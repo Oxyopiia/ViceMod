@@ -3,9 +3,9 @@
 	"id": "vice",
 	"version": "${version}",
 	"name": "Vice",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Vice is a DoomTowers improvement mod.",
 	"authors": [
-		"Me!"
+		"Oxyopia"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
@@ -15,20 +15,16 @@
 	"icon": "assets/vice/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"main": [
-			"net.oxyopia.vice.ExampleMod"
-		],
 		"client": [
-			"net.oxyopia.vice.ExampleModClient"
+			"net.oxyopia.vice.Vice"
 		],
 		"fabric-datagen": [
-			"net.oxyopia.vice.ExampleModDataGenerator"
+			"net.oxyopia.vice.ViceDataGenerator"
 		]
 	},
 	"mixins": [
-		"vice.mixins.json",
 		{
-			"config": "vice.client.mixins.json",
+			"config": "vice.mixins.json",
 			"environment": "client"
 		}
 	],

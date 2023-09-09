@@ -1,6 +1,4 @@
 # gradle
-src/main/java/net/oxyopia/vice/config/options.txt
-
 .gradle/
 build/
 out/

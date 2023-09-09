@@ -193,7 +193,6 @@ public class Config extends Vigilant {
             name = "8-Bit Katana Sound",
             description = "Coming SoonTM",
             category = "Sounds",
-            min = 0,
             max = 200,
             increment = 5
     )

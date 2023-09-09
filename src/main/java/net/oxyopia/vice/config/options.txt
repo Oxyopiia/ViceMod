@@ -1,0 +1,46 @@
+just a txt file to help me organise the config better ig
+
+
+semi-planned features:
+    Loot Tracker(s) w/ Avg. Drop Chance (not for now)
+    Dynamic Scoreboard
+    Cooldown Tracker UI
+
+
+//// ACTUAL SETTINGS
+
+Quality of Life
+    Prevent placing Player Heads
+    Snowball Cannon Corrector
+    World 4 Burger Timers
+
+    Fishing
+        Fishing Bite Sound Effect
+        Disable Other's Bobber Bites
+        Fishing with Slime Hook Warning
+
+Arenas
+    QOL
+        Danger Zones (w/ Color Customization)
+
+    Live Arenas Information
+        Main Toggle
+        Display Mobs Killed & Alive
+        Display Unique Drops
+        Display Wave Timer
+
+Bosses
+    PPP Burp Warning
+    MH (Gen) Warning
+    Santa Claus Present Warning
+
+Sounds (Mute item abilities)
+    Main Toggle
+    8 Bit Katana
+    etc.
+
+Vice Multiplayer
+    WebSocket Minigun Glitch Indicator
+        "Shares encrypted information with other Vice users on when the Minigun Glitch occurs"
+    WebSocket Arenas Availability Indicator
+        "Shares encrypted information with other Vice users to inform you or others which Arenas are available at a given time."

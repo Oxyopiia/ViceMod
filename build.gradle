@@ -21,6 +21,9 @@ repositories {
 	maven {
 		url = "https://repo.essential.gg/repository/maven-public"
 	}
+	maven {
+		url = "https://maven.terraformersmc.com/releases/"
+	}
 }
 
 loom {
@@ -28,7 +31,6 @@ loom {
 
 	mods {
 		"vice" {
-			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
 	}
@@ -47,15 +49,16 @@ loom {
 }
 
 // Add the generated resources to the main source set
-sourceSets {
-	main {
-		resources {
-			srcDirs += [
-					'src/main/generated'
-			]
-		}
-	}
-}
+//sourceSets {
+//	main {
+//		resources {
+//			srcDirs += [
+//					'src/main/generated'
+//			]
+//		}
+//	}
+//}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -63,11 +66,13 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation(include("gg.essential:vigilance-1.18.1-fabric:284") {
+	modImplementation(include("gg.essential:vigilance-1.18.1-fabric:286") {
 		exclude group: "gg.essential", module: "universalcraft-1.18.1-fabric"
 	})
-	modImplementation(include("gg.essential:universalcraft-1.20.1-fabric:277"))
-	
+	modImplementation(include("gg.essential:universalcraft-${project.minecraft_version}-fabric:289"))
+	modApi "com.terraformersmc:modmenu:7.2.2"
+
+
 	// Uncomment the following line to enable the deprecated Fabric API modules.
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
@@ -116,5 +121,6 @@ publishing {
 		// Notice: This block does NOT have the same function as the block in the top level.
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
+
 	}
 }

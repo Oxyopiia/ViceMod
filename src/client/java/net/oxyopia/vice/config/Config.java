@@ -7,13 +7,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.io.File;
-    import java.util.Comparator;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-public class Config extends Vigilant {
 
-    // Vice Config
+public class Config extends Vigilant {
 
     @Property(
         type = PropertyType.BUTTON,
@@ -38,15 +37,6 @@ public class Config extends Vigilant {
         subcategory = "Vice"
     )
     public boolean COPY_CHAT_TO_CLIPBOARD = true;
-
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "Fullbright",
-            description = "Maximizes gamma",
-            category = "General",
-            subcategory = "Vice"
-    )
-    public boolean VICE_FULLBRIGHT = false;
 
     @Property(
         type = PropertyType.SWITCH,
@@ -74,6 +64,15 @@ public class Config extends Vigilant {
         subcategory = "Quality of Life"
     )
     public boolean PREVENT_PLACING_PLAYER_HEADS = true;
+    
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Daily Rewards Notification",
+            description = "Displays a notification when your Daily Rewards are ready to claim.",
+            category = "General",
+            subcategory = "Quality of Life"
+    )
+    public boolean DAILY_REWARDS_NOTIFICATION = true;
     
     @Property(
             type = PropertyType.SWITCH,
@@ -142,6 +141,25 @@ public class Config extends Vigilant {
     )
     public boolean FISHING_WITH_WRONG_HOOK = true;
 
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Oyster Queen Display",
+        description = "Displays your current quest progress for Oyster Queen while in World 6.",
+        category = "General",
+        subcategory = "Fishing"
+    )
+    public boolean OYSTER_QUEEN_DISPLAY = false;
+
+    // Category /General/Bug Fixes
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Fix Player Count in scoreboard",
+            description = "When not killing a mob in a while, the scoreboard becomes desynced with the player count, so this attempts to fix it.",
+            category = "General",
+            subcategory = "Bug Fixes"
+    )
+    public boolean FIX_SCOREBOARD_PLAYER_COUNT = true;
+
 
     // Category /Arenas/Quality of Life
 
@@ -162,6 +180,15 @@ public class Config extends Vigilant {
         subcategory = "Quality of Life"
     )
     public Color ARENA_DANGER_ZONE_COLOR = new Color(255, 0, 0);
+    
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Arenas Cooldown Notification",
+            description = "Displays a notification when an Arena cooldown has expired.",
+            category = "Arenas",
+            subcategory = "Quality of Life"
+    )
+    public boolean ARENAS_COOLDOWN_NOTIFIER = true;
 
 
     // Category /Arenas/Live Arena Info
@@ -297,7 +324,10 @@ public class Config extends Vigilant {
 
 
     public Config() {
-        super(new File("./config/vice.toml"), "Vice", new JVMAnnotationPropertyCollector(), new ConfigSorting());
+        super(new File("./config/vice/config.toml"), "Vice", new JVMAnnotationPropertyCollector(), new ConfigSorting());
+    }
+
+    public void init() {
         initialize();
         markDirty();
     }

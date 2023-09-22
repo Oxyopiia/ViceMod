@@ -1,16 +1,17 @@
 package net.oxyopia.vice.config;
 
-import gg.essential.universal.UChat;
+import gg.essential.api.EssentialAPI;
+import gg.essential.universal.UDesktop;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.io.File;
+import java.net.URI;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-
 
 public class Config extends Vigilant {
 
@@ -18,13 +19,27 @@ public class Config extends Vigilant {
         type = PropertyType.BUTTON,
         name = "Edit HUD Locations",
         description = "Edit the position of HUD Elements\n" +
-            "Drag elements in the menu to reposition\n" +
-            "Use the scroll wheel on an element to resize.",
+            " - Drag elements around in the menu to reposition,\n" +
+            " - Use the Scroll Wheel on an element to resize.",
         category = "General",
-        subcategory = "Vice"
+        subcategory = "Vice",
+        placeholder = "Edit HUD Locations"
     )
     public void EDIT_HUD_LOCATIONS() {
-        UChat.chat("Soon");
+        EssentialAPI.getNotifications().push("Vice", "HUD Manager coming soon", 3f);
+    }
+    
+    @Property(
+        type = PropertyType.BUTTON,
+        name = "Vice Discord",
+        description = "Join the vice Discord to recieve updates, post suggestions, and more!",
+        category = "General",
+        subcategory = "Vice",
+        placeholder = "Join"
+    )
+    public void JOIN_VICE_DISCORD() {
+        UDesktop.browse(URI.create("https://discord.gg/7nb9KcZHug"));
+        EssentialAPI.getNotifications().push("Vice", "Hopefully opened Discord/Web Browser!", 3f);
     }
 
     // Quality of Life
@@ -39,13 +54,22 @@ public class Config extends Vigilant {
     public boolean COPY_CHAT_TO_CLIPBOARD = true;
 
     @Property(
+            type = PropertyType.SWITCH,
+            name = "Developer Mode",
+            description = "dev mode for beta versions/debugging\n§cOnly enable if you know what you're doing!",
+            category = "General",
+            subcategory = "Developer"
+    )
+    public boolean DEVMODE = false;
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Snowball Cannon Corrector",
         description = "Attempts to fix the offset of Snowball projectiles launched by the Snowball Cannon.",
         category = "General",
         subcategory = "Quality of Life"
     )
-    public boolean CORRECT_SNOWBALL_CANNON = false;
+    public boolean CORRECT_SNOWBALL_CANNON = true;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -85,22 +109,12 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "World 4 Held Item Display",
-            description = "Displays what item you currently have held in Arena 4, such as Cheese, or Soda",
+            name = "World 4 Utilities",
+            description = "Displays a UI while in World 4 showing your Held Food Item, Burger Times, and Ingredients.",
             category = "General",
             subcategory = "Quality of Life"
     )
-    public boolean W4_HELD_ITEM_DISPLAY = true;
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Burger Timers",
-        description = "Displays a graphic on the screen displaying a live timer for Burgers, or Soda in World 4.",
-        category = "General",
-        subcategory = "Quality of Life"
-    )
-    public boolean W4_BURGER_TIMER = false;
-
+    public boolean W4_UTILS = false;
 
     @Property(
         type = PropertyType.SWITCH,
@@ -117,29 +131,42 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Fishing Bite Ding",
-        description = "Plays a ding sound when your bobber is bitten.",
+        description = "Plays a ding sound when your bobber is bitten.\n" +
+            "§eRequires semi-close proximity if Don't Detect with Sound Packets is disabled.",
         category = "General",
         subcategory = "Fishing"
     )
     public boolean FISHING_DING = true;
 
     @Property(
-        type = PropertyType.SWITCH,
-        name = "Disable Other's Bites",
-        description = "Disable the Splash sound effect from other people's bobbers. Useful if Semi-AFKing.",
-        category = "General",
-        subcategory = "Fishing"
+            type = PropertyType.SWITCH,
+            name = "Don't Detect Bite with Sound Packets",
+            description = "Allows for infinite range of Fishing Bite Ding by not using Sound packets, only relying on Velocity packets.\n"+
+                "§eNot extensively tested, may provide false positives.\n" +
+                "§aWhen within normal setting range, works as usual.",
+            category = "General",
+            subcategory = "Fishing"
     )
-    public boolean DISABLE_OTHERS_FISHING_BITES = false;
+    public boolean FISHING_DING_DONT_DETECT_SOUND_PACKET = false;
 
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Fishing with Wrong Hook Warning",
-        description = "Displays a warning when fishing with a Slime, Luminous, or GenHook.",
-        category = "General",
-        subcategory = "Fishing"
-    )
-    public boolean FISHING_WITH_WRONG_HOOK = true;
+//    @Property(
+//        type = PropertyType.SWITCH,
+//        name = "Disable Other's Bites",
+//        description = "Disable the Splash sound effect from other people's bobbers. Useful if Semi-AFKing.",
+//        category = "General",
+//        subcategory = "Fishing"
+//    )
+//    public boolean DISABLE_OTHERS_FISHING_BITES = false;
+
+//    @Property(
+//        type = PropertyType.SWITCH,
+//        name = "Fishing with Wrong Hook Warning",
+//        description = "Displays a warning when fishing with a Slime, Luminous, or GenHook.",
+//        category = "General",
+//        subcategory = "Fishing",
+//        hidden = true
+//    )
+//    public boolean FISHING_WITH_WRONG_HOOK = true;
 
     @Property(
         type = PropertyType.SWITCH,
@@ -177,7 +204,8 @@ public class Config extends Vigilant {
         name = "Danger Zone Colour",
         description = "Color the thing",
         category = "Arenas",
-        subcategory = "Quality of Life"
+        subcategory = "Quality of Life",
+        allowAlpha = false
     )
     public Color ARENA_DANGER_ZONE_COLOR = new Color(255, 0, 0);
     
@@ -320,7 +348,6 @@ public class Config extends Vigilant {
         category = "Vice Multiplayer"
     )
     public boolean SILENCE_TIMER_WEBSOCKET_ENABLED = false;
-
 
 
     public Config() {

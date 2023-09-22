@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "vice",
-	"version": "1.0.0-beta1",
+	"version": "1.0.0-beta2",
 	"name": "Vice",
 	"description": "Vice is a DoomTowers improvement mod.",
 	"authors": [
@@ -35,11 +35,10 @@
 		"fabricloader": ">=0.14.22",
 		"minecraft": "~1.20.1",
 		"java": ">=17",
-		"fabric-api": "*",
-		"modmenu": "7.2.2"
+		"fabric-api": "*"
 	},
 	"suggests": {
-		"essential": "*"
+		"modmenu": "7.2.2"
 	},
 	"custom": {
 		"modmenu": {

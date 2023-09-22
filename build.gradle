@@ -27,11 +27,11 @@ repositories {
 }
 
 loom {
-    splitEnvironmentSourceSets()
+//    splitEnvironmentSourceSets()
 
 	mods {
 		"vice" {
-			sourceSet sourceSets.client
+			sourceSet sourceSets.main
 		}
 	}
     runs {
@@ -66,11 +66,14 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation(include("gg.essential:vigilance-1.18.1-fabric:286") {
-		exclude group: "gg.essential", module: "universalcraft-1.18.1-fabric"
-	})
-	modImplementation(include("gg.essential:universalcraft-${project.minecraft_version}-fabric:289"))
+//	modImplementation(include("gg.essential:vigilance-1.18.1-fabric:286") {
+//		exclude group: "gg.essential", module: "universalcraft-1.18.1-fabric"
+//	})
+//	modImplementation(include("gg.essential:universalcraft-${project.minecraft_version}-fabric:289"))
 	modApi "com.terraformersmc:modmenu:7.2.2"
+
+	modImplementation include("gg.essential:loader-fabric:1.2.1")
+	modCompileOnly "gg.essential:essential-${project.minecraft_version}-fabric:14049+g778662f5d"
 
 
 	// Uncomment the following line to enable the deprecated Fabric API modules.

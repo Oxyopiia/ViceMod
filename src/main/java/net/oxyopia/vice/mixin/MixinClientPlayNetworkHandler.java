@@ -9,26 +9,23 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.oxyopia.vice.features.Fishing;
-import static net.oxyopia.vice.Vice.*;
+import static net.oxyopia.vice.Vice.client;
+import static net.oxyopia.vice.Vice.config;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public class MixinClientPlayNetworkHandler {
 
-	@Inject(at = @At("HEAD"), method = "onPlaySound", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "onPlaySound")
 	private void onPlaySound(PlaySoundS2CPacket packet, CallbackInfo callbackInfo) {
-		if (client.isOnThread() && packet.getSound().value().getId().toString().equalsIgnoreCase("minecraft:entity.fishing_bobber.splash")) {
-			if (config.FISHING_DING) {
-				Fishing.handleFishingSplash(packet);
-			}
+		if (client.isOnThread() && config.FISHING_DING && packet.getSound().value().getId().toString().equalsIgnoreCase("minecraft:entity.fishing_bobber.splash")) {
+			Fishing.handleFishingSplash(packet);
 		}
 	}
 
 	@Inject(at = @At("HEAD"), method = "onEntityVelocityUpdate")
 	private void onEntityVelocityUpdate(EntityVelocityUpdateS2CPacket packet, CallbackInfo callbackInfo){
-		if (client.isOnThread() && config.FISHING_DING) {
-			if (client.player != null && client.player.fishHook != null) {
-				Fishing.handleVelocityUpdate(packet, client.player.fishHook);
-			}
+		if (client.isOnThread() && config.FISHING_DING && client.player != null && client.player.fishHook != null) {
+			Fishing.handleVelocityUpdate(packet, client.player.fishHook);
 		}
 	}
 }

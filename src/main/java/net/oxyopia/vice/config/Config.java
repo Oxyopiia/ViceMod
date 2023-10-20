@@ -2,6 +2,7 @@ package net.oxyopia.vice.config;
 
 import gg.essential.api.EssentialAPI;
 import gg.essential.universal.UDesktop;
+import gg.essential.universal.UScreen;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +13,8 @@ import java.net.URI;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+
+import static net.oxyopia.vice.Vice.devConfig;
 
 public class Config extends Vigilant {
 
@@ -28,6 +31,15 @@ public class Config extends Vigilant {
     public void EDIT_HUD_LOCATIONS() {
         EssentialAPI.getNotifications().push("Vice", "HUD Manager coming soon", 3f);
     }
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "HUD Text Shadow",
+        description = "Toggle text shadow on Vice HUD elements.",
+        category = "General",
+        subcategory = "Vice"
+    )
+    public boolean HUD_TEXT_SHADOW = true;
     
     @Property(
         type = PropertyType.BUTTON,
@@ -44,14 +56,8 @@ public class Config extends Vigilant {
 
     // Quality of Life
 
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Copy Chat Messages",
-        description = "Allows for Right Clicking chat messages to Copy them to Clipboard.",
-        category = "General",
-        subcategory = "Vice"
-    )
-    public boolean COPY_CHAT_TO_CLIPBOARD = true;
+
+//    public boolean COPY_CHAT_TO_CLIPBOARD = true;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -61,6 +67,20 @@ public class Config extends Vigilant {
             subcategory = "Developer"
     )
     public boolean DEVMODE = false;
+
+    @Property(
+        type = PropertyType.BUTTON,
+        name = "Dev Menu",
+        description = "Open the developer menu",
+        category = "General",
+        subcategory = "Developer",
+        placeholder = "Open"
+    )
+    public void OPEN_DEV_CONFIG() {
+        UScreen.displayScreen(devConfig.gui());
+    }
+
+
 
     @Property(
         type = PropertyType.SWITCH,
@@ -81,6 +101,16 @@ public class Config extends Vigilant {
     public boolean SNOWBALL_CANNON_PROJECTION = false;
 
     @Property(
+        type = PropertyType.COLOR,
+        name = "Snowball Projection Colour",
+        description = "Color the thing",
+        category = "General",
+        subcategory = "Quality of Life",
+        allowAlpha = false
+    )
+    public Color SNOWBALL_CANNON_PROJECTION_COLOR = new Color(0, 127, 255);
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Prevent Placing Player Heads",
         description = "Blocks place block packets when using player heads to prevent consuming some player heads, such as Ancient Cells.",
@@ -88,6 +118,15 @@ public class Config extends Vigilant {
         subcategory = "Quality of Life"
     )
     public boolean PREVENT_PLACING_PLAYER_HEADS = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Hide Revolver Blindness",
+            description = "Hides the blindness effect when aiming the revolver.",
+            category = "General",
+            subcategory = "Quality of Life"
+    )
+    public boolean HIDE_REVOLVER_BLINDNESS = false;
     
     @Property(
             type = PropertyType.SWITCH,
@@ -116,16 +155,6 @@ public class Config extends Vigilant {
     )
     public boolean W4_UTILS = false;
 
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Silence Spawn Timer",
-        description = "Displays a graphic on the screen after Silence has spawned §eat §eleast §eonce§r displaying a timer when he will next spawn.",
-        category = "General",
-        subcategory = "Quality of Life"
-    )
-    public boolean SILENCE_SPAWN_TIMER = false;
-
-
     // Quality of Life/Fishing
 
     @Property(
@@ -147,7 +176,7 @@ public class Config extends Vigilant {
             category = "General",
             subcategory = "Fishing"
     )
-    public boolean FISHING_DING_DONT_DETECT_SOUND_PACKET = false;
+    public boolean FISHING_DING_DONT_DETECT_SOUND_PACKET = true;
 
 //    @Property(
 //        type = PropertyType.SWITCH,
@@ -357,6 +386,10 @@ public class Config extends Vigilant {
     public void init() {
         initialize();
         markDirty();
+
+        addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
+        addDependency("SNOWBALL_CANNON_PROJECTION_COLOR", "SNOWBALL_CANNON_PROJECTION");
+        addDependency("FISHING_DING_DONT_DETECT_SOUND_PACKET", "FISHING_DING");
     }
 
     public static class ConfigSorting extends SortingBehavior {

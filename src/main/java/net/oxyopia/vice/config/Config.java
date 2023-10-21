@@ -108,7 +108,7 @@ public class Config extends Vigilant {
         subcategory = "Quality of Life",
         allowAlpha = false
     )
-    public Color SNOWBALL_CANNON_PROJECTION_COLOR = new Color(0, 127, 255);
+    public Color SNOWBALL_CANNON_PROJECTION_COLOR = new Color(0, 200, 255);
 
     @Property(
         type = PropertyType.SWITCH,
@@ -126,16 +126,16 @@ public class Config extends Vigilant {
             category = "General",
             subcategory = "Quality of Life"
     )
-    public boolean HIDE_REVOLVER_BLINDNESS = false;
+    public boolean HIDE_REVOLVER_BLINDNESS = true;
     
     @Property(
             type = PropertyType.SWITCH,
-            name = "Daily Rewards Notification",
-            description = "Displays a notification when your Daily Rewards are ready to claim.",
+            name = "Better Tower Beacon UI",
+            description = "Display the floor number as a stack size, and add the featured worlds in the lore.",
             category = "General",
             subcategory = "Quality of Life"
     )
-    public boolean DAILY_REWARDS_NOTIFICATION = true;
+    public boolean BETTER_TOWER_BEACON_UI = true;
     
     @Property(
             type = PropertyType.SWITCH,
@@ -145,15 +145,6 @@ public class Config extends Vigilant {
             subcategory = "Quality of Life"
     )
     public boolean HIDE_SERVER_TIPS = true;
-
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "World 4 Utilities",
-            description = "Displays a UI while in World 4 showing your Held Food Item, Burger Times, and Ingredients.",
-            category = "General",
-            subcategory = "Quality of Life"
-    )
-    public boolean W4_UTILS = false;
 
     // Quality of Life/Fishing
 
@@ -178,25 +169,6 @@ public class Config extends Vigilant {
     )
     public boolean FISHING_DING_DONT_DETECT_SOUND_PACKET = true;
 
-//    @Property(
-//        type = PropertyType.SWITCH,
-//        name = "Disable Other's Bites",
-//        description = "Disable the Splash sound effect from other people's bobbers. Useful if Semi-AFKing.",
-//        category = "General",
-//        subcategory = "Fishing"
-//    )
-//    public boolean DISABLE_OTHERS_FISHING_BITES = false;
-
-//    @Property(
-//        type = PropertyType.SWITCH,
-//        name = "Fishing with Wrong Hook Warning",
-//        description = "Displays a warning when fishing with a Slime, Luminous, or GenHook.",
-//        category = "General",
-//        subcategory = "Fishing",
-//        hidden = true
-//    )
-//    public boolean FISHING_WITH_WRONG_HOOK = true;
-
     @Property(
         type = PropertyType.SWITCH,
         name = "Oyster Queen Display",
@@ -215,6 +187,15 @@ public class Config extends Vigilant {
             subcategory = "Bug Fixes"
     )
     public boolean FIX_SCOREBOARD_PLAYER_COUNT = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Fix Revolver attacking",
+            description = "Fixes a bug that prevents shooting the revolver if just outside attack range.",
+            category = "General",
+            subcategory = "Bug Fixes"
+    )
+    public boolean FIX_REVOLVER_SHOOTING = true;
 
 
     // Category /Arenas/Quality of Life
@@ -304,27 +285,33 @@ public class Config extends Vigilant {
             subcategory = "Quality of Life"
     )
     public boolean DISABLE_BOSS_SOUNDS = false;
-
-    // Category /Bosses/PPP
+    
     @Property(
-        type = PropertyType.SWITCH,
-        name = "PPP Burp Warning",
-        description = "Displays a warning during PPP's Burp Ability, which spawns dropping Eyes.",
-        category = "Bosses",
-        subcategory = "PPP"
+            type = PropertyType.SWITCH,
+            name = "Nearby Amethyst Warning",
+            description = "Plays a warning chime when the player is within the damage radius of a falling Amethyst",
+            category = "Bosses",
+            subcategory = "Shadow Gelato"
     )
-    public boolean PPP_BURP_WARNING = false;
-
-
-    // Category /Bosses/Minehut Boss
+    public boolean SHADOWGELATO_AMETHYST_WARNING = false;
+    
     @Property(
-        type = PropertyType.SWITCH,
-        name = "Minehut (Gen) Furnace Warning",
-        description = "Displays a warning while Gen is charging its Furnace ability.",
-        category = "Bosses",
-        subcategory = "Minehut Boss"
+            type = PropertyType.SWITCH,
+            name = "Miniboss Health Info",
+            description = "Displays health of Shadow Gelato's Minibosses in Phase 2",
+            category = "Bosses",
+            subcategory = "Shadow Gelato"
     )
-    public boolean MH_GEN_WARNING = false;
+    public boolean SHADOWGELATO_MINIBOSS_HEALTH = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Permasludge Rape Warning",
+            description = "Informs you when you are getting raped by Permasludge to parry",
+            category = "Bosses",
+            subcategory = "Shadow Gelato"
+    )
+    public boolean SHADOWGELATO_RAPE_WARNING = false;
 
     // Category /Bosses/Arenas
     @Property(

@@ -1,6 +1,6 @@
 package net.oxyopia.vice.utils.enums;
 
-public enum DoomWorld {
+public enum Worlds {
 	RealityPeak("realitypeak"),
 	Desert("desertedDunes"),
 	Space("spaceescape"),
@@ -20,6 +20,7 @@ public enum DoomWorld {
 	PPP("fakeplayer"),
 	Minehut("minehutboss"),
 	DarkVice("darkvice"),
+	ShadowGelato("shadowgelato"),
 
 	Floor2Arena("f2arenas"),
 	Floor3Arena("f3arenas"),
@@ -29,11 +30,11 @@ public enum DoomWorld {
 
 	private final String worldName;
 
-	DoomWorld(String worldName) {
+	Worlds(String worldName) {
 		this.worldName = worldName;
 	}
 
-	public String getName() {
+	public String getId() {
 		return worldName;
 	}
 }

@@ -3,6 +3,7 @@ package net.oxyopia.vice.commands;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import gg.essential.api.EssentialAPI;
+import gg.essential.universal.wrappers.UPlayer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.oxyopia.vice.utils.DevUtils;
@@ -17,7 +18,7 @@ public class TestCommand {
 					return null;
 				});
 
-				DevUtils.sendErrorMessage(new IndexOutOfBoundsException("Your mother is very large"), "An error occurred trying to find who asked");
+				PlayerUtils.sendViceMessage(UPlayer.getPosX() + " " + UPlayer.getPosY() + " " + UPlayer.getPosZ());
 
 				return Command.SINGLE_SUCCESS;
 			})

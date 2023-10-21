@@ -3,7 +3,7 @@
 	"id": "vice",
 	"version": "1.0.0-beta2",
 	"name": "Vice",
-	"description": "Vice is a DoomTowers improvement mod.",
+	"description": "Vice is a DoomTowers mod, featuring various improvements like UIs, Helpers, Chat/Sound filters, and more!",
 	"authors": [
 		"Oxyopia"
 	],

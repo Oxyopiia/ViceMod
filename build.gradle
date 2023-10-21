@@ -76,7 +76,7 @@ dependencies {
 	modApi "com.terraformersmc:modmenu:7.2.2"
 
 	modImplementation include("gg.essential:loader-fabric:1.2.1")
-	modCompileOnly "gg.essential:essential-${project.minecraft_version}-fabric:14049+g778662f5d"
+	modCompileOnly "gg.essential:essential-${project.minecraft_version}-fabric:14395+gb029e9d212"
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.1.2")
 
 

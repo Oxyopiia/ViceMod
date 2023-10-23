@@ -4,6 +4,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+import net.oxyopia.vice.utils.Utils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -14,16 +15,17 @@ import static net.oxyopia.vice.Vice.client;
 import static net.oxyopia.vice.Vice.config;
 
 @Mixin(DrawContext.class)
-public abstract class MixinDrawContext {
+public class MixinDrawContext {
 
 	@ModifyVariable(argsOnly = true, method = "drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V", at = @At(value="INVOKE", target="Lnet/minecraft/client/util/math/MatrixStack;push()V"), ordinal = 0)
 	private String towerBeaconFeatures(String countOverride, TextRenderer textRenderer, ItemStack stack, int x, int y) {
-		if (config.BETTER_TOWER_BEACON_UI && client.currentScreen != null && client.currentScreen.getTitle().contains(Text.of("Tower Beacon"))) {
+		if (Utils.inDoomTowers() && config.BETTER_TOWER_BEACON_UI && client.currentScreen != null && client.currentScreen.getTitle().contains(Text.of("Tower Beacon"))) {
 			String itemName = stack.getName().getString();
 			Pattern pattern = Pattern.compile("(.*)Floor \\d");
 
 			if (pattern.matcher(itemName).find()) return itemName.substring(itemName.length() - 1);
 		}
+
 		return countOverride;
 	}
 }

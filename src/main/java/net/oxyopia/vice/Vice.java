@@ -3,10 +3,12 @@ package net.oxyopia.vice;
 import com.mojang.logging.LogUtils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.client.MinecraftClient;
 import net.oxyopia.vice.commands.ViceCommand;
 import net.oxyopia.vice.commands.TestCommand;
 import net.oxyopia.vice.config.*;
+import net.oxyopia.vice.utils.Utils;
 import org.slf4j.Logger;
 
 public class Vice implements ClientModInitializer {
@@ -30,6 +32,14 @@ public class Vice implements ClientModInitializer {
 			ViceCommand.register(dispatcher);
 			TestCommand.register(dispatcher);
 		});
+
+		ClientPlayConnectionEvents.JOIN.register((listener, packetSender, minecraftClient) -> {
+			Utils.inDoomTowers = false;
+			// Set to false in case server we are switching to does not have a scoreboard, and then let
+			// MixinInGameHud#checkInDoomTowers re update if in DoomTowers
+		});
+
+		ClientPlayConnectionEvents.DISCONNECT.register((phase, listener) -> Utils.inDoomTowers = false);
 	}
 }
 

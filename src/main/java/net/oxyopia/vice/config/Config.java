@@ -188,15 +188,6 @@ public class Config extends Vigilant {
     )
     public boolean FIX_SCOREBOARD_PLAYER_COUNT = true;
 
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "Fix Revolver attacking",
-            description = "Fixes a bug that prevents shooting the revolver if just outside attack range.",
-            category = "General",
-            subcategory = "Bug Fixes"
-    )
-    public boolean FIX_REVOLVER_SHOOTING = true;
-
 
     // Category /Arenas/Quality of Life
 
@@ -271,7 +262,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Boss Despawn Timers",
-            description = "Adjusts the Bossbar to display the Bosse's despawn timer.",
+            description = "Adjusts the Bossbar to display the Bosse's despawn timer.\n§cComing in a future pre-release!",
             category = "Bosses",
             subcategory = "Quality of Life"
     )
@@ -280,7 +271,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Disable Boss Sounds",
-            description = "Removes boss sounds, for now only works with PPP, may be separated in the future.",
+            description = "Removes boss sounds, for now only works with PPP, may be separated in the future.\n§cComing in a future pre-release!",
             category = "Bosses",
             subcategory = "Quality of Life"
     )
@@ -317,7 +308,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Santa Present Warning",
-        description = "Displays a warning when Santa uses his present throw ability.",
+        description = "Displays a warning when Santa uses his present throw ability.\n§cComing in a future pre-release!",
         category = "Bosses",
         subcategory = "Arenas"
     )
@@ -377,6 +368,10 @@ public class Config extends Vigilant {
         addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
         addDependency("SNOWBALL_CANNON_PROJECTION_COLOR", "SNOWBALL_CANNON_PROJECTION");
         addDependency("FISHING_DING_DONT_DETECT_SOUND_PACKET", "FISHING_DING");
+
+        setCategoryDescription("Arenas", "§cFEATURES COMING SOON" + "\n§7i cannot be bothered to remove the section just to re add it when i make it, nothing works rn ok?");
+        setCategoryDescription("Sounds", "§cFEATURES COMING SOON" + "\n§7i cannot be bothered to remove the section just to re add it when i make it, nothing works rn ok?");
+        setCategoryDescription("Vice Multiplayer", "§cFEATURES NOT COMING LITERALLY ANYTIME SOON" + "\n§7all these features are complete concepts, and are not planned to be packed with the initial release");
     }
 
     public static class ConfigSorting extends SortingBehavior {

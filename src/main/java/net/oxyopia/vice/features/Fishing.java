@@ -6,6 +6,7 @@ import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.oxyopia.vice.utils.DevUtils;
+import net.oxyopia.vice.utils.Utils;
 
 import static net.oxyopia.vice.Vice.*;
 
@@ -19,7 +20,7 @@ public class Fishing {
 	private static long lastTouchedWater = -1;
 
 	public static void handleFishingSplash(PlaySoundS2CPacket packet) {
-		if (client.player != null && client.player.fishHook != null && client.player.fishHook.isTouchingWater()) {
+		if (Utils.inDoomTowers() && client.player != null && client.player.fishHook != null && client.player.fishHook.isTouchingWater()) {
 			FishingBobberEntity fishHook = client.player.fishHook;
 			double soundDeviation = fishHook.squaredDistanceTo(packet.getX(), packet.getY(), packet.getZ());
 
@@ -35,7 +36,7 @@ public class Fishing {
 	}
 
 	public static void handleVelocityUpdate(EntityVelocityUpdateS2CPacket packet, FishingBobberEntity fishHook) {
-		if (packet.getId() == fishHook.getId()) {
+		if (Utils.inDoomTowers() && packet.getId() == fishHook.getId() && client.player != null) {
 			int velocityY = packet.getVelocityY();
 
 			if (fishHook.isTouchingWater() && lastTouchedWater > 0 && velocityY <= MIN_Y_VELOCITY_DETECTION) {

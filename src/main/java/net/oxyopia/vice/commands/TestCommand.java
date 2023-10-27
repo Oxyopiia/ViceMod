@@ -3,9 +3,13 @@ package net.oxyopia.vice.commands;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import gg.essential.api.EssentialAPI;
-import gg.essential.universal.wrappers.UPlayer;
+import gg.essential.universal.wrappers.message.UTextComponent;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import net.minecraft.item.ItemStack;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.HoverEvent;
+import net.oxyopia.vice.utils.ItemUtils;
 import net.oxyopia.vice.utils.Utils;
 
 public class TestCommand {
@@ -17,8 +21,14 @@ public class TestCommand {
 					return null;
 				});
 
-				Utils.sendViceMessage("inDoomTowers: &&a " + Utils.inDoomTowers());
-				Utils.sendViceMessage(UPlayer.getPosX() + " " + UPlayer.getPosY() + " " + UPlayer.getPosZ());
+				Utils.sendViceMessage("inDoomTowers: &&a" + Utils.inDoomTowers());
+
+				ItemStack heldItem = ItemUtils.getHeldItem();
+				if (heldItem.getNbt() != null) {
+					Utils.sendViceMessage(new UTextComponent("§eClick to copy your held item's NBT.§r")
+						.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, heldItem.getNbt().asString())
+						.setHover(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackContent(heldItem)));
+				}
 
 				return Command.SINGLE_SUCCESS;
 			})

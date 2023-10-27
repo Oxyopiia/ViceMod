@@ -12,7 +12,7 @@ import net.oxyopia.vice.utils.Utils;
 import org.slf4j.Logger;
 
 public class Vice implements ClientModInitializer {
-	private static final Logger LOGGER = LogUtils.getLogger();
+	public static final Logger LOGGER = LogUtils.getLogger();
 	public static final Config config = new Config();
 	public static final DevConfig devConfig = new DevConfig();
 	public static MinecraftClient client;

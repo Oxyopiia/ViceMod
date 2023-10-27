@@ -9,7 +9,7 @@
     "MixinClientPlayerInteractionManager",
     "MixinClientPlayNetworkHandler",
     "MixinDrawContext",
-    "MixinGameRenderer",
-    "MixinInGameHud"
+    "MixinInGameHud",
+    "MixinMinecraftClient"
   ]
 }

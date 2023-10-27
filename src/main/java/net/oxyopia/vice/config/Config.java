@@ -60,11 +60,11 @@ public class Config extends Vigilant {
 //    public boolean COPY_CHAT_TO_CLIPBOARD = true;
 
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Developer Mode",
-            description = "dev mode for beta versions/debugging\n§cOnly enable if you know what you're doing!",
-            category = "General",
-            subcategory = "Developer"
+        type = PropertyType.SWITCH,
+        name = "Developer Mode",
+        description = "dev mode for beta versions/debugging\n§cOnly enable if you know what you're doing!",
+        category = "General",
+        subcategory = "Developer"
     )
     public boolean DEVMODE = false;
 
@@ -92,11 +92,11 @@ public class Config extends Vigilant {
     public boolean CORRECT_SNOWBALL_CANNON = true;
 
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Snowball Cannon Projection",
-            description = "Displays a line of projection of where the Snowball Cannon can reach.",
-            category = "General",
-            subcategory = "Quality of Life"
+        type = PropertyType.SWITCH,
+        name = "Snowball Cannon Projection",
+        description = "Displays a line of projection of where the Snowball Cannon can reach.",
+        category = "General",
+        subcategory = "Quality of Life"
     )
     public boolean SNOWBALL_CANNON_PROJECTION = false;
 
@@ -120,11 +120,11 @@ public class Config extends Vigilant {
     public boolean PREVENT_PLACING_PLAYER_HEADS = true;
 
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Hide Revolver Blindness",
-            description = "Hides the blindness effect when aiming the revolver.",
-            category = "General",
-            subcategory = "Quality of Life"
+        type = PropertyType.SWITCH,
+        name = "Hide Revolver Blindness",
+        description = "Hides the blindness effect when aiming the revolver.",
+        category = "General",
+        subcategory = "Quality of Life"
     )
     public boolean HIDE_REVOLVER_BLINDNESS = true;
     
@@ -146,7 +146,73 @@ public class Config extends Vigilant {
     )
     public boolean HIDE_SERVER_TIPS = true;
 
-    // Quality of Life/Fishing
+    // General/Item Cooldown Display
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Item Cooldown Display",
+        description = "Highlights a hotbar slot when on cooldown, and can display a HUD graphic. Customizable when enabled!",
+        category = "General",
+        subcategory = "Item Cooldowns"
+    )
+    public boolean ITEM_COOLDOWN_DISPLAY = false;
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Cooldown Display Type",
+        description = "Changes how the Item Cooldown Display is shown.",
+        category = "General",
+        subcategory = "Item Cooldowns",
+        options = {"Vanilla", "Static Background", "Color Fade", "Text Only"}
+    )
+    public int ITEMCD_DISPLAY_TYPE = 1;
+
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Show Timer/Ready Text in Hotbar",
+    	description = "Displays a text stating the cooldown remaining or when ready.",
+    	category = "General",
+    	subcategory = "Item Cooldowns"
+    )
+    public boolean SHOW_ITEMCD_TEXT = true;
+
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Show Timer/Ready Text near Crosshair",
+    	description = "Displays a text stating the cooldown remaining or when ready near your crosshair.",
+    	category = "General",
+    	subcategory = "Item Cooldowns"
+    )
+    public boolean SHOW_ITEMCD_TEXT_CROSSHAIR = true;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Hide when Ready",
+        description = "Instead of highlighting as Green, hides the Overlay.",
+        category = "General",
+        subcategory = "Item Cooldowns"
+    )
+    public boolean HIDE_ITEMCD_WHEN_READY = false;
+
+    @Property(
+    	type = PropertyType.PERCENT_SLIDER,
+    	name = "Background Opacity",
+    	description = "Opacity for any item backgrounds rendered in the Item Cooldown Display.",
+    	category = "General",
+    	subcategory = "Item Cooldowns",
+        minF = 0.01f,
+        maxF = 1f
+    )
+    public float ITEMCD_BACKGROUND_OPACITY = 0.25f;
+
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Hide Cooldown Tittles",
+    	description = "Hides the Cooldown titles when trying to use an item while on Cooldown\n",
+    	category = "General",
+    	subcategory = "Item Cooldowns"
+    )
+    public boolean HIDE_ITEM_COOLDOWN_TITLES = false;
+
+    // General/Fishing
 
     @Property(
         type = PropertyType.SWITCH,
@@ -178,10 +244,12 @@ public class Config extends Vigilant {
     )
     public boolean OYSTER_QUEEN_DISPLAY = false;
 
+
+
     // Category /General/Bug Fixes
     @Property(
             type = PropertyType.SWITCH,
-            name = "Fix Player Count in scoreboard",
+            name = "Fix Player Count in Scoreboard",
             description = "When not killing a mob in a while, the scoreboard becomes desynced with the player count, so this attempts to fix it.",
             category = "General",
             subcategory = "Bug Fixes"
@@ -211,11 +279,11 @@ public class Config extends Vigilant {
     public Color ARENA_DANGER_ZONE_COLOR = new Color(255, 0, 0);
     
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Arenas Cooldown Notification",
-            description = "Displays a notification when an Arena cooldown has expired.",
-            category = "Arenas",
-            subcategory = "Quality of Life"
+        type = PropertyType.SWITCH,
+        name = "Arenas Cooldown Notification",
+        description = "Displays a notification when an Arena cooldown has expired.",
+        category = "Arenas",
+        subcategory = "Quality of Life"
     )
     public boolean ARENAS_COOLDOWN_NOTIFIER = true;
 
@@ -260,47 +328,47 @@ public class Config extends Vigilant {
 
     // Category /Bosses/Quality of Life
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Boss Despawn Timers",
-            description = "Adjusts the Bossbar to display the Bosse's despawn timer.\n§cComing in a future pre-release!",
-            category = "Bosses",
-            subcategory = "Quality of Life"
+        type = PropertyType.SWITCH,
+        name = "Boss Despawn Timers",
+        description = "Adjusts the Bossbar to display the Bosse's despawn timer.\n§cComing in a future release!",
+        category = "Bosses",
+        subcategory = "Quality of Life"
     )
     public boolean BOSS_DESPAWN_TIMERS = true;
     
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Disable Boss Sounds",
-            description = "Removes boss sounds, for now only works with PPP, may be separated in the future.\n§cComing in a future pre-release!",
-            category = "Bosses",
-            subcategory = "Quality of Life"
+        type = PropertyType.SWITCH,
+        name = "Disable Boss Sounds",
+        description = "Removes boss sounds, for now only works with PPP, may be separated in the future.\n§cComing in a future release!",
+        category = "Bosses",
+        subcategory = "Quality of Life"
     )
     public boolean DISABLE_BOSS_SOUNDS = false;
     
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Nearby Amethyst Warning",
-            description = "Plays a warning chime when the player is within the damage radius of a falling Amethyst",
-            category = "Bosses",
-            subcategory = "Shadow Gelato"
+        type = PropertyType.SWITCH,
+        name = "Nearby Amethyst Warning",
+        description = "Plays a warning chime when the player is within the damage radius of a falling Amethyst",
+        category = "Bosses",
+        subcategory = "Shadow Gelato"
     )
     public boolean SHADOWGELATO_AMETHYST_WARNING = false;
     
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Miniboss Health Info",
-            description = "Displays health of Shadow Gelato's Minibosses in Phase 2",
-            category = "Bosses",
-            subcategory = "Shadow Gelato"
+        type = PropertyType.SWITCH,
+        name = "Miniboss Health Info",
+        description = "Displays health of Shadow Gelato's Minibosses in Phase 2",
+        category = "Bosses",
+        subcategory = "Shadow Gelato"
     )
     public boolean SHADOWGELATO_MINIBOSS_HEALTH = false;
 
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Permasludge Rape Warning",
-            description = "Informs you when you are getting raped by Permasludge to parry",
-            category = "Bosses",
-            subcategory = "Shadow Gelato"
+        type = PropertyType.SWITCH,
+        name = "Permasludge Rape Warning",
+        description = "Informs you when you are getting raped by Permasludge to parry",
+        category = "Bosses",
+        subcategory = "Shadow Gelato"
     )
     public boolean SHADOWGELATO_RAPE_WARNING = false;
 
@@ -308,7 +376,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Santa Present Warning",
-        description = "Displays a warning when Santa uses his present throw ability.\n§cComing in a future pre-release!",
+        description = "Displays a warning when Santa uses his present throw ability.\n§cComing in a future release!",
         category = "Bosses",
         subcategory = "Arenas"
     )
@@ -326,35 +394,35 @@ public class Config extends Vigilant {
     )
     public int EIGHT_BIT_KATANA_VOLUME = 100;
 
-
-    // Category /Vice Multiplayer/
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Arenas Availability Indicator",
-        description = "Shares §anon-identifiable §rinformation with other Vice users to inform you and others whether an Arena is available\n" +
-            "Connects to a secure websocket.",
-        category = "Vice Multiplayer"
-    )
-    public boolean ARENA_AVAILABILITY_WEBSOCKET_ENABLED = false;
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Boss Availability Indicator",
-        description = "Shares §anon-identifiable §rinformation with other Vice users to inform you and others whether a Boss Arena is available\n" +
-            "Connects to a secure websocket.",
-        category = "Vice Multiplayer"
-    )
-    public boolean BOSS_AVAILABILITY_WEBSOCKET_ENABLED = false;
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Shared Silence Spawn Timer",
-        description = "Acts as an extension to the pre existing Silence Spawn timer. Shares §anon-identifiable §rinformation with other Vice users.\n" +
-            "Connects to a secure websocket.\n" +
-            "§cRequires §cSilence §cSpawn §cTimer §cto §cbe §cenabled.",
-        category = "Vice Multiplayer"
-    )
-    public boolean SILENCE_TIMER_WEBSOCKET_ENABLED = false;
+//
+//    // Category /Vice Multiplayer/
+//    @Property(
+//        type = PropertyType.SWITCH,
+//        name = "Arenas Availability Indicator",
+//        description = "Shares §anon-identifiable §rinformation with other Vice users to inform you and others whether an Arena is available\n" +
+//            "Connects to a secure websocket.",
+//        category = "Vice Multiplayer"
+//    )
+//    public boolean ARENA_AVAILABILITY_WEBSOCKET_ENABLED = false;
+//
+//    @Property(
+//        type = PropertyType.SWITCH,
+//        name = "Boss Availability Indicator",
+//        description = "Shares §anon-identifiable §rinformation with other Vice users to inform you and others whether a Boss Arena is available\n" +
+//            "Connects to a secure websocket.",
+//        category = "Vice Multiplayer"
+//    )
+//    public boolean BOSS_AVAILABILITY_WEBSOCKET_ENABLED = false;
+//
+//    @Property(
+//        type = PropertyType.SWITCH,
+//        name = "Shared Silence Spawn Timer",
+//        description = "Acts as an extension to the pre existing Silence Spawn timer. Shares §anon-identifiable §rinformation with other Vice users.\n" +
+//            "Connects to a secure websocket.\n" +
+//            "§cRequires §cSilence §cSpawn §cTimer §cto §cbe §cenabled.",
+//        category = "Vice Multiplayer"
+//    )
+//    public boolean SILENCE_TIMER_WEBSOCKET_ENABLED = false;
 
 
     public Config() {
@@ -369,9 +437,14 @@ public class Config extends Vigilant {
         addDependency("SNOWBALL_CANNON_PROJECTION_COLOR", "SNOWBALL_CANNON_PROJECTION");
         addDependency("FISHING_DING_DONT_DETECT_SOUND_PACKET", "FISHING_DING");
 
+        addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
+        addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");
+        addDependency("SHOW_ITEMCD_TEXT_CROSSHAIR", "ITEM_COOLDOWN_DISPLAY");
+        addDependency("HIDE_ITEMCD_WHEN_READY", "ITEM_COOLDOWN_DISPLAY");
+        addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY");
+
         setCategoryDescription("Arenas", "§cFEATURES COMING SOON" + "\n§7i cannot be bothered to remove the section just to re add it when i make it, nothing works rn ok?");
         setCategoryDescription("Sounds", "§cFEATURES COMING SOON" + "\n§7i cannot be bothered to remove the section just to re add it when i make it, nothing works rn ok?");
-        setCategoryDescription("Vice Multiplayer", "§cFEATURES NOT COMING LITERALLY ANYTIME SOON" + "\n§7all these features are complete concepts, and are not planned to be packed with the initial release");
     }
 
     public static class ConfigSorting extends SortingBehavior {

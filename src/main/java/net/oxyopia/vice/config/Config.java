@@ -121,13 +121,43 @@ public class Config extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Display Defence Number",
+        description = "Displays your exact defence number of all pieces of your armor combined.",
+        category = "General",
+        subcategory = "Quality of Life",
+        searchTags = {"armour"}
+    )
+    public boolean DISPLAY_DEFENCE_HUD = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Hide Armor Bar",
+        description = "Stops the armor bar from rendering.",
+        category = "General",
+        subcategory = "Quality of Life",
+        searchTags = {"armour", "defence"}
+    )
+    public boolean HIDE_ARMOR_BAR = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Hide Hunger Bar",
+        description = "Stops the hunger bar from rendering.",
+        category = "General",
+        subcategory = "Quality of Life",
+        searchTags = {"food", "meter"}
+    )
+    public boolean HIDE_HUNGER_BAR = true;
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Hide Revolver Blindness",
         description = "Hides the blindness effect when aiming the revolver.",
         category = "General",
         subcategory = "Quality of Life"
     )
     public boolean HIDE_REVOLVER_BLINDNESS = true;
-    
+
     @Property(
             type = PropertyType.SWITCH,
             name = "Better Tower Beacon UI",
@@ -161,7 +191,7 @@ public class Config extends Vigilant {
         description = "Changes how the Item Cooldown Display is shown.",
         category = "General",
         subcategory = "Item Cooldowns",
-        options = {"Vanilla", "Static Background", "Color Fade", "Percentage Background", "Text Only"}
+        options = {"Vanilla", "Static Background", "Color Fade", "Percentage Based", "Text Only"}
     )
     public int ITEMCD_DISPLAY_TYPE = 1;
 
@@ -205,7 +235,7 @@ public class Config extends Vigilant {
 
     @Property(
     	type = PropertyType.SWITCH,
-    	name = "Hide Cooldown Tittles",
+    	name = "Hide Cooldown Titles",
     	description = "Hides the Cooldown titles when trying to use an item while on Cooldown\n",
     	category = "General",
     	subcategory = "Item Cooldowns"
@@ -362,15 +392,6 @@ public class Config extends Vigilant {
         subcategory = "Shadow Gelato"
     )
     public boolean SHADOWGELATO_MINIBOSS_HEALTH = false;
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Permasludge Rape Warning",
-        description = "Informs you when you are getting raped by Permasludge to parry",
-        category = "Bosses",
-        subcategory = "Shadow Gelato"
-    )
-    public boolean SHADOWGELATO_RAPE_WARNING = false;
 
     // Category /Bosses/Arenas
     @Property(

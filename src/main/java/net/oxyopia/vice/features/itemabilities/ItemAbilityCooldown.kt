@@ -172,7 +172,7 @@ class ItemAbilityCooldown {
 							var col = Color(1f, 0f, 0f, bgOpacity)
 
 							if (progressLeft > 0.075f && progressLeft <= 0.5f) col = Color(1f, 1f, 0f, bgOpacity)
-							else if (progressLeft <= 0.075f) col = Color(1f, 0.2f, 0f, bgOpacity)
+							else if (progressLeft <= 0.075f) col = Color(0.4f, 1f, 0f, bgOpacity)
 
 							RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), x, y, x + 16, y + 16, 0, col)
 						}

@@ -13,7 +13,7 @@ public class DevConfig extends Vigilant {
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
 		name = "Red Fadeout Multiplier",
-		description = "Red fade for item cooldown display option Color Fade\nDefault 2f",
+		description = "Red fade for item cooldown display option Color Fade\nDefault 2.7f",
 		category = "Experiments",
 		minF = 0.5f,
 		maxF = 7.5f,
@@ -24,7 +24,7 @@ public class DevConfig extends Vigilant {
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
 		name = "Green Fadein Multiplier",
-		description = "Green fade for item cooldown display option Color Fade\nDefault 2f",
+		description = "Green fade for item cooldown display option Color Fade\nDefault 1.3f",
 		category = "Experiments",
 		minF = 0.5f,
 		maxF = 7.5f,

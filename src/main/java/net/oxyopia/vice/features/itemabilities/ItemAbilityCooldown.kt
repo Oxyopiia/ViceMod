@@ -32,7 +32,8 @@ class ItemAbilityCooldown {
 		VANILLA(0),
 		STATIC(1),
 		COLORFADE(2),
-		TEXTONLY(3);
+		PERCENTAGE(3),
+		TEXTONLY(4);
 	}
 
 	companion object {
@@ -133,7 +134,7 @@ class ItemAbilityCooldown {
 		fun onRenderItemSlot(textRenderer: TextRenderer, stack: ItemStack, x: Int, y: Int) {
 			if(!Utils.inDoomTowers() || !Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
-			val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(stack), ClickType.RIGHT)
+			val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(stack))
 
 			ability?.apply {
 				val matrices = MatrixStack()
@@ -156,8 +157,8 @@ class ItemAbilityCooldown {
 						}
 
 						displayType == DisplayType.COLORFADE.id -> {
-							var redness: Float = min(1f, 2.7f * progressLeft)
-							var greenness: Float = min(1f, 1.3f - (1.3f * progressLeft))
+							var redness: Float = max(0f, min(1f, 2.7f * progressLeft))
+							var greenness: Float = max(0f, min(1f, 1.3f - (1.3f * progressLeft)))
 
 							if (Vice.config.DEVMODE) {
 								redness = max(0f, min(1f, Vice.devConfig.ITEMCD_RED_FADE_OVERRIDE * progressLeft))
@@ -165,6 +166,15 @@ class ItemAbilityCooldown {
 							}
 
 							RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), x, y, x + 16, y + 16, 0, Color(redness, greenness, 0f, bgOpacity))
+						}
+
+						displayType == DisplayType.PERCENTAGE.id -> {
+							var col = Color(1f, 0f, 0f, bgOpacity)
+
+							if (progressLeft > 0.075f && progressLeft <= 0.5f) col = Color(1f, 1f, 0f, bgOpacity)
+							else if (progressLeft <= 0.075f) col = Color(1f, 0.2f, 0f, bgOpacity)
+
+							RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), x, y, x + 16, y + 16, 0, col)
 						}
 					}
 
@@ -198,7 +208,7 @@ class ItemAbilityCooldown {
 		fun onRenderInGameHud(x: Int, y: Int) {
 			if(!Utils.inDoomTowers() || !(Vice.config.ITEM_COOLDOWN_DISPLAY && Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR)) return
 
-			val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(ItemUtils.getHeldItem()), ClickType.RIGHT)
+			val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(ItemUtils.getHeldItem()))
 
 			ability?.apply {
 				if(!isOnCooldown()) return

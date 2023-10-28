@@ -73,10 +73,10 @@ enum class ItemAbility(
     companion object {
         var sharedCooldowns = HashMap<String, Long>()
 
-        fun getByName(name: String, clickType: ClickType = ClickType.RIGHT): ItemAbility? {
+        fun getByName(name: String, clickType: ClickType? = null): ItemAbility? {
             return entries.firstOrNull {
-				it.itemName.replace(" ","") == name.replace(" ", "") &&
-				it.clickType == clickType
+                it.itemName.replace(" ", "") == name.replace(" ", "") &&
+                (clickType == null || it.clickType == clickType)
             }
         }
     }

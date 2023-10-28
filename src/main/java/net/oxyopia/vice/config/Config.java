@@ -161,7 +161,7 @@ public class Config extends Vigilant {
         description = "Changes how the Item Cooldown Display is shown.",
         category = "General",
         subcategory = "Item Cooldowns",
-        options = {"Vanilla", "Static Background", "Color Fade", "Text Only"}
+        options = {"Vanilla", "Static Background", "Color Fade", "Percentage Background", "Text Only"}
     )
     public int ITEMCD_DISPLAY_TYPE = 1;
 
@@ -201,7 +201,7 @@ public class Config extends Vigilant {
         minF = 0.01f,
         maxF = 1f
     )
-    public float ITEMCD_BACKGROUND_OPACITY = 0.25f;
+    public float ITEMCD_BACKGROUND_OPACITY = 0.2f;
 
     @Property(
     	type = PropertyType.SWITCH,

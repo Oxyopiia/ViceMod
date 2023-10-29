@@ -36,7 +36,7 @@ public class Vice implements ClientModInitializer {
 		ClientPlayConnectionEvents.JOIN.register((listener, packetSender, minecraftClient) -> {
 			Utils.inDoomTowers = false;
 			// Set to false in case server we are switching to does not have a scoreboard, and then let
-			// MixinInGameHud#checkInDoomTowers re update if in DoomTowers
+			// MixinInGameHud#onRenderScoreboardSidebar re update if in DoomTowers
 		});
 
 		ClientPlayConnectionEvents.DISCONNECT.register((phase, listener) -> Utils.inDoomTowers = false);

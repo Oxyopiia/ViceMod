@@ -398,12 +398,53 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SLIDER,
         name = "8-Bit Katana Volume",
-        description = "Coming SoonTM",
         category = "Sounds",
-        max = 200,
-        increment = 10
+        max = 200
     )
     public int EIGHT_BIT_KATANA_VOLUME = 100;
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Arctic Core Volume",
+        category = "Sounds",
+        max = 200
+    )
+    public int ARCTIC_CORE_VOLUME = 100;
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Barbed Shotgun Volume",
+        category = "Sounds",
+        max = 200
+    )
+    public int BARBED_SHOTGUN_VOLUME = 100;
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Bedrock Breaker Volume",
+        description = "§cMay have inaccuracies with the 'regenerating' (beacon) sounds.",
+        category = "Sounds",
+        max = 200
+    )
+    public int BEDROCK_BREAKER_VOLUME = 100;
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Laser Point Minigun Volume",
+        category = "Sounds",
+        max = 200
+    )
+    public int LASER_POINT_MINIGUN_VOLUME = 100;
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Snowball Cannon Volume",
+        category = "Sounds",
+        max = 200
+    )
+    public int SNOWBALL_CANNON_VOLUME = 100;
+
+
 
 //
 //    // Category /Vice Multiplayer/
@@ -455,7 +496,6 @@ public class Config extends Vigilant {
         addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY");
 
         setCategoryDescription("Arenas", "§cFEATURES COMING SOON" + "\n§7i cannot be bothered to remove the section just to re add it when i make it, nothing works rn ok?");
-        setCategoryDescription("Sounds", "§cFEATURES COMING SOON" + "\n§7i cannot be bothered to remove the section just to re add it when i make it, nothing works rn ok?");
     }
 
     public static class ConfigSorting extends SortingBehavior {

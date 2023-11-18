@@ -73,7 +73,7 @@ dependencies {
 //		exclude group: "gg.essential", module: "universalcraft-1.18.1-fabric"
 //	})
 //	modImplementation(include("gg.essential:universalcraft-${project.minecraft_version}-fabric:289"))
-	modApi "com.terraformersmc:modmenu:7.2.2"
+	modApi "com.terraformersmc:modmenu:8.0.0"
 
 	modImplementation include("gg.essential:loader-fabric:1.2.2")
 	modCompileOnly "gg.essential:essential-${project.minecraft_version}-fabric:14634+g33cd03ac3f"

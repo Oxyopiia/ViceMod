@@ -154,5 +154,7 @@ public class DevConfig extends Vigilant {
 	public void init() {
 		initialize();
 		markDirty();
+
+		setSubcategoryDescription("Experiments", "Item Cooldown Display", "this is here as i haven't made the HUD manager yet, will be removed when that is added");
 	}
 }

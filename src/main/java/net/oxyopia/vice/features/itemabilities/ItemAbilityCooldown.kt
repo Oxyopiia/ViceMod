@@ -233,7 +233,7 @@ class ItemAbilityCooldown {
 				var centered = false
 				var xPos = x + 3
 				var yPos = y + 3
-				var color = Color(1f, 0.5f, 0f, 1f)
+				var color = Color(0f, 1f, 1f, 1f)
 
 				if (Vice.config.DEVMODE) {
 					xPos = x + Vice.devConfig.ITEMCD_CURSORCD_X_OFFSET

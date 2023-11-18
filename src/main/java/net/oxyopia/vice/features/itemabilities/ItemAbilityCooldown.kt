@@ -50,7 +50,10 @@ class ItemAbilityCooldown {
 					ItemAbility.ARCTIC_CORE.onSound()
 				}
 
-				// Ask someone else for arctic scroll, cheers
+				// Arctic Scroll
+				(sound.soundName() == "block.lava.pop" || sound.soundName() == "entity.player.hurt_freeze") && sound.pitch == 1f && sound.volume == 9999f -> {
+					ItemAbility.ARCTIC_SCROLL.onSound()
+				}
 
 				// 8-Bit Katana
 				sound.soundName() == "entity.player.attack.crit" && sound.volume == 9999f -> {

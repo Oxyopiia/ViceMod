@@ -80,17 +80,6 @@ public class Config extends Vigilant {
         UScreen.displayScreen(devConfig.gui());
     }
 
-
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Snowball Cannon Corrector",
-        description = "Attempts to fix the offset of Snowball projectiles launched by the Snowball Cannon.",
-        category = "General",
-        subcategory = "Quality of Life"
-    )
-    public boolean CORRECT_SNOWBALL_CANNON = true;
-
     @Property(
         type = PropertyType.SWITCH,
         name = "Snowball Cannon Projection",
@@ -129,25 +118,26 @@ public class Config extends Vigilant {
     )
     public boolean DISPLAY_DEFENCE_HUD = false;
 
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Hide Armor Bar",
-        description = "Stops the armor bar from rendering.",
-        category = "General",
-        subcategory = "Quality of Life",
-        searchTags = {"armour", "defence"}
-    )
-    public boolean HIDE_ARMOR_BAR = false;
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Hide Hunger Bar",
-        description = "Stops the hunger bar from rendering.",
-        category = "General",
-        subcategory = "Quality of Life",
-        searchTags = {"food", "meter"}
-    )
-    public boolean HIDE_HUNGER_BAR = true;
+// Add back soon
+//    @Property(
+//        type = PropertyType.SWITCH,
+//        name = "Hide Armor Bar",
+//        description = "Stops the armor bar from rendering.",
+//        category = "General",
+//        subcategory = "Quality of Life",
+//        searchTags = {"armour", "defence"}
+//    )
+//    public boolean HIDE_ARMOR_BAR = false;
+//
+//    @Property(
+//        type = PropertyType.SWITCH,
+//        name = "Hide Hunger Bar",
+//        description = "Stops the hunger bar from rendering.",
+//        category = "General",
+//        subcategory = "Quality of Life",
+//        searchTags = {"food", "meter"}
+//    )
+//    public boolean HIDE_HUNGER_BAR = true;
 
     @Property(
         type = PropertyType.SWITCH,

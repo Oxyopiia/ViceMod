@@ -73,32 +73,4 @@ public class MixinInGameHud {
 			// add soon thx
 		}
 	}
-
-	@ModifyExpressionValue(
-		method = "renderStatusBars",
-		slice = @Slice(
-			from = @At(value="INVOKE", target="Lnet/minecraft/util/profiler/Profiler;push(Ljava/lang/String;)V"),
-			to = @At(value="INVOKE", target="Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal=0)
-		),
-		at = @At(value="CONSTANT", args="intValue=10", ordinal=0)
-	)
-	private int hideArmorBar(int original) {
-		if (Utils.inDoomTowers() && config.HIDE_ARMOR_BAR) return -1;
-
-		return original;
-	}
-
-	@ModifyExpressionValue(
-		method = "renderStatusBars",
-		slice = @Slice(
-			from = @At(value="INVOKE", target="Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal=1),
-			to = @At(value="INVOKE", target="Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal=2)
-		),
-		at = @At(value="CONSTANT", args="intValue=10", ordinal=0)
-	)
-	private int hideHungerBar(int original) {
-		if (Utils.inDoomTowers() && config.HIDE_HUNGER_BAR) return -1;
-
-		return original;
-	}
 }

@@ -29,7 +29,7 @@ fun drawGamingMode(context: DrawContext, id: Int) {
 	val buffer = tessellator.buffer
 
 	buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE)
-	buffer.vertex(positionMatrix, 0f, 0f, 0f).color(1f, 1f, 1f, 1f).texture(0f, 0f).next()
+	buffer.vertex(positionMatrix, 0f, 0f, 100f).color(1f, 1f, 1f, 1f).texture(0f, 0f).next()
 	buffer.vertex(positionMatrix, 0f, 0f + data.height * data.scale, 100f).color(1f, 1f, 1f, 1f).texture(0f, 1f).next()
 	buffer.vertex(positionMatrix,0f + data.width * data.scale, 0f + data.height * data.scale, 100f).color(1f, 1f, 1f, 1f).texture(1f, 1f).next()
 	buffer.vertex(positionMatrix, 0f + data.width * data.scale, 0f, 100f).color(1f, 1f, 1f, 1f).texture(1f, 0f).next()

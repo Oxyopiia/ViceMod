@@ -10,10 +10,12 @@ import net.minecraft.util.Identifier
 import net.oxyopia.vice.utils.Utils
 import org.joml.Matrix4f
 
+data class ImageData(val path: String, val width: Int, val height: Int, val scale: Float = 0.05f)
+private val Z_LAYER: Float = 1000f
+
 fun drawGamingMode(context: DrawContext, id: Int) {
 	if (!Utils.inDoomTowers()) return
 
-	data class ImageData(val path: String, val width: Int, val height: Int, val scale: Float = 0.05f)
 	val data: ImageData = when (id) {
 		1 -> ImageData("icon.png", 500, 500, 0.12f)
 		2 -> ImageData("doomtowersisbloodybrilliant.png", 800, 600, 0.15f)
@@ -29,10 +31,10 @@ fun drawGamingMode(context: DrawContext, id: Int) {
 	val buffer = tessellator.buffer
 
 	buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE)
-	buffer.vertex(positionMatrix, 0f, 0f, 100f).color(1f, 1f, 1f, 1f).texture(0f, 0f).next()
-	buffer.vertex(positionMatrix, 0f, 0f + data.height * data.scale, 100f).color(1f, 1f, 1f, 1f).texture(0f, 1f).next()
-	buffer.vertex(positionMatrix,0f + data.width * data.scale, 0f + data.height * data.scale, 100f).color(1f, 1f, 1f, 1f).texture(1f, 1f).next()
-	buffer.vertex(positionMatrix, 0f + data.width * data.scale, 0f, 100f).color(1f, 1f, 1f, 1f).texture(1f, 0f).next()
+	buffer.vertex(positionMatrix, 0f, 0f, Z_LAYER).color(1f, 1f, 1f, 1f).texture(0f, 0f).next()
+	buffer.vertex(positionMatrix, 0f, data.height * data.scale, Z_LAYER).color(1f, 1f, 1f, 1f).texture(0f, 1f).next()
+	buffer.vertex(positionMatrix,data.width * data.scale, data.height * data.scale, Z_LAYER).color(1f, 1f, 1f, 1f).texture(1f, 1f).next()
+	buffer.vertex(positionMatrix, data.width * data.scale, 0f, Z_LAYER).color(1f, 1f, 1f, 1f).texture(1f, 0f).next()
 
 	RenderSystem.setShader { GameRenderer.getPositionColorTexProgram() }
 

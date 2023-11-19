@@ -43,7 +43,7 @@ enum class ItemAbility(
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, cooldownDisplay = false),
     SNOWBALL_CANNON("Snowball Cannon", 0.5f, cooldownDisplay = false);
 
-    // Detecting whether the ability has ACTUALLY happened is performed in /features/itemabilities/ItemAbilityCooldownJAVA.java
+    // Detecting whether the ability has ACTUALLY happened is performed in /features/itemabilities/ItemAbilityCooldown.kt
     // This will reset the cooldown regardless of whether it is still on cooldown or not.
     // Functionality to check for cooldowns MAY be added in a feature commit
     fun activate() {

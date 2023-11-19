@@ -1,6 +1,5 @@
 package net.oxyopia.vice.mixin;
 
-import gg.essential.lib.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.effect.StatusEffects;
@@ -8,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
+import net.oxyopia.vice.features.hud.GamingModeKt;
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown;
 import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
@@ -51,6 +50,7 @@ public class MixinInGameHud {
 		int y = (this.scaledHeight) / 2;
 
 		ItemAbilityCooldown.Companion.onRenderInGameHud(x-1, y-1);
+		if (config.DEV_GAMING_MODE != 0) GamingModeKt.drawGamingMode(context, config.DEV_GAMING_MODE);
 	}
 
 	@Inject(at = @At("HEAD"), method = "setSubtitle", cancellable = true)

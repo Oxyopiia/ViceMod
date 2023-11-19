@@ -81,6 +81,16 @@ public class Config extends Vigilant {
     }
 
     @Property(
+    	type = PropertyType.SELECTOR,
+    	name = "Gaming Mode",
+    	description = "Choose your epic gaming mode for optimal gaming performance",
+    	category = "General",
+    	subcategory = "Developer",
+        options = {"None", "Vice", "DoomTowers smashing", "msmdude", "digmonireland", "Trump", "clive"}
+    )
+    public int DEV_GAMING_MODE = 0;
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Snowball Cannon Projection",
         description = "Displays a line of projection of where the Snowball Cannon can reach.",

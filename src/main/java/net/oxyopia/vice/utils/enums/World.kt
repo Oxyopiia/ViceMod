@@ -22,9 +22,9 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	DarkVice("darkvice", "Abyssal Vice", type = WorldType.BOSS),
 	ShadowGelato("shadowgelato", "Shadow Gelato", type = WorldType.BOSS),
 
-	Floor2Arena("f2arenas", "Floor 2 Arena", type = WorldType.ARENA),
-	Floor3Arena("f3arenas", "Floor 3 Arena", type = WorldType.ARENA),
-	Floor4Arena("f4arenas", "Floor 4 Arena", type = WorldType.ARENA),
+	Floor2Arena("f2arenas", "Void Voyage", type = WorldType.ARENA),
+	Floor3Arena("f3arenas", "Cryonic Caverns", type = WorldType.ARENA),
+	Floor4Arena("f4arenas", "Tidal Zone", type = WorldType.ARENA),
 
 	Tower("overworld", "The Tower", type = WorldType.TOWER);
 

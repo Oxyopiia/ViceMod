@@ -11,7 +11,7 @@ enum class Set(name: String) {
     companion object {
         fun getByName(name: String): Set {
             // Returns NONE if unknown, or if new set i suppose, maybe i'll make a failsafe soon idk?
-            return entries.firstOrNull { it.name === name } ?: NONE
+            return entries.firstOrNull { it.name == name } ?: NONE
         }
     }
 }

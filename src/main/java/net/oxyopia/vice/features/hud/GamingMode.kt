@@ -23,6 +23,7 @@ fun drawGamingMode(context: DrawContext, id: Int) {
 		4 -> ImageData("digiheart.png", 246, 85, 0.7f)
 		5 -> ImageData("trumpet.png", 828, 817, 0.07f)
 		6 -> ImageData("clive.png", 311, 528, 0.15f)
+		7 -> ImageData("blackman.png", 581, 690, 0.09f)
 		else -> return
 	}
 

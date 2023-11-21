@@ -8,6 +8,7 @@
   "client": [
     "MixinClientPlayerInteractionManager",
     "MixinClientPlayNetworkHandler",
+    "MixinDownloadingTerrainScreen",
     "MixinDrawContext",
     "MixinInGameHud",
     "MixinMinecraftClient",

@@ -5,15 +5,15 @@ import net.oxyopia.vice.Vice.config
 
 fun onSound(sound: SoundInstance): Float {
 	when {
-		(sound.soundName() == "block.note_block.bit" || sound.soundName() == "entity.player.attack.crit") && ItemAbility.EIGHT_BIT_KATANA.remainingCooldown() >= 8.5 -> {
+		(sound.soundName() == "block.note_block.bit" || sound.soundName() == "entity.player.attack.crit") && ItemAbility.EIGHT_BIT_KATANA.remainingCooldown() >= 8f -> {
 			return config.EIGHT_BIT_KATANA_VOLUME / 100f
 		}
 
-		(sound.soundName() == "entity.blaze.shoot" || sound.soundName() == "entity.generic.explode") && ItemAbility.BARBED_SHOTGUN.remainingCooldown() >= 4.5 -> {
+		(sound.soundName() == "entity.blaze.shoot" || sound.soundName() == "entity.generic.explode") && ItemAbility.BARBED_SHOTGUN.remainingCooldown() >= 4.25f -> {
 			return config.BARBED_SHOTGUN_VOLUME / 100f
 		}
 
-		sound.soundName() == "entity.snowball.throw" && sound.volume == 9999f && ItemAbility.SNOWBALL_CANNON.remainingCooldown() >= 0.25f -> {
+		sound.soundName() == "entity.snowball.throw" && sound.volume == 9999f && ItemAbility.SNOWBALL_CANNON.remainingCooldown() >= 0.2f -> {
 			return config.SNOWBALL_CANNON_VOLUME / 100f
 		}
 
@@ -21,7 +21,7 @@ fun onSound(sound: SoundInstance): Float {
 			return config.ARCTIC_CORE_VOLUME / 100f
 		}
 
-		(sound.soundName() == "block.note_block.bit" || sound.soundName() == "entity.generic.explode") && ItemAbility.LASER_POINT_MINIGUN.remainingCooldown() > 0.15f -> {
+		(sound.soundName() == "block.note_block.bit" || sound.soundName() == "entity.generic.explode") && ItemAbility.LASER_POINT_MINIGUN.remainingCooldown() > 0.05f -> {
 			return config.LASER_POINT_MINIGUN_VOLUME / 100f
 		}
 

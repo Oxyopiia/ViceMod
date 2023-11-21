@@ -6,7 +6,7 @@ import net.minecraft.network.packet.s2c.play.*;
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown;
 import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
-import net.oxyopia.vice.utils.enums.Worlds;
+import net.oxyopia.vice.utils.enums.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -43,7 +43,7 @@ public class MixinClientPlayNetworkHandler {
 	
 	@Inject(at = @At("HEAD"), method = "onBlockUpdate")
 	private void shadowGelatoFeatures(BlockUpdateS2CPacket packet, CallbackInfo ci) {
-		if (client.isOnThread() && config.SHADOWGELATO_AMETHYST_WARNING && Objects.equals(Utils.getWorld(), Worlds.ShadowGelato.getId())) {
+		if (client.isOnThread() && config.SHADOWGELATO_AMETHYST_WARNING && Objects.equals(Utils.getWorld(), World.ShadowGelato.getId())) {
 //			ShadowGelato.handleBlockUpdate(packet);
 		}
 	}

@@ -81,6 +81,16 @@ public class Config extends Vigilant {
     }
 
     @Property(
+    	type = PropertyType.SELECTOR,
+    	name = "Gaming Mode",
+    	description = "Choose your epic gaming mode for optimal gaming performance",
+    	category = "General",
+    	subcategory = "Developer",
+        options = {"None", "Vice", "DoomTowers smashing", "msmdude", "digmonireland", "Trump", "clive", "law Abiding Citizen"}
+    )
+    public int DEV_GAMING_MODE = 0;
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Snowball Cannon Projection",
         description = "Displays a line of projection of where the Snowball Cannon can reach.",
@@ -117,6 +127,15 @@ public class Config extends Vigilant {
         searchTags = {"armour"}
     )
     public boolean DISPLAY_DEFENCE_HUD = false;
+
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Show Defence Icon",
+    	description = "Display a defence icon under the defence number",
+    	category = "General",
+    	subcategory = "Quality of Life"
+    )
+    public boolean DEFENCE_HUD_ICON = true;
 
 // Add back soon
 //    @Property(
@@ -197,7 +216,7 @@ public class Config extends Vigilant {
     @Property(
     	type = PropertyType.SWITCH,
     	name = "Show Timer/Ready Text near Crosshair",
-    	description = "Displays a text stating the cooldown remaining or when ready near your crosshair.",
+    	description = "Displays a text stating the cooldown remaining or when ready near your crosshair.\n§eCan be customized in Developer options (search 'dev')",
     	category = "General",
     	subcategory = "Item Cooldowns"
     )
@@ -368,7 +387,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Nearby Amethyst Warning",
-        description = "Plays a warning chime when the player is within the damage radius of a falling Amethyst",
+        description = "Draws color coded lines from the player to nearby Amethysts.\nPlays a warning chime when within the damage radius of them.",
         category = "Bosses",
         subcategory = "Shadow Gelato"
     )
@@ -383,58 +402,56 @@ public class Config extends Vigilant {
     )
     public boolean SHADOWGELATO_MINIBOSS_HEALTH = false;
 
-    // Category /Bosses/Arenas
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Santa Present Warning",
-        description = "Displays a warning when Santa uses his present throw ability.\n§cComing in a future release!",
-        category = "Bosses",
-        subcategory = "Arenas"
-    )
-    public boolean ARENAS_SANTA_PRESENT_WARNING = false;
-
 
     // Category /Sounds/
     @Property(
         type = PropertyType.SLIDER,
         name = "8-Bit Katana Volume",
-        description = "Coming SoonTM",
         category = "Sounds",
-        max = 200,
-        increment = 10
+        max = 200
     )
     public int EIGHT_BIT_KATANA_VOLUME = 100;
 
-//
-//    // Category /Vice Multiplayer/
-//    @Property(
-//        type = PropertyType.SWITCH,
-//        name = "Arenas Availability Indicator",
-//        description = "Shares §anon-identifiable §rinformation with other Vice users to inform you and others whether an Arena is available\n" +
-//            "Connects to a secure websocket.",
-//        category = "Vice Multiplayer"
-//    )
-//    public boolean ARENA_AVAILABILITY_WEBSOCKET_ENABLED = false;
-//
-//    @Property(
-//        type = PropertyType.SWITCH,
-//        name = "Boss Availability Indicator",
-//        description = "Shares §anon-identifiable §rinformation with other Vice users to inform you and others whether a Boss Arena is available\n" +
-//            "Connects to a secure websocket.",
-//        category = "Vice Multiplayer"
-//    )
-//    public boolean BOSS_AVAILABILITY_WEBSOCKET_ENABLED = false;
-//
-//    @Property(
-//        type = PropertyType.SWITCH,
-//        name = "Shared Silence Spawn Timer",
-//        description = "Acts as an extension to the pre existing Silence Spawn timer. Shares §anon-identifiable §rinformation with other Vice users.\n" +
-//            "Connects to a secure websocket.\n" +
-//            "§cRequires §cSilence §cSpawn §cTimer §cto §cbe §cenabled.",
-//        category = "Vice Multiplayer"
-//    )
-//    public boolean SILENCE_TIMER_WEBSOCKET_ENABLED = false;
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Arctic Core Volume",
+        category = "Sounds",
+        max = 200
+    )
+    public int ARCTIC_CORE_VOLUME = 100;
 
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Barbed Shotgun Volume",
+        category = "Sounds",
+        max = 200
+    )
+    public int BARBED_SHOTGUN_VOLUME = 100;
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Bedrock Breaker Volume",
+        description = "§cMay have inaccuracies with the 'regenerating' (beacon) sounds.",
+        category = "Sounds",
+        max = 200
+    )
+    public int BEDROCK_BREAKER_VOLUME = 100;
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Laser Point Minigun Volume",
+        category = "Sounds",
+        max = 200
+    )
+    public int LASER_POINT_MINIGUN_VOLUME = 100;
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Snowball Cannon Volume",
+        category = "Sounds",
+        max = 200
+    )
+    public int SNOWBALL_CANNON_VOLUME = 100;
 
     public Config() {
         super(new File("./config/vice/config.toml"), "Vice", new JVMAnnotationPropertyCollector(), new ConfigSorting());
@@ -447,6 +464,7 @@ public class Config extends Vigilant {
         addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
         addDependency("SNOWBALL_CANNON_PROJECTION_COLOR", "SNOWBALL_CANNON_PROJECTION");
         addDependency("FISHING_DING_DONT_DETECT_SOUND_PACKET", "FISHING_DING");
+        addDependency("DEFENCE_HUD_ICON", "DISPLAY_DEFENCE_HUD");
 
         addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
         addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");
@@ -455,7 +473,6 @@ public class Config extends Vigilant {
         addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY");
 
         setCategoryDescription("Arenas", "§cFEATURES COMING SOON" + "\n§7i cannot be bothered to remove the section just to re add it when i make it, nothing works rn ok?");
-        setCategoryDescription("Sounds", "§cFEATURES COMING SOON" + "\n§7i cannot be bothered to remove the section just to re add it when i make it, nothing works rn ok?");
     }
 
     public static class ConfigSorting extends SortingBehavior {

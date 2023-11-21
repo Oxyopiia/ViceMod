@@ -86,6 +86,16 @@ class ItemAbilityCooldown {
 				sound.soundName() == "entity.generic.explode" && sound.pitch == 1.5f && sound.volume == 9999f -> {
 					ItemAbility.DYNAMITE_BARREL.onSound()
 				}
+
+				// Laser Point Minigun
+				sound.soundName() == "entity.generic.explode" && sound.pitch == 2.0f && sound.volume == 9999f -> {
+					ItemAbility.LASER_POINT_MINIGUN.onSound()
+				}
+
+				// Snowball Cannon
+				sound.soundName() == "entity.snowball.throw" && sound.pitch == 1f && sound.volume == 9999f -> {
+					ItemAbility.SNOWBALL_CANNON.onSound()
+				}
 			}
 		}
 
@@ -140,6 +150,8 @@ class ItemAbilityCooldown {
 			val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(stack))
 
 			ability?.apply {
+				if (!cooldownDisplay) return
+
 				val matrices = MatrixStack()
 				val displayType = Vice.config.ITEMCD_DISPLAY_TYPE
 				val bgOpacity = Vice.config.ITEMCD_BACKGROUND_OPACITY
@@ -214,14 +226,14 @@ class ItemAbilityCooldown {
 			val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(ItemUtils.getHeldItem()))
 
 			ability?.apply {
-				if(!isOnCooldown()) return
+				if(!isOnCooldown() || !cooldownDisplay) return
 
 				val matrices = MatrixStack()
 
 				var centered = false
 				var xPos = x + 3
 				var yPos = y + 3
-				var color = Color(1f, 0.5f, 0f, 1f)
+				var color = Color(0f, 1f, 1f, 1f)
 
 				if (Vice.config.DEVMODE) {
 					xPos = x + Vice.devConfig.ITEMCD_CURSORCD_X_OFFSET

@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
 import net.oxyopia.vice.features.arenas.ArenaSession;
-import net.oxyopia.vice.features.arenas.LiveArenaInformation;
 import net.oxyopia.vice.features.hud.GamingModeKt;
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown;
 import net.oxyopia.vice.utils.DevUtils;
@@ -80,15 +79,15 @@ public class MixinInGameHud {
 		DevUtils.sendDebugChat("&&eTITLE&&r " + title.getString(), "INGAMEHUD_MIXIN_DEBUGGER");
 
 		Matcher matcher = pattern.matcher(title.getString());
-		if (matcher.matches()) {
+		if (matcher.matches() && ArenaSession.INSTANCE.getActive()) {
 			try {
 				int waveNumber = Integer.parseInt(matcher.group(1));
-				LiveArenaInformation.INSTANCE.onTitle(waveNumber);
+				ArenaSession.INSTANCE.setWave(waveNumber);
 			} catch (NumberFormatException err) {
 				DevUtils.sendErrorMessage(err, "An error occurred parsing Wave Number regex!");
 			}
 		} else if (title.getString().contains("MINIBOSS")) {
-			LiveArenaInformation.INSTANCE.onTitle(ArenaSession.INSTANCE.getWaveNumber() + 1);
+			ArenaSession.INSTANCE.setWave(ArenaSession.INSTANCE.getWaveNumber() + 1);
 		}
 
 	}

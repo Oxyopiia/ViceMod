@@ -1,7 +1,7 @@
 package net.oxyopia.vice.mixin;
 
 import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
-import net.oxyopia.vice.features.arenas.ArenasHelperFunctions;
+import net.oxyopia.vice.features.arenas.ArenaSession;
 import net.oxyopia.vice.utils.Utils;
 import net.oxyopia.vice.utils.enums.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +18,7 @@ public class MixinDownloadingTerrainScreen {
 		String worldId = client.world != null ? client.world.getRegistryKey().getValue().getPath() : "";
 
 		if (client.isOnThread() && Utils.inDoomTowers() && World.Companion.getById(worldId) != null) {
-			ArenasHelperFunctions.INSTANCE.parseWorldChange(client.world);
+			ArenaSession.INSTANCE.onWorldChange(client.world);
 		}
 	}
 }

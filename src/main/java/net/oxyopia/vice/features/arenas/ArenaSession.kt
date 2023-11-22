@@ -1,5 +1,6 @@
 package net.oxyopia.vice.features.arenas
 
+import net.minecraft.client.world.ClientWorld
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice.config
 import net.oxyopia.vice.utils.DevUtils
@@ -48,8 +49,8 @@ object ArenaSession {
 				25 -> Utils.sendViceMessage("Mobs now have &&bSpeed I&&r & &&aResistance III")
 				30 -> Utils.sendViceMessage("Mobs now have &&bSpeed II&&r & &&aResistance III")
 				40 -> Utils.sendViceMessage("Mobs now have &&bSpeed II&&r & &&aResistance III&&r & &&4Strength I")
-				50 -> Utils.sendViceMessage("Mobs now have &&bSpeed II&&r & &&aResistance III&&r & &&4Strength II")
-				75 -> Utils.sendViceMessage("Mobs now have &&bSpeed II&&r & &&aResistance III&&r & &&4Strength III")
+				50 -> Utils.sendViceMessage("Mobs now have &&bSpeed II&&r & &&aResistance IV&&r & &&4Strength II")
+				75 -> Utils.sendViceMessage("Mobs now have &&bSpeed II&&r & &&aResistance IV&&r & &&4Strength III")
 				else -> return
 			}
 
@@ -95,5 +96,24 @@ object ArenaSession {
 
 	fun calculateUniqueDropChance(): Double {
 		return (waveNumber * 0.25).coerceAtMost(100.0)
+	}
+
+
+	fun onWorldChange(world: ClientWorld?) {
+		if (Utils.inDoomTowers()) {
+			val worldPath: String? = world?.registryKey?.value?.path
+			val world2: World? = worldPath?.let { World.getById(it) }
+
+			// I'm gonna create a WorldChangeEvent for handling this in the future, for now it'll be here, because im lazy as hell:
+			if (world2 == null) {
+				DevUtils.sendWarningMessage("Unable to match world &&b$worldPath &&eto a DoomTowers World. Please report this!")
+			}
+
+			if (!active && world2?.type == World.WorldType.ARENA) {
+				begin(world2)
+			} else if (active && world2?.type != World.WorldType.ARENA) {
+				dispose()
+			}
+		}
 	}
 }

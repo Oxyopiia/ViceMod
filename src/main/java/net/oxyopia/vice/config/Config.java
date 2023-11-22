@@ -331,7 +331,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Live Arena Information",
-        description = "Main Toggle for Live Arena Information, useful for preserving settings. At base, displays current Wave.",
+        description = "Display useful statistics during an Arena session. At base, displays current Wave.",
         category = "Arenas",
         subcategory = "Live Arena Info"
     )
@@ -348,12 +348,21 @@ public class Config extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Display Time Elapsed",
+        description = "Displays the time elapsed during your Session.",
+        category = "Arenas",
+        subcategory = "Live Arena Info"
+    )
+    public boolean LIVE_ARENA_TOTAL_TIMER = true;
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Display Wave Timer",
         description = "Displays the estimated time left for the current Wave.",
         category = "Arenas",
         subcategory = "Live Arena Info"
     )
-    public boolean LIVE_ARENA_TIMER = true;
+    public boolean LIVE_ARENA_ROUND_TIMER = true;
 
     @Property(
         type = PropertyType.SELECTOR,
@@ -364,6 +373,15 @@ public class Config extends Vigilant {
         options = {"None", "Basic Drops Only", "Unique Drops Only", "All"}
     )
     public int LIVE_ARENA_DROPS = 2;
+
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Mob Effects Notification",
+    	description = "Sends a chat message when mobs gain certain potion effects during an Arena.",
+    	category = "Arenas",
+    	subcategory = "Live Arena Info"
+    )
+    public boolean ARENAS_MOB_EFFECT_NOTIFICATION = true;
 
     // Category /Bosses/Quality of Life
     @Property(
@@ -472,7 +490,12 @@ public class Config extends Vigilant {
         addDependency("HIDE_ITEMCD_WHEN_READY", "ITEM_COOLDOWN_DISPLAY");
         addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY");
 
-        setCategoryDescription("Arenas", "§cFEATURES COMING SOON" + "\n§7i cannot be bothered to remove the section just to re add it when i make it, nothing works rn ok?");
+        addDependency("LIVE_ARENA_MOBS", "LIVE_ARENA_TOGGLE");
+        addDependency("LIVE_ARENA_TOTAL_TIMER", "LIVE_ARENA_TOGGLE");
+        addDependency("LIVE_ARENA_ROUND_TIMER", "LIVE_ARENA_TOGGLE");
+        addDependency("LIVE_ARENA_DROPS", "LIVE_ARENA_TOGGLE");
+
+        setCategoryDescription("Bosses", "§cFEATURES COMING SOON" + "\n§7i cannot be bothered to remove the section just to re add it when i make it, nothing works rn ok?");
     }
 
     public static class ConfigSorting extends SortingBehavior {

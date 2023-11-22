@@ -50,5 +50,15 @@ public class DevUtils {
 		client.inGameHud.getChatHud().addMessage(errorChat);
 	}
 
+	public static void sendWarningMessage(String msg) {
+		Text warningChat = Text.literal(warningPrefix + msg)
+			.setStyle(Style.EMPTY
+				.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, msg))
+				.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("§eClick to copy the warning to your clipboard!\n§7§o"+msg))));
+
+
+		client.inGameHud.getChatHud().addMessage(warningChat);
+	}
+
 
 }

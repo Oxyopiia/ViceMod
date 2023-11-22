@@ -18,7 +18,8 @@ public class Vice implements ClientModInitializer {
 	public static MinecraftClient client;
 
 	public static final String chatPrefix = "§bVice §7|§r ";
-	public static final String errorPrefix = "§cVice §cERROR §7|§c ";
+	public static final String errorPrefix = "§bVice §cERROR §7|§c ";
+	public static final String warningPrefix = "§bVice §eWARN §7|§e ";
 	public static final String devPrefix = "§9Vice §7(Dev) |§r ";
 
 	@Override

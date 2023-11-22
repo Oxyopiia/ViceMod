@@ -7,17 +7,22 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
+import net.oxyopia.vice.features.arenas.ArenaSession;
+import net.oxyopia.vice.features.arenas.LiveArenaInformation;
 import net.oxyopia.vice.features.hud.GamingModeKt;
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown;
 import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static net.oxyopia.vice.Vice.client;
 import static net.oxyopia.vice.Vice.config;
@@ -45,7 +50,7 @@ public class MixinInGameHud {
 	}
 	
 	@Inject(at = @At(value="INVOKE", target="Lnet/minecraft/client/gui/hud/SubtitlesHud;render(Lnet/minecraft/client/gui/DrawContext;)V"), method = "render")
-	private void onRender(DrawContext context, float tickDelta, CallbackInfo ci) {
+	private void hudRenderEvent(DrawContext context, float tickDelta, CallbackInfo ci) {
 		int x = (this.scaledWidth) / 2;
 		int y = (this.scaledHeight) / 2;
 
@@ -54,9 +59,10 @@ public class MixinInGameHud {
 	}
 
 	@Inject(at = @At("HEAD"), method = "setSubtitle", cancellable = true)
-	private void onSubtitle(Text title, CallbackInfo ci) {
-		DevUtils.sendDebugChat(title.getString(), "INGAMEHUD_MIXIN_DEBUGGER");
-		if (Utils.inDoomTowers() && config.HIDE_REVOLVER_BLINDNESS && title.getString().contains("Left click to fire") && client.player != null) {
+	private void onSubtitle(Text subtitle, CallbackInfo ci) {
+		DevUtils.sendDebugChat("&&dSUBTITLE&&r " + subtitle.getString(), "INGAMEHUD_MIXIN_DEBUGGER");
+
+		if (Utils.inDoomTowers() && config.HIDE_REVOLVER_BLINDNESS && subtitle.getString().contains("Left click to fire") && client.player != null) {
 			if (client.player.hasStatusEffect(StatusEffects.BLINDNESS)) {
 				client.player.removeStatusEffect(StatusEffects.BLINDNESS);
 			} else if (client.player.hasStatusEffect(StatusEffects.DARKNESS)) {
@@ -64,7 +70,27 @@ public class MixinInGameHud {
 			}
 		}
 
-		ItemAbilityCooldown.Companion.onSubtitle(title, ci);
+		ItemAbilityCooldown.Companion.onSubtitle(subtitle, ci);
+	}
+
+	@Unique private final Pattern pattern = Pattern.compile("WAVE\\s(\\d+)");
+
+	@Inject(at = @At("HEAD"), method = "setTitle")
+	private void onTitle(Text title, CallbackInfo ci) {
+		DevUtils.sendDebugChat("&&eTITLE&&r " + title.getString(), "INGAMEHUD_MIXIN_DEBUGGER");
+
+		Matcher matcher = pattern.matcher(title.getString());
+		if (matcher.matches()) {
+			try {
+				int waveNumber = Integer.parseInt(matcher.group(1));
+				LiveArenaInformation.INSTANCE.onTitle(waveNumber);
+			} catch (NumberFormatException err) {
+				DevUtils.sendErrorMessage(err, "An error occurred parsing Wave Number regex!");
+			}
+		} else if (title.getString().contains("MINIBOSS")) {
+			LiveArenaInformation.INSTANCE.onTitle(ArenaSession.INSTANCE.getWaveNumber() + 1);
+		}
+
 	}
 
 	@Inject(at = @At("HEAD"), method = "render")

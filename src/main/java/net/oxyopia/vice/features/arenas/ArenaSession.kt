@@ -1,11 +1,13 @@
 package net.oxyopia.vice.features.arenas
 
-import net.minecraft.client.world.ClientWorld
-import net.minecraft.util.Identifier
-import net.oxyopia.vice.Vice.config
+import net.oxyopia.vice.Vice.EVENT_MANAGER
+import net.oxyopia.vice.events.ArenaWaveUpdateEvent
+import net.oxyopia.vice.events.TitleEvent
+import net.oxyopia.vice.events.WorldChangeEvent
+import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.enums.World
+import java.util.regex.Pattern
 import kotlin.math.round
 
 object ArenaSession {
@@ -39,23 +41,10 @@ object ArenaSession {
 		waveNumber = n
 		waveMobsKilled = 0
 		waveStartTime = System.currentTimeMillis()
+		EVENT_MANAGER.publish(ArenaWaveUpdateEvent(n))
 		DevUtils.sendDebugChat("&&dARENAS&&r Wave Updated to &&a$n &&r($waveStartTime)", "ARENAS_DEBUGGER")
 
-		if (config.ARENAS_MOB_EFFECT_NOTIFICATION) {
-			when (n) {
-				10 -> Utils.sendViceMessage("Mobs now have &&bSpeed I")
-				15 -> Utils.sendViceMessage("Mobs now have &&bSpeed I&&r & &&aResistance I")
-				20 -> Utils.sendViceMessage("Mobs now have &&bSpeed I&&r & &&aResistance II")
-				25 -> Utils.sendViceMessage("Mobs now have &&bSpeed I&&r & &&aResistance III")
-				30 -> Utils.sendViceMessage("Mobs now have &&bSpeed II&&r & &&aResistance III")
-				40 -> Utils.sendViceMessage("Mobs now have &&bSpeed II&&r & &&aResistance III&&r & &&4Strength I")
-				50 -> Utils.sendViceMessage("Mobs now have &&bSpeed II&&r & &&aResistance IV&&r & &&4Strength II")
-				75 -> Utils.sendViceMessage("Mobs now have &&bSpeed II&&r & &&aResistance IV&&r & &&4Strength III")
-				else -> return
-			}
 
-			Utils.playSound(Identifier("minecraft", "block.note_block.pling"), 2f, 1f)
-		}
 	}
 
 	fun addKill() {
@@ -98,22 +87,31 @@ object ArenaSession {
 		return (waveNumber * 0.25).coerceAtMost(100.0)
 	}
 
+	@SubscribeEvent
+	fun onWorldChange(event: WorldChangeEvent) {
+		val worldPath: String? = event.world.registryKey?.value?.path
+		val world2: World? = worldPath?.let { World.getById(it) }
 
-	fun onWorldChange(world: ClientWorld?) {
-		if (Utils.inDoomTowers()) {
-			val worldPath: String? = world?.registryKey?.value?.path
-			val world2: World? = worldPath?.let { World.getById(it) }
+		if (!active && world2?.type == World.WorldType.ARENA) {
+			begin(world2)
+		} else if (active && world2?.type != World.WorldType.ARENA) {
+			dispose()
+		}
+	}
 
-			// I'm gonna create a WorldChangeEvent for handling this in the future, for now it'll be here, because im lazy as hell:
-			if (world2 == null) {
-				DevUtils.sendWarningMessage("Unable to match world &&b$worldPath &&eto a DoomTowers World. Please report this!")
+	@SubscribeEvent
+	fun onTitle(event: TitleEvent) {
+		val pattern = Pattern.compile("WAVE\\s(\\d+)")
+		val matcher = pattern.matcher(event.title)
+		if (matcher.matches() && active) {
+			try {
+				val waveNumber = matcher.group(1).toInt()
+				setWave(waveNumber)
+			} catch (err: NumberFormatException) {
+				DevUtils.sendErrorMessage(err, "An error occurred parsing Wave Number regex!")
 			}
-
-			if (!active && world2?.type == World.WorldType.ARENA) {
-				begin(world2)
-			} else if (active && world2?.type != World.WorldType.ARENA) {
-				dispose()
-			}
+		} else if (event.title.contains("MINIBOSS")) {
+			setWave(waveNumber + 1)
 		}
 	}
 }

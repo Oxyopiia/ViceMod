@@ -1,19 +1,18 @@
 package net.oxyopia.vice.features.itemabilities
 
-import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket
-import net.minecraft.text.Text
 import net.minecraft.util.ClickType
 import net.minecraft.util.math.MathHelper
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.events.*
+import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.RenderUtils
 import net.oxyopia.vice.utils.Utils
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 import java.awt.Color
 import kotlin.math.ceil
 import kotlin.math.max
@@ -37,7 +36,12 @@ class ItemAbilityCooldown {
 	}
 
 	companion object {
-		fun onSound(sound: PlaySoundS2CPacket) {
+		private fun PlaySoundS2CPacket.soundName(): String = this.sound.value().id.path
+
+		@SubscribeEvent
+		fun onSound(event: SoundPacketEvent) {
+			val sound: PlaySoundS2CPacket = event.packet
+
 			when {
 
 				// Barbed Shotgun
@@ -99,55 +103,94 @@ class ItemAbilityCooldown {
 			}
 		}
 
+		@SubscribeEvent
+		fun onRenderInGameHud(event: RenderInGameHudEvent) {
+			if(!Utils.inDoomTowers() || !(Vice.config.ITEM_COOLDOWN_DISPLAY && Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR)) return
+
+			val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(ItemUtils.getHeldItem()))
+
+			ability?.apply {
+				if(!isOnCooldown() || !cooldownDisplay) return
+
+				val matrices = MatrixStack()
+
+				var centered = false
+				var xPos = (event.scaledWidth / 2 - 1) + 3
+				var yPos = (event.scaledHeight / 2 - 1) - 1 + 3
+				var color = Color(0f, 1f, 1f, 1f)
+
+				if (Vice.config.DEVMODE) {
+					xPos = (event.scaledWidth / 2 - 1) + Vice.devConfig.ITEMCD_CURSORCD_X_OFFSET
+					yPos = (event.scaledHeight / 2 - 1) + Vice.devConfig.ITEMCD_CURSORCD_Y_OFFSET
+					centered = Vice.devConfig.ITEMCD_CURSORCD_CENTER_TEXT
+					color = Vice.devConfig.ITEMCD_CURSORCD_COLOR
+				}
+
+				matrices.push()
+				matrices.translate(0.0f, 0.0f, 200.0f)
+
+				val roundedFloat: String = String.format("%.0f", ceil(remainingCooldown().toDouble()))
+				RenderUtils.drawText(matrices, Vice.client.textRenderer, roundedFloat, xPos, yPos, color.rgb, Vice.config.HUD_TEXT_SHADOW, centered)
+
+				matrices.pop()
+			}
+		}
+
 		// im putting functionality here just for future proofing because i will not be bothered if i wanted to add this in the future
-		fun onLeftClick(stack: ItemStack) {
-			if (Utils.inDoomTowers() && Vice.config.ITEM_COOLDOWN_DISPLAY) {
-				val name = ItemUtils.getNameWithoutEnchants(stack)
-				val ability: ItemAbility? = ItemAbility.getByName(name, ClickType.LEFT)
+		@Suppress("UNUSED_PARAMETER")
+		@SubscribeEvent
+		fun onLeftClick(event: LeftClickEvent) {
+			if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
-				ability?.let {
-					it.lastClicked = System.currentTimeMillis()
-					DevUtils.sendDebugChat("&&bITEMABILITY &&conLeftClick as&&b " + ability.name, "ITEM_ABILITY_DEBUGGER")
+			val stack: ItemStack = if (Vice.client.player != null) Vice.client.player!!.mainHandStack else ItemStack.EMPTY
+			val name = ItemUtils.getNameWithoutEnchants(stack)
+			val ability: ItemAbility? = ItemAbility.getByName(name, ClickType.LEFT)
 
-					if (!it.soundOnUse && it.remainingCooldown() == 0f) {
-						it.activate()
-					}
+			ability?.let {
+				it.lastClicked = System.currentTimeMillis()
+				DevUtils.sendDebugChat("&&bITEMABILITY &&conLeftClick as&&b " + ability.name, "ITEM_ABILITY_DEBUGGER")
+
+				if (!it.soundOnUse && it.remainingCooldown() == 0f) {
+					it.activate()
 				}
 			}
 		}
 
-		fun onRightClick(stack: ItemStack) {
-			if (Utils.inDoomTowers() && Vice.config.ITEM_COOLDOWN_DISPLAY) {
-				val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(stack), ClickType.RIGHT)
+		@Suppress("UNUSED_PARAMETER")
+		@SubscribeEvent
+		fun onRightClick(event: RightClickEvent) {
+			if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
-				ability?.let {
-					it.lastClicked = System.currentTimeMillis()
-					DevUtils.sendDebugChat("&&bITEMABILITY &&donRightClick as&&b " + ability.name, "ITEM_ABILITY_DEBUGGER")
+			val stack: ItemStack =  if (Vice.client.player != null) Vice.client.player!!.mainHandStack else ItemStack.EMPTY
+			val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(stack), ClickType.RIGHT)
 
-					if (!it.soundOnUse && it.remainingCooldown() == 0f) {
-						it.activate()
-					}
+			ability?.let {
+				it.lastClicked = System.currentTimeMillis()
+				DevUtils.sendDebugChat("&&bITEMABILITY &&donRightClick as&&b " + ability.name, "ITEM_ABILITY_DEBUGGER")
+
+				if (!it.soundOnUse && it.remainingCooldown() == 0f) {
+					it.activate()
 				}
 			}
 		}
 
-		fun onSubtitle(title: Text, ci: CallbackInfo) {
-			if (Utils.inDoomTowers()) {
-				if (title.string.toString().contains("100%")) {
-					ItemAbility.GALACTIC_HAND_CANNON.lastClicked = System.currentTimeMillis()
-				}
+		@SubscribeEvent
+		fun onSubtitle(event: SubtitleEvent) {
+			if (event.subtitle.contains("100%")) {
+				ItemAbility.GALACTIC_HAND_CANNON.lastClicked = System.currentTimeMillis()
+			}
 
-				if (Vice.config.HIDE_ITEM_COOLDOWN_TITLES && title.string.toString().contains("Cooldown")) {
-					Vice.client.inGameHud.clearTitle()
-					ci.cancel()
-				}
+			if (Vice.config.HIDE_ITEM_COOLDOWN_TITLES && event.subtitle.contains("Cooldown")) {
+				Vice.client.inGameHud.clearTitle()
+				event.callbackInfo.cancel()
 			}
 		}
 
-		fun onRenderItemSlot(textRenderer: TextRenderer, stack: ItemStack, x: Int, y: Int) {
-			if(!Utils.inDoomTowers() || !Vice.config.ITEM_COOLDOWN_DISPLAY) return
+		@SubscribeEvent
+		fun onRenderItemSlot(event: RenderItemSlotEvent) {
+			if(!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
-			val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(stack))
+			val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(event.stack))
 
 			ability?.apply {
 				if (!cooldownDisplay) return
@@ -162,13 +205,13 @@ class ItemAbilityCooldown {
 
 					when {
 						displayType == DisplayType.VANILLA.id -> {
-							val k = y + MathHelper.floor(16.0f * (1.0f - progressLeft))
+							val k = event.y + MathHelper.floor(16.0f * (1.0f - progressLeft))
 							val l = k + MathHelper.ceil(16.0f * progressLeft)
-							RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), x, k, x + 16, l, 0, Int.MAX_VALUE)
+							RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, k, event.x + 16, l, 0, Int.MAX_VALUE)
 						}
 
 						displayType == DisplayType.STATIC.id -> {
-							RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), x, y, x + 16, y + 16, -500, Color(0.9f, 0f, 0f, bgOpacity))
+							RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, -500, Color(0.9f, 0f, 0f, bgOpacity))
 						}
 
 						displayType == DisplayType.COLORFADE.id -> {
@@ -180,7 +223,7 @@ class ItemAbilityCooldown {
 								greenness = max(0f, min(1f, Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE - (Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE * progressLeft)))
 							}
 
-							RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), x, y, x + 16, y + 16, 0, Color(redness, greenness, 0f, bgOpacity))
+							RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, Color(redness, greenness, 0f, bgOpacity))
 						}
 
 						displayType == DisplayType.PERCENTAGE.id -> {
@@ -189,7 +232,7 @@ class ItemAbilityCooldown {
 							if (progressLeft > 0.075f && progressLeft <= 0.5f) col = Color(1f, 1f, 0f, bgOpacity)
 							else if (progressLeft <= 0.075f) col = Color(0.4f, 1f, 0f, bgOpacity)
 
-							RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), x, y, x + 16, y + 16, 0, col)
+							RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, col)
 						}
 					}
 
@@ -199,59 +242,25 @@ class ItemAbilityCooldown {
 
 						matrices.push()
 						matrices.translate(0.0f, 0.0f, 200.0f)
-						RenderUtils.drawText(matrices, textRenderer, roundedFloat, x, y + 9, 0xFFFFFF, true, false)
+						RenderUtils.drawText(matrices, event.textRenderer, roundedFloat, event.x, event.y + 9, 0xFFFFFF, true, false)
 						matrices.pop()
 					}
 
 				} else {
 					// Render Green background if enabled
 					if (!Vice.config.HIDE_ITEMCD_WHEN_READY && (displayType != DisplayType.VANILLA.id && displayType != DisplayType.TEXTONLY.id)) {
-						RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), x, y, x + 16, y + 16, 0, Color(0f, 1f, 0f, bgOpacity))
+						RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, Color(0f, 1f, 0f, bgOpacity))
 					}
 
 					// Render R if enabled (by Text Option or using Display Type TextOnly)
 					if (Vice.config.SHOW_ITEMCD_TEXT || displayType == DisplayType.TEXTONLY.id) {
 						matrices.push()
 						matrices.translate(0.0f, 0.0f, 200.0f)
-						RenderUtils.drawText(matrices, textRenderer, "R", x, y + 9, 0xFFFFFF, true, false)
+						RenderUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, 0xFFFFFF, true, false)
 						matrices.pop()
 					}
 				}
 			}
 		}
-
-		fun onRenderInGameHud(x: Int, y: Int) {
-			if(!Utils.inDoomTowers() || !(Vice.config.ITEM_COOLDOWN_DISPLAY && Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR)) return
-
-			val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(ItemUtils.getHeldItem()))
-
-			ability?.apply {
-				if(!isOnCooldown() || !cooldownDisplay) return
-
-				val matrices = MatrixStack()
-
-				var centered = false
-				var xPos = x + 3
-				var yPos = y + 3
-				var color = Color(0f, 1f, 1f, 1f)
-
-				if (Vice.config.DEVMODE) {
-					xPos = x + Vice.devConfig.ITEMCD_CURSORCD_X_OFFSET
-					yPos = y + Vice.devConfig.ITEMCD_CURSORCD_Y_OFFSET
-					centered = Vice.devConfig.ITEMCD_CURSORCD_CENTER_TEXT
-					color = Vice.devConfig.ITEMCD_CURSORCD_COLOR
-				}
-
-				matrices.push()
-				matrices.translate(0.0f, 0.0f, 200.0f)
-
-				val roundedFloat: String = String.format("%.0f", ceil(remainingCooldown().toDouble()))
-				RenderUtils.drawText(matrices, Vice.client.textRenderer, roundedFloat, xPos, yPos, color.rgb, Vice.config.HUD_TEXT_SHADOW, centered)
-
-				matrices.pop()
-			}
-		}
 	}
 }
-
-private fun PlaySoundS2CPacket.soundName(): String = this.sound.value().id.path

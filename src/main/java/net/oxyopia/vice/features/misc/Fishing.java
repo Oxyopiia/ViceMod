@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features;
+package net.oxyopia.vice.features.misc;
 
 import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;

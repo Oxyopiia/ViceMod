@@ -1,24 +1,22 @@
 package net.oxyopia.vice.mixin;
 
 import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
-import net.oxyopia.vice.features.arenas.ArenaSession;
+import net.oxyopia.vice.events.WorldChangeEvent;
 import net.oxyopia.vice.utils.Utils;
-import net.oxyopia.vice.utils.enums.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static net.oxyopia.vice.Vice.EVENT_MANAGER;
 import static net.oxyopia.vice.Vice.client;
 
 @Mixin(DownloadingTerrainScreen.class)
 public class MixinDownloadingTerrainScreen {
 	@Inject(at = @At("HEAD"), method = "close")
 	private void onWorldLoad(CallbackInfo ci) {
-		String worldId = client.world != null ? client.world.getRegistryKey().getValue().getPath() : "";
-
-		if (client.isOnThread() && Utils.inDoomTowers() && World.Companion.getById(worldId) != null) {
-			ArenaSession.INSTANCE.onWorldChange(client.world);
+		if (client.isOnThread() && Utils.inDoomTowers() && client.world != null) {
+			EVENT_MANAGER.publish(new WorldChangeEvent(client.world));
 		}
 	}
 }

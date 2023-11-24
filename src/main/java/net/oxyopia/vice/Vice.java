@@ -9,6 +9,7 @@ import net.oxyopia.vice.commands.ViceCommand;
 import net.oxyopia.vice.commands.TestCommand;
 import net.oxyopia.vice.config.*;
 import net.oxyopia.vice.events.core.EventManager;
+import net.oxyopia.vice.features.misc.Fishing;
 import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker;
 import net.oxyopia.vice.features.misc.RevolverBlindnessHider;
 import net.oxyopia.vice.features.arenas.ArenaEffectNotification;
@@ -65,6 +66,7 @@ public class Vice implements ClientModInitializer {
 		EVENT_MANAGER.subscribe(PlacePlayerHeadBlocker.INSTANCE);
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider.INSTANCE);
 		EVENT_MANAGER.subscribe(GamingMode.INSTANCE);
+		EVENT_MANAGER.subscribe(Fishing.INSTANCE);
 	}
 }
 

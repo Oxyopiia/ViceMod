@@ -5,6 +5,7 @@ import gg.essential.universal.wrappers.message.UTextComponent;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.scoreboard.ScoreboardPlayerScore;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.oxyopia.vice.Vice;
 
@@ -41,5 +42,11 @@ public class Utils {
 		} catch (Exception err) {
 			DevUtils.sendErrorMessage(err, "An error occurred attempting to play a sound");
 		}
+	}
+
+	public static void sendVanillaTitle(String title, String subtitle, Float stayTime, Float fadeinout) {
+		client.inGameHud.setSubtitle(Text.of(subtitle.replaceAll("&&", "§")));
+		client.inGameHud.setTitle(Text.of(title.replaceAll("&&", "§")));
+		client.inGameHud.setTitleTicks((int) (20 * fadeinout), (int) (20 * stayTime), (int) (20 * fadeinout));
 	}
 }

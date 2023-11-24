@@ -181,6 +181,7 @@ class ItemAbilityCooldown {
 			}
 
 			if (Vice.config.HIDE_ITEM_COOLDOWN_TITLES && event.subtitle.contains("Cooldown")) {
+				Vice.client.inGameHud.clearTitle()
 				event.callbackInfo.cancel()
 			}
 		}

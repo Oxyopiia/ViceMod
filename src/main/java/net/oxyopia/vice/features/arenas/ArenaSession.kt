@@ -1,7 +1,7 @@
 package net.oxyopia.vice.features.arenas
 
 import net.oxyopia.vice.Vice.EVENT_MANAGER
-import net.oxyopia.vice.events.ArenaWaveUpdateEvent
+import net.oxyopia.vice.events.ArenaWaveChangeEvent
 import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.WorldChangeEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
@@ -41,10 +41,8 @@ object ArenaSession {
 		waveNumber = n
 		waveMobsKilled = 0
 		waveStartTime = System.currentTimeMillis()
-		EVENT_MANAGER.publish(ArenaWaveUpdateEvent(n))
+		EVENT_MANAGER.publish(ArenaWaveChangeEvent(n))
 		DevUtils.sendDebugChat("&&dARENAS&&r Wave Updated to &&a$n &&r($waveStartTime)", "ARENAS_DEBUGGER")
-
-
 	}
 
 	fun addKill() {

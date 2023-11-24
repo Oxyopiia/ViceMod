@@ -62,7 +62,7 @@ public class Vice implements ClientModInitializer {
 	private void subscribeEventListeners() {
 		EVENT_MANAGER.subscribe(ArenaSession.INSTANCE);
 		EVENT_MANAGER.subscribe(ArenaEffectNotification.INSTANCE);
-		EVENT_MANAGER.subscribe(ItemAbilityCooldown.Companion);
+		EVENT_MANAGER.subscribe(ItemAbilityCooldown.INSTANCE);
 		EVENT_MANAGER.subscribe(PlacePlayerHeadBlocker.INSTANCE);
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider.INSTANCE);
 		EVENT_MANAGER.subscribe(GamingMode.INSTANCE);

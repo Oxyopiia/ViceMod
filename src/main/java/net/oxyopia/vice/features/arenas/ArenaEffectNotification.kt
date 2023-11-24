@@ -2,13 +2,13 @@ package net.oxyopia.vice.features.arenas
 
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.events.ArenaWaveUpdateEvent
+import net.oxyopia.vice.events.ArenaWaveChangeEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils
 
 object ArenaEffectNotification {
 	@SubscribeEvent
-	fun onWaveUpdate(event: ArenaWaveUpdateEvent) {
+	fun onWaveUpdate(event: ArenaWaveChangeEvent) {
 		if (Vice.config.ARENAS_MOB_EFFECT_NOTIFICATION) {
 			when (event.waveNumber) {
 				10 -> Utils.sendViceMessage("Mobs now have &&bSpeed I")

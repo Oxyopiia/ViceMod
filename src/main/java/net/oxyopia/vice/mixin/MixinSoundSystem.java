@@ -19,7 +19,7 @@ public abstract class MixinSoundSystem {
 		method="play(Lnet/minecraft/client/sound/SoundInstance;)V"
 	)
 	private float getAdjustedVolume(SoundSystem instance, float volume, SoundCategory category, @Local(ordinal=0) SoundInstance sound2) {
-		if (!Utils.inDoomTowers()) return this.getAdjustedVolume(volume, category);
+		if (!Utils.INSTANCE.getInDoomTowers()) return this.getAdjustedVolume(volume, category);
 
 		float multiplier = AbilitySoundHider.INSTANCE.onSound(sound2);
 		return (multiplier == -1f ? this.getAdjustedVolume(volume, category) : multiplier);

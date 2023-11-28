@@ -19,7 +19,7 @@ public class MixinDrawContext {
 
 	@ModifyVariable(argsOnly = true, method = "drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V", at = @At(value="INVOKE", target="Lnet/minecraft/client/util/math/MatrixStack;push()V"), ordinal = 0)
 	private String towerBeaconFeatures(String countOverride, TextRenderer textRenderer, ItemStack stack, int x, int y) {
-		if (Utils.inDoomTowers() && config.BETTER_TOWER_BEACON_UI && client.currentScreen != null && client.currentScreen.getTitle().contains(Text.of("Tower Beacon"))) {
+		if (Utils.INSTANCE.getInDoomTowers() && config.BETTER_TOWER_BEACON_UI && client.currentScreen != null && client.currentScreen.getTitle().contains(Text.of("Tower Beacon"))) {
 			String itemName = stack.getName().getString();
 			Pattern pattern = Pattern.compile("(.*)Floor \\d");
 

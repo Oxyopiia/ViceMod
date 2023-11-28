@@ -18,7 +18,7 @@ import static net.oxyopia.vice.Vice.EVENT_MANAGER;
 public abstract class MixinClientPlayerInteractionManager {
 	@Inject(at = @At("HEAD"), method = "interactBlock", cancellable = true)
 	private void interactBlock(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
-		if (Utils.inDoomTowers()) {
+		if (Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new BlockInteractEvent(player, hand, hitResult, cir));
 		}
 	}

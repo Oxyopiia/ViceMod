@@ -17,15 +17,16 @@ public class TestCommand {
 		dispatcher.register(ClientCommandManager.literal("test")
 			.executes(context -> {
 				EssentialAPI.getNotifications().push("Vice", "This is a notification test", 4f, () -> {
-					Utils.sendViceMessage("Notification clicked");
+					Utils.INSTANCE.sendViceMessage("Notification clicked");
 					return null;
 				});
 
-				Utils.sendViceMessage("inDoomTowers: &&a" + Utils.inDoomTowers());
+				Utils.INSTANCE.sendViceMessage("inDoomTowers: &&a" + Utils.INSTANCE.getInDoomTowers());
 
 				ItemStack heldItem = ItemUtils.getHeldItem();
+
 				if (heldItem.getNbt() != null) {
-					Utils.sendViceMessage(new UTextComponent("§eClick to copy your held item's NBT.§r")
+					Utils.INSTANCE.sendViceMessage(new UTextComponent("§eClick to copy your held item's NBT.§r")
 						.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, heldItem.getNbt().asString())
 						.setHover(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackContent(heldItem)));
 				}

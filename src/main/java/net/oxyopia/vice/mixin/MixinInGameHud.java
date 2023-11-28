@@ -28,38 +28,38 @@ public class MixinInGameHud {
 	@Inject(at = @At("HEAD"), method = "renderScoreboardSidebar")
 	private void onRenderScoreboardSidebar(DrawContext context, ScoreboardObjective objective, CallbackInfo ci) {
 		if (objective.getDisplayName().getString().contains("DoomTowers")) {
-			Utils.inDoomTowers = true;
-			Utils.scoreboardData = objective.getScoreboard().getAllPlayerScores(objective);
+			Utils.INSTANCE.setInDoomTowers(true);
+			Utils.INSTANCE.setScoreboardData(objective.getScoreboard().getAllPlayerScores(objective));
 		} else {
-			Utils.inDoomTowers = false;
-			if (Utils.scoreboardData != null) Utils.scoreboardData.clear();
+			Utils.INSTANCE.setInDoomTowers(false);
+			Utils.INSTANCE.getScoreboardData().clear();
 		}
 	}
 
 	@Inject(at = @At(value="INVOKE", target="Lnet/minecraft/client/gui/DrawContext;drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;II)V"), method = "renderHotbarItem")
 	private void onRenderHotbarItem(DrawContext context, int x, int y, float f, PlayerEntity player, ItemStack stack, int seed, CallbackInfo ci) {
-		if (Utils.inDoomTowers()) {
+		if (Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new RenderItemSlotEvent(client.textRenderer, stack, x, y));
 		}
 	}
 	
 	@Inject(at = @At(value="INVOKE", target="Lnet/minecraft/client/gui/hud/SubtitlesHud;render(Lnet/minecraft/client/gui/DrawContext;)V"), method = "render")
 	private void hudRenderEvent(DrawContext context, float tickDelta, CallbackInfo ci) {
-		if (Utils.inDoomTowers()) {
+		if (Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new RenderInGameHudEvent(context, this.scaledWidth, this.scaledHeight));
 		}
 	}
 
 	@Inject(at = @At("HEAD"), method = "setSubtitle", cancellable = true)
 	private void onSubtitle(Text subtitle, CallbackInfo ci) {
-		if (Utils.inDoomTowers()) {
+		if (Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new SubtitleEvent(subtitle.getString(), ci));
 		}
 	}
 
 	@Inject(at = @At("HEAD"), method = "setTitle")
 	private void onTitle(Text title, CallbackInfo ci) {
-		if (Utils.inDoomTowers()) {
+		if (Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new TitleEvent(title.getString(), ci));
 		}
 	}

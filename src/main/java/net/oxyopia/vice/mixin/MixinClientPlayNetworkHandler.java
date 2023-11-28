@@ -21,7 +21,7 @@ public class MixinClientPlayNetworkHandler {
 
 	@Inject(at = @At("HEAD"), method = "onPlaySound")
 	private void onSound(PlaySoundS2CPacket packet, CallbackInfo callbackInfo) {
-		if (client.isOnThread() && Utils.inDoomTowers()) {
+		if (client.isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new SoundPacketEvent(packet));
 
 			DevUtils.sendDebugChat("&&bSOUND&&r " + packet.getSound().value().getId().toString() + " &&dP " + packet.getPitch() + " &&eV" + packet.getVolume(), "SEND_SOUND_INFO");
@@ -31,21 +31,21 @@ public class MixinClientPlayNetworkHandler {
 
 	@Inject(at = @At("HEAD"), method = "onEntityVelocityUpdate")
 	private void fishingVelocityUpdate(EntityVelocityUpdateS2CPacket packet, CallbackInfo callbackInfo){
-		if (client.isOnThread() && Utils.inDoomTowers()) {
+		if (client.isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new EntityVelocityPacketEvent(packet));
 		}
 	}
 
 	@Inject(at = @At("HEAD"), method = "onEntitySpawn")
 	private void onEntitySpawn(EntitySpawnS2CPacket packet, CallbackInfo ci) {
-		if (client.isOnThread() && Utils.inDoomTowers()) {
+		if (client.isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new EntitySpawnPacketEvent(packet));
 		}
 	}
 	
 	@Inject(at = @At("HEAD"), method = "onBlockUpdate")
 	private void shadowGelatoFeatures(BlockUpdateS2CPacket packet, CallbackInfo ci) {
-		if (client.isOnThread() && Utils.inDoomTowers()) {
+		if (client.isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new BlockUpdatePacketEvent(packet));
 		}
 	}

@@ -17,14 +17,14 @@ public class MixinMinecraftClient {
 
 	@Inject(at = @At("HEAD"), method = "doAttack")
 	private void onAttack(CallbackInfoReturnable<Boolean> cir) {
-		if (Utils.inDoomTowers()) {
+		if (Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new LeftClickEvent());
 		}
 	}
 
 	@Inject(at = @At("HEAD"), method = "doItemUse")
 	private void onUse(CallbackInfo ci) {
-		if (Utils.inDoomTowers()) {
+		if (Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new RightClickEvent());
 		}
 	}

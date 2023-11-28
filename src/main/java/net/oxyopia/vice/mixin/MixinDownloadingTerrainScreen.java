@@ -15,7 +15,7 @@ import static net.oxyopia.vice.Vice.client;
 public class MixinDownloadingTerrainScreen {
 	@Inject(at = @At("HEAD"), method = "close")
 	private void onWorldLoad(CallbackInfo ci) {
-		if (client.isOnThread() && Utils.inDoomTowers() && client.world != null) {
+		if (client.isOnThread() && Utils.INSTANCE.getInDoomTowers() && client.world != null) {
 			EVENT_MANAGER.publish(new WorldChangeEvent(client.world));
 		}
 	}

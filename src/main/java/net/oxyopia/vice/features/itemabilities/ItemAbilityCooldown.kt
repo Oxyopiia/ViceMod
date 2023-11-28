@@ -12,7 +12,6 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.RenderUtils
-import net.oxyopia.vice.utils.Utils
 import java.awt.Color
 import kotlin.math.ceil
 import kotlin.math.max
@@ -104,7 +103,7 @@ object ItemAbilityCooldown {
 
 	@SubscribeEvent
 	fun onRenderInGameHud(event: RenderInGameHudEvent) {
-		if (!Utils.inDoomTowers() || !(Vice.config.ITEM_COOLDOWN_DISPLAY && Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR)) return
+		if (!(Vice.config.ITEM_COOLDOWN_DISPLAY && Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR)) return
 
 		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(ItemUtils.getHeldItem()))
 

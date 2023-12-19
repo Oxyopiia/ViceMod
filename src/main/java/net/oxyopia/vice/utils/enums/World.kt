@@ -28,6 +28,14 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 
 	Tower("overworld", "The Tower", type = WorldType.TOWER);
 
+	fun isInWorld(): Boolean {
+		Utils.getWorld()?.let {
+			return Utils.inDoomTowers && this == World.getById(it)
+		}
+
+		return false
+	}
+
 	enum class WorldType {
 		NORMAL,
 		BOSS,

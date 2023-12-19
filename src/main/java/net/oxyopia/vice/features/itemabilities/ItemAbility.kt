@@ -19,7 +19,7 @@ enum class ItemAbility(
         val set: Set? = null, // this is pointless looking back, but might be useful in the future
         val setAmount: Int = 0,
         val sharedCooldownId : String? = null,
-        val cooldownDisplay: Boolean = true,
+        val displayCooldown: Boolean = true,
         val specialUsage: Boolean = false,
         val soundOnUse: Boolean = true, // Set to false to instantly activate on click, may be buggy
         var lastActivated: Long = 0,
@@ -40,8 +40,8 @@ enum class ItemAbility(
     REVOLVER("Revolver", 20f, set = Set.HEAVY, setAmount = 2),
     DYNAMITE_BARREL("Dynamite Barrel", 10f, set = Set.DEMOLITIONIST, setAmount = 1),
 
-    LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, cooldownDisplay = false),
-    SNOWBALL_CANNON("Snowball Cannon", 0.5f, cooldownDisplay = false);
+    LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, displayCooldown = false),
+    SNOWBALL_CANNON("Snowball Cannon", 0.5f, displayCooldown = false);
 
     // Detecting whether the ability has ACTUALLY happened is performed in /features/itemabilities/ItemAbilityCooldown.kt
     // This will reset the cooldown regardless of whether it is still on cooldown or not.

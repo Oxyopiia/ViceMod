@@ -7,7 +7,12 @@ import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket
 import net.minecraft.util.ClickType
 import net.minecraft.util.math.MathHelper
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.events.*
+import net.oxyopia.vice.events.SoundPacketEvent
+import net.oxyopia.vice.events.RenderInGameHudEvent
+import net.oxyopia.vice.events.LeftClickEvent
+import net.oxyopia.vice.events.RightClickEvent
+import net.oxyopia.vice.events.SubtitleEvent
+import net.oxyopia.vice.events.RenderItemSlotEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils
@@ -105,10 +110,10 @@ object ItemAbilityCooldown {
 	fun onRenderInGameHud(event: RenderInGameHudEvent) {
 		if (!(Vice.config.ITEM_COOLDOWN_DISPLAY && Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR)) return
 
-		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(ItemUtils.getHeldItem()))
+		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getHeldItemName())
 
 		ability?.apply {
-			if (!isOnCooldown() || !cooldownDisplay) return
+			if (!isOnCooldown() || !displayCooldown) return
 
 			val matrices = MatrixStack()
 
@@ -191,28 +196,28 @@ object ItemAbilityCooldown {
 		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(event.stack))
 
 		ability?.apply {
-			if (!cooldownDisplay) return
+			if (!displayCooldown) return
 
 			val matrices = MatrixStack()
 			val displayType = Vice.config.ITEMCD_DISPLAY_TYPE
 			val bgOpacity = Vice.config.ITEMCD_BACKGROUND_OPACITY
 
-			if (this.isOnCooldown()) {
+			if (isOnCooldown()) {
 				val timeRemaining = remainingCooldown()
 				val progressLeft: Float = remainingCooldown() / cooldown
 
-				when {
-					displayType == DisplayType.VANILLA.id -> {
+				when (displayType) {
+					DisplayType.VANILLA.id -> {
 						val k = event.y + MathHelper.floor(16.0f * (1.0f - progressLeft))
 						val l = k + MathHelper.ceil(16.0f * progressLeft)
 						RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, k, event.x + 16, l, 0, Int.MAX_VALUE)
 					}
 
-					displayType == DisplayType.STATIC.id -> {
+					DisplayType.STATIC.id -> {
 						RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, -500, Color(0.9f, 0f, 0f, bgOpacity))
 					}
 
-					displayType == DisplayType.COLORFADE.id -> {
+					DisplayType.COLORFADE.id -> {
 						var redness: Float = max(0f, min(1f, 2.7f * progressLeft))
 						var greenness: Float = max(0f, min(1f, 1.3f - (1.3f * progressLeft)))
 
@@ -224,7 +229,7 @@ object ItemAbilityCooldown {
 						RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, Color(redness, greenness, 0f, bgOpacity))
 					}
 
-					displayType == DisplayType.PERCENTAGE.id -> {
+					DisplayType.PERCENTAGE.id -> {
 						var col = Color(1f, 0f, 0f, bgOpacity)
 
 						if (progressLeft > 0.075f && progressLeft <= 0.5f) col = Color(1f, 1f, 0f, bgOpacity)

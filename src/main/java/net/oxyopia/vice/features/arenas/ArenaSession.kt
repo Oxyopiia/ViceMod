@@ -73,16 +73,22 @@ object ArenaSession {
 	fun totalWaveMobs(): Int {
 		// First round has 7 mobs, adding 2 each round until round 20, where it caps at 43
 		return if (isBossWave()) 1 else {
-			(5 + (waveNumber * 2)).coerceAtMost(43)
+			(3 + (waveNumber * 2)).coerceAtMost(43)
 		}
 	}
 
-	fun calculateCommonDrops(): Int {
+	fun calcCommonDrops(): Int {
 		return round(waveNumber * 1.25).toInt().coerceAtMost(64)
 	}
 
-	fun calculateUniqueDropChance(): Double {
+	fun calcUniqueDropChance(): Double {
 		return (waveNumber * 0.25).coerceAtMost(100.0)
+	}
+
+	fun calcAverageWaveTime(): Long {
+		if (waveNumber == 0) return 0
+
+		return (totalTimeElapsed() - 5) / waveNumber
 	}
 
 	@SubscribeEvent

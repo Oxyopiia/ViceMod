@@ -23,6 +23,10 @@ public class ItemUtils {
 		return client.player != null ? client.player.getMainHandStack() : ItemStack.EMPTY;
 	}
 
+	public static String getHeldItemName() {
+		return getHeldItem().getName().getString();
+	}
+
 	/**
 	 * @author Mojang
 	 */

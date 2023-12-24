@@ -110,7 +110,7 @@ object ItemAbilityCooldown {
 	fun onRenderInGameHud(event: RenderInGameHudEvent) {
 		if (!(Vice.config.ITEM_COOLDOWN_DISPLAY && Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR)) return
 
-		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getHeldItemName())
+		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(ItemUtils.getHeldItem()))
 
 		ability?.apply {
 			if (!isOnCooldown() || !displayCooldown) return
@@ -151,7 +151,7 @@ object ItemAbilityCooldown {
 
 		ability?.let {
 			it.lastClicked = System.currentTimeMillis()
-			DevUtils.sendDebugChat("&&bITEMABILITY &&conLeftClick as&&b " + ability.name, "ITEM_ABILITY_DEBUGGER")
+			DevUtils.sendDebugChat("&&bITEMABILITY &&conLeftClick as&&b " + it.name, "ITEM_ABILITY_DEBUGGER")
 
 			if (!it.soundOnUse && it.remainingCooldown() == 0f) {
 				it.activate()
@@ -169,7 +169,7 @@ object ItemAbilityCooldown {
 
 		ability?.let {
 			it.lastClicked = System.currentTimeMillis()
-			DevUtils.sendDebugChat("&&bITEMABILITY &&donRightClick as&&b " + ability.name, "ITEM_ABILITY_DEBUGGER")
+			DevUtils.sendDebugChat("&&bITEMABILITY &&donRightClick as&&b " + it.name, "ITEM_ABILITY_DEBUGGER")
 
 			if (!it.soundOnUse && it.remainingCooldown() == 0f) {
 				it.activate()
@@ -179,10 +179,11 @@ object ItemAbilityCooldown {
 
 	@SubscribeEvent
 	fun onSubtitle(event: SubtitleEvent) {
-		if (event.subtitle.contains("100%")) {
+		if (event.subtitle.contains("96%")) {
 			ItemAbility.GALACTIC_HAND_CANNON.lastClicked = System.currentTimeMillis()
 		}
 
+		// Known Bug: will clear other cooldowns (daily rewards/arenas)
 		if (Vice.config.HIDE_ITEM_COOLDOWN_TITLES && event.subtitle.contains("Cooldown")) {
 			Vice.client.inGameHud.clearTitle()
 			event.callbackInfo.cancel()
@@ -195,6 +196,7 @@ object ItemAbilityCooldown {
 
 		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(event.stack))
 
+		// May refactor code in the future, a bit too much indentation and ambiguity for my liking
 		ability?.apply {
 			if (!displayCooldown) return
 
@@ -255,7 +257,7 @@ object ItemAbilityCooldown {
 					RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, Color(0f, 1f, 0f, bgOpacity))
 				}
 
-				// Render R if enabled (by Text Option or using Display Type TextOnly)
+				// Render R in slot if enabled (by Text Option or using Display Type TextOnly)
 				if (Vice.config.SHOW_ITEMCD_TEXT || displayType == DisplayType.TEXTONLY.id) {
 					matrices.push()
 					matrices.translate(0.0f, 0.0f, 200.0f)

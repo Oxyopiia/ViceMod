@@ -40,11 +40,15 @@ public class EventManager {
 				if (method.isAnnotationPresent(SubscribeEvent.class)) {
 					final SubscribeEvent subscribeEvent = method.getAnnotation(SubscribeEvent.class);
 					final int prio = subscribeEvent.priority();
+  
 					Class<?>[] parameterTypes = method.getParameterTypes();
+
 					if (parameterTypes.length > 0 && BaseEvent.class.isAssignableFrom(parameterTypes[0])) {
 						final Class<?> eventClazz = parameterTypes[0];
+
 						if (BaseEvent.class.isAssignableFrom(eventClazz)) {
 							final Class<? extends BaseEvent> safeEventClazz = eventClazz.asSubclass(BaseEvent.class);
+
 							DefaultListener listener = new DefaultListener(safeEventClazz, method);
 							listener.setPrio(prio);
 							listener.setSource(object);

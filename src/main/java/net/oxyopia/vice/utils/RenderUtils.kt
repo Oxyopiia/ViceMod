@@ -2,12 +2,16 @@ package net.oxyopia.vice.utils
 
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.font.TextRenderer
+import net.minecraft.client.font.TextRenderer.TextLayerType
 import net.minecraft.client.render.*
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.entity.Entity
+import net.minecraft.util.math.AffineTransformation
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.ColorHelper
 import net.minecraft.util.math.Vec3d
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.events.WorldRenderEvent
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
@@ -65,7 +69,7 @@ object RenderUtils {
 			xPos -= (width / 2).toDouble().toInt()
 		}
 
-		val i = textRenderer.draw(text, xPos.toFloat(), y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
+		val i = textRenderer.draw(text, xPos.toFloat(), y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
 		RenderSystem.disableDepthTest()
 		vertexConsumers.draw()
 		RenderSystem.enableDepthTest()
@@ -78,47 +82,100 @@ object RenderUtils {
 		DevUtils.sendDebugChat("renderBox x,y,z 1: $x1 $y1 $z1 to $x2 $y2 $z2", "GAME_RENDERER_DEBUGGER")
 	}
 
-	fun draw3DLine(stack: MatrixStack, x1: Float, y1: Float, z1: Float, x2: Float, y2: Float, z2: Float, color: Color, lineWidth: Float) {
-		val pos1 = Vec3d(x1.toDouble(), y1.toDouble(), z1.toDouble())
-		val pos2 = Vec3d(x2.toDouble(), y2.toDouble(), z2.toDouble())
-		draw3DLine(stack, pos1, pos2, color, lineWidth)
+	/**
+	 * Adapted from SkyHanni under the GNU Lesser General Public License v2.1.
+	 *
+	 * @link https://github.com/hannibal002/SkyHanni/blob/beta/src/main/java/at/hannibal2/skyhanni/utils/RenderUtils.kt#L691
+	 * @link https://github.com/hannibal002/SkyHanni/blob/beta/LICENSE
+	 * @author hannibal002
+	 */
+	fun WorldRenderEvent.draw3DLine(pos1: Vec3d, pos2: Vec3d, color: Color, lineWidth: Float = 3f, depth: Boolean = true) {
+		RenderSystem.disableCull()
+
+		val camera: Entity = Vice.client.cameraEntity ?: return
+		val tessellator = Tessellator.getInstance()
+		val builder = tessellator.buffer
+
+		val realX = camera.lastRenderX + (camera.x - camera.lastRenderX) * tickDelta
+		val realY = camera.lastRenderY + (camera.y - camera.lastRenderY) * tickDelta
+		val realZ = camera.lastRenderZ + (camera.z - camera.lastRenderZ) * tickDelta
+
+		matrices.push()
+		matrices.translate(-realX, -realY, -realZ)
+
+		RenderSystem.enableBlend()
+		RenderSystem.blendFuncSeparate(770, 771, 1, 0)
+		RenderSystem.lineWidth(lineWidth)
+
+		if (!depth) {
+			GL11.glDisable(GL11.GL_DEPTH_TEST)
+			RenderSystem.depthMask(false)
+		}
+
+		val matrix4f = matrices.peek().positionMatrix
+
+		builder.begin(VertexFormat.DrawMode.LINE_STRIP, VertexFormats.POSITION_COLOR)
+		builder.vertex(matrix4f, pos1.x.toFloat(), pos1.y.toFloat(), pos1.z.toFloat()).color(color.rgb).next()
+		builder.vertex(matrix4f, pos2.x.toFloat(), pos2.y.toFloat(), pos2.z.toFloat()).color(color.rgb).next()
+		tessellator.draw()
+
+		matrices.pop()
+
+		if (!depth) {
+			GL11.glEnable(GL11.GL_DEPTH_TEST)
+			RenderSystem.depthMask(true)
+		}
+
+		RenderSystem.disableBlend()
+		RenderSystem.enableDepthTest()
 	}
 
-	/**
-	 * Draw a line between two points.
-	 * Adapted from Skyblocker mod under the GNU LESSER GENERAL PUBLIC LICENSE
-	 *
-	 * does not work yet :(
-	 *
-	 * @author hysky
-	 */
-	fun draw3DLine(stack: MatrixStack, point1: Vec3d, point2: Vec3d, color: Color, lineWidth: Float) {
-		if (Vice.client.cameraEntity == null) return
-		val cameraPos = Vice.client.cameraEntity!!.pos
+	fun WorldRenderEvent.drawString(
+			position: Vec3d,
+			string: String,
+			color: Color,
+			size: Float = 0.25f,
+			center: Boolean = true,
+			offset: Float = -1f,
+			visibleThroughObjects: Boolean = true
+	) {
+		val client = Vice.client
+		val camera: Camera = client.gameRenderer.camera
+		if (camera.isReady && client.entityRenderDispatcher.gameOptions != null) {
+			val textRenderer: TextRenderer = client.textRenderer
 
-//		stack.push();
-//		stack.translate(-cameraPos.x, cameraPos.y, -cameraPos.z);
-		val tessellator = Tessellator.getInstance()
-		val buffer = tessellator.buffer
-		val matrix3f = stack.peek().normalMatrix
-		val matrix4f = stack.peek().positionMatrix
-		GL11.glEnable(GL11.GL_LINE_SMOOTH)
-		GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST)
-		RenderSystem.setShader { GameRenderer.getRenderTypeLinesProgram() }
-		RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
-		RenderSystem.lineWidth(lineWidth)
-		RenderSystem.enableBlend()
-		RenderSystem.defaultBlendFunc()
-		RenderSystem.disableCull()
-		RenderSystem.enableDepthTest()
-		buffer.begin(VertexFormat.DrawMode.LINE_STRIP, VertexFormats.LINES)
-		val normal = point2.subtract(point1).normalize()
-		buffer.vertex(matrix4f, point1.x.toFloat(), point1.y.toFloat(), point1.z.toFloat()).color(color.rgb).normal(matrix3f, normal.x.toFloat(), normal.y.toFloat(), normal.z.toFloat()).next()
-		buffer.vertex(matrix4f, point2.x.toFloat(), point2.y.toFloat(), point2.z.toFloat()).color(color.rgb).normal(matrix3f, normal.x.toFloat(), normal.y.toFloat(), normal.z.toFloat()).next()
-		tessellator.draw()
-		//		stack.pop();
-		GL11.glDisable(GL11.GL_LINE_SMOOTH)
-		RenderSystem.lineWidth(1f)
-		RenderSystem.enableCull()
+			val x = camera.pos.x
+			val y = camera.pos.y
+			val z = camera.pos.z
+
+			val matrixStack = RenderSystem.getModelViewStack()
+			matrixStack.push()
+			matrixStack.translate((position.x - x).toFloat().toDouble(), ((position.y - y).toFloat() + 0.07f).toDouble(), (position.z - z).toFloat().toDouble())
+			matrixStack.scale(size, -size, size)
+
+			if (visibleThroughObjects) {
+				RenderSystem.disableDepthTest()
+			} else {
+				RenderSystem.enableDepthTest()
+			}
+
+			RenderSystem.depthMask(true)
+			matrixStack.scale(-1.0f, 1.0f, 1.0f)
+			RenderSystem.applyModelViewMatrix()
+
+			var g = if (center) (-textRenderer.getWidth(string)).toFloat() / 2.0f else 0.0f
+			g -= offset / size
+
+			val immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().buffer)
+			val textLayer = if (visibleThroughObjects) TextLayerType.SEE_THROUGH else TextLayerType.NORMAL
+
+			textRenderer.draw(string, g, 0.0f, color.rgb, false, AffineTransformation.identity().matrix, immediate, textLayer, 0, 15728880)
+			immediate.draw()
+
+			RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f)
+			RenderSystem.enableDepthTest()
+			matrixStack.pop()
+			RenderSystem.applyModelViewMatrix()
+		}
 	}
 }

@@ -54,10 +54,7 @@ public class Config extends Vigilant {
         EssentialAPI.getNotifications().push("Vice", "Hopefully opened Discord/Web Browser!", 3f);
     }
 
-    // Quality of Life
-
-
-//    public boolean COPY_CHAT_TO_CLIPBOARD = true;
+    // General/Developer
 
     @Property(
         type = PropertyType.SWITCH,
@@ -90,6 +87,8 @@ public class Config extends Vigilant {
     )
     public int DEV_GAMING_MODE = 0;
 
+    // General/Quality of Life
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Snowball Cannon Projection",
@@ -120,46 +119,6 @@ public class Config extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Display Defence Number",
-        description = "Displays your exact defence number of all pieces of your armor combined.",
-        category = "General",
-        subcategory = "Quality of Life",
-        searchTags = {"armour"}
-    )
-    public boolean DISPLAY_DEFENCE_HUD = false;
-
-    @Property(
-    	type = PropertyType.SWITCH,
-    	name = "Show Defence Icon",
-    	description = "Display a defence icon under the defence number",
-    	category = "General",
-    	subcategory = "Quality of Life"
-    )
-    public boolean DEFENCE_HUD_ICON = true;
-
-// Add back soon
-//    @Property(
-//        type = PropertyType.SWITCH,
-//        name = "Hide Armor Bar",
-//        description = "Stops the armor bar from rendering.",
-//        category = "General",
-//        subcategory = "Quality of Life",
-//        searchTags = {"armour", "defence"}
-//    )
-//    public boolean HIDE_ARMOR_BAR = false;
-//
-//    @Property(
-//        type = PropertyType.SWITCH,
-//        name = "Hide Hunger Bar",
-//        description = "Stops the hunger bar from rendering.",
-//        category = "General",
-//        subcategory = "Quality of Life",
-//        searchTags = {"food", "meter"}
-//    )
-//    public boolean HIDE_HUNGER_BAR = true;
-
-    @Property(
-        type = PropertyType.SWITCH,
         name = "Hide Revolver Blindness",
         description = "Hides the blindness effect when aiming the revolver.",
         category = "General",
@@ -185,7 +144,8 @@ public class Config extends Vigilant {
     )
     public boolean HIDE_SERVER_TIPS = true;
 
-    // General/Item Cooldown Display
+    // General/Item Cooldowns
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Item Cooldown Display",
@@ -274,29 +234,7 @@ public class Config extends Vigilant {
     )
     public boolean FISHING_DING_DONT_DETECT_SOUND_PACKET = true;
 
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Oyster Queen Display",
-        description = "Displays your current quest progress for Oyster Queen while in World 6.",
-        category = "General",
-        subcategory = "Fishing"
-    )
-    public boolean OYSTER_QUEEN_DISPLAY = false;
-
-
-
-    // Category /General/Bug Fixes
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "Fix Player Count in Scoreboard",
-            description = "When not killing a mob in a while, the scoreboard becomes desynced with the player count, so this attempts to fix it.",
-            category = "General",
-            subcategory = "Bug Fixes"
-    )
-    public boolean FIX_SCOREBOARD_PLAYER_COUNT = true;
-
-
-    // Category /Arenas/Quality of Life
+    // Arenas/Quality of Life
 
     @Property(
         type = PropertyType.SWITCH,
@@ -327,7 +265,7 @@ public class Config extends Vigilant {
     public boolean ARENAS_COOLDOWN_NOTIFIER = true;
 
 
-    // Category /Arenas/Live Arena Info
+    // Arenas/Live Arena Info
     @Property(
         type = PropertyType.SWITCH,
         name = "Live Arena Information",
@@ -383,11 +321,12 @@ public class Config extends Vigilant {
     )
     public boolean ARENAS_MOB_EFFECT_NOTIFICATION = true;
 
-    // Category /Bosses/Quality of Life
+    // Bosses/Quality of Life
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Boss Despawn Timers",
-        description = "Adjusts the Bossbar to display the Bosse's despawn timer.\n§cComing in a future release!",
+        description = "Adjusts the Bossbar to display the despawn timer of the boss.\n§cComing in a future release!",
         category = "Bosses",
         subcategory = "Quality of Life"
     )
@@ -395,33 +334,15 @@ public class Config extends Vigilant {
     
     @Property(
         type = PropertyType.SWITCH,
-        name = "Disable Boss Sounds",
-        description = "Removes boss sounds, for now only works with PPP, may be separated in the future.\n§cComing in a future release!",
+        name = "Silence Boss Sounds",
+        description = "Silences boss sound effects, may be separated into a per-boss basis the future.\n§cComing in a future release!",
         category = "Bosses",
         subcategory = "Quality of Life"
     )
     public boolean DISABLE_BOSS_SOUNDS = false;
-    
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Nearby Amethyst Warning",
-        description = "Draws color coded lines from the player to nearby Amethysts.\nPlays a warning chime when within the damage radius of them.",
-        category = "Bosses",
-        subcategory = "Shadow Gelato"
-    )
-    public boolean SHADOWGELATO_AMETHYST_WARNING = false;
-    
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Miniboss Health Info",
-        description = "Displays health of Shadow Gelato's Minibosses in Phase 2",
-        category = "Bosses",
-        subcategory = "Shadow Gelato"
-    )
-    public boolean SHADOWGELATO_MINIBOSS_HEALTH = false;
 
+    // Sounds
 
-    // Category /Sounds/
     @Property(
         type = PropertyType.SLIDER,
         name = "8-Bit Katana Volume",
@@ -449,7 +370,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SLIDER,
         name = "Bedrock Breaker Volume",
-        description = "§cMay have inaccuracies with the 'regenerating' (beacon) sounds.",
+        description = "§eMay have inaccuracies with the 'regenerating' (beacon) sounds.",
         category = "Sounds",
         max = 200
     )
@@ -482,7 +403,6 @@ public class Config extends Vigilant {
         addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
         addDependency("SNOWBALL_CANNON_PROJECTION_COLOR", "SNOWBALL_CANNON_PROJECTION");
         addDependency("FISHING_DING_DONT_DETECT_SOUND_PACKET", "FISHING_DING");
-        addDependency("DEFENCE_HUD_ICON", "DISPLAY_DEFENCE_HUD");
 
         addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
         addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");

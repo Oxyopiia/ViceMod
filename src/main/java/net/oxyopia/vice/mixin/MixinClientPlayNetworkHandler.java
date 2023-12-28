@@ -1,9 +1,11 @@
 package net.oxyopia.vice.mixin;
 
 import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.network.packet.s2c.play.*;
-//import net.oxyopia.vice.features.bosses.ShadowGelato;
 import net.oxyopia.vice.events.BlockUpdatePacketEvent;
+import net.oxyopia.vice.events.EntityDeathEvent;
 import net.oxyopia.vice.events.EntitySpawnPacketEvent;
 import net.oxyopia.vice.events.EntityVelocityPacketEvent;
 import net.oxyopia.vice.events.SoundPacketEvent;
@@ -30,7 +32,7 @@ public class MixinClientPlayNetworkHandler {
 	}
 
 	@Inject(at = @At("HEAD"), method = "onEntityVelocityUpdate")
-	private void fishingVelocityUpdate(EntityVelocityUpdateS2CPacket packet, CallbackInfo callbackInfo){
+	private void onEntityVelocityUpdate(EntityVelocityUpdateS2CPacket packet, CallbackInfo callbackInfo){
 		if (client.isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new EntityVelocityPacketEvent(packet));
 		}
@@ -43,8 +45,19 @@ public class MixinClientPlayNetworkHandler {
 		}
 	}
 	
+	@Inject(at = @At("HEAD"), method = "onEntityStatus")
+	private void onEntityStatusUpdate(EntityStatusS2CPacket packet, CallbackInfo ci) {
+		if (client.isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
+			if (packet.getStatus() == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
+				Entity entity = packet.getEntity(Utils.INSTANCE.getWorld());
+
+				if (entity != null) EVENT_MANAGER.publish(new EntityDeathEvent(entity));
+			}
+		}
+	}
+	
 	@Inject(at = @At("HEAD"), method = "onBlockUpdate")
-	private void shadowGelatoFeatures(BlockUpdateS2CPacket packet, CallbackInfo ci) {
+	private void onBlockUpdate(BlockUpdateS2CPacket packet, CallbackInfo ci) {
 		if (client.isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new BlockUpdatePacketEvent(packet));
 		}

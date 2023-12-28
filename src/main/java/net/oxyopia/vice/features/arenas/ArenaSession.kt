@@ -1,7 +1,10 @@
 package net.oxyopia.vice.features.arenas
 
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.oxyopia.vice.Vice.EVENT_MANAGER
 import net.oxyopia.vice.events.ArenaWaveChangeEvent
+import net.oxyopia.vice.events.EntityDeathEvent
 import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.WorldChangeEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
@@ -39,7 +42,7 @@ object ArenaSession {
 
 	fun setWave(n: Int) {
 		waveNumber = n
-		waveMobsKilled = 0
+		waveMobsKilled = if (n != 1) -1 else 0 // This is done because DoomTowers starts the next wave in the same tick as the death event
 		waveStartTime = System.currentTimeMillis()
 		EVENT_MANAGER.publish(ArenaWaveChangeEvent(n))
 		DevUtils.sendDebugChat("&&dARENAS&&r Wave Updated to &&a$n &&r($waveStartTime)", "ARENAS_DEBUGGER")
@@ -71,7 +74,7 @@ object ArenaSession {
 	}
 
 	fun totalWaveMobs(): Int {
-		// First round has 7 mobs, adding 2 each round until round 20, where it caps at 43
+		// First round has 5 mobs, adding 2 each round until round 20, where it caps at 43
 		return if (isBossWave()) 1 else {
 			(3 + (waveNumber * 2)).coerceAtMost(43)
 		}
@@ -117,5 +120,13 @@ object ArenaSession {
 		} else if (event.title.contains("MINIBOSS")) {
 			setWave(waveNumber + 1)
 		}
+	}
+
+	@SubscribeEvent
+	fun onEntityDeath(event: EntityDeathEvent) {
+		if (!active || !relatedWorld.isInWorld()) return
+		if (event.entity !is LivingEntity || event.entity is PlayerEntity) return
+
+		addKill()
 	}
 }

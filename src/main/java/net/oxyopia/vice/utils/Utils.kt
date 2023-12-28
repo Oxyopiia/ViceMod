@@ -4,6 +4,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException
 import gg.essential.universal.UChat
 import gg.essential.universal.wrappers.message.UTextComponent
 import net.minecraft.client.sound.PositionedSoundInstance
+import net.minecraft.client.world.ClientWorld
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.scoreboard.ScoreboardPlayerScore
@@ -20,7 +21,9 @@ object Utils {
 
 	var scoreboardData: Collection<ScoreboardPlayerScore> = emptyList()
 
-	fun getWorld(): String? = Vice.client.world?.registryKey?.value?.path
+	fun getWorld(): ClientWorld? = Vice.client.world
+
+	fun getWorldString(): String? = Vice.client.world?.registryKey?.value?.path
 
 	fun sendViceMessage(msg: String) {
 		UChat.chat("${Vice.chatPrefix}${msg.replace("&&", "§")}")

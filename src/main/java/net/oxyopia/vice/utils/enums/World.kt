@@ -31,7 +31,7 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	Tower("overworld", "The Tower", type = WorldType.TOWER);
 
 	fun isInWorld(): Boolean {
-		Utils.getWorld()?.let {
+		Utils.getWorldString()?.let {
 			return Utils.inDoomTowers && this == World.getById(it)
 		}
 

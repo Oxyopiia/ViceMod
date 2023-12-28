@@ -118,26 +118,10 @@ public class DevConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "InGameHud mixin",
-		description = "title displays",
+		description = "Debugger for title data, subtitle data, and more",
 		category = "Debugs"
 	)
 	public boolean INGAMEHUD_MIXIN_DEBUGGER = false;
-
-	@Property(
-	        type = PropertyType.SWITCH,
-	        name = "shadow gelato amethyst rendering debugger",
-	        description = "yes",
-	        category = "Debugs"
-	)
-	public boolean SHADOW_GELATO_AMETHYST = false;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Utils info",
-		description = "utisl info",
-		category = "Debugs"
-	)
-	public boolean UTILS_INFO = false;
 
 	@Property(
 		type = PropertyType.SWITCH,

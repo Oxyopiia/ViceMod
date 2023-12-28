@@ -14,7 +14,7 @@ import net.oxyopia.vice.utils.Utils;
 
 public class TestCommand {
 	public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
-		dispatcher.register(ClientCommandManager.literal("test")
+		dispatcher.register(ClientCommandManager.literal("vicedevdata")
 			.executes(context -> {
 				EssentialAPI.getNotifications().push("Vice", "This is a notification test", 4f, () -> {
 					Utils.INSTANCE.sendViceMessage("Notification clicked");

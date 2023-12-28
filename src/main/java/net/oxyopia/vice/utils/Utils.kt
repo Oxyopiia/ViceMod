@@ -15,9 +15,6 @@ import net.oxyopia.vice.Vice
 import kotlin.math.floor
 
 object Utils {
-	/**
-	 * Use inDoomTowers() method instead, this is so dev mode bypassing is available
-	 */
 	var inDoomTowers = false
 		get() = field || (Vice.config.DEVMODE && Vice.devConfig.BYPASS_INSTANCE_CHECK)
 

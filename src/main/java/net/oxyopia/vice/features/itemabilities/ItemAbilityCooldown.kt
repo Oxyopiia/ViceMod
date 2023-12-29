@@ -15,8 +15,8 @@ import net.oxyopia.vice.events.SubtitleEvent
 import net.oxyopia.vice.events.RenderItemSlotEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
+import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.ItemUtils
-import net.oxyopia.vice.utils.RenderUtils
 import java.awt.Color
 import kotlin.math.ceil
 import kotlin.math.max
@@ -133,7 +133,7 @@ object ItemAbilityCooldown {
 			matrices.translate(0.0f, 0.0f, 200.0f)
 
 			val roundedFloat: String = String.format("%.0f", ceil(remainingCooldown().toDouble()))
-			RenderUtils.drawText(matrices, Vice.client.textRenderer, roundedFloat, xPos, yPos, color.rgb, Vice.config.HUD_TEXT_SHADOW, centered)
+			HudUtils.drawText(matrices, Vice.client.textRenderer, roundedFloat, xPos, yPos, color.rgb, Vice.config.HUD_TEXT_SHADOW, centered)
 
 			matrices.pop()
 		}
@@ -212,11 +212,11 @@ object ItemAbilityCooldown {
 					DisplayType.VANILLA.id -> {
 						val k = event.y + MathHelper.floor(16.0f * (1.0f - progressLeft))
 						val l = k + MathHelper.ceil(16.0f * progressLeft)
-						RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, k, event.x + 16, l, 0, Int.MAX_VALUE)
+						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, k, event.x + 16, l, 0, Int.MAX_VALUE)
 					}
 
 					DisplayType.STATIC.id -> {
-						RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, -500, Color(0.9f, 0f, 0f, bgOpacity))
+						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, -500, Color(0.9f, 0f, 0f, bgOpacity))
 					}
 
 					DisplayType.COLORFADE.id -> {
@@ -228,7 +228,7 @@ object ItemAbilityCooldown {
 							greenness = max(0f, min(1f, Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE - (Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE * progressLeft)))
 						}
 
-						RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, Color(redness, greenness, 0f, bgOpacity))
+						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, Color(redness, greenness, 0f, bgOpacity))
 					}
 
 					DisplayType.PERCENTAGE.id -> {
@@ -237,7 +237,7 @@ object ItemAbilityCooldown {
 						if (progressLeft > 0.075f && progressLeft <= 0.5f) col = Color(1f, 1f, 0f, bgOpacity)
 						else if (progressLeft <= 0.075f) col = Color(0.4f, 1f, 0f, bgOpacity)
 
-						RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, col)
+						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, col)
 					}
 				}
 
@@ -247,21 +247,21 @@ object ItemAbilityCooldown {
 
 					matrices.push()
 					matrices.translate(0.0f, 0.0f, 200.0f)
-					RenderUtils.drawText(matrices, event.textRenderer, roundedFloat, event.x, event.y + 9, 0xFFFFFF, true, false)
+					HudUtils.drawText(matrices, event.textRenderer, roundedFloat, event.x, event.y + 9, 0xFFFFFF, true, false)
 					matrices.pop()
 				}
 
 			} else {
 				// Render Green background if enabled
 				if (!Vice.config.HIDE_ITEMCD_WHEN_READY && (displayType != DisplayType.VANILLA.id && displayType != DisplayType.TEXTONLY.id)) {
-					RenderUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, Color(0f, 1f, 0f, bgOpacity))
+					HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, Color(0f, 1f, 0f, bgOpacity))
 				}
 
 				// Render R in slot if enabled (by Text Option or using Display Type TextOnly)
 				if (Vice.config.SHOW_ITEMCD_TEXT || displayType == DisplayType.TEXTONLY.id) {
 					matrices.push()
 					matrices.translate(0.0f, 0.0f, 200.0f)
-					RenderUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, 0xFFFFFF, true, false)
+					HudUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, 0xFFFFFF, true, false)
 					matrices.pop()
 				}
 			}

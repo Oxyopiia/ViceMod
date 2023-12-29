@@ -9,7 +9,6 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.scoreboard.ScoreboardPlayerScore
 import net.minecraft.sound.SoundEvent
-import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
 
@@ -40,12 +39,6 @@ object Utils {
 		} catch (err: Exception) {
 			DevUtils.sendErrorMessage(err, "An error occurred attempting to play a sound")
 		}
-	}
-
-	fun sendVanillaTitle(title: String, subtitle: String, stayTime: Float = 1f, fadeinout: Float = 0.25f) {
-		Vice.client.inGameHud.setSubtitle(Text.of(subtitle.replace("&&", "§")))
-		Vice.client.inGameHud.setTitle(Text.of(title.replace("&&", "§")))
-		Vice.client.inGameHud.setTitleTicks((20 * fadeinout).toInt(), (20 * stayTime).toInt(), (20 * fadeinout).toInt())
 	}
 
 	/**

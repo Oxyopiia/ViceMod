@@ -7,6 +7,7 @@ import net.oxyopia.vice.events.EntityVelocityPacketEvent
 import net.oxyopia.vice.events.SoundPacketEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
+import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
 
 object Fishing {
@@ -59,12 +60,12 @@ object Fishing {
 
 		if (lastDetectedSound > 0 && currentTime - lastDetectedSound <= MAX_SOUND_DETECTION_TIME) {
 			Utils.playSound(Identifier("minecraft", BITE_SOUND), 1.4f, 3f)
-			Utils.sendVanillaTitle("", "&&bBite!", 0.8f, 0.1f)
+			HudUtils.sendVanillaTitle("", "&&bBite!", 0.8f, 0.1f)
 			lastHandled = currentTime
 			lastDetectedSound = -1
 		} else if (Vice.config.FISHING_DING_DONT_DETECT_SOUND_PACKET && currentTime - lastHandled >= 1000) {
 			Utils.playSound(Identifier("minecraft", BITE_SOUND), 1.4f, 3f)
-			Utils.sendVanillaTitle("", "&&bBite!", 0.8f, 0.1f)
+			HudUtils.sendVanillaTitle("", "&&bBite!", 0.8f, 0.1f)
 			lastHandled = currentTime
 		}
 	}

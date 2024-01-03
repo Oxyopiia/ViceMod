@@ -6,6 +6,7 @@ import gg.essential.vigilance.data.*;
 import java.awt.*;
 import java.io.File;
 
+@SuppressWarnings("unused")
 public class DevConfig extends Vigilant {
 
 	/** EXPERIMENTS */
@@ -86,7 +87,7 @@ public class DevConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Sounds",
-		description = "sends sound information when there is a FUCKING sound (sent from server only)",
+		description = "sends sound information when there is a LITERAL SOUND (sent from server only)",
 		category = "Debugs"
 	)
 	public boolean SEND_SOUND_INFO = false;

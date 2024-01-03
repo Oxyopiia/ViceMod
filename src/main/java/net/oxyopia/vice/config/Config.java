@@ -11,6 +11,7 @@ import java.awt.*;
 import java.io.File;
 import java.net.URI;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +41,7 @@ public class Config extends Vigilant {
         subcategory = "Vice"
     )
     public boolean HUD_TEXT_SHADOW = true;
-    
+
     @Property(
         type = PropertyType.BUTTON,
         name = "Vice Discord",
@@ -78,11 +79,11 @@ public class Config extends Vigilant {
     }
 
     @Property(
-    	type = PropertyType.SELECTOR,
-    	name = "Gaming Mode",
-    	description = "Choose your epic gaming mode for optimal gaming performance",
-    	category = "General",
-    	subcategory = "Developer",
+        type = PropertyType.SELECTOR,
+        name = "Gaming Mode",
+        description = "Choose your epic gaming mode for optimal gaming performance",
+        category = "General",
+        subcategory = "Developer",
         options = {"None", "Vice", "DoomTowers smashing", "msmdude", "digmonireland", "Trump", "clive", "law Abiding Citizen"}
     )
     public int DEV_GAMING_MODE = 0;
@@ -92,9 +93,10 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Snowball Cannon Projection",
-        description = "Displays a line of projection of where the Snowball Cannon can reach.",
+        description = "Displays a line of projection of where the Snowball Cannon can reach.\n§cComing soon!",
         category = "General",
-        subcategory = "Quality of Life"
+        subcategory = "Quality of Life",
+        hidden = true
     )
     public boolean SNOWBALL_CANNON_PROJECTION = false;
 
@@ -127,20 +129,20 @@ public class Config extends Vigilant {
     public boolean HIDE_REVOLVER_BLINDNESS = true;
 
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Better Tower Beacon UI",
-            description = "Display the floor number as a stack size, and add the featured worlds in the lore.",
-            category = "General",
-            subcategory = "Quality of Life"
+        type = PropertyType.SWITCH,
+        name = "Better Tower Beacon UI",
+        description = "Display the floor number as a stack size, and add the featured worlds in the lore.",
+        category = "General",
+        subcategory = "Quality of Life"
     )
     public boolean BETTER_TOWER_BEACON_UI = true;
-    
+
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Hide Server Tips",
-            description = "Hides messages such as the periodic Discord tip in chat.",
-            category = "General",
-            subcategory = "Quality of Life"
+        type = PropertyType.SWITCH,
+        name = "Hide Server Tips",
+        description = "Hides messages such as the periodic Discord tip in chat.",
+        category = "General",
+        subcategory = "Quality of Life"
     )
     public boolean HIDE_SERVER_TIPS = true;
 
@@ -165,20 +167,20 @@ public class Config extends Vigilant {
     public int ITEMCD_DISPLAY_TYPE = 1;
 
     @Property(
-    	type = PropertyType.SWITCH,
-    	name = "Show Timer/Ready Text in Hotbar",
-    	description = "Displays a text stating the cooldown remaining or when ready.",
-    	category = "General",
-    	subcategory = "Item Cooldowns"
+        type = PropertyType.SWITCH,
+        name = "Show Timer/Ready Text in Hotbar",
+        description = "Displays a text stating the cooldown remaining or when ready.",
+        category = "General",
+        subcategory = "Item Cooldowns"
     )
     public boolean SHOW_ITEMCD_TEXT = true;
 
     @Property(
-    	type = PropertyType.SWITCH,
-    	name = "Show Timer/Ready Text near Crosshair",
-    	description = "Displays a text stating the cooldown remaining or when ready near your crosshair.\n§eCan be customized in Developer options (search 'dev')",
-    	category = "General",
-    	subcategory = "Item Cooldowns"
+        type = PropertyType.SWITCH,
+        name = "Show Timer/Ready Text near Crosshair",
+        description = "Displays a text stating the cooldown remaining or when ready near your crosshair.\n§eCan be customized in Developer options (search 'dev'), will be migrated to HUD Manager soon!",
+        category = "General",
+        subcategory = "Item Cooldowns"
     )
     public boolean SHOW_ITEMCD_TEXT_CROSSHAIR = true;
 
@@ -192,22 +194,22 @@ public class Config extends Vigilant {
     public boolean HIDE_ITEMCD_WHEN_READY = false;
 
     @Property(
-    	type = PropertyType.PERCENT_SLIDER,
-    	name = "Background Opacity",
-    	description = "Opacity for any item backgrounds rendered in the Item Cooldown Display.",
-    	category = "General",
-    	subcategory = "Item Cooldowns",
+        type = PropertyType.PERCENT_SLIDER,
+        name = "Background Opacity",
+        description = "Opacity for any item backgrounds rendered in the Item Cooldown Display.",
+        category = "General",
+        subcategory = "Item Cooldowns",
         minF = 0.01f,
         maxF = 1f
     )
     public float ITEMCD_BACKGROUND_OPACITY = 0.2f;
 
     @Property(
-    	type = PropertyType.SWITCH,
-    	name = "Hide Cooldown Titles",
-    	description = "Hides the Cooldown titles when trying to use an item while on Cooldown\n",
-    	category = "General",
-    	subcategory = "Item Cooldowns"
+        type = PropertyType.SWITCH,
+        name = "Hide Cooldown Titles",
+        description = "Hides the Cooldown titles when trying to use an item while on Cooldown.",
+        category = "General",
+        subcategory = "Item Cooldowns"
     )
     public boolean HIDE_ITEM_COOLDOWN_TITLES = false;
 
@@ -224,13 +226,13 @@ public class Config extends Vigilant {
     public boolean FISHING_DING = true;
 
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Don't Detect Bite with Sound Packets",
-            description = "Allows for infinite range of Fishing Bite Ding by not using Sound packets, only relying on Velocity packets.\n"+
-                "§eNot extensively tested, may provide false positives.\n" +
-                "§aWhen within normal setting range, works as usual.",
-            category = "General",
-            subcategory = "Fishing"
+        type = PropertyType.SWITCH,
+        name = "Don't Detect Bite with Sound Packets",
+        description = "Allows for infinite range of Fishing Bite Ding by not using Sound packets, only relying on Velocity packets.\n"+
+            "§eNot extensively tested, may provide false positives.\n" +
+            "§aWhen within normal setting range, works as usual.",
+        category = "General",
+        subcategory = "Fishing"
     )
     public boolean FISHING_DING_DONT_DETECT_SOUND_PACKET = true;
 
@@ -241,7 +243,8 @@ public class Config extends Vigilant {
         name = "Draw Danger Zones",
         description = "Draws a Bounding Box around the zone where Mobs spawn in Arenas",
         category = "Arenas",
-        subcategory = "Quality of Life"
+        subcategory = "Quality of Life",
+        hidden = true
     )
     public boolean DRAW_ARENA_DANGER_ZONES = false;
 
@@ -254,7 +257,7 @@ public class Config extends Vigilant {
         allowAlpha = false
     )
     public Color ARENA_DANGER_ZONE_COLOR = new Color(255, 0, 0);
-    
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Arenas Cooldown Notification",
@@ -271,7 +274,8 @@ public class Config extends Vigilant {
         name = "Live Arena Information",
         description = "Display useful statistics during an Arena session. At base, displays current Wave.",
         category = "Arenas",
-        subcategory = "Live Arena Info"
+        subcategory = "Live Arena Info",
+        hidden = true
     )
     public boolean LIVE_ARENA_TOGGLE = false;
 
@@ -313,11 +317,11 @@ public class Config extends Vigilant {
     public int LIVE_ARENA_DROPS = 2;
 
     @Property(
-    	type = PropertyType.SWITCH,
-    	name = "Mob Effects Notification",
-    	description = "Sends a chat message when mobs gain certain potion effects during an Arena.",
-    	category = "Arenas",
-    	subcategory = "Live Arena Info"
+        type = PropertyType.SWITCH,
+        name = "Mob Effects Notification",
+        description = "Sends a chat message when mobs gain certain potion effects during an Arena.",
+        category = "Arenas",
+        subcategory = "Live Arena Info"
     )
     public boolean ARENAS_MOB_EFFECT_NOTIFICATION = true;
 
@@ -331,7 +335,7 @@ public class Config extends Vigilant {
         subcategory = "Quality of Life"
     )
     public boolean BOSS_DESPAWN_TIMERS = true;
-    
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Silence Boss Sounds",
@@ -441,16 +445,18 @@ public class Config extends Vigilant {
                 String key1 = entry1.getKey();
                 String key2 = entry2.getKey();
 
-                if ("Vice".equals(key1)) {
-                    return -1;
-                } else if ("Vice".equals(key2)) {
-                    return 1;
-                } else if ("Quality of Life".equals(key1)) {
-                    return -1;
-                } else if ("Quality of Life".equals(key2)) {
-                    return 1;
+                // This places Vice & Quality of Life at the top, and Developer at the bottom.
+                Map<String, Integer> keyOrderMap = new HashMap<>();
+                keyOrderMap.put("Vice", -2);
+                keyOrderMap.put("Quality of Life", -1);
+                keyOrderMap.put("Developer", 1);
+
+                int order1 = keyOrderMap.getOrDefault(key1, 0);
+                int order2 = keyOrderMap.getOrDefault(key2, 0);
+
+                if (order1 != order2) {
+                    return Integer.compare(order1, order2);
                 } else {
-                    // If neither "Vice" nor "Quality of Life", compare alphabetically
                     return key1.compareTo(key2);
                 }
             };

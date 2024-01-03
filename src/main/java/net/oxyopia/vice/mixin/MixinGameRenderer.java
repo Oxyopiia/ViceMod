@@ -1,5 +1,6 @@
 package net.oxyopia.vice.mixin;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.oxyopia.vice.events.WorldRenderEvent;
@@ -16,7 +17,7 @@ public class MixinGameRenderer {
 
 	@Inject(at = @At("HEAD"), method = "renderWorld")
 	private void renderWorld(float tickDelta, long limitTime, MatrixStack matrices, CallbackInfo ci) {
-		if (client.isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
+		if (MinecraftClient.getInstance().isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new WorldRenderEvent(tickDelta, limitTime, matrices));
 		}
 	}

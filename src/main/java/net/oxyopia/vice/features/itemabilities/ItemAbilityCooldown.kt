@@ -1,5 +1,6 @@
 package net.oxyopia.vice.features.itemabilities
 
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
@@ -7,12 +8,7 @@ import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket
 import net.minecraft.util.ClickType
 import net.minecraft.util.math.MathHelper
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.events.SoundPacketEvent
-import net.oxyopia.vice.events.RenderInGameHudEvent
-import net.oxyopia.vice.events.LeftClickEvent
-import net.oxyopia.vice.events.RightClickEvent
-import net.oxyopia.vice.events.SubtitleEvent
-import net.oxyopia.vice.events.RenderItemSlotEvent
+import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
@@ -133,7 +129,8 @@ object ItemAbilityCooldown {
 			matrices.translate(0.0f, 0.0f, 200.0f)
 
 			val roundedFloat: String = String.format("%.0f", ceil(remainingCooldown().toDouble()))
-			HudUtils.drawText(matrices, Vice.client.textRenderer, roundedFloat, xPos, yPos, color.rgb, Vice.config.HUD_TEXT_SHADOW, centered)
+			HudUtils.drawText(matrices,
+				MinecraftClient.getInstance().textRenderer, roundedFloat, xPos, yPos, color.rgb, Vice.config.HUD_TEXT_SHADOW, centered)
 
 			matrices.pop()
 		}
@@ -145,7 +142,7 @@ object ItemAbilityCooldown {
 	fun onLeftClick(event: LeftClickEvent) {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
-		val stack: ItemStack = if (Vice.client.player != null) Vice.client.player!!.mainHandStack else ItemStack.EMPTY
+		val stack: ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
 		val name = ItemUtils.getNameWithoutEnchants(stack)
 		val ability: ItemAbility? = ItemAbility.getByName(name, ClickType.LEFT)
 
@@ -164,7 +161,7 @@ object ItemAbilityCooldown {
 	fun onRightClick(event: RightClickEvent) {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
-		val stack: ItemStack = if (Vice.client.player != null) Vice.client.player!!.mainHandStack else ItemStack.EMPTY
+		val stack: ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
 		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(stack), ClickType.RIGHT)
 
 		ability?.let {
@@ -185,7 +182,7 @@ object ItemAbilityCooldown {
 
 		// Known Bug: will clear other cooldowns (daily rewards/arenas)
 		if (Vice.config.HIDE_ITEM_COOLDOWN_TITLES && event.subtitle.contains("Cooldown")) {
-			Vice.client.inGameHud.clearTitle()
+			MinecraftClient.getInstance().inGameHud.clearTitle()
 			event.callbackInfo.cancel()
 		}
 	}

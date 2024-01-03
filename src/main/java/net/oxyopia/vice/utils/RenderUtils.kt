@@ -1,6 +1,7 @@
 package net.oxyopia.vice.utils
 
 import com.mojang.blaze3d.systems.RenderSystem
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.font.TextRenderer.TextLayerType
 import net.minecraft.client.render.*
@@ -9,7 +10,6 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.math.AffineTransformation
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
-import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.WorldRenderEvent
 import org.lwjgl.opengl.GL11
 import java.awt.Color
@@ -31,7 +31,7 @@ object RenderUtils {
 	fun WorldRenderEvent.draw3DLine(pos1: Vec3d, pos2: Vec3d, color: Color, lineWidth: Float = 3f, depth: Boolean = true) {
 		RenderSystem.disableCull()
 
-		val camera: Entity = Vice.client.cameraEntity ?: return
+		val camera: Entity = MinecraftClient.getInstance().cameraEntity ?: return
 		val tessellator = Tessellator.getInstance()
 		val builder = tessellator.buffer
 
@@ -78,7 +78,7 @@ object RenderUtils {
 			offset: Float = -1f,
 			visibleThroughObjects: Boolean = true
 	) {
-		val client = Vice.client
+		val client = MinecraftClient.getInstance()
 		val camera: Camera = client.gameRenderer.camera
 		if (camera.isReady && client.entityRenderDispatcher.gameOptions != null) {
 			val textRenderer: TextRenderer = client.textRenderer

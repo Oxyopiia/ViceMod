@@ -2,7 +2,7 @@ package net.oxyopia.vice.features.arenas
 
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.oxyopia.vice.Vice.EVENT_MANAGER
+import net.oxyopia.vice.Vice.Companion.EVENT_MANAGER
 import net.oxyopia.vice.events.ArenaWaveChangeEvent
 import net.oxyopia.vice.events.EntityDeathEvent
 import net.oxyopia.vice.events.TitleEvent

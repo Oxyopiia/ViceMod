@@ -1,12 +1,12 @@
 package net.oxyopia.vice.utils
 
 import com.mojang.blaze3d.systems.RenderSystem
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.Text
 import net.minecraft.util.math.ColorHelper
-import net.oxyopia.vice.Vice
 import java.awt.Color
 
 object HudUtils {
@@ -38,7 +38,7 @@ object HudUtils {
 		val h = ColorHelper.Argb.getGreen(color).toFloat() / 255.0f
 		val j = ColorHelper.Argb.getBlue(color).toFloat() / 255.0f
 
-		val vertexConsumers = Vice.client.bufferBuilders.entityVertexConsumers
+		val vertexConsumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
 		val vertexConsumer = vertexConsumers.getBuffer(layer)
 		vertexConsumer.vertex(matrix4f, ax.toFloat(), ay.toFloat(), z.toFloat()).color(g, h, j, f).next()
 		vertexConsumer.vertex(matrix4f, ax.toFloat(), by.toFloat(), z.toFloat()).color(g, h, j, f).next()
@@ -56,7 +56,7 @@ object HudUtils {
 		}
 
 		var xPos = x
-		val vertexConsumers = Vice.client.bufferBuilders.entityVertexConsumers
+		val vertexConsumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
 
 		if (centered) {
 			val width = textRenderer.getWidth(text) + if (shadow) 1 else 0
@@ -71,8 +71,10 @@ object HudUtils {
 	}
 
 	fun sendVanillaTitle(title: String, subtitle: String, stayTime: Float = 1f, fadeinout: Float = 0.25f) {
-		Vice.client.inGameHud.setSubtitle(Text.of(subtitle.replace("&&", "§")))
-		Vice.client.inGameHud.setTitle(Text.of(title.replace("&&", "§")))
-		Vice.client.inGameHud.setTitleTicks((20 * fadeinout).toInt(), (20 * stayTime).toInt(), (20 * fadeinout).toInt())
+		val client = MinecraftClient.getInstance()
+
+		client.inGameHud.setSubtitle(Text.of(subtitle.replace("&&", "§")))
+		client.inGameHud.setTitle(Text.of(title.replace("&&", "§")))
+		client.inGameHud.setTitleTicks((20 * fadeinout).toInt(), (20 * stayTime).toInt(), (20 * fadeinout).toInt())
 	}
 }

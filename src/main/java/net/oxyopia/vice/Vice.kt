@@ -1,72 +1,89 @@
-package net.oxyopia.vice;
+package net.oxyopia.vice
 
-import com.mojang.logging.LogUtils;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.minecraft.client.MinecraftClient;
-import net.oxyopia.vice.commands.ViceCommand;
-import net.oxyopia.vice.commands.TestCommand;
-import net.oxyopia.vice.config.*;
-import net.oxyopia.vice.events.core.EventManager;
-import net.oxyopia.vice.features.misc.Fishing;
-import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker;
-import net.oxyopia.vice.features.misc.RevolverBlindnessHider;
-import net.oxyopia.vice.features.arenas.ArenaEffectNotification;
-import net.oxyopia.vice.features.arenas.ArenaSession;
-import net.oxyopia.vice.features.hud.GamingMode;
-import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown;
-import net.oxyopia.vice.utils.Utils;
-import org.slf4j.Logger;
+import com.mojang.brigadier.CommandDispatcher
+import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
+import net.fabricmc.fabric.api.networking.v1.PacketSender
+import net.fabricmc.loader.api.FabricLoader
+import net.fabricmc.loader.api.Version
+import net.fabricmc.loader.api.metadata.ModMetadata
+import net.minecraft.client.MinecraftClient
+import net.minecraft.client.network.ClientPlayNetworkHandler
+import net.minecraft.command.CommandRegistryAccess
+import net.oxyopia.vice.commands.TestCommand
+import net.oxyopia.vice.commands.ViceCommand
+import net.oxyopia.vice.config.Config
+import net.oxyopia.vice.config.DevConfig
+import net.oxyopia.vice.events.core.EventManager
+import net.oxyopia.vice.features.arenas.ArenaEffectNotification
+import net.oxyopia.vice.features.arenas.ArenaSession
+import net.oxyopia.vice.features.hud.GamingMode
+import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
+import net.oxyopia.vice.features.misc.Fishing
+import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker
+import net.oxyopia.vice.features.misc.RevolverBlindnessHider
+import net.oxyopia.vice.utils.Utils.inDoomTowers
 
-public class Vice implements ClientModInitializer {
-	public static final Logger LOGGER = LogUtils.getLogger();
-	public static final EventManager EVENT_MANAGER = new EventManager();
-	public static final Config config = new Config();
-	public static final DevConfig devConfig = new DevConfig();
-	public static MinecraftClient client;
+class Vice : ClientModInitializer {
+	companion object {
+		const val MOD_ID = "vice"
 
-	public static final String chatPrefix = "§bVice §7|§r ";
-	public static final String errorPrefix = "§bVice §cERROR §7|§c ";
-	public static final String warningPrefix = "§bVice §eWARN §7|§e ";
-	public static final String devPrefix = "§9Vice §7(Dev) |§r ";
+		private val metadata: ModMetadata by lazy {
+			FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().metadata
+		}
+		val version: Version by lazy { metadata.version }
 
-	@Override
-	public void onInitializeClient() {
-		config.init();
-		devConfig.init();
+		@JvmField
+		val EVENT_MANAGER: EventManager = EventManager()
 
-		client = MinecraftClient.getInstance();
+		@JvmField
+		val config: Config = Config()
 
-		subscribeEventListeners();
-		initConnectionEvents();
-		registerCommands();
+		@JvmField
+		val devConfig: DevConfig = DevConfig()
+
+		const val CHAT_PREFIX: String = "§bVice §7|§r "
+		const val ERROR_PREFIX: String = "§bVice §cERROR §7|§c "
+		const val WARNING_PREFIX: String = "§bVice §eWARN §7|§e "
+		const val DEV_PREFIX: String = "§9Vice §7(Dev) |§r "
 	}
 
-	private void registerCommands() {
-		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-			ViceCommand.register(dispatcher);
-			TestCommand.register(dispatcher);
-		});
+	override fun onInitializeClient() {
+		config.init()
+		devConfig.init()
+
+		subscribeEventListeners()
+		initConnectionEvents()
+		registerCommands()
 	}
 
-	private void initConnectionEvents() {
-		ClientPlayConnectionEvents.DISCONNECT.register((phase, listener) -> Utils.INSTANCE.setInDoomTowers(false));
-		ClientPlayConnectionEvents.JOIN.register((listener, packetSender, minecraftClient) -> {
-			Utils.INSTANCE.setInDoomTowers(false);
-			// Set to false in case server we are switching to does not have a scoreboard, and then let
-			// MixinInGameHud#onRenderScoreboardSidebar re update if in DoomTowers
-		});
+	private fun registerCommands() {
+		ClientCommandRegistrationCallback.EVENT.register(ClientCommandRegistrationCallback { dispatcher: CommandDispatcher<FabricClientCommandSource?>?, _: CommandRegistryAccess? ->
+			ViceCommand.register(dispatcher)
+			TestCommand.register(dispatcher)
+		})
 	}
 
-	private void subscribeEventListeners() {
-		EVENT_MANAGER.subscribe(ArenaSession.INSTANCE);
-		EVENT_MANAGER.subscribe(ArenaEffectNotification.INSTANCE);
-		EVENT_MANAGER.subscribe(ItemAbilityCooldown.INSTANCE);
-		EVENT_MANAGER.subscribe(PlacePlayerHeadBlocker.INSTANCE);
-		EVENT_MANAGER.subscribe(RevolverBlindnessHider.INSTANCE);
-		EVENT_MANAGER.subscribe(GamingMode.INSTANCE);
-		EVENT_MANAGER.subscribe(Fishing.INSTANCE);
+	private fun initConnectionEvents() {
+		// If still in DoomTowers, will be updated back to true by Mixin
+		ClientPlayConnectionEvents.DISCONNECT.register(ClientPlayConnectionEvents.Disconnect { _: ClientPlayNetworkHandler?, _: MinecraftClient? ->
+			inDoomTowers = false
+		})
+		ClientPlayConnectionEvents.JOIN.register(ClientPlayConnectionEvents.Join { _: ClientPlayNetworkHandler?, _: PacketSender?, _: MinecraftClient? ->
+			inDoomTowers = false
+		})
+	}
+
+	private fun subscribeEventListeners() {
+		EVENT_MANAGER.subscribe(ArenaSession)
+		EVENT_MANAGER.subscribe(ArenaEffectNotification)
+		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
+		EVENT_MANAGER.subscribe(PlacePlayerHeadBlocker)
+		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
+		EVENT_MANAGER.subscribe(GamingMode)
+		EVENT_MANAGER.subscribe(Fishing)
 	}
 }
 

@@ -5,6 +5,7 @@ import gg.essential.universal.UDesktop;
 import gg.essential.universal.UScreen;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
+import net.oxyopia.vice.Vice;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -397,7 +398,7 @@ public class Config extends Vigilant {
     public int SNOWBALL_CANNON_VOLUME = 100;
 
     public Config() {
-        super(new File("./config/vice/config.toml"), "Vice", new JVMAnnotationPropertyCollector(), new ConfigSorting());
+        super(new File("./config/vice/config.toml"), "Vice §b" + Vice.Companion.getVersion(), new JVMAnnotationPropertyCollector(), new ConfigSorting());
     }
 
     public void init() {

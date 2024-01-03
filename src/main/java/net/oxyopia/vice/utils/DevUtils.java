@@ -1,6 +1,7 @@
 package net.oxyopia.vice.utils;
 
 import gg.essential.universal.UChat;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.Style;
@@ -14,7 +15,7 @@ import static net.oxyopia.vice.Vice.*;
 public class DevUtils {
 	public static void sendDebugChat(String msg) {
 		if (Vice.config.DEVMODE) {
-			UChat.chat(Vice.devPrefix + msg.replaceAll("&&", "§"));
+			UChat.chat(Vice.DEV_PREFIX + msg.replaceAll("&&", "§"));
 		}
 	}
 
@@ -42,22 +43,22 @@ public class DevUtils {
 
 		String joinedStackTrace = stackTraceString.toString();
 
-		Text errorChat = Text.literal(errorPrefix + msg + "§e Click to copy the error to clipboard!")
+		Text errorChat = Text.literal(ERROR_PREFIX + msg + "§e Click to copy the error to clipboard!")
 			.setStyle(Style.EMPTY
 				.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, joinedStackTrace))
 				.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("§eClick to copy the error to your clipboard!\n§7§o"+msg))));
 
-		client.inGameHud.getChatHud().addMessage(errorChat);
+		MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(errorChat);
 	}
 
 	public static void sendWarningMessage(String msg) {
-		Text warningChat = Text.literal(warningPrefix + msg)
+		Text warningChat = Text.literal(WARNING_PREFIX + msg)
 			.setStyle(Style.EMPTY
 				.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, msg))
 				.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("§eClick to copy the warning to your clipboard!\n§7§o"+msg))));
 
 
-		client.inGameHud.getChatHud().addMessage(warningChat);
+		MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(warningChat);
 	}
 
 

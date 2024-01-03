@@ -1,5 +1,6 @@
 package net.oxyopia.vice.features.misc
 
+import net.minecraft.client.MinecraftClient
 import net.minecraft.entity.projectile.FishingBobberEntity
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
@@ -25,7 +26,7 @@ object Fishing {
 	@SubscribeEvent
 	fun onSound(event: SoundPacketEvent) {
 		if (!Vice.config.FISHING_DING || event.packet.sound.value().id.toString() != SPLASH_SOUND) return
-		val fishHook = Vice.client.player?.fishHook ?: return
+		val fishHook = MinecraftClient.getInstance().player?.fishHook ?: return
 		if (!fishHook.isTouchingWater) return
 
 		val soundDeviation = fishHook.squaredDistanceTo(event.packet.x, event.packet.y, event.packet.z)
@@ -38,7 +39,7 @@ object Fishing {
 
 	@SubscribeEvent
 	fun onVelocityUpdate(event: EntityVelocityPacketEvent) {
-		val fishHook = Vice.client.player?.fishHook ?: return
+		val fishHook = MinecraftClient.getInstance().player?.fishHook ?: return
 		if (!Vice.config.FISHING_DING || event.packet.id != fishHook.id) return
 
 		val velocityY = event.packet.velocityY
@@ -46,7 +47,7 @@ object Fishing {
 		if (fishHook.isTouchingWater && lastTouchedWater > 0 && velocityY <= MIN_Y_VELOCITY_DETECTION) {
 			DevUtils.sendDebugChat("Detected velocity of &&a$velocityY&&r", "FISHING_DEBUGGER")
 
-			Vice.client.executeTask {
+			MinecraftClient.getInstance().executeTask {
 				handleVelocityUpdate()
 			}
 

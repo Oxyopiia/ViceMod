@@ -1,7 +1,7 @@
 package net.oxyopia.vice.features.itemabilities
 
 import net.minecraft.client.sound.SoundInstance
-import net.oxyopia.vice.Vice.config
+import net.oxyopia.vice.Vice.Companion.config
 
 object AbilitySoundHider {
 	// called by MixinSoundSystem, returns new volume

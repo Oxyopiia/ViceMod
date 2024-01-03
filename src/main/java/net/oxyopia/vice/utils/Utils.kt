@@ -3,6 +3,7 @@ package net.oxyopia.vice.utils
 import com.mojang.brigadier.exceptions.CommandSyntaxException
 import gg.essential.universal.UChat
 import gg.essential.universal.wrappers.message.UTextComponent
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.nbt.NbtCompound
@@ -18,24 +19,26 @@ object Utils {
 	var inDoomTowers = false
 		get() = field || (Vice.config.DEVMODE && Vice.devConfig.BYPASS_INSTANCE_CHECK)
 
+	private val client: MinecraftClient = MinecraftClient.getInstance()
+
 	var scoreboardData: Collection<ScoreboardPlayerScore> = emptyList()
 
-	fun getWorld(): ClientWorld? = Vice.client.world
+	fun getWorld(): ClientWorld? = client.world
 
-	fun getWorldString(): String? = Vice.client.world?.registryKey?.value?.path
+	fun getWorldString(): String? = client.world?.registryKey?.value?.path
 
 	fun sendViceMessage(msg: String) {
-		UChat.chat("${Vice.chatPrefix}${msg.replace("&&", "§")}")
+		UChat.chat("${Vice.CHAT_PREFIX}${msg.replace("&&", "§")}")
 	}
 
 	fun sendViceMessage(msg: UTextComponent) {
-		msg.text = "${Vice.chatPrefix}${msg.text}"
+		msg.text = "${Vice.CHAT_PREFIX}${msg.text}"
 		UChat.chat(msg)
 	}
 
 	fun playSound(identifier: Identifier, pitch: Float, volume: Float) {
 		try {
-			Vice.client.soundManager.play(PositionedSoundInstance.master(SoundEvent.of(identifier), pitch, volume))
+			client.soundManager.play(PositionedSoundInstance.master(SoundEvent.of(identifier), pitch, volume))
 		} catch (err: Exception) {
 			DevUtils.sendErrorMessage(err, "An error occurred attempting to play a sound")
 		}

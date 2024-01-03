@@ -7,7 +7,7 @@ import net.minecraft.entity.EntityStatuses;
 import net.minecraft.network.packet.s2c.play.*;
 import net.oxyopia.vice.events.BlockUpdatePacketEvent;
 import net.oxyopia.vice.events.EntityDeathEvent;
-import net.oxyopia.vice.events.EntitySpawnPacketEvent;
+import net.oxyopia.vice.events.EntitySpawnEvent;
 import net.oxyopia.vice.events.EntityVelocityPacketEvent;
 import net.oxyopia.vice.events.SoundPacketEvent;
 import net.oxyopia.vice.utils.DevUtils;
@@ -39,10 +39,10 @@ public class MixinClientPlayNetworkHandler {
 		}
 	}
 
-	@Inject(at = @At("HEAD"), method = "onEntitySpawn")
-	private void onEntitySpawn(EntitySpawnS2CPacket packet, CallbackInfo ci) {
+	@Inject(at = @At("HEAD"), method = "playSpawnSound")
+	private void onEntitySpawn(Entity entity, CallbackInfo ci) {
 		if (MinecraftClient.getInstance().isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new EntitySpawnPacketEvent(packet));
+			EVENT_MANAGER.publish(new EntitySpawnEvent(entity));
 		}
 	}
 	

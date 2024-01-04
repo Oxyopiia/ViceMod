@@ -350,53 +350,53 @@ public class Config extends Vigilant {
     // Sounds
 
     @Property(
-        type = PropertyType.SLIDER,
+        type = PropertyType.DECIMAL_SLIDER,
         name = "8-Bit Katana Volume",
         category = "Sounds",
-        max = 200
+        maxF = 2f
     )
-    public int EIGHT_BIT_KATANA_VOLUME = 100;
+    public float EIGHT_BIT_KATANA_VOLUME = 1f;
 
     @Property(
-        type = PropertyType.SLIDER,
+        type = PropertyType.DECIMAL_SLIDER,
         name = "Arctic Core Volume",
         category = "Sounds",
-        max = 200
+        maxF = 2f
     )
-    public int ARCTIC_CORE_VOLUME = 100;
+    public float ARCTIC_CORE_VOLUME = 1f;
 
     @Property(
-        type = PropertyType.SLIDER,
+        type = PropertyType.DECIMAL_SLIDER,
         name = "Barbed Shotgun Volume",
         category = "Sounds",
-        max = 200
+        maxF = 2f
     )
-    public int BARBED_SHOTGUN_VOLUME = 100;
+    public float BARBED_SHOTGUN_VOLUME = 1f;
 
     @Property(
-        type = PropertyType.SLIDER,
+        type = PropertyType.DECIMAL_SLIDER,
         name = "Bedrock Breaker Volume",
         description = "§eMay have inaccuracies with the 'regenerating' (beacon) sounds.",
         category = "Sounds",
-        max = 200
+        maxF = 2f
     )
-    public int BEDROCK_BREAKER_VOLUME = 100;
+    public float BEDROCK_BREAKER_VOLUME = 1f;
 
     @Property(
-        type = PropertyType.SLIDER,
+        type = PropertyType.DECIMAL_SLIDER,
         name = "Laser Point Minigun Volume",
         category = "Sounds",
-        max = 200
+        maxF = 2f
     )
-    public int LASER_POINT_MINIGUN_VOLUME = 100;
+    public float LASER_POINT_MINIGUN_VOLUME = 1f;
 
     @Property(
-        type = PropertyType.SLIDER,
+        type = PropertyType.DECIMAL_SLIDER,
         name = "Snowball Cannon Volume",
         category = "Sounds",
-        max = 200
+        maxF = 2f
     )
-    public int SNOWBALL_CANNON_VOLUME = 100;
+    public float SNOWBALL_CANNON_VOLUME = 1f;
 
     public Config() {
         super(new File("./config/vice/config.toml"), "Vice §b" + Vice.Companion.getVersion(), new JVMAnnotationPropertyCollector(), new ConfigSorting());

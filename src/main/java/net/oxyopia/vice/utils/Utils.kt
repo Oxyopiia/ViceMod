@@ -8,7 +8,6 @@ import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.StringNbtReader
-import net.minecraft.scoreboard.ScoreboardPlayerScore
 import net.minecraft.sound.SoundEvent
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
@@ -20,8 +19,6 @@ object Utils {
 		get() = field || (Vice.config.DEVMODE && Vice.devConfig.BYPASS_INSTANCE_CHECK)
 
 	private val client: MinecraftClient = MinecraftClient.getInstance()
-
-	var scoreboardData: Collection<ScoreboardPlayerScore> = emptyList()
 
 	fun getWorld(): ClientWorld? = client.world
 

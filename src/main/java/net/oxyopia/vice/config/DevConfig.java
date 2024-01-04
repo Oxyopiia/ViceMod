@@ -63,7 +63,7 @@ public class DevConfig extends Vigilant {
 		subcategory = "Item Cooldown Display",
 		allowAlpha = false
 	)
-	public Color ITEMCD_CURSORCD_COLOR = new Color(1f, 0.5f, 0f, 1f);
+	public Color ITEMCD_CURSORCD_COLOR = new Color(0, 236, 255, 255);
 
 	@Property(
 		type = PropertyType.SWITCH,

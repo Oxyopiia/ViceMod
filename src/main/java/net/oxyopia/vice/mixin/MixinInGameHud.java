@@ -28,13 +28,7 @@ public class MixinInGameHud {
 
 	@Inject(at = @At("HEAD"), method = "renderScoreboardSidebar")
 	private void onRenderScoreboardSidebar(DrawContext context, ScoreboardObjective objective, CallbackInfo ci) {
-		if (objective.getDisplayName().getString().contains("DoomTowers")) {
-			Utils.INSTANCE.setInDoomTowers(true);
-			Utils.INSTANCE.setScoreboardData(objective.getScoreboard().getAllPlayerScores(objective));
-		} else {
-			Utils.INSTANCE.setInDoomTowers(false);
-			Utils.INSTANCE.getScoreboardData().clear();
-		}
+		Utils.INSTANCE.setInDoomTowers(objective.getDisplayName().getString().contains("DoomTowers"));
 	}
 
 	@Inject(at = @At(value="INVOKE", target="Lnet/minecraft/client/gui/DrawContext;drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;II)V"), method = "renderHotbarItem")

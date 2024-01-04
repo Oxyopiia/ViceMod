@@ -116,7 +116,7 @@ object ItemAbilityCooldown {
 			var centered = false
 			var xPos = (event.scaledWidth / 2 - 1) + 3
 			var yPos = (event.scaledHeight / 2 - 1) - 1 + 3
-			var color = Color(0f, 1f, 1f, 1f)
+			var color = Color(0, 236, 255, 255)
 
 			if (Vice.config.DEVMODE) {
 				xPos = (event.scaledWidth / 2 - 1) + Vice.devConfig.ITEMCD_CURSORCD_X_OFFSET

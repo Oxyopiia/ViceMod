@@ -35,20 +35,21 @@ public class DevUtils {
 
 	public static void sendErrorMessage(Throwable throwable, String msg) {
 		StackTraceElement[] stackTrace = throwable.getStackTrace();
-		StringBuilder stackTraceString = new StringBuilder();
+		StringBuilder stackTraceString = new StringBuilder(throwable.getMessage());
 
 		for (StackTraceElement element : stackTrace) {
-			stackTraceString.append(element.toString()).append("\n");
+			stackTraceString.append("\n\t").append(element.toString());
 		}
 
 		String joinedStackTrace = stackTraceString.toString();
 
-		Text errorChat = Text.literal(ERROR_PREFIX + msg + "§e Click to copy the error to clipboard!")
+		Text errorChat = Text.literal(ERROR_PREFIX + msg + "§7 Click to copy the error to clipboard!")
 			.setStyle(Style.EMPTY
 				.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, joinedStackTrace))
-				.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("§eClick to copy the error to your clipboard!\n§7§o"+msg))));
+				.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("§7Click to copy the error to your clipboard!\n§c"+msg))));
 
 		MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(errorChat);
+		Vice.Companion.getLogger().error(throwable.getMessage(), throwable);
 	}
 
 	public static void sendWarningMessage(String msg) {

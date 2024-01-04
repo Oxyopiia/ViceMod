@@ -1,6 +1,7 @@
 package net.oxyopia.vice
 
 import com.mojang.brigadier.CommandDispatcher
+import com.mojang.logging.LogUtils
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
@@ -25,6 +26,7 @@ import net.oxyopia.vice.features.misc.Fishing
 import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker
 import net.oxyopia.vice.features.misc.RevolverBlindnessHider
 import net.oxyopia.vice.utils.Utils.inDoomTowers
+import org.slf4j.Logger
 
 class Vice : ClientModInitializer {
 	companion object {
@@ -33,7 +35,10 @@ class Vice : ClientModInitializer {
 		private val metadata: ModMetadata by lazy {
 			FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().metadata
 		}
+
 		val version: Version by lazy { metadata.version }
+
+		val logger: Logger = LogUtils.getLogger()
 
 		@JvmField
 		val EVENT_MANAGER: EventManager = EventManager()

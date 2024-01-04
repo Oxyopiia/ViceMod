@@ -92,7 +92,7 @@ public class EventManager {
 						MethodHandle handle = lookup.unreflect(listener.getTarget());
 						handle.invoke(listener.getSource(), event);
 					} catch (Throwable e) {
-						DevUtils.sendErrorMessage(e, "An error occurred publishing a " + clazz.getSimpleName());
+						DevUtils.sendErrorMessage(e, "An error occurred invoking a " + clazz.getSimpleName());
 					}
 				}
 			}

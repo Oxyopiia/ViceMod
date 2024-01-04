@@ -50,8 +50,8 @@ class Vice : ClientModInitializer {
 		val devConfig: DevConfig = DevConfig()
 
 		const val CHAT_PREFIX: String = "§bVice §7|§r "
-		const val ERROR_PREFIX: String = "§bVice §cERROR §7|§c "
-		const val WARNING_PREFIX: String = "§bVice §eWARN §7|§e "
+		const val ERROR_PREFIX: String = "§cVice §cERROR §7|§c "
+		const val WARNING_PREFIX: String = "§eVice §eWARN §7|§e "
 		const val DEV_PREFIX: String = "§9Vice §7(Dev) |§r "
 	}
 

@@ -9,14 +9,9 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 object RevolverBlindnessHider {
 	@SubscribeEvent
 	fun onSubtitle(event: SubtitleEvent) {
+		if (!Vice.config.HIDE_REVOLVER_BLINDNESS || !event.subtitle.contains("Left click to fire")) return
 		val player = MinecraftClient.getInstance().player ?: return
 
-		if (Vice.config.HIDE_REVOLVER_BLINDNESS && event.subtitle.contains("Left click to fire")) {
-			if (player.hasStatusEffect(StatusEffects.BLINDNESS)) {
-				player.removeStatusEffect(StatusEffects.BLINDNESS)
-			} else if (player.hasStatusEffect(StatusEffects.DARKNESS)) {
-				player.removeStatusEffect(StatusEffects.DARKNESS)
-			}
-		}
+		if (player.hasStatusEffect(StatusEffects.BLINDNESS)) player.removeStatusEffect(StatusEffects.BLINDNESS)
 	}
 }

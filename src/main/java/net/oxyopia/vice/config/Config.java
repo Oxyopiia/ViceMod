@@ -143,7 +143,8 @@ public class Config extends Vigilant {
         name = "Hide Server Tips",
         description = "Hides messages such as the periodic Discord tip in chat.",
         category = "General",
-        subcategory = "Quality of Life"
+        subcategory = "Quality of Life",
+        hidden = true
     )
     public boolean HIDE_SERVER_TIPS = true;
 

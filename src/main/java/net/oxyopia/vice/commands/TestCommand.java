@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
+import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.ItemUtils;
 import net.oxyopia.vice.utils.Utils;
 
@@ -30,6 +31,8 @@ public class TestCommand {
 						.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, heldItem.getNbt().asString())
 						.setHover(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackContent(heldItem)));
 				}
+
+				DevUtils.sendErrorMessage(new Exception("Random exception lmao there isnt anything wrong"), "This is an error test");
 
 				return Command.SINGLE_SUCCESS;
 			})

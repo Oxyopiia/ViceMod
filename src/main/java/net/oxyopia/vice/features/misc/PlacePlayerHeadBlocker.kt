@@ -13,7 +13,7 @@ object PlacePlayerHeadBlocker {
 	fun onBlockInteract(event: BlockInteractEvent) {
 		if (!Vice.config.PREVENT_PLACING_PLAYER_HEADS) return
 
-		val stack: ItemStack = if (event.hand == Hand.MAIN_HAND) event.player.getMainHandStack() else event.player.getOffHandStack()
+		val stack: ItemStack = if (event.hand == Hand.MAIN_HAND) event.player.mainHandStack else event.player.offHandStack
 		if (stack.item === Items.PLAYER_HEAD) {
 			event.cir.returnValue = ActionResult.PASS
 		}

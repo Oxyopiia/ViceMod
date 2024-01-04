@@ -265,7 +265,8 @@ public class Config extends Vigilant {
         name = "Arenas Cooldown Notification",
         description = "Displays a notification when an Arena cooldown has expired.",
         category = "Arenas",
-        subcategory = "Quality of Life"
+        subcategory = "Quality of Life",
+        hidden = true
     )
     public boolean ARENAS_COOLDOWN_NOTIFIER = true;
 

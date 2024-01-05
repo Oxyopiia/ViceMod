@@ -1,7 +1,9 @@
 package net.oxyopia.vice.mixin;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.oxyopia.vice.utils.Utils;
@@ -11,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import java.util.regex.Pattern;
 
-import static net.oxyopia.vice.Vice.client;
 import static net.oxyopia.vice.Vice.config;
 
 @Mixin(DrawContext.class)
@@ -19,7 +20,9 @@ public class MixinDrawContext {
 
 	@ModifyVariable(argsOnly = true, method = "drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V", at = @At(value="INVOKE", target="Lnet/minecraft/client/util/math/MatrixStack;push()V"), ordinal = 0)
 	private String towerBeaconFeatures(String countOverride, TextRenderer textRenderer, ItemStack stack, int x, int y) {
-		if (Utils.inDoomTowers() && config.BETTER_TOWER_BEACON_UI && client.currentScreen != null && client.currentScreen.getTitle().contains(Text.of("Tower Beacon"))) {
+		Screen currentScreen = MinecraftClient.getInstance().currentScreen;
+
+		if (Utils.INSTANCE.getInDoomTowers() && config.BETTER_TOWER_BEACON_UI && currentScreen != null && currentScreen.getTitle().contains(Text.of("Tower Beacon"))) {
 			String itemName = stack.getName().getString();
 			Pattern pattern = Pattern.compile("(.*)Floor \\d");
 

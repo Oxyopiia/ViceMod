@@ -1,5 +1,6 @@
 package net.oxyopia.vice.utils;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -7,8 +8,6 @@ import net.minecraft.nbt.NbtList;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static net.oxyopia.vice.Vice.client;
 
 public class ItemUtils {
 	public static String getNameWithoutEnchants(ItemStack itemStack) {
@@ -20,7 +19,12 @@ public class ItemUtils {
 	}
 
 	public static ItemStack getHeldItem() {
+		MinecraftClient client = MinecraftClient.getInstance();
 		return client.player != null ? client.player.getMainHandStack() : ItemStack.EMPTY;
+	}
+
+	public static String getHeldItemName() {
+		return getHeldItem().getName().getString();
 	}
 
 	/**

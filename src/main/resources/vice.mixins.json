@@ -10,6 +10,7 @@
     "MixinClientPlayNetworkHandler",
     "MixinDownloadingTerrainScreen",
     "MixinDrawContext",
+    "MixinGameRenderer",
     "MixinInGameHud",
     "MixinMinecraftClient",
     "MixinSoundSystem"

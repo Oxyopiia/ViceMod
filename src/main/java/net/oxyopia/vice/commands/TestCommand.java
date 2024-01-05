@@ -9,26 +9,30 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
+import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.ItemUtils;
 import net.oxyopia.vice.utils.Utils;
 
 public class TestCommand {
 	public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
-		dispatcher.register(ClientCommandManager.literal("test")
+		dispatcher.register(ClientCommandManager.literal("vicedevdata")
 			.executes(context -> {
 				EssentialAPI.getNotifications().push("Vice", "This is a notification test", 4f, () -> {
-					Utils.sendViceMessage("Notification clicked");
+					Utils.INSTANCE.sendViceMessage("Notification clicked");
 					return null;
 				});
 
-				Utils.sendViceMessage("inDoomTowers: &&a" + Utils.inDoomTowers());
+				Utils.INSTANCE.sendViceMessage("inDoomTowers: &&a" + Utils.INSTANCE.getInDoomTowers());
 
 				ItemStack heldItem = ItemUtils.getHeldItem();
+
 				if (heldItem.getNbt() != null) {
-					Utils.sendViceMessage(new UTextComponent("§eClick to copy your held item's NBT.§r")
+					Utils.INSTANCE.sendViceMessage(new UTextComponent("§eClick to copy your held item's NBT.§r")
 						.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, heldItem.getNbt().asString())
 						.setHover(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackContent(heldItem)));
 				}
+
+				DevUtils.sendErrorMessage(new Exception("Random exception lmao there isnt anything wrong"), "This is an error test");
 
 				return Command.SINGLE_SUCCESS;
 			})

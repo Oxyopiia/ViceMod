@@ -6,6 +6,7 @@ import gg.essential.vigilance.data.*;
 import java.awt.*;
 import java.io.File;
 
+@SuppressWarnings("unused")
 public class DevConfig extends Vigilant {
 
 	/** EXPERIMENTS */
@@ -62,7 +63,7 @@ public class DevConfig extends Vigilant {
 		subcategory = "Item Cooldown Display",
 		allowAlpha = false
 	)
-	public Color ITEMCD_CURSORCD_COLOR = new Color(1f, 0.5f, 0f, 1f);
+	public Color ITEMCD_CURSORCD_COLOR = new Color(0, 236, 255, 255);
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -86,7 +87,7 @@ public class DevConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Sounds",
-		description = "sends sound information when there is a FUCKING sound (sent from server only)",
+		description = "sends sound information when there is a LITERAL SOUND (sent from server only)",
 		category = "Debugs"
 	)
 	public boolean SEND_SOUND_INFO = false;
@@ -118,26 +119,10 @@ public class DevConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "InGameHud mixin",
-		description = "title displays",
+		description = "Debugger for title data, subtitle data, and more",
 		category = "Debugs"
 	)
 	public boolean INGAMEHUD_MIXIN_DEBUGGER = false;
-
-	@Property(
-	        type = PropertyType.SWITCH,
-	        name = "shadow gelato amethyst rendering debugger",
-	        description = "yes",
-	        category = "Debugs"
-	)
-	public boolean SHADOW_GELATO_AMETHYST = false;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Utils info",
-		description = "utisl info",
-		category = "Debugs"
-	)
-	public boolean UTILS_INFO = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -146,6 +131,14 @@ public class DevConfig extends Vigilant {
 		category = "Debugs"
 	)
 	public boolean ITEM_ABILITY_DEBUGGER = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Arenas",
+		description = "arenas",
+		category = "Debugs"
+	)
+	public boolean ARENAS_DEBUGGER = false;
 
 	public DevConfig() {
 		super(new File("./config/vice/developerSettings.toml"), "Vice Developer Menu");

@@ -43,13 +43,18 @@ object ItemAbilityCooldown {
 
 		when {
 
+			// Wasted Shotgun
+			sound.soundName() == "entity.blaze.shoot" && sound.pitch == 0.5f && sound.volume == 9999f -> {
+				ItemAbility.WASTED_SHOTGUN.onSound()
+			}
+
 			// Barbed Shotgun
 			sound.soundName() == "entity.blaze.shoot" && sound.pitch == 0.5f && sound.volume == 9999f -> {
 				ItemAbility.BARBED_SHOTGUN.onSound()
 			}
 
-                        // WASTED BOOMSTICK
-                        sound.soundName() == "entity.blaze.shoot" && sound.pitch == 1.0f && sound.volume == 9999f -> {
+			// WASTED BOOMSTICK
+			sound.soundName() == "entity.blaze.shoot" && sound.pitch == 1.0f && sound.volume == 9999f -> {
 				ItemAbility.WASTED_BOOMSTICK.onSound()
 			}
 

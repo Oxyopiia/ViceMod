@@ -53,12 +53,10 @@ object Utils {
 			val lore = ItemUtils.getLore(itemStack)
 
 			lore.forEach { string ->
-				Vice.logger.info(string)
 				val matcher = pattern.matcher(string)
 
 				if (matcher.find()) {
 					val set = Set.getByName(matcher.group(1))
-					Vice.logger.info(set.toString())
 					setsMap[set] = setsMap.getOrDefault(set, 0) + 1
 				}
 			}

@@ -32,6 +32,7 @@ enum class ItemAbility(
     ARCTIC_CORE("Arctic's Core", 2f, set = Set.DEMOLITIONIST, setAmount = 2),
     ARCTIC_SCROLL("Arctic Scroll", 15f),
     EIGHT_BIT_KATANA("8-Bit Katana", 10f, set = Set.DIGITAL, setAmount = 1),
+    ADVENTURER_HOOK("Adventurer's Hook", 3f, sharedCooldownId = "GRAPPLING_HOOK"),
     SLIME_HOOK("Slime Hook", 3f, sharedCooldownId = "GRAPPLING_HOOK"),
     LUMINESCENT_HOOK("Luminescent Hook", 3f, sharedCooldownId = "GRAPPLING_HOOK"),
     GENHOOK("GenHook", 2f, sharedCooldownId = "GRAPPLING_HOOK"),

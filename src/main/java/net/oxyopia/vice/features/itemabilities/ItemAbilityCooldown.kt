@@ -48,6 +48,34 @@ object ItemAbilityCooldown {
 				ItemAbility.BARBED_SHOTGUN.onSound()
 			}
 
+                        // WASTED BOOMSTICK
+                        /* IDK what Boomstick Sound - Derpy
+                        sound.soundName() == "entity.blaze.shoot" && sound.pitch == 0.5f && sound.volume == 9999f -> {
+				ItemAbility.WASTED_BOOMSTICK.onSound()
+			}
+                        */
+
+			// Crystaline Blade
+                        /* IDK what Crystaline Blade Sound - Derpy
+			sound.soundName() == "entity.snowball.throw" && sound.pitch == 0.5f && sound.volume == 9999f -> {
+				ItemAbility.CRYSTALINE_BLADE.onSound()
+			}
+                        */
+
+			// Bartender's Glove
+                        /* IDK what Bartender's Glove Sound - Derpy
+			sound.soundName() == "entity.snowball.throw" && sound.pitch == 0.5f && sound.volume == 9999f -> {
+				ItemAbility.BARTENDER_GLOVE.onSound()
+			}
+                        */
+
+			// Flesh Hatchet
+                        /* IDK what Flesh Hatchet Sound - Derpy
+			sound.soundName() == "entity.snowball.throw" && sound.pitch == 0.5f && sound.volume == 9999f -> {
+				ItemAbility.FLESH_HATCHET.onSound()
+			}
+                        */			
+
 			// Arctic Core
 			sound.soundName() == "entity.snowball.throw" && sound.pitch == 0.5f && sound.volume == 9999f -> {
 				ItemAbility.ARCTIC_CORE.onSound()

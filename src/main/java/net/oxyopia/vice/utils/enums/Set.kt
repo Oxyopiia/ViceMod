@@ -1,6 +1,6 @@
 package net.oxyopia.vice.utils.enums
 
-enum class Set(name: String) {
+enum class Set(val text: String) {
     CHEF("Chef"),
     DEMOLITIONIST("Demolitionist"),
     FLESHCRAWLER("Fleshcrawler"),
@@ -11,7 +11,7 @@ enum class Set(name: String) {
     companion object {
         fun getByName(name: String): Set {
             // Returns NONE if unknown, or if new set i suppose, maybe i'll make a failsafe soon idk?
-            return entries.firstOrNull { it.name == name } ?: NONE
+            return entries.firstOrNull { it.text == name } ?: NONE
         }
     }
 }

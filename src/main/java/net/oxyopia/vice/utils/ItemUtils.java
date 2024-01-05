@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +42,9 @@ public class ItemUtils {
 					NbtList nbtList = nbtCompound.getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE);
 
 					for (int i = 0; i < nbtList.size(); ++i) {
-						String lineLore = nbtList.getString(i);
+						Text lineLore = Text.Serializer.fromJson(nbtList.getString(i));
 
-						lore.add(lineLore);
+						if (lineLore != null) lore.add(lineLore.getString());
 					}
 				}
 			}

@@ -4,6 +4,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException
 import gg.essential.universal.UChat
 import gg.essential.universal.wrappers.message.UTextComponent
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.nbt.NbtCompound
@@ -11,6 +12,9 @@ import net.minecraft.nbt.StringNbtReader
 import net.minecraft.sound.SoundEvent
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.utils.enums.Set
+import java.util.*
+import java.util.regex.Pattern
 
 import kotlin.math.floor
 
@@ -39,6 +43,27 @@ object Utils {
 		} catch (err: Exception) {
 			DevUtils.sendErrorMessage(err, "An error occurred attempting to play a sound")
 		}
+	}
+
+	fun ClientPlayerEntity.getEquippedSets(): Map<Set, Int> {
+		val setsMap: MutableMap<Set, Int> = EnumMap(Set::class.java)
+		val pattern = Pattern.compile("♦ Set: (.*)")
+
+		armorItems?.forEach { itemStack ->
+			val lore = ItemUtils.getLore(itemStack)
+
+			lore.forEach { string ->
+				Vice.logger.info(string)
+				val matcher = pattern.matcher(string)
+
+				if (matcher.find()) {
+					val set = Set.getByName(matcher.group(1))
+					Vice.logger.info(set.toString())
+					setsMap[set] = setsMap.getOrDefault(set, 0) + 1
+				}
+			}
+		}
+		return setsMap
 	}
 
 	/**

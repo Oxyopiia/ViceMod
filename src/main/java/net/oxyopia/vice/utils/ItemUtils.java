@@ -15,7 +15,7 @@ public class ItemUtils {
 	}
 
 	public static String getNameWithoutEnchants(String string) {
-		return string.replaceAll("\\s\\(.*\\)", "");
+		return string.replaceAll("\\s\\(.*\\)", "").replaceAll(" §", "");
 	}
 
 	public static ItemStack getHeldItem() {

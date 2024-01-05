@@ -48,6 +48,26 @@ object ItemAbilityCooldown {
 				ItemAbility.BARBED_SHOTGUN.onSound()
 			}
 
+                        // WASTED BOOMSTICK
+                        sound.soundName() == "entity.blaze.shoot" && sound.pitch == 1.0f && sound.volume == 9999f -> {
+				ItemAbility.WASTED_BOOMSTICK.onSound()
+			}
+
+			// Crystaline Blade
+			sound.soundName() == "block.amethyst_block.break" && sound.pitch == 1.0f && sound.volume == 9999f -> {
+				ItemAbility.CRYSTALINE_BLADE.onSound()
+			}
+
+			// Bartender's Glove
+			sound.soundName() == "entity.snowball.throw" && sound.pitch == 0.5f && sound.volume == 9999f -> {
+				ItemAbility.BARTENDER_GLOVE.onSound()
+			}
+
+			// Flesh Hatchet
+			sound.soundName() == "item.trident.return" && sound.pitch == 1.0f && sound.volume == 9999f -> {
+				ItemAbility.FLESH_HATCHET.onSound()
+			}		
+
 			// Arctic Core
 			sound.soundName() == "entity.snowball.throw" && sound.pitch == 0.5f && sound.volume == 9999f -> {
 				ItemAbility.ARCTIC_CORE.onSound()

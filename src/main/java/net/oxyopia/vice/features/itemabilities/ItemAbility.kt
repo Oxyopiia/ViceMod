@@ -29,6 +29,7 @@ enum class ItemAbility(
     CRYSTALINE_BLADE("Crystaline Blade", 10f),
     BURGER_BLADE("Burger Blade", 15f, set = Set.CHEF, setAmount = 1, soundOnUse = false), // Use on click
     GALACTIC_HAND_CANNON("Galactic Hand Cannon", 17.5f, specialUsage = true), // On 100% charge, 17.5f cd
+    WASTED_SHOTGUN("Wasted Shotgun", 5f),
     BARBED_SHOTGUN("Barbed Shotgun", 5f),
     WASTED_BOOMSTICK("Wasted Boomstick", 7f),
     ARCTIC_CORE("Arctic's Core", 2f, set = Set.DEMOLITIONIST, setAmount = 2),

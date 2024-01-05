@@ -43,22 +43,18 @@ object ItemAbilityCooldown {
 
 		when {
 
-			// Wasted Shotgun
-			sound.soundName() == "entity.blaze.shoot" && sound.pitch == 0.5f && sound.volume == 9999f -> {
-				ItemAbility.WASTED_SHOTGUN.onSound()
-			}
-
 			// Barbed Shotgun
 			sound.soundName() == "entity.blaze.shoot" && sound.pitch == 0.5f && sound.volume == 9999f -> {
 				ItemAbility.BARBED_SHOTGUN.onSound()
+				ItemAbility.WASTED_SHOTGUN.onSound()
 			}
 
-                        // WASTED BOOMSTICK
-                        sound.soundName() == "entity.blaze.shoot" && sound.pitch == 1.0f && sound.volume == 9999f -> {
+			// Wasted Boomstick
+			sound.soundName() == "entity.blaze.shoot" && sound.pitch == 1.0f && sound.volume == 9999f -> {
 				ItemAbility.WASTED_BOOMSTICK.onSound()
 			}
 
-			// Crystaline Blade
+			// Crystalline Blade
 			sound.soundName() == "block.amethyst_block.break" && sound.pitch == 1.0f && sound.volume == 9999f -> {
 				ItemAbility.CRYSTALINE_BLADE.onSound()
 			}
@@ -90,7 +86,7 @@ object ItemAbilityCooldown {
 
 			// Any Hook - calls all, should correctly identify based off enum value lastClicked
 			sound.soundName() == "entity.fishing_bobber.retrieve" && sound.pitch >= 0.25f && sound.pitch <= 0.8f && sound.volume == 1f -> {
-                                ItemAbility.ADVENTURER_HOOK.onSound()
+				ItemAbility.ADVENTURER_HOOK.onSound()
 				ItemAbility.SLIME_HOOK.onSound()
 				ItemAbility.LUMINESCENT_HOOK.onSound()
 				ItemAbility.GENHOOK.onSound()

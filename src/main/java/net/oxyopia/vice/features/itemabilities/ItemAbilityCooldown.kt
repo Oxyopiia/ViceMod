@@ -65,6 +65,7 @@ object ItemAbilityCooldown {
 
 			// Any Hook - calls all, should correctly identify based off enum value lastClicked
 			sound.soundName() == "entity.fishing_bobber.retrieve" && sound.pitch >= 0.25f && sound.pitch <= 0.8f && sound.volume == 1f -> {
+                                ItemAbility.ADVENTURER_HOOK.onSound()
 				ItemAbility.SLIME_HOOK.onSound()
 				ItemAbility.LUMINESCENT_HOOK.onSound()
 				ItemAbility.GENHOOK.onSound()

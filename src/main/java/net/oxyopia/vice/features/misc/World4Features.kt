@@ -160,7 +160,10 @@ object World4Features {
 		var yPos = 8
 
 		if (Vice.config.SHOW_NEXT_COOKING_ITEM && currentOrder == CookingOrder.NONE) {
-			HudUtils.drawText(event.context.matrices, MinecraftClient.getInstance().textRenderer, "&&cNo Order", xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
+			var text = "&&cNo Order"
+			if (Vice.config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) text += "&&7 (&&${getStockColor()}${stock}&&7)"
+
+			HudUtils.drawText(event.context.matrices, MinecraftClient.getInstance().textRenderer, text, xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
 			yPos += 10
 		} else if (Vice.config.SHOW_NEXT_COOKING_ITEM) {
 			val recipe = currentOrder.recipe

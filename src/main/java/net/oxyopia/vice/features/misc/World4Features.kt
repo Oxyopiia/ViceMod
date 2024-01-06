@@ -154,6 +154,7 @@ object World4Features {
 	@SubscribeEvent
 	fun onHudRender(event: RenderInGameHudEvent) {
 		if (MinecraftClient.getInstance().player == null || !World.Burger.isInWorld()) return
+		if (MinecraftClient.getInstance().player?.y!! <= 100.0) return
 
 		val xPos = event.scaledWidth / 2
 		var yPos = 8

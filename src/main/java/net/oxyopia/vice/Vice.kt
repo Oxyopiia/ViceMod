@@ -25,6 +25,7 @@ import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.misc.Fishing
 import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker
 import net.oxyopia.vice.features.misc.RevolverBlindnessHider
+import net.oxyopia.vice.features.misc.World4Features
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger
 
@@ -89,6 +90,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(Fishing)
+		EVENT_MANAGER.subscribe(World4Features)
 	}
 }
 

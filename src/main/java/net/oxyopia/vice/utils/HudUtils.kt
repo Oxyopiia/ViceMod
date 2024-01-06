@@ -7,6 +7,7 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.Text
 import net.minecraft.util.math.ColorHelper
+import net.oxyopia.vice.Vice
 import java.awt.Color
 
 object HudUtils {
@@ -50,7 +51,7 @@ object HudUtils {
 		RenderSystem.enableDepthTest()
 	}
 
-	fun drawText(stack: MatrixStack, textRenderer: TextRenderer, text: String?, x: Int, y: Int, color: Int, shadow: Boolean, centered: Boolean): Int {
+	fun drawText(stack: MatrixStack, textRenderer: TextRenderer, text: String?, x: Int, y: Int, color: Int, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
 		if (text == null) {
 			return 0
 		}
@@ -59,11 +60,11 @@ object HudUtils {
 		val vertexConsumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
 
 		if (centered) {
-			val width = textRenderer.getWidth(text) + if (shadow) 1 else 0
-			xPos -= (width / 2).toDouble().toInt()
+			val width = textRenderer.getWidth(text.replace(Regex("&&[a-zA-z0-9]"), "")) + if (shadow) 1 else 0
+			xPos = x - (width / 2).toDouble().toInt()
 		}
 
-		val i = textRenderer.draw(text, xPos.toFloat(), y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
+		val i = textRenderer.draw(text.replace("&&", "§"), xPos.toFloat(), y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
 		RenderSystem.disableDepthTest()
 		vertexConsumers.draw()
 		RenderSystem.enableDepthTest()

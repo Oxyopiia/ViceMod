@@ -140,6 +140,14 @@ public class DevConfig extends Vigilant {
 	)
 	public boolean ARENAS_DEBUGGER = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Cooking debugger",
+		description = "w4 stuff",
+		category = "Debugs"
+	)
+	public boolean COOKING_DEBUGGER = false;
+
 	public DevConfig() {
 		super(new File("./config/vice/developerSettings.toml"), "Vice Developer Menu");
 	}

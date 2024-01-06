@@ -12,6 +12,7 @@
     "MixinDrawContext",
     "MixinGameRenderer",
     "MixinInGameHud",
+    "MixinMessageHandler",
     "MixinMinecraftClient",
     "MixinSoundSystem"
   ]

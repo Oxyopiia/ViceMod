@@ -71,7 +71,7 @@ object World4Features {
 			)
 		),
 		OBESE_VICE_BURGER(
-			"Obese Vice's Triple Patty Bacon Bomb",
+			"Obese Vice",
 			listOf(
 				CookingItem.BREAD,
 				CookingItem.COOKED_MEAT,
@@ -90,7 +90,7 @@ object World4Features {
 
 		companion object {
 			fun getByName(displayName: String): CookingOrder? {
-				return entries.firstOrNull { it.displayName == displayName }
+				return entries.firstOrNull { it.displayName.lowercase() == displayName.lowercase() }
 			}
 		}
 	}
@@ -113,7 +113,7 @@ object World4Features {
 			return
 		}
 
-		if (content.contains("NEW ORDER")) {
+		if (content.contains("NEW ORDER") || content.contains("BOSS ORDER")) {
 			lastSeenNewOrder = System.currentTimeMillis()
 		} else if (System.currentTimeMillis() - lastSeenNewOrder <= 1 * 1000) {
 			val order = CookingOrder.getByName(content) ?: return

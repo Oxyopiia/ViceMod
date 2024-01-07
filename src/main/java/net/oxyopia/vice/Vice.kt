@@ -21,6 +21,7 @@ import net.oxyopia.vice.events.core.EventManager
 import net.oxyopia.vice.features.arenas.ArenaEffectNotification
 import net.oxyopia.vice.features.arenas.ArenaSession
 import net.oxyopia.vice.features.hud.GamingMode
+import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.misc.Fishing
 import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker
@@ -85,6 +86,7 @@ class Vice : ClientModInitializer {
 	private fun subscribeEventListeners() {
 		EVENT_MANAGER.subscribe(ArenaSession)
 		EVENT_MANAGER.subscribe(ArenaEffectNotification)
+		EVENT_MANAGER.subscribe(AbilitySoundChanger)
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(PlacePlayerHeadBlocker)
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)

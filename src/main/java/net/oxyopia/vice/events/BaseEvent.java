@@ -10,6 +10,7 @@ package net.oxyopia.vice.events;
 public abstract class BaseEvent {
 
 	private boolean cancelable = false;
+	private boolean returnable = false;
 	private boolean canceled = false;
 	private Object returnValue;
 
@@ -37,15 +38,23 @@ public abstract class BaseEvent {
 		return this.cancelable;
 	}
 
+	public void setReturnable(boolean val) {
+		this.returnable = val;
+	}
+
+	public boolean isReturnable() {
+		return this.returnable;
+	}
+
 	public void setReturnValue(Object value) {
-		if (this.cancelable) {
+		if (this.returnable && this.cancelable) {
 			this.setCanceled(true);
 			this.returnValue = value;
 		}
 	}
 
 	public Object getReturnValue() {
-		if (this.cancelable) return this.returnValue;
+		if (this.returnable) return this.returnValue;
 		return null;
 	}
 }

@@ -6,7 +6,6 @@ import net.oxyopia.vice.events.ModifySoundEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 
 object AbilitySoundChanger {
-	// called by MixinSoundSystem, returns new volume
 	@SubscribeEvent
 	fun onSound(event: ModifySoundEvent) {
 		val sound = event.sound

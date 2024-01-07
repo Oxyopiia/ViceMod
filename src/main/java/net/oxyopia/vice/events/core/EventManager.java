@@ -91,8 +91,12 @@ public class EventManager {
 
 		while (clazz != null) {
 			if (subscribers.containsKey(clazz)) {
-				if (clazz.isAnnotationPresent(Cancelable.class)) {
+				if (clazz.isAnnotationPresent(Cancelable.class) || clazz.isAnnotationPresent(Returnable.class)) {
 					event.setCancelable(true);
+
+					if (clazz.isAnnotationPresent(Returnable.class)) {
+						event.setReturnable(true);
+					}
 				}
 
 				final ArrayList<DefaultListener> listenersCopy = new ArrayList<>(subscribers.get(clazz));
@@ -103,6 +107,7 @@ public class EventManager {
 						MethodHandles.Lookup lookup = MethodHandles.lookup();
 						MethodHandle handle = lookup.unreflect(listener.getTarget());
 						handle.invoke(listener.getSource(), event);
+
 					} catch (Throwable e) {
 						DevUtils.sendErrorMessage(e, "An error occurred invoking a " + clazz.getSimpleName());
 					}

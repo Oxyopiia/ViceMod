@@ -21,10 +21,12 @@ import net.oxyopia.vice.events.core.EventManager
 import net.oxyopia.vice.features.arenas.ArenaEffectNotification
 import net.oxyopia.vice.features.arenas.ArenaSession
 import net.oxyopia.vice.features.hud.GamingMode
+import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.misc.Fishing
 import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker
 import net.oxyopia.vice.features.misc.RevolverBlindnessHider
+import net.oxyopia.vice.features.misc.World4Features
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger
 
@@ -84,11 +86,13 @@ class Vice : ClientModInitializer {
 	private fun subscribeEventListeners() {
 		EVENT_MANAGER.subscribe(ArenaSession)
 		EVENT_MANAGER.subscribe(ArenaEffectNotification)
+		EVENT_MANAGER.subscribe(AbilitySoundChanger)
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(PlacePlayerHeadBlocker)
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(Fishing)
+		EVENT_MANAGER.subscribe(World4Features)
 	}
 }
 

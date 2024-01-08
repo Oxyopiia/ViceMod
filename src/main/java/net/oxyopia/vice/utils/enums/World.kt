@@ -7,6 +7,7 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	Desert("deserteddunes", "Deserted Dunes"),
 	Space("spaceescape", "World 3 or 4"),
 	Burger("spaceescape", "World 3 or 4"),
+	Supermarket("supermarket", "Supermarket"),
 	Temple("losttemple", "Lost Temple"),
 	ArcticAssault("arcticassault", "Arctic Assault"),
 	MagmaHeights("magmaheights", "Magma Heights"),
@@ -32,7 +33,7 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 
 	fun isInWorld(): Boolean {
 		Utils.getWorldString()?.let {
-			return Utils.inDoomTowers && this == World.getById(it)
+			return Utils.inDoomTowers && this.id == it
 		}
 
 		return false

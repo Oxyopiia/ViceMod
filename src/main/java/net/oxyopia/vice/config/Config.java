@@ -148,6 +148,35 @@ public class Config extends Vigilant {
     )
     public boolean HIDE_SERVER_TIPS = true;
 
+    // General/World 4
+
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Show Next Cooking Item",
+    	description = "Displays a HUD graphic showing the next required item for your order in World 4.",
+    	category = "General",
+    	subcategory = "World 4"
+    )
+    public boolean SHOW_NEXT_COOKING_ITEM = true;
+
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Show Stock Information",
+    	description = "Displays a HUD graphic showing your stock in World 4.",
+    	category = "General",
+    	subcategory = "World 4"
+    )
+    public boolean SHOW_COOKING_STOCK_INFO = false;
+
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Simplify Cooking Displays",
+    	description = "Shows cooking displays in a more simplified manner",
+    	category = "General",
+    	subcategory = "World 4"
+    )
+    public boolean SIMPLIFY_COOKING_DISPLAYS = false;
+
     // General/Item Cooldowns
 
     @Property(

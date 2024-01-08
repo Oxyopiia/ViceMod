@@ -16,19 +16,17 @@ enum class ItemAbility(
         val itemName: String,
         val cooldown: Float,
         val clickType: ClickType = ClickType.RIGHT,
-        val set: Set? = null, // this is pointless looking back, but might be useful in the future
+        val set: Set? = null,
         val setAmount: Int = 0,
         val sharedCooldownId : String? = null,
         val displayCooldown: Boolean = true,
-        val specialUsage: Boolean = false,
-        val soundOnUse: Boolean = true, // Set to false to instantly activate on click, may be buggy
+        val soundOnUse: Boolean = true,
         var lastActivated: Long = 0,
         var lastClicked: Long = 0
 ) {
     VORTEX_LAUNCHER("Vortex Launcher", 5f, soundOnUse = false),
     CRYSTALINE_BLADE("Crystaline Blade", 10f),
-    BURGER_BLADE("Burger Blade", 15f, set = Set.CHEF, setAmount = 1, soundOnUse = false), // Use on click
-    GALACTIC_HAND_CANNON("Galactic Hand Cannon", 17.5f, specialUsage = true), // On 100% charge, 17.5f cd
+    BURGER_BLADE("Burger Blade", 15f, set = Set.CHEF, setAmount = 1, soundOnUse = false),
     WASTED_SHOTGUN("Wasted Shotgun", 5f),
     BARBED_SHOTGUN("Barbed Shotgun", 5f),
     WASTED_BOOMSTICK("Wasted Boomstick", 7f),

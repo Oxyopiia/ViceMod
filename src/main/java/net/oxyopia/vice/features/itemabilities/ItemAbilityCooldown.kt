@@ -13,6 +13,7 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.ItemUtils
+import net.oxyopia.vice.utils.Utils.getEquippedSets
 import java.awt.Color
 import kotlin.math.ceil
 import kotlin.math.max
@@ -43,22 +44,18 @@ object ItemAbilityCooldown {
 
 		when {
 
-			// Wasted Shotgun
-			sound.soundName() == "entity.blaze.shoot" && sound.pitch == 0.5f && sound.volume == 9999f -> {
-				ItemAbility.WASTED_SHOTGUN.onSound()
-			}
-
 			// Barbed Shotgun
 			sound.soundName() == "entity.blaze.shoot" && sound.pitch == 0.5f && sound.volume == 9999f -> {
 				ItemAbility.BARBED_SHOTGUN.onSound()
+				ItemAbility.WASTED_SHOTGUN.onSound()
 			}
 
-			// WASTED BOOMSTICK
+			// Wasted Boomstick
 			sound.soundName() == "entity.blaze.shoot" && sound.pitch == 1.0f && sound.volume == 9999f -> {
 				ItemAbility.WASTED_BOOMSTICK.onSound()
 			}
 
-			// Crystaline Blade
+			// Crystalline Blade
 			sound.soundName() == "block.amethyst_block.break" && sound.pitch == 1.0f && sound.volume == 9999f -> {
 				ItemAbility.CRYSTALINE_BLADE.onSound()
 			}
@@ -71,7 +68,7 @@ object ItemAbilityCooldown {
 			// Flesh Hatchet
 			sound.soundName() == "item.trident.return" && sound.pitch == 1.0f && sound.volume == 9999f -> {
 				ItemAbility.FLESH_HATCHET.onSound()
-			}		
+			}
 
 			// Arctic Core
 			sound.soundName() == "entity.snowball.throw" && sound.pitch == 0.5f && sound.volume == 9999f -> {
@@ -90,7 +87,7 @@ object ItemAbilityCooldown {
 
 			// Any Hook - calls all, should correctly identify based off enum value lastClicked
 			sound.soundName() == "entity.fishing_bobber.retrieve" && sound.pitch >= 0.25f && sound.pitch <= 0.8f && sound.volume == 1f -> {
-                                ItemAbility.ADVENTURER_HOOK.onSound()
+				ItemAbility.ADVENTURER_HOOK.onSound()
 				ItemAbility.SLIME_HOOK.onSound()
 				ItemAbility.LUMINESCENT_HOOK.onSound()
 				ItemAbility.GENHOOK.onSound()
@@ -170,16 +167,9 @@ object ItemAbilityCooldown {
 
 		val stack: ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
 		val name = ItemUtils.getNameWithoutEnchants(stack)
-		val ability: ItemAbility? = ItemAbility.getByName(name, ClickType.LEFT)
+		val ability: ItemAbility = ItemAbility.getByName(name, ClickType.LEFT) ?: return
 
-		ability?.let {
-			it.lastClicked = System.currentTimeMillis()
-			DevUtils.sendDebugChat("&&bITEMABILITY &&conLeftClick as&&b " + it.name, "ITEM_ABILITY_DEBUGGER")
-
-			if (!it.soundOnUse && it.remainingCooldown() == 0f) {
-				it.activate()
-			}
-		}
+		handleClickEventAbility(ability)
 	}
 
 	@Suppress("UNUSED_PARAMETER")
@@ -188,24 +178,26 @@ object ItemAbilityCooldown {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
 		val stack: ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
-		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(stack), ClickType.RIGHT)
+		val name = ItemUtils.getNameWithoutEnchants(stack)
+		val ability: ItemAbility = ItemAbility.getByName(name, ClickType.RIGHT) ?: return
 
-		ability?.let {
-			it.lastClicked = System.currentTimeMillis()
-			DevUtils.sendDebugChat("&&bITEMABILITY &&donRightClick as&&b " + it.name, "ITEM_ABILITY_DEBUGGER")
+		handleClickEventAbility(ability)
+	}
 
-			if (!it.soundOnUse && it.remainingCooldown() == 0f) {
-				it.activate()
+	private fun handleClickEventAbility(ability: ItemAbility) {
+		ability.apply {
+			lastClicked = System.currentTimeMillis()
+			DevUtils.sendDebugChat("&&bITEMABILITY &&conLeftClick as&&b $name", "ITEM_ABILITY_DEBUGGER")
+
+			if (soundOnUse || remainingCooldown() > 0f) return
+			if (set == null || (MinecraftClient.getInstance().player?.getEquippedSets()?.getOrDefault(set, 0) ?: 0) >= setAmount) {
+				activate()
 			}
 		}
 	}
 
 	@SubscribeEvent
 	fun onSubtitle(event: SubtitleEvent) {
-		if (event.subtitle.contains("96%")) {
-			ItemAbility.GALACTIC_HAND_CANNON.lastClicked = System.currentTimeMillis()
-		}
-
 		// Known Bug: will clear other cooldowns (daily rewards/arenas)
 		if (Vice.config.HIDE_ITEM_COOLDOWN_TITLES && event.subtitle.contains("Cooldown")) {
 			MinecraftClient.getInstance().inGameHud.clearTitle()

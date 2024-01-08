@@ -2,6 +2,7 @@ package net.oxyopia.vice.events.core;
 
 import net.oxyopia.vice.events.BaseEvent;
 import net.oxyopia.vice.utils.DevUtils;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -13,7 +14,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * EventManager class for managing event subscriptions and handling event hooks.
  * Uses a ConcurrentHashMap to store the subscribers for thread-safe access.
  * Each event class is mapped to a list of DefaultListeners.
+ *
  * @author pvpb0t
+ * @author Oxyopiia
  */
 public class EventManager {
 
@@ -52,6 +55,7 @@ public class EventManager {
 							DefaultListener listener = new DefaultListener(safeEventClazz, method);
 							listener.setPrio(prio);
 							listener.setSource(object);
+
 							subscribers.computeIfAbsent(safeEventClazz, k -> new ArrayList<>()).add(listener);
 
 							for (Class<?> subClazz : eventClazz.getDeclaredClasses()) {
@@ -81,23 +85,42 @@ public class EventManager {
 	 *
 	 * @param event the event to be hooked to listeners.
 	 */
-	public void publish(BaseEvent event) {
+	@Nullable
+	public Object publish(BaseEvent event) {
 		Class<?> clazz = event.getClass();
+
 		while (clazz != null) {
 			if (subscribers.containsKey(clazz)) {
+				if (clazz.isAnnotationPresent(Cancelable.class) || clazz.isAnnotationPresent(Returnable.class)) {
+					event.setCancelable(true);
+
+					if (clazz.isAnnotationPresent(Returnable.class)) {
+						event.setReturnable(true);
+					}
+				}
+
 				final ArrayList<DefaultListener> listenersCopy = new ArrayList<>(subscribers.get(clazz));
 				for (DefaultListener listener : listenersCopy) {
+					if (event.isCanceled()) break;
+
 					try {
 						MethodHandles.Lookup lookup = MethodHandles.lookup();
 						MethodHandle handle = lookup.unreflect(listener.getTarget());
 						handle.invoke(listener.getSource(), event);
+
 					} catch (Throwable e) {
 						DevUtils.sendErrorMessage(e, "An error occurred invoking a " + clazz.getSimpleName());
 					}
 				}
+
+				if (event.getReturnValue() != null) {
+					return event.getReturnValue();
+				}
 			}
 			clazz = clazz.getSuperclass();
 		}
+
+		return null;
 	}
 
 

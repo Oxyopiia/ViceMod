@@ -219,9 +219,9 @@ object ItemAbilityCooldown {
 			val displayType = Vice.config.ITEMCD_DISPLAY_TYPE
 			val bgOpacity = Vice.config.ITEMCD_BACKGROUND_OPACITY
 
-			var whiteColor = 0xFFFFFF
-			var redColor = 0xF70505
-			var greenColor = 0x1DF705
+			val whiteColor = 0xFFFFFF
+			val redColor = 0xF70505
+			val greenColor = 0x1DF705
 
 			if (isOnCooldown()) {
 				val timeRemaining = remainingCooldown()
@@ -278,27 +278,18 @@ object ItemAbilityCooldown {
 
 				// Render R in slot if enabled (by Text Option or using Display Type TextOnly)
 				if (Vice.config.SHOW_ITEMCD_TEXT || displayType == DisplayType.TEXTONLY.id) {
-					if(ability.toString() == "ARCTIC_SCROLL") {
-						var hp = MinecraftClient.getInstance().player?.health
-						if (hp != null) {
-							if(hp <= 10) {
-								matrices.push()
-								matrices.translate(0.0f, 0.0f, 200.0f)
-								HudUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, greenColor, true, false)
-								matrices.pop()
-							} else {
-								matrices.push()
-								matrices.translate(0.0f, 0.0f, 200.0f)
-								HudUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, redColor, true, false)
-								matrices.pop()
-							}
-						}
-					} else {
 					matrices.push()
 					matrices.translate(0.0f, 0.0f, 200.0f)
-					HudUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, whiteColor, true, false)
+
+					var color = whiteColor
+
+					if (ability == ItemAbility.ARCTIC_SCROLL) {
+						val hp = MinecraftClient.getInstance().player?.health ?: 0f
+						color = if (hp <= 10f) greenColor else redColor
+					}
+
+					HudUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, color, true, false)
 					matrices.pop()
-						}
 				}
 			}
 		}

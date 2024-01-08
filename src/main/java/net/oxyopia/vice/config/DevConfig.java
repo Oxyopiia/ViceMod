@@ -94,6 +94,14 @@ public class DevConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Bossbar debugger",
+		description = "yep",
+		category = "Debugs"
+	)
+	public boolean BOSSBAR_DEBUGGER = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "PredictProjectile",
 		description = "origin and end coordinates, calling patterns",
 		category = "Debugs"

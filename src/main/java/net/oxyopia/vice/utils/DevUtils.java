@@ -20,6 +20,8 @@ public class DevUtils {
 	}
 
 	public static void sendDebugChat(String msg, String fieldName) {
+		if (!Vice.config.DEVMODE) return;
+
 		try {
 			Field field = DevConfig.class.getDeclaredField(fieldName);
 			field.setAccessible(true);

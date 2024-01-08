@@ -8,12 +8,12 @@ import net.oxyopia.vice.utils.enums.World
 import java.util.UUID
 import kotlin.math.ceil
 
-object ElGelato {
-	private const val PHASE_1_MAX_TIME = 1 * 60
-	private const val PHASE_2_MAX_TIME = 2 * 60
-	private const val PHASE_3_MAX_TIME = 2 * 60
+object MinehutBoss {
+	private const val PHASE_1_MAX_TIME = 2 * 60
+	private const val PHASE_2_MAX_TIME = 3 * 60
+	private const val PHASE_3_MAX_TIME = 4 * 60
 
-	private val bossbarRegex = Regex("(?:EL|TRUE) GELATO - (.\\d*)/\\d* ♥ \\[PHASE (\\d)]")
+	private val bossbarRegex = Regex("Lifesteal Box SMP Unique - (.\\d*)/\\d* ♥ \\[PHASE (\\d)]")
 
 	private var lastSpawned = 0L
 	private var lastKnownUUID: UUID? = null
@@ -21,13 +21,13 @@ object ElGelato {
 
 	@SubscribeEvent
 	fun onBossBarModifyEvent(event: ModifyBossBarEvent) {
-		if (!Vice.config.BOSS_DESPAWN_TIMERS || !World.Gelato.isInWorld()) return
+		if (!Vice.config.BOSS_DESPAWN_TIMERS || !World.Minehut.isInWorld()) return
 
 		bossbarRegex.find(event.original.string)?.apply {
 			if (lastKnownUUID != event.instance.uuid) {
 				lastSpawned = System.currentTimeMillis()
 				lastKnownUUID = event.instance.uuid
-				DevUtils.sendDebugChat("&&9BOSS CHANGE &&rDetected El Gelato change", "BOSS_DETECTION_INFO")
+				DevUtils.sendDebugChat("&&9BOSS CHANGE &&rDetected MH change", "BOSS_DETECTION_INFO")
 			}
 
 			val diff = System.currentTimeMillis() - lastSpawned
@@ -44,7 +44,7 @@ object ElGelato {
 			try {
 				lastKnownHealth = groupValues[1].toInt()
 			} catch (e: NumberFormatException) {
-				DevUtils.sendErrorMessage(e, "An error occurred converting Bossbar Health of El Gelato to an Int!")
+				DevUtils.sendErrorMessage(e, "An error occurred converting Bossbar Health of a Minehut Boss to an Int!")
 			}
 		}
 	}

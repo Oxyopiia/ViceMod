@@ -8,12 +8,11 @@ import net.oxyopia.vice.utils.enums.World
 import java.util.UUID
 import kotlin.math.ceil
 
-object ElGelato {
-	private const val PHASE_1_MAX_TIME = 1 * 60
-	private const val PHASE_2_MAX_TIME = 2 * 60
-	private const val PHASE_3_MAX_TIME = 2 * 60
+object AbyssalVice {
+	private const val PHASE_1_MAX_TIME = 5 * 60
+	private const val PHASE_2_MAX_TIME = 5 * 60
 
-	private val bossbarRegex = Regex("(?:EL|TRUE) GELATO - (.\\d*)/\\d* ♥ \\[PHASE (\\d)]")
+	private val bossbarRegex = Regex("Abyssal Vice - (.\\d*)/\\d* ♥ \\[PHASE (\\d)]")
 
 	private var lastSpawned = 0L
 	private var lastKnownUUID: UUID? = null
@@ -21,13 +20,13 @@ object ElGelato {
 
 	@SubscribeEvent
 	fun onBossBarModifyEvent(event: ModifyBossBarEvent) {
-		if (!Vice.config.BOSS_DESPAWN_TIMERS || !World.Gelato.isInWorld()) return
+		if (!Vice.config.BOSS_DESPAWN_TIMERS || !World.DarkVice.isInWorld()) return
 
 		bossbarRegex.find(event.original.string)?.apply {
 			if (lastKnownUUID != event.instance.uuid) {
 				lastSpawned = System.currentTimeMillis()
 				lastKnownUUID = event.instance.uuid
-				DevUtils.sendDebugChat("&&9BOSS CHANGE &&rDetected El Gelato change", "BOSS_DETECTION_INFO")
+				DevUtils.sendDebugChat("&&9BOSS CHANGE &&rDetected Dark Vice change", "BOSS_DETECTION_INFO")
 			}
 
 			val diff = System.currentTimeMillis() - lastSpawned
@@ -37,14 +36,13 @@ object ElGelato {
 				when (groupValues[2]) {
 					"1" -> event.original.copy().append(String.format(" \uD83D\uDD51 %.0fs", ceil(PHASE_1_MAX_TIME - (diff / 1000f)))).setStyle(style)
 					"2" -> event.original.copy().append(String.format(" \uD83D\uDD51 %.0fs", ceil(PHASE_2_MAX_TIME - (diff / 1000f)))).setStyle(style)
-					"3" -> event.original.copy().append(String.format(" \uD83D\uDD51 %.0fs", ceil(PHASE_3_MAX_TIME - (diff / 1000f)))).setStyle(style)
 					else -> event.original
 				}
 
 			try {
 				lastKnownHealth = groupValues[1].toInt()
 			} catch (e: NumberFormatException) {
-				DevUtils.sendErrorMessage(e, "An error occurred converting Bossbar Health of El Gelato to an Int!")
+				DevUtils.sendErrorMessage(e, "An error occurred converting Bossbar Health of Dark Vice to an Int!")
 			}
 		}
 	}

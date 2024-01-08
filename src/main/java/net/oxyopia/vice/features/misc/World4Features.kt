@@ -118,9 +118,13 @@ object World4Features {
 		} else if (System.currentTimeMillis() - lastSeenNewOrder <= 1 * 1000) {
 			val order = CookingOrder.getByName(content) ?: return
 			updateOrder(order)
+			return
 		}
 
-		if (content.contains("Order Complete") || content.contains("Incorrect Ingredient ")) updateOrder(CookingOrder.NONE)
+		if (content.contains("Order Complete") || content.contains("Incorrect Ingredient ")) {
+			updateOrder(CookingOrder.NONE)
+			return
+		}
 
 		ingredientsRegex.find(content)?.apply {
 			try {

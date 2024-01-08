@@ -20,6 +20,7 @@ import net.oxyopia.vice.config.DevConfig
 import net.oxyopia.vice.events.core.EventManager
 import net.oxyopia.vice.features.arenas.ArenaEffectNotification
 import net.oxyopia.vice.features.arenas.ArenaSession
+import net.oxyopia.vice.features.bosses.PPP
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
@@ -92,6 +93,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(Fishing)
+		EVENT_MANAGER.subscribe(PPP)
 		EVENT_MANAGER.subscribe(World4Features)
 	}
 }

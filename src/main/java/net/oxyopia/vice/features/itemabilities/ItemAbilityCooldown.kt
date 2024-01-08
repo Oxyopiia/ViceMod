@@ -219,6 +219,10 @@ object ItemAbilityCooldown {
 			val displayType = Vice.config.ITEMCD_DISPLAY_TYPE
 			val bgOpacity = Vice.config.ITEMCD_BACKGROUND_OPACITY
 
+			val whiteColor = 0xFFFFFF
+			val redColor = 0xF70505
+			val greenColor = 0x1DF705
+
 			if (isOnCooldown()) {
 				val timeRemaining = remainingCooldown()
 				val progressLeft: Float = remainingCooldown() / cooldown
@@ -262,7 +266,7 @@ object ItemAbilityCooldown {
 
 					matrices.push()
 					matrices.translate(0.0f, 0.0f, 200.0f)
-					HudUtils.drawText(matrices, event.textRenderer, roundedFloat, event.x, event.y + 9, 0xFFFFFF, true, false)
+					HudUtils.drawText(matrices, event.textRenderer, roundedFloat, event.x, event.y + 9, whiteColor, true, false)
 					matrices.pop()
 				}
 
@@ -276,7 +280,15 @@ object ItemAbilityCooldown {
 				if (Vice.config.SHOW_ITEMCD_TEXT || displayType == DisplayType.TEXTONLY.id) {
 					matrices.push()
 					matrices.translate(0.0f, 0.0f, 200.0f)
-					HudUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, 0xFFFFFF, true, false)
+
+					var color = whiteColor
+
+					if (ability == ItemAbility.ARCTIC_SCROLL) {
+						val hp = MinecraftClient.getInstance().player?.health ?: 0f
+						color = if (hp <= 10f) greenColor else redColor
+					}
+
+					HudUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, color, true, false)
 					matrices.pop()
 				}
 			}

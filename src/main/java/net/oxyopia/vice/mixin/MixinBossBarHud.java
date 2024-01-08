@@ -27,11 +27,11 @@ public class MixinBossBarHud {
 		if (!Utils.INSTANCE.getInDoomTowers()) return instance.getName();
 
 		if (!Objects.equals(lastReportedTitle, instance.getName().getString())) {
-			DevUtils.sendDebugChat(instance.getName().getString(), "BOSSBAR_DEBUGGER");
+			DevUtils.sendDebugChat("&&5BOSSBAR &&rUpdated to: " + instance.getName().getString(), "BOSSBAR_DEBUGGER");
 			lastReportedTitle = instance.getName().getString();
 		}
 
-		Object modified = EVENT_MANAGER.publish(new ModifyBossBarEvent(instance.getName()));
+		Object modified = EVENT_MANAGER.publish(new ModifyBossBarEvent(instance, instance.getName()));
 
 		if (modified instanceof Text) {
 			return (Text) modified;

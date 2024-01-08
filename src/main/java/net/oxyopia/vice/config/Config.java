@@ -362,7 +362,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Boss Despawn Timers",
-        description = "Adjusts the Bossbar to display the despawn timer of the boss.\n§cComing in a future release!",
+        description = "Adjusts the Bossbar to display the despawn timer of the boss.",
         category = "Bosses",
         subcategory = "Quality of Life"
     )
@@ -450,8 +450,6 @@ public class Config extends Vigilant {
         addDependency("LIVE_ARENA_TOTAL_TIMER", "LIVE_ARENA_TOGGLE");
         addDependency("LIVE_ARENA_ROUND_TIMER", "LIVE_ARENA_TOGGLE");
         addDependency("LIVE_ARENA_DROPS", "LIVE_ARENA_TOGGLE");
-
-        setCategoryDescription("Bosses", "§cFEATURES COMING SOON" + "\n§7i cannot be bothered to remove the section just to re add it when i make it, nothing works rn ok?");
     }
 
     public static class ConfigSorting extends SortingBehavior {

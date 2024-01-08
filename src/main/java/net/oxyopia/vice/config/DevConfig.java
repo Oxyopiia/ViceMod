@@ -156,6 +156,14 @@ public class DevConfig extends Vigilant {
 	)
 	public boolean COOKING_DEBUGGER = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Boss Title Detection information",
+		description = "robotop is hot",
+		category = "Debugs"
+	)
+	public boolean BOSS_DETECTION_INFO = false;
+
 	public DevConfig() {
 		super(new File("./config/vice/developerSettings.toml"), "Vice Developer Menu");
 	}

@@ -29,7 +29,7 @@ object Utils {
 	fun getWorldString(): String? = client.world?.registryKey?.value?.path
 
 	fun sendViceMessage(msg: String) {
-		UChat.chat("${Vice.CHAT_PREFIX}${msg.replace("&&", "§")}")
+		UChat.chat("${Vice.CHAT_PREFIX}${msg.replaceFormatting()}")
 	}
 
 	fun sendViceMessage(msg: UTextComponent) {
@@ -88,5 +88,12 @@ object Utils {
 			DevUtils.sendErrorMessage(e, "An error occurred parsing an item's NBT!")
 		}
 		return null
+	}
+
+	/**
+	 * Converts any two consecutive ampersands in a string to a section character, useful for formatting Minecraft Texts
+	 */
+	fun String.replaceFormatting(): String {
+		return this.replace("&&", "§")
 	}
 }

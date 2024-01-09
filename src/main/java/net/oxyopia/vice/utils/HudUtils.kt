@@ -8,6 +8,7 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.Text
 import net.minecraft.util.math.ColorHelper
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.utils.Utils.replaceFormatting
 import java.awt.Color
 
 object HudUtils {
@@ -60,22 +61,26 @@ object HudUtils {
 		val vertexConsumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
 
 		if (centered) {
-			val width = textRenderer.getWidth(text.replace(Regex("&&[a-zA-z0-9]"), "")) + if (shadow) 1 else 0
+			val width = textRenderer.getSpecialTextWidth(text)
 			xPos = x - (width / 2).toDouble().toInt()
 		}
 
-		val i = textRenderer.draw(text.replace("&&", "§"), xPos.toFloat(), y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
+		val i = textRenderer.draw(text.replaceFormatting(), xPos.toFloat(), y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
 		RenderSystem.disableDepthTest()
 		vertexConsumers.draw()
 		RenderSystem.enableDepthTest()
 		return i
 	}
 
+	fun TextRenderer.getSpecialTextWidth(text: String, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW): Int {
+		return this.getWidth(text.replace(Regex("&&[a-zA-z0-9]"), "").replace("§", "")) + if (shadow) 1 else 0
+	}
+
 	fun sendVanillaTitle(title: String, subtitle: String, stayTime: Float = 1f, fadeinout: Float = 0.25f) {
 		val client = MinecraftClient.getInstance()
 
-		client.inGameHud.setSubtitle(Text.of(subtitle.replace("&&", "§")))
-		client.inGameHud.setTitle(Text.of(title.replace("&&", "§")))
+		client.inGameHud.setSubtitle(Text.of(subtitle.replaceFormatting()))
+		client.inGameHud.setTitle(Text.of(title.replaceFormatting()))
 		client.inGameHud.setTitleTicks((20 * fadeinout).toInt(), (20 * stayTime).toInt(), (20 * fadeinout).toInt())
 	}
 }

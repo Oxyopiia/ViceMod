@@ -73,7 +73,7 @@ object HudUtils {
 	}
 
 	fun TextRenderer.getSpecialTextWidth(text: String, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW): Int {
-		return this.getWidth(text.replace(Regex("&&[a-zA-z0-9]"), "").replace("§", "")) + if (shadow) 1 else 0
+		return this.getWidth(text.replace(Regex("&&[a-zA-Z0-9]"), "").replace("§", "")) + if (shadow) 1 else 0
 	}
 
 	fun sendVanillaTitle(title: String, subtitle: String, stayTime: Float = 1f, fadeinout: Float = 0.25f) {

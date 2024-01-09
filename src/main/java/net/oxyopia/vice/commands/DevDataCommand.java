@@ -13,7 +13,7 @@ import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.ItemUtils;
 import net.oxyopia.vice.utils.Utils;
 
-public class TestCommand {
+public class DevDataCommand {
 	public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
 		dispatcher.register(ClientCommandManager.literal("vicedevdata")
 			.executes(context -> {

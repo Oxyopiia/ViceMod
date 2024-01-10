@@ -41,7 +41,7 @@ object World4Features {
 		}
 	}
 
-	enum class CookingOrder(val displayName: String, val recipe: List<CookingItem>) {
+	enum class CookingOrder(val displayName: String, val recipe: List<CookingItem>, val isBossOrder: Boolean = false) {
 		HAMBURGER("Hamburger", listOf(CookingItem.BREAD, CookingItem.COOKED_MEAT, CookingItem.BREAD)),
 		CHEESEBURGER(
 			"Cheeseburger",
@@ -84,7 +84,8 @@ object World4Features {
 				CookingItem.COOKED_MEAT,
 				CookingItem.CHEESE,
 				CookingItem.BREAD
-			)
+			),
+			isBossOrder = true
 		),
 		NONE("", emptyList());
 
@@ -172,7 +173,8 @@ object World4Features {
 		} else if (Vice.config.SHOW_NEXT_COOKING_ITEM) {
 			val recipe = currentOrder.recipe
 
-			HudUtils.drawText(event.context.matrices, MinecraftClient.getInstance().textRenderer, "&&a&&l${currentOrder.displayName}", xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
+			val orderDisplayColor = if (currentOrder.isBossOrder) "&&5" else "&&a"
+			HudUtils.drawText(event.context.matrices, MinecraftClient.getInstance().textRenderer, orderDisplayColor + "&&l${currentOrder.displayName}", xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
 
 			var text = "&&7Next Ingredient: &&6${recipe[orderCurrentItemIndex].displayName}"
 			if ((recipe.size - 1) > orderCurrentItemIndex) text += "&&8 -> ${recipe[orderCurrentItemIndex + 1].displayName}"

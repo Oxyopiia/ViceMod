@@ -36,7 +36,7 @@ object World4Features {
 
 		companion object {
 			fun getByName(displayName: String): CookingItem? {
-				return entries.firstOrNull { it.displayName == displayName }
+				return entries.filterNot { it == NONE }.firstOrNull { it.displayName == displayName }
 			}
 		}
 	}
@@ -90,7 +90,7 @@ object World4Features {
 
 		companion object {
 			fun getByName(displayName: String): CookingOrder? {
-				return entries.firstOrNull { it.displayName.lowercase() == displayName.lowercase() }
+				return entries.filterNot { it == NONE }.firstOrNull { it.displayName.lowercase() == displayName.lowercase() }
 			}
 		}
 	}

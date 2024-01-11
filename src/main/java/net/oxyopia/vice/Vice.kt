@@ -13,7 +13,8 @@ import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayNetworkHandler
 import net.minecraft.command.CommandRegistryAccess
-import net.oxyopia.vice.commands.TestCommand
+import net.oxyopia.vice.commands.DevDataCommand
+import net.oxyopia.vice.commands.EventTreeCommand
 import net.oxyopia.vice.commands.ViceCommand
 import net.oxyopia.vice.config.Config
 import net.oxyopia.vice.config.DevConfig
@@ -70,7 +71,10 @@ class Vice : ClientModInitializer {
 	private fun registerCommands() {
 		ClientCommandRegistrationCallback.EVENT.register(ClientCommandRegistrationCallback { dispatcher: CommandDispatcher<FabricClientCommandSource?>?, _: CommandRegistryAccess? ->
 			ViceCommand.register(dispatcher)
-			TestCommand.register(dispatcher)
+			DevDataCommand.register(dispatcher)
+			dispatcher?.let {
+				EventTreeCommand.register(it)
+			}
 		})
 	}
 

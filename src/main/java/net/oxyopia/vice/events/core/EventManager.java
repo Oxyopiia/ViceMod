@@ -26,6 +26,10 @@ public class EventManager {
 	 */
 	private final ConcurrentHashMap<Class<? extends BaseEvent>, ArrayList<DefaultListener>> subscribers = new ConcurrentHashMap<>();
 
+	public ConcurrentHashMap<Class<? extends BaseEvent>, ArrayList<DefaultListener>> getSubscribers() {
+		return subscribers;
+	}
+
 	// original code before i tried fixing an ide warning via ai: https://chat.openai.com/share/60845b26-3401-4a19-8246-520bd78659d2
 	/**
 	 * Subscribes an object to events that it has specified methods for.

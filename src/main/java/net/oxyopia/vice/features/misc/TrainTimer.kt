@@ -1,26 +1,14 @@
 package net.oxyopia.vice.features.misc
 
-import kotlinx.coroutines.selects.whileSelect
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.minecraft.client.MinecraftClient
 import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.server.MinecraftServer
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.EntityDeathEvent
 import net.oxyopia.vice.events.EntitySpawnEvent
 import net.oxyopia.vice.events.RenderInGameHudEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.features.itemabilities.ItemAbility
-import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.enums.World
 import java.awt.Color
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -123,7 +111,7 @@ object TrainTimer {
 		if (!Vice.config.TRAIN_TIMER) return
 		if (event.entity.customName.toString().contains(entityName)) {
 			aliveCount = 3
-			Utils.playSound(Identifier("minecraft", "block.bell.use"), 1f, 9999f)
+			Utils.playSound("block.bell.use", volume = 9999f)
 
 			startCooldown()
 			if (periodicTask == null) {

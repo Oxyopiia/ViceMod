@@ -37,12 +37,16 @@ object Utils {
 		UChat.chat(msg)
 	}
 
-	fun playSound(identifier: Identifier, pitch: Float, volume: Float) {
+	fun playSound(identifier: Identifier, pitch: Float = 1f, volume: Float = 1f) {
 		try {
 			client.soundManager.play(PositionedSoundInstance.master(SoundEvent.of(identifier), pitch, volume))
 		} catch (err: Exception) {
 			DevUtils.sendErrorMessage(err, "An error occurred attempting to play a sound")
 		}
+	}
+
+	fun playSound(string: String, pitch: Float = 1f, volume: Float = 1f) {
+		playSound(Identifier("minecraft", string), pitch, volume)
 	}
 
 	fun ClientPlayerEntity.getEquippedSets(): Map<Set, Int> {

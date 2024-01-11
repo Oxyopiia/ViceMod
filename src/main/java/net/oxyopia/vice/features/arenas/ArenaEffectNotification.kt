@@ -1,6 +1,5 @@
 package net.oxyopia.vice.features.arenas
 
-import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ArenaWaveChangeEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
@@ -22,7 +21,7 @@ object ArenaEffectNotification {
 				else -> return
 			}
 
-			Utils.playSound(Identifier("minecraft", "block.note_block.pling"), 2f, 1f)
+			Utils.playSound("block.note_block.pling", 2f)
 		}
 	}
 }

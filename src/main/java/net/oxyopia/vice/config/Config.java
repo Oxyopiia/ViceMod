@@ -121,6 +121,15 @@ public class Config extends Vigilant {
     public boolean PREVENT_PLACING_PLAYER_HEADS = true;
 
     @Property(
+            type = PropertyType.SWITCH,
+            name = "Train Timer (World 11)",
+            description = "Show when next train arrived or if train still alive",
+            category = "General",
+            subcategory = "Quality of Life"
+    )
+    public boolean TRAIN_TIMER = false;
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Hide Revolver Blindness",
         description = "Hides the blindness effect when aiming the revolver.",

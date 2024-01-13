@@ -4,7 +4,7 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.entity.projectile.FishingBobberEntity
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.EntityVelocityPacketEvent
-import net.oxyopia.vice.events.SoundPacketEvent
+import net.oxyopia.vice.events.SoundEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
@@ -23,8 +23,8 @@ object Fishing {
 	private var lastTouchedWater: Long = -1
 
 	@SubscribeEvent
-	fun onSound(event: SoundPacketEvent) {
-		if (!Vice.config.FISHING_DING || event.packet.sound.value().id.toString() != SPLASH_SOUND) return
+	fun onSound(event: SoundEvent) {
+		if (!Vice.config.FISHING_DING || event.soundName != SPLASH_SOUND) return
 		val fishHook = MinecraftClient.getInstance().player?.fishHook ?: return
 		if (!fishHook.isTouchingWater) return
 

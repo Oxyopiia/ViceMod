@@ -4,7 +4,6 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
-import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket
 import net.minecraft.util.ClickType
 import net.minecraft.util.math.MathHelper
 import net.oxyopia.vice.Vice
@@ -36,57 +35,50 @@ object ItemAbilityCooldown {
 		TEXTONLY(4);
 	}
 
-	private fun PlaySoundS2CPacket.soundName(): String = this.sound.value().id.path
-
 	@SubscribeEvent
-	fun onSound(event: SoundPacketEvent) {
-		val sound: PlaySoundS2CPacket = event.packet
+	fun onSound(event: SoundEvent) {
 
 		when {
 
-			// Barbed Shotgun
-			sound.soundName() == "entity.blaze.shoot" && sound.pitch == 0.5f && sound.volume == 9999f -> {
+			// Barbed/Wasted Shotgun
+			event.soundName == "entity.blaze.shoot" && event.pitch == 0.5f && event.volume == 9999f -> {
 				ItemAbility.BARBED_SHOTGUN.onSound()
 				ItemAbility.WASTED_SHOTGUN.onSound()
 			}
 
 			// Wasted Boomstick
-			sound.soundName() == "entity.blaze.shoot" && sound.pitch == 1.0f && sound.volume == 9999f -> {
+			event.soundName == "entity.blaze.shoot" && event.pitch == 1.0f && event.volume == 9999f -> {
 				ItemAbility.WASTED_BOOMSTICK.onSound()
 			}
 
 			// Crystalline Blade
-			sound.soundName() == "block.amethyst_block.break" && sound.pitch == 1.0f && sound.volume == 9999f -> {
+			event.soundName == "block.amethyst_block.break" && event.pitch == 1.0f && event.volume == 9999f -> {
 				ItemAbility.CRYSTALINE_BLADE.onSound()
 			}
 
-			// Bartender's Glove
-			sound.soundName() == "entity.snowball.throw" && sound.pitch == 0.5f && sound.volume == 9999f -> {
+			// Bartender's Glove/Arctic Core
+			event.soundName == "entity.snowball.throw" && event.pitch == 0.5f && event.volume == 9999f -> {
 				ItemAbility.BARTENDER_GLOVE.onSound()
-			}
-
-			// Flesh Hatchet
-			sound.soundName() == "item.trident.return" && sound.pitch == 1.0f && sound.volume == 9999f -> {
-				ItemAbility.FLESH_HATCHET.onSound()
-			}
-
-			// Arctic Core
-			sound.soundName() == "entity.snowball.throw" && sound.pitch == 0.5f && sound.volume == 9999f -> {
 				ItemAbility.ARCTIC_CORE.onSound()
 			}
 
+			// Flesh Hatchet
+			event.soundName == "item.trident.return" && event.pitch == 1.0f && event.volume == 9999f -> {
+				ItemAbility.FLESH_HATCHET.onSound()
+			}
+
 			// Arctic Scroll
-			(sound.soundName() == "block.lava.pop" || sound.soundName() == "entity.player.hurt_freeze") && sound.pitch == 1f && sound.volume == 9999f -> {
+			(event.soundName == "block.lava.pop" || event.soundName == "entity.player.hurt_freeze") && event.pitch == 1f && event.volume == 9999f -> {
 				ItemAbility.ARCTIC_SCROLL.onSound()
 			}
 
 			// 8-Bit Katana
-			sound.soundName() == "entity.player.attack.crit" && sound.volume == 9999f -> {
+			event.soundName == "entity.player.attack.crit" && event.volume == 9999f -> {
 				ItemAbility.EIGHT_BIT_KATANA.onSound()
 			}
 
 			// Any Hook - calls all, should correctly identify based off enum value lastClicked
-			sound.soundName() == "entity.fishing_bobber.retrieve" && sound.pitch >= 0.25f && sound.pitch <= 0.8f && sound.volume == 1f -> {
+			event.soundName == "entity.fishing_bobber.retrieve" && event.pitch >= 0.25f && event.pitch <= 0.8f && event.volume == 1f -> {
 				ItemAbility.ADVENTURER_HOOK.onSound()
 				ItemAbility.SLIME_HOOK.onSound()
 				ItemAbility.LUMINESCENT_HOOK.onSound()
@@ -94,32 +86,32 @@ object ItemAbilityCooldown {
 			}
 
 			// Bedrock Breaker
-			sound.soundName() == "entity.bat.takeoff" && sound.volume == 9999f -> {
+			event.soundName == "entity.bat.takeoff" && event.volume == 9999f -> {
 				ItemAbility.BEDROCK_BREAKER.onSound()
 			}
 
 			// Doge Hammer
-			sound.soundName() == "entity.wolf.ambient" && sound.volume == 9999f -> {
+			event.soundName == "entity.wolf.ambient" && event.volume == 9999f -> {
 				ItemAbility.DOGE_HAMMER.onSound()
 			}
 
 			// Revolver
-			sound.soundName() == "entity.wither.spawn" && sound.pitch == 1.25f && sound.volume == 9999f -> {
+			event.soundName == "entity.wither.spawn" && event.pitch == 1.25f && event.volume == 9999f -> {
 				ItemAbility.REVOLVER.onSound()
 			}
 
 			// Dynamite Barrel
-			sound.soundName() == "entity.generic.explode" && sound.pitch == 1.5f && sound.volume == 9999f -> {
+			event.soundName == "entity.generic.explode" && event.pitch == 1.5f && event.volume == 9999f -> {
 				ItemAbility.DYNAMITE_BARREL.onSound()
 			}
 
 			// Laser Point Minigun
-			sound.soundName() == "entity.generic.explode" && sound.pitch == 2.0f && sound.volume == 9999f -> {
+			event.soundName == "entity.generic.explode" && event.pitch == 2.0f && event.volume == 9999f -> {
 				ItemAbility.LASER_POINT_MINIGUN.onSound()
 			}
 
 			// Snowball Cannon
-			sound.soundName() == "entity.snowball.throw" && sound.pitch == 1f && sound.volume == 9999f -> {
+			event.soundName == "entity.snowball.throw" && event.pitch == 1f && event.volume == 9999f -> {
 				ItemAbility.SNOWBALL_CANNON.onSound()
 			}
 		}

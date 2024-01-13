@@ -9,7 +9,7 @@ import net.oxyopia.vice.events.BlockUpdatePacketEvent;
 import net.oxyopia.vice.events.EntityDeathEvent;
 import net.oxyopia.vice.events.EntitySpawnEvent;
 import net.oxyopia.vice.events.EntityVelocityPacketEvent;
-import net.oxyopia.vice.events.SoundPacketEvent;
+import net.oxyopia.vice.events.SoundEvent;
 import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,7 +25,7 @@ public class MixinClientPlayNetworkHandler {
 	@Inject(at = @At("HEAD"), method = "onPlaySound")
 	private void onSound(PlaySoundS2CPacket packet, CallbackInfo callbackInfo) {
 		if (MinecraftClient.getInstance().isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new SoundPacketEvent(packet));
+			EVENT_MANAGER.publish(new SoundEvent(packet));
 
 			DevUtils.sendDebugChat("&&bSOUND&&r " + packet.getSound().value().getId().toString() + " &&dP " + packet.getPitch() + " &&eV" + packet.getVolume(), "SEND_SOUND_INFO");
 		}

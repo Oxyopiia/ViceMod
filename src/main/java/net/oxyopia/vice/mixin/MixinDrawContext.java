@@ -18,7 +18,12 @@ import static net.oxyopia.vice.Vice.config;
 @Mixin(DrawContext.class)
 public class MixinDrawContext {
 
-	@ModifyVariable(argsOnly = true, method = "drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V", at = @At(value="INVOKE", target="Lnet/minecraft/client/util/math/MatrixStack;push()V"), ordinal = 0)
+	@ModifyVariable(
+		argsOnly = true,
+		method = "drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V",
+		at = @At(value="INVOKE", target="Lnet/minecraft/client/util/math/MatrixStack;push()V"),
+		ordinal = 0
+	)
 	private String towerBeaconFeatures(String countOverride, TextRenderer textRenderer, ItemStack stack, int x, int y) {
 		Screen currentScreen = MinecraftClient.getInstance().currentScreen;
 

@@ -116,11 +116,13 @@ object World4Features {
 			heldItem = CookingItem.getByName(it.groupValues[1]) ?: CookingItem.NONE
 			DevUtils.sendDebugChat("&&6COOKING &&rUpdated held item to &&d${heldItem.name}", "COOKING_DEBUGGER")
 
-			if (heldItem == CookingItem.COOKED_MEAT && hideHandledMessages) {
-				Utils.playSound("block.note_block.pling", pitch = 1.5f, volume = 3f)
-			}
+			if (hideHandledMessages) {
+				event.cancel()
 
-			if (hideHandledMessages) event.cancel()
+				if (heldItem == CookingItem.COOKED_MEAT) {
+					Utils.playSound("block.note_block.pling", pitch = 1.5f, volume = 3f)
+				}
+			}
 			return
 		}
 
@@ -241,6 +243,7 @@ object World4Features {
 	}
 
 	private fun getStockColor(): String {
+		@Suppress("KotlinConstantConditions")
 		return when {
 			stock >= 25 -> "a"
 			stock in 11..24 -> "e"

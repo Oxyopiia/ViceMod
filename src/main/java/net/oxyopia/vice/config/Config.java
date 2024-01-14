@@ -31,7 +31,7 @@ public class Config extends Vigilant {
         placeholder = "Edit HUD Locations"
     )
     public void EDIT_HUD_LOCATIONS() {
-        EssentialAPI.getNotifications().push("Vice", "HUD Manager coming soon", 3f);
+        EssentialAPI.getNotifications().push("Vice", "HUD Manager coming soon\n§eUse Developer Mode as an alternative for now!", 3f);
     }
 
     @Property(
@@ -198,7 +198,7 @@ public class Config extends Vigilant {
     @Property(
     	type = PropertyType.SWITCH,
     	name = "Block Wrong Cooking Clicks",
-    	description = "Blocks clicks when clicking on a Cooking plate with the wrong item for your current order.",
+    	description = "Blocks clicks when clicking on a Cooking plate with the wrong item for your current order.\n§eUse /viceclickoverride to override!",
     	category = "General",
     	subcategory = "World 4"
     )

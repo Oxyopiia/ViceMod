@@ -4,6 +4,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.client.MinecraftClient
 import net.minecraft.util.ActionResult
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.commands.BlockClickOverride
 import net.oxyopia.vice.events.BlockInteractEvent
 import net.oxyopia.vice.events.RenderInGameHudEvent
 import net.oxyopia.vice.events.ServerChatMessageEvent
@@ -168,6 +169,12 @@ object World4Features {
 			} catch (e: NumberFormatException) {
 				DevUtils.sendErrorMessage(e, "An error occurred casting a regex group value (${groupValues[1]}) to an Int!")
 			}
+
+			return
+		}
+
+		if (content.startsWith("Hey! Sorry,") && hideHandledMessages) {
+			event.cancel()
 		}
 	}
 
@@ -232,7 +239,7 @@ object World4Features {
 
 	@SubscribeEvent
 	fun onBlockInteract(event: BlockInteractEvent) {
-		if (!Vice.config.BLOCK_WRONG_COOKING_CLICKS || !World.Burger.isInWorld()) return
+		if (!Vice.config.BLOCK_WRONG_COOKING_CLICKS || !World.Burger.isInWorld() || BlockClickOverride.isActive()) return
 
 		val block = Utils.getWorld()?.getBlockState(event.hitResult.blockPos)?.block ?: return
 		if (block != Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE) return

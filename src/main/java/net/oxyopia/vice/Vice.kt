@@ -13,6 +13,7 @@ import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayNetworkHandler
 import net.minecraft.command.CommandRegistryAccess
+import net.oxyopia.vice.commands.BlockClickOverride
 import net.oxyopia.vice.commands.DevDataCommand
 import net.oxyopia.vice.commands.EventTreeCommand
 import net.oxyopia.vice.commands.ViceCommand
@@ -25,7 +26,6 @@ import net.oxyopia.vice.features.bosses.*
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
-import net.oxyopia.vice.features.misc.*
 import net.oxyopia.vice.features.misc.TrainTimer
 import net.oxyopia.vice.features.misc.Fishing
 import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker
@@ -76,6 +76,7 @@ class Vice : ClientModInitializer {
 			DevDataCommand.register(dispatcher)
 			dispatcher?.let {
 				EventTreeCommand.register(it)
+				BlockClickOverride.register(it)
 			}
 		})
 	}

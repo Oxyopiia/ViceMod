@@ -25,8 +25,13 @@ object TrainTimer {
 		if (!Vice.config.TRAIN_TIMER) return
 		if (!Vice.config.TRAIN_TIMER_OUTSIDE && !World.Showdown.isInWorld()) return
 
-		val xPos = event.scaledWidth / 2
+		var xPos = event.scaledWidth / 2
 		var yPos = 260
+
+		if (Vice.config.DEVMODE) {
+			xPos = (event.scaledWidth / 2 - 1) + Vice.devConfig.TRAIN_TIMER_HUD_X_OFFSET_LOCATION
+			yPos = (event.scaledHeight / 2 - 1) + Vice.devConfig.TRAIN_TIMER_HUD_Y_OFFSET_LOCATION
+		}
 
 		val matrices = event.context.matrices
 		val textRenderer = MinecraftClient.getInstance().textRenderer

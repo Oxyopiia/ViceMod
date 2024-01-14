@@ -13,7 +13,7 @@ import net.oxyopia.vice.utils.enums.World
 import java.util.concurrent.TimeUnit
 
 object TrainTimer {
-	val CONDUCTOR_NAME = "The Train Conductor" // The Train Conductor // Abducted Cow
+	val CONDUCTOR_NAME = "The Train Conductor"
 	val PORTER_NAME = "Porter"
 
 	var timeLeft = 0L
@@ -24,15 +24,15 @@ object TrainTimer {
 	fun onHudRender(event: RenderInGameHudEvent) {
 		if (!Vice.config.TRAIN_TIMER || !World.Showdown.isInWorld()) return
 
-		val xPos = event.scaledWidth - 160
-		val yPos = 300
+		val xPos = event.scaledWidth / 2
+		val yPos = 260
 
 		if(aliveCount > 0) {
 
 			HudUtils.drawText(
 				event.context.matrices,
 				MinecraftClient.getInstance().textRenderer,
-				"Train Arrived!",
+				"&&6&&lTrain Arrived!",
 				xPos,
 				yPos,
 				centered = true
@@ -42,36 +42,19 @@ object TrainTimer {
 				HudUtils.drawText(
 					event.context.matrices,
 					MinecraftClient.getInstance().textRenderer,
-					"The Train Conductor - Alive",
+					"&&aConductor Alive",
 					xPos,
 					yPos + 10,
 					centered = true
 				)
 
-				HudUtils.drawText(
-					event.context.matrices,
-					MinecraftClient.getInstance().textRenderer,
-					"Porters - Dead",
-					xPos,
-					yPos + 20,
-					centered = true
-				)
 			} else {
 				HudUtils.drawText(
 					event.context.matrices,
 					MinecraftClient.getInstance().textRenderer,
-					"The Train Conductor - Kill more ${aliveCount - 1} Porters",
+					"&&6${aliveCount - 1} Porters",
 					xPos,
 					yPos + 10,
-					centered = true
-				)
-
-				HudUtils.drawText(
-					event.context.matrices,
-					MinecraftClient.getInstance().textRenderer,
-					"Porters - ${aliveCount - 1} Alive",
-					xPos,
-					yPos + 20,
 					centered = true
 				)
 			}
@@ -83,7 +66,7 @@ object TrainTimer {
 			HudUtils.drawText(
 				event.context.matrices,
 				MinecraftClient.getInstance().textRenderer,
-				"Train arrive in: ${seconds} seconds",
+				"&&6Train arrives in: &&a${seconds} seconds",
 				xPos,
 				yPos,
 				centered = true
@@ -93,16 +76,15 @@ object TrainTimer {
 
 	@SubscribeEvent
 	fun onTrainSpawned(event: EntitySpawnEvent) {
-		if (!Vice.config.TRAIN_TIMER) return
 		if (event.entity.customName.toString().contains(CONDUCTOR_NAME)) {
 			aliveCount = 3
-			Utils.playSound("block.bell.use", volume = 9999f)
+			if (Vice.config.TRAIN_TIMER) Utils.playSound("block.bell.use", volume = 9999f)
 		}
 	}
 
 	@SubscribeEvent
 	fun onEntityDeath(event: EntityDeathEvent) {
-		if (!Vice.config.TRAIN_TIMER || !World.Showdown.isInWorld()) return
+		if (!World.Showdown.isInWorld()) return
 
 		if (event.entity.customName.toString().contains(CONDUCTOR_NAME) || event.entity.customName.toString().contains(PORTER_NAME)) {
 			aliveCount--

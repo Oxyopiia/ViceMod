@@ -184,7 +184,7 @@ public class Config extends Vigilant {
     	category = "General",
     	subcategory = "World 4"
     )
-    public boolean SHOW_COOKING_STOCK_INFO = false;
+    public boolean SHOW_COOKING_STOCK_INFO = true;
 
     @Property(
     	type = PropertyType.SWITCH,
@@ -203,6 +203,15 @@ public class Config extends Vigilant {
     	subcategory = "World 4"
     )
     public boolean BLOCK_WRONG_COOKING_CLICKS = true;
+
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Hide Handled Chat Messages",
+    	description = "Hides chat messages handled by the Cooking UI (held item, stock info, etc)",
+    	category = "General",
+    	subcategory = "World 4"
+    )
+    public boolean HIDE_HANDLED_COOKING_MESSAGES = true;
 
     // General/Item Cooldowns
 

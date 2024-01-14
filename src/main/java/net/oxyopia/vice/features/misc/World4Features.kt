@@ -110,11 +110,13 @@ object World4Features {
 	fun onChatMessage(event: ServerChatMessageEvent) {
 		if (!World.Burger.isInWorld()) return
 		val content = event.content.string
+		val hideHandledMessages = Vice.config.HIDE_HANDLED_COOKING_MESSAGES
 
 		heldItemRegex.find(content.removeSuffix("."))?.let {
 			heldItem = CookingItem.getByName(it.groupValues[1]) ?: CookingItem.NONE
 			DevUtils.sendDebugChat("&&6COOKING &&rUpdated held item to &&d${heldItem.name}", "COOKING_DEBUGGER")
 
+			if (hideHandledMessages) event.cancel()
 			return
 		}
 
@@ -123,6 +125,7 @@ object World4Features {
 		} else if (System.currentTimeMillis() - lastSeenNewOrder <= 1 * 1000) {
 			val order = CookingOrder.getByName(content) ?: return
 			updateOrder(order)
+
 			return
 		}
 
@@ -140,6 +143,8 @@ object World4Features {
 					orderCurrentItemIndex = currentOrder.recipe.size - ingredientsRemaining
 					DevUtils.sendDebugChat("&&6COOKING &&rNext Item: ${currentOrder.recipe[orderCurrentItemIndex]}", "COOKING_DEBUGGER")
 				}
+
+				if (hideHandledMessages) event.cancel()
 			} catch (e: NumberFormatException) {
 				DevUtils.sendErrorMessage(e, "An error occurred casting a regex group value (${groupValues[1]}) to an Int!")
 			}
@@ -151,6 +156,9 @@ object World4Features {
 			try {
 				stock = groupValues[1].toInt()
 				DevUtils.sendDebugChat("&&6COOKING &&Updated Stock to ${stock}", "COOKING_DEBUGGER")
+
+				if (hideHandledMessages) event.cancel()
+
 			} catch (e: NumberFormatException) {
 				DevUtils.sendErrorMessage(e, "An error occurred casting a regex group value (${groupValues[1]}) to an Int!")
 			}
@@ -172,7 +180,10 @@ object World4Features {
 
 		if (Vice.config.SHOW_NEXT_COOKING_ITEM && currentOrder == CookingOrder.NONE) {
 			var text = "&&cNo Order"
-			if (Vice.config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) text += "&&7 (&&${getStockColor()}${stock}&&7)"
+
+			if (Vice.config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) {
+				text += "&&7 (&&${getStockColor()}${stock}&&7)"
+			}
 
 			HudUtils.drawText(event.context.matrices, MinecraftClient.getInstance().textRenderer, text, xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
 			yPos += 10
@@ -184,12 +195,15 @@ object World4Features {
 			HudUtils.drawText(event.context.matrices, MinecraftClient.getInstance().textRenderer, orderDisplayColor + "&&l${currentOrder.displayName}", xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
 
 			var text = "&&7Next Ingredient: &&6${recipe[orderCurrentItemIndex].displayName}"
-			if (recipe[orderCurrentItemIndex] == heldItem) text.replace("&&6", "&&a")
+			if (recipe[orderCurrentItemIndex] == heldItem) text = text.replace("&&6", "&&a")
 			if ((recipe.size - 1) > orderCurrentItemIndex) text += "&&8 -> ${recipe[orderCurrentItemIndex + 1].displayName}"
 
 			if (Vice.config.SIMPLIFY_COOKING_DISPLAYS) {
 				text = text.removePrefix("&&7Next Ingredient: ")
-				if (stock >= 0) text += "&&7 (&&${getStockColor()}${stock}&&7)"
+
+				if (Vice.config.SHOW_COOKING_STOCK_INFO && stock >= 0) {
+					text += "&&7 (&&${getStockColor()}${stock}&&7)"
+				}
 			}
 
 			HudUtils.drawText(

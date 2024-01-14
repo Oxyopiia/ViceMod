@@ -30,6 +30,10 @@ public abstract class BaseEvent {
 		if (cancelable) this.canceled = way;
 	}
 
+	public void cancel() {
+		setCanceled(true);
+	}
+
 	public void setCancelable(boolean val) {
 		this.cancelable = val;
 	}

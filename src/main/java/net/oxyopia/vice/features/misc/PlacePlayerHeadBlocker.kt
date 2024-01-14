@@ -15,7 +15,7 @@ object PlacePlayerHeadBlocker {
 
 		val stack: ItemStack = if (event.hand == Hand.MAIN_HAND) event.player.mainHandStack else event.player.offHandStack
 		if (stack.item === Items.PLAYER_HEAD) {
-			event.cir.returnValue = ActionResult.PASS
+			event.returnValue = ActionResult.PASS
 		}
 	}
 }

@@ -1,13 +1,17 @@
 package net.oxyopia.vice.features.misc
 
+import net.minecraft.block.Blocks
 import net.minecraft.client.MinecraftClient
+import net.minecraft.util.ActionResult
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.events.BlockInteractEvent
 import net.oxyopia.vice.events.RenderInGameHudEvent
 import net.oxyopia.vice.events.ServerChatMessageEvent
 import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
+import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.enums.World
 import java.awt.Color
 
@@ -128,6 +132,8 @@ object World4Features {
 		}
 
 		ingredientsRegex.find(content)?.apply {
+			if (currentOrder == CookingOrder.NONE) return
+
 			try {
 				val ingredientsRemaining = groupValues[1].toInt()
 				if (ingredientsRemaining > 0) {
@@ -170,6 +176,7 @@ object World4Features {
 
 			HudUtils.drawText(event.context.matrices, MinecraftClient.getInstance().textRenderer, text, xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
 			yPos += 10
+
 		} else if (Vice.config.SHOW_NEXT_COOKING_ITEM) {
 			val recipe = currentOrder.recipe
 
@@ -202,11 +209,23 @@ object World4Features {
 		}
 	}
 
+	@SubscribeEvent
+	fun onBlockInteract(event: BlockInteractEvent) {
+		if (!Vice.config.BLOCK_WRONG_COOKING_CLICKS || !World.Burger.isInWorld()) return
+
+		val block = Utils.getWorld()?.getBlockState(event.hitResult.blockPos)?.block ?: return
+		if (block != Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE) return
+
+		if (currentOrder == CookingOrder.NONE || heldItem != currentOrder.recipe[orderCurrentItemIndex]) {
+			event.returnValue = ActionResult.FAIL
+		}
+	}
+
 	private fun getStockColor(): String {
 		return when {
 			stock >= 25 -> "a"
-			stock in 6..24 -> "e"
-			stock <= 5 -> "c"
+			stock in 11..24 -> "e"
+			stock <= 10 -> "c"
 			else -> "7"
 		}
 	}

@@ -124,7 +124,7 @@ public class EventManager {
 			clazz = clazz.getSuperclass();
 		}
 
-		return null;
+		return event.isCanceled();
 	}
 
 

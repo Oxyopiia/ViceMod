@@ -16,10 +16,14 @@ import static net.oxyopia.vice.Vice.EVENT_MANAGER;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public abstract class MixinClientPlayerInteractionManager {
-	@Inject(at = @At("HEAD"), method = "interactBlock", cancellable = true)
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/border/WorldBorder;contains(Lnet/minecraft/util/math/BlockPos;)Z"), method = "interactBlock", cancellable = true)
 	private void interactBlock(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new BlockInteractEvent(player, hand, hitResult, cir));
+			Object modified = EVENT_MANAGER.publish(new BlockInteractEvent(player, hand, hitResult));
+
+			if (modified instanceof ActionResult) {
+				cir.setReturnValue((ActionResult) modified);
+			}
 		}
 	}
 }

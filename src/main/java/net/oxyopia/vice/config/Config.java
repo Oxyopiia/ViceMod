@@ -122,8 +122,8 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "Train Timer (World 11)",
-            description = "Show when next train arrived or if train still alive",
+            name = "Train Timer",
+            description = "Displays a HUD graphic showing information about the Train in World 11.",
             category = "General",
             subcategory = "Quality of Life"
     )
@@ -194,6 +194,15 @@ public class Config extends Vigilant {
     	subcategory = "World 4"
     )
     public boolean SIMPLIFY_COOKING_DISPLAYS = false;
+
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Block Wrong Cooking Clicks",
+    	description = "Blocks clicks when clicking on a Cooking plate with the wrong item for your current order.",
+    	category = "General",
+    	subcategory = "World 4"
+    )
+    public boolean BLOCK_WRONG_COOKING_CLICKS = true;
 
     // General/Item Cooldowns
 

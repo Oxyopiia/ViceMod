@@ -52,7 +52,7 @@ object HudUtils {
 		RenderSystem.enableDepthTest()
 	}
 
-	fun drawText(stack: MatrixStack, textRenderer: TextRenderer, text: String?, x: Int, y: Int, color: Int, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
+	fun drawText(stack: MatrixStack, textRenderer: TextRenderer, text: String?, x: Int, y: Int, color: Int = Color(255, 255, 255, 255).rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
 		if (text == null) {
 			return 0
 		}

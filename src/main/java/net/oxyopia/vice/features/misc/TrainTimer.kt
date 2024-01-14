@@ -10,12 +10,16 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
 import java.awt.Color
+import net.oxyopia.vice.utils.enums.World
+import java.util.UUID
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 
 object TrainTimer {
+	val CONDUCTOR_NAME = "The Train Conductor"
+	val PORTER_NAME = "Porter"
 
 	var cooldownEndTime: Long = 0
 	val cooldownDurationSeconds: Long = 60 * 40
@@ -31,7 +35,7 @@ object TrainTimer {
 
 	@SubscribeEvent
 	fun onHudRender(event: RenderInGameHudEvent) {
-		if (!Vice.config.TRAIN_TIMER) return
+		if (!Vice.config.TRAIN_TIMER || !World.Showdown.isInWorld()) return
 
 		val xPos = event.scaledWidth - 160
 		var yPos = 300
@@ -44,7 +48,6 @@ object TrainTimer {
 				"Train Arrived!",
 				xPos,
 				yPos,
-				Color(255, 255, 255, 255).rgb,
 				centered = true
 			)
 
@@ -55,7 +58,6 @@ object TrainTimer {
 					"The Train Conductor - Alive",
 					xPos,
 					yPos + 10,
-					Color(255, 255, 255, 255).rgb,
 					centered = true
 				)
 
@@ -65,7 +67,6 @@ object TrainTimer {
 					"Porters - Dead",
 					xPos,
 					yPos + 20,
-					Color(255, 255, 255, 255).rgb,
 					centered = true
 				)
 			} else {
@@ -75,7 +76,6 @@ object TrainTimer {
 					"The Train Conductor - Kill more ${aliveCount - 1} Porters",
 					xPos,
 					yPos + 10,
-					Color(255, 255, 255, 255).rgb,
 					centered = true
 				)
 
@@ -85,7 +85,6 @@ object TrainTimer {
 					"Porters - ${aliveCount - 1} Alive",
 					xPos,
 					yPos + 20,
-					Color(255, 255, 255, 255).rgb,
 					centered = true
 				)
 			}
@@ -100,7 +99,6 @@ object TrainTimer {
 				"Train arrive in: ${seconds} seconds",
 				xPos,
 				yPos,
-				Color(255, 255, 255, 255).rgb,
 				centered = true
 			)
 		}
@@ -133,10 +131,10 @@ object TrainTimer {
 	}
 
 	@SubscribeEvent
-	fun onTrainKilled(event: EntityDeathEvent) {
-		if (!Vice.config.TRAIN_TIMER) return
+	fun onEntityDeath(event: EntityDeathEvent) {
+		if (!Vice.config.TRAIN_TIMER || !World.Showdown.isInWorld() || !conductorIsAlive) return
 
-		if (event.entity.customName.toString().contains(entityName) || event.entity.customName.toString().contains(entityName2)) {
+		if (event.entity.customName.toString().contains(CONDUCTOR_NAME) || event.entity.customName.toString().contains(PORTER_NAME)) {
 			aliveCount--
 		}
 	}

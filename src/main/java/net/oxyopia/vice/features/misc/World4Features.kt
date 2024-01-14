@@ -116,6 +116,10 @@ object World4Features {
 			heldItem = CookingItem.getByName(it.groupValues[1]) ?: CookingItem.NONE
 			DevUtils.sendDebugChat("&&6COOKING &&rUpdated held item to &&d${heldItem.name}", "COOKING_DEBUGGER")
 
+			if (heldItem == CookingItem.COOKED_MEAT && hideHandledMessages) {
+				Utils.playSound("block.note_block.pling", pitch = 1.5f, volume = 3f)
+			}
+
 			if (hideHandledMessages) event.cancel()
 			return
 		}

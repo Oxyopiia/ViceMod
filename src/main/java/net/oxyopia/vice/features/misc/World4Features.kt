@@ -184,6 +184,7 @@ object World4Features {
 			HudUtils.drawText(event.context.matrices, MinecraftClient.getInstance().textRenderer, orderDisplayColor + "&&l${currentOrder.displayName}", xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
 
 			var text = "&&7Next Ingredient: &&6${recipe[orderCurrentItemIndex].displayName}"
+			if (recipe[orderCurrentItemIndex] == heldItem) text.replace("&&6", "&&a")
 			if ((recipe.size - 1) > orderCurrentItemIndex) text += "&&8 -> ${recipe[orderCurrentItemIndex + 1].displayName}"
 
 			if (Vice.config.SIMPLIFY_COOKING_DISPLAYS) {

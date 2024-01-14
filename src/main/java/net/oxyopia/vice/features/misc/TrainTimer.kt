@@ -1,11 +1,10 @@
 package net.oxyopia.vice.features.misc
 
 import net.minecraft.client.MinecraftClient
-import net.minecraft.entity.Entity
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.EntityDeathEvent
-import net.oxyopia.vice.events.EntitySpawnEvent
 import net.oxyopia.vice.events.RenderInGameHudEvent
+import net.oxyopia.vice.events.ServerChatMessageEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
@@ -13,71 +12,53 @@ import net.oxyopia.vice.utils.enums.World
 import java.util.concurrent.TimeUnit
 
 object TrainTimer {
-	val CONDUCTOR_NAME = "The Train Conductor"
-	val PORTER_NAME = "Porter"
+	private const val SPAWN_COOLDOWN_TIME_SECONDS = 45 * 60
+	private const val SPAWN_MESSAGE = "The Train Conductor has returned!"
+	private const val CONDUCTOR_NAME = "The Train Conductor"
+	private const val PORTER_NAME = "Porter"
 
-	var timeLeft = 0L
-	var entity: Entity? = null
-	var aliveCount = 0
+	private var spawnTime = 0L
+	private var aliveCount = 0
 
 	@SubscribeEvent
 	fun onHudRender(event: RenderInGameHudEvent) {
-		if (!Vice.config.TRAIN_TIMER || !World.Showdown.isInWorld()) return
+		if (!Vice.config.TRAIN_TIMER) return
+		if (!Vice.config.TRAIN_TIMER_OUTSIDE && !World.Showdown.isInWorld()) return
 
 		val xPos = event.scaledWidth / 2
-		val yPos = 260
+		var yPos = 260
 
-		if(aliveCount > 0) {
+		val matrices = event.context.matrices
+		val textRenderer = MinecraftClient.getInstance().textRenderer
 
-			HudUtils.drawText(
-				event.context.matrices,
-				MinecraftClient.getInstance().textRenderer,
-				"&&6&&lTrain Arrived!",
-				xPos,
-				yPos,
-				centered = true
-			)
+		val secondaryText = when {
+			aliveCount > 1 && World.Showdown.isInWorld() -> "&&6${aliveCount - 1} Porters"
 
-			if(aliveCount == 1) {
-				HudUtils.drawText(
-					event.context.matrices,
-					MinecraftClient.getInstance().textRenderer,
-					"&&aConductor Alive",
-					xPos,
-					yPos + 10,
-					centered = true
-				)
+			aliveCount == 1 && World.Showdown.isInWorld() -> "&&aConductor Alive"
 
-			} else {
-				HudUtils.drawText(
-					event.context.matrices,
-					MinecraftClient.getInstance().textRenderer,
-					"&&6${aliveCount - 1} Porters",
-					xPos,
-					yPos + 10,
-					centered = true
-				)
+			spawnTime > 0 -> {
+				val seconds = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - spawnTime) % SPAWN_COOLDOWN_TIME_SECONDS
+				val formatted = Utils.formatDuration(SPAWN_COOLDOWN_TIME_SECONDS - seconds)
+				"&&6Next Train arrives in: &&a${formatted}"
 			}
 
-		} else {
-
-			val seconds = TimeUnit.MILLISECONDS.toSeconds(timeLeft)
-
-			HudUtils.drawText(
-				event.context.matrices,
-				MinecraftClient.getInstance().textRenderer,
-				"&&6Train arrives in: &&a${seconds} seconds",
-				xPos,
-				yPos,
-				centered = true
-			)
+			else -> "&&6Next Train arrives in: &&cUnknown"
 		}
+
+		if (aliveCount > 0) {
+			HudUtils.drawText(matrices, textRenderer, "&&6&&lTrain Arrived", xPos, yPos, centered = true)
+			yPos += 10
+		}
+
+		HudUtils.drawText(matrices, textRenderer, secondaryText, xPos, yPos, centered = true)
 	}
 
 	@SubscribeEvent
-	fun onTrainSpawned(event: EntitySpawnEvent) {
-		if (event.entity.customName.toString().contains(CONDUCTOR_NAME)) {
+	fun onChatEvent(event: ServerChatMessageEvent) {
+		if (event.content.string.contains(SPAWN_MESSAGE)) {
+			spawnTime = System.currentTimeMillis()
 			aliveCount = 3
+
 			if (Vice.config.TRAIN_TIMER) Utils.playSound("block.bell.use", volume = 9999f)
 		}
 	}

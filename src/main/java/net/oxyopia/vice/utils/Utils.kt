@@ -85,6 +85,10 @@ object Utils {
 		}
 	}
 
+	fun formatDuration(seconds: Long): String {
+		return formatDuration(seconds * 1000, false)
+	}
+
 	fun parseNbt(nbt: String): NbtCompound? {
 		try {
 			return StringNbtReader.parse(nbt)

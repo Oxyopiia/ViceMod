@@ -130,6 +130,15 @@ public class Config extends Vigilant {
     public boolean TRAIN_TIMER = false;
 
     @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Show Train Timer outside World 11",
+    	description = "Show the train timer while outside World 11, yeah",
+    	category = "General",
+    	subcategory = "Quality of Life"
+    )
+    public boolean TRAIN_TIMER_OUTSIDE = false;
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Hide Revolver Blindness",
         description = "Hides the blindness effect when aiming the revolver.",
@@ -447,6 +456,7 @@ public class Config extends Vigilant {
 
         addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
         addDependency("SNOWBALL_CANNON_PROJECTION_COLOR", "SNOWBALL_CANNON_PROJECTION");
+        addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
         addDependency("FISHING_DING_DONT_DETECT_SOUND_PACKET", "FISHING_DING");
 
         addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");

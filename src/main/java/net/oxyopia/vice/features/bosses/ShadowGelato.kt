@@ -4,6 +4,7 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ModifyBossBarEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
+import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.enums.World
 import java.util.*
 import kotlin.math.ceil
@@ -35,8 +36,8 @@ object ShadowGelato {
 
 			event.returnValue =
 				when (groupValues[2]) {
-					"1" -> event.original.copy().append(String.format(" \uD83D\uDD51 %.0fs", ceil(PHASE_1_MAX_TIME - (diff / 1000f)))).setStyle(style)
-					"3" -> event.original.copy().append(String.format(" \uD83D\uDD51 %.0fs", ceil(PHASE_3_MAX_TIME - (diff / 1000f)))).setStyle(style)
+					"1" -> event.original.copy().append(Utils.formatTimer(PHASE_1_MAX_TIME, diff)).setStyle(style)
+					"3" -> event.original.copy().append(Utils.formatTimer(PHASE_3_MAX_TIME, diff)).setStyle(style)
 					else -> event.original
 				}
 

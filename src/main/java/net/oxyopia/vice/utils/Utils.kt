@@ -10,11 +10,15 @@ import net.minecraft.client.world.ClientWorld
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.sound.SoundEvent
+import net.minecraft.text.MutableText
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.events.ModifyBossBarEvent
+import net.oxyopia.vice.features.bosses.ViceBoss
 import net.oxyopia.vice.utils.enums.Set
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.math.ceil
 
 import kotlin.math.floor
 
@@ -85,9 +89,18 @@ object Utils {
 		}
 	}
 
+	fun formatDuration(seconds: Float): String {
+		return formatDuration((seconds).toLong())
+	}
+
 	fun formatDuration(seconds: Long): String {
 		return formatDuration(seconds * 1000, false)
 	}
+
+	fun formatTimer(phaseTimer: Int, diff: Long): String {
+		return " \uD83D\uDD51 " + formatDuration(ceil(phaseTimer - (diff / 1000f)))
+	}
+
 
 	fun parseNbt(nbt: String): NbtCompound? {
 		try {

@@ -110,7 +110,7 @@ object World4Features {
 	@SubscribeEvent
 	fun onChatMessage(event: ServerChatMessageEvent) {
 		if (!World.Burger.isInWorld()) return
-		val content = event.content.string
+		val content = event.string
 		val hideHandledMessages = Vice.config.HIDE_HANDLED_COOKING_MESSAGES
 
 		heldItemRegex.find(content.removeSuffix("."))?.let {

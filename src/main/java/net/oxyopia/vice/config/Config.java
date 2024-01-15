@@ -155,16 +155,27 @@ public class Config extends Vigilant {
         subcategory = "Quality of Life"
     )
     public boolean BETTER_TOWER_BEACON_UI = true;
+    
+    // General/Spam Hider
 
     @Property(
         type = PropertyType.SWITCH,
         name = "Hide Server Tips",
         description = "Hides messages such as the periodic Discord tip in chat.",
         category = "General",
-        subcategory = "Quality of Life",
+        subcategory = "Spam Hider",
         hidden = true
     )
-    public boolean HIDE_SERVER_TIPS = true;
+    public boolean HIDE_SERVER_TIPS = false;
+    
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Hide Worldguard Messages",
+    	description = "Hides the 'Hey! Sorry' Worldguard Messages",
+    	category = "General",
+    	subcategory = "Spam Hider"
+    )
+    public boolean HIDE_WORLDGUARD_MESSAGES = false;
 
     // General/World 4
 

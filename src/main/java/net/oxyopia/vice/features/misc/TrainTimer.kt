@@ -60,7 +60,7 @@ object TrainTimer {
 
 	@SubscribeEvent
 	fun onChatEvent(event: ServerChatMessageEvent) {
-		if (event.content.string.contains(SPAWN_MESSAGE)) {
+		if (event.string.contains(SPAWN_MESSAGE)) {
 			spawnTime = System.currentTimeMillis()
 			aliveCount = 3
 

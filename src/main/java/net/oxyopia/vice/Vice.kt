@@ -26,6 +26,7 @@ import net.oxyopia.vice.features.bosses.*
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
+import net.oxyopia.vice.features.misc.ChatFilter
 import net.oxyopia.vice.features.misc.TrainTimer
 import net.oxyopia.vice.features.misc.Fishing
 import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker
@@ -108,6 +109,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(PPP)
 		EVENT_MANAGER.subscribe(World4Features)
 		EVENT_MANAGER.subscribe(TrainTimer)
+		EVENT_MANAGER.subscribe(ChatFilter)
 	}
 }
 

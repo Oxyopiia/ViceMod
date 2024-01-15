@@ -2,7 +2,6 @@ package net.oxyopia.vice.config;
 
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
-import net.minecraft.client.MinecraftClient;
 
 import java.awt.*;
 import java.io.File;
@@ -32,28 +31,6 @@ public class DevConfig extends Vigilant {
 		subcategory = "Item Cooldown Display"
 	)
 	public float ITEMCD_GREEN_FADE_OVERRIDE = 1.3f;
-
-	/*@Property(
-		type = PropertyType.NUMBER,
-		name = "Cursor Cooldown X Offset",
-		description = "X offset for cooldown displayed near cursor",
-		category = "Experiments",
-		subcategory = "Item Cooldown Display",
-		min = -100,
-		max = 100
-	)
-	public int ITEMCD_CURSORCD_X_OFFSET = 3;
-
-	@Property(
-		type = PropertyType.NUMBER,
-		name = "Cursor Cooldown Y Offset",
-		description = "Y offset for cooldown displayed near cursor",
-		category = "Experiments",
-		subcategory = "Item Cooldown Display",
-		min = -100,
-		max = 100
-	)
-	public int ITEMCD_CURSORCD_Y_OFFSET = 3;*/
 
 	@Property(
 		type = PropertyType.COLOR,
@@ -164,6 +141,8 @@ public class DevConfig extends Vigilant {
 	)
 	public boolean BOSS_DETECTION_INFO = false;
 
+	/** HUD MANAGER THING FOR NOW */
+
 	@Property(
 			type = PropertyType.NUMBER,
 			name = "X Offset Location",
@@ -240,11 +219,6 @@ public class DevConfig extends Vigilant {
 		markDirty();
 
 		setSubcategoryDescription("Experiments", "Item Cooldown Display", "this is here as i haven't made the HUD manager yet, will be removed when that is added");
-
-		setSubcategoryDescription("HUD Manager Experiments", "Train Timer", "this is here as i haven't made the HUD manager yet, will be removed when that is added");
-
-		setSubcategoryDescription("HUD Manager Experiments", "Item Cooldown", "this is here as i haven't made the HUD manager yet, will be removed when that is added");
-
-		setSubcategoryDescription("HUD Manager Experiments", "Cooking Order", "this is here as i haven't made the HUD manager yet, will be removed when that is added");
+		setCategoryDescription("HUD Manager Experiments", "this is here as i haven't made the HUD manager yet, will be removed when that is added, cheers");
 	}
 }

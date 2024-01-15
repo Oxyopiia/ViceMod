@@ -7,7 +7,6 @@ import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.enums.World
 import java.util.*
-import kotlin.math.ceil
 
 object ShadowGelato {
 	private const val PHASE_1_MAX_TIME = 2 * 60

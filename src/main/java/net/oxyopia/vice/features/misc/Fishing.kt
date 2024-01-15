@@ -59,15 +59,17 @@ object Fishing {
 		val currentTime = System.currentTimeMillis()
 
 		if (lastDetectedSound > 0 && currentTime - lastDetectedSound <= MAX_SOUND_DETECTION_TIME) {
-			Utils.playSound(BITE_SOUND, 1.4f, 3f)
-			HudUtils.sendVanillaTitle("", "&&bBite!", 0.8f, 0.1f)
-			lastHandled = currentTime
+			sendBiteNotification(currentTime)
 			lastDetectedSound = -1
 		} else if (Vice.config.FISHING_DING_DONT_DETECT_SOUND_PACKET && currentTime - lastHandled >= 1000) {
-			Utils.playSound(BITE_SOUND, 1.4f, 3f)
-			HudUtils.sendVanillaTitle("", "&&bBite!", 0.8f, 0.1f)
-			lastHandled = currentTime
+			sendBiteNotification(currentTime)
 		}
+	}
+
+	private fun sendBiteNotification(timestamp: Long) {
+		Utils.playSound(BITE_SOUND, 1.4f, 3f)
+		HudUtils.sendVanillaTitle("", "&&bBite!", 0.8f, 0.1f)
+		lastHandled = timestamp
 	}
 
 	private fun updateLastTouchedWater(velocityY: Int, fishHook: FishingBobberEntity) {

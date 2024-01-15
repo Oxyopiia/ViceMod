@@ -10,11 +10,8 @@ import net.minecraft.client.world.ClientWorld
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.sound.SoundEvent
-import net.minecraft.text.MutableText
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.events.ModifyBossBarEvent
-import net.oxyopia.vice.features.bosses.ViceBoss
 import net.oxyopia.vice.utils.enums.Set
 import java.util.*
 import java.util.regex.Pattern
@@ -76,7 +73,7 @@ object Utils {
 	 * Formats a duration as dd:hh:MM:SS
 	 * @param ms Time in Milliseconds
 	 */
-	fun formatDuration(ms: Long, showMs: Boolean): String {
+	fun formatDuration(ms: Long, showMs: Boolean = false): String {
 		val hours = floor(ms.toDouble() / (1000 * 60 * 60)).toLong()
 		val mins = floor((ms / (1000 * 60)).toDouble() % 60).toLong()
 		val secs = floor((ms / 1000).toDouble() % 60).toLong()
@@ -97,8 +94,8 @@ object Utils {
 		return formatDuration(seconds * 1000, false)
 	}
 
-	fun formatTimer(phaseTimer: Int, diff: Long): String {
-		return " \uD83D\uDD51 " + formatDuration(ceil(phaseTimer - (diff / 1000f)))
+	fun formatTimer(timeLimit: Int, elapsedMilliseconds: Long): String {
+		return " \uD83D\uDD51 " + formatDuration(ceil(timeLimit - (elapsedMilliseconds / 1000f)))
 	}
 
 

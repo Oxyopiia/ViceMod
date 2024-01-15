@@ -197,6 +197,9 @@ object ItemAbilityCooldown {
 		}
 	}
 
+	private val redColor = Color(255, 0, 0).rgb
+	private val greenColor = Color(0, 255, 0).rgb
+
 	@SubscribeEvent
 	fun onRenderItemSlot(event: RenderItemSlotEvent) {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
@@ -211,19 +214,16 @@ object ItemAbilityCooldown {
 			val displayType = Vice.config.ITEMCD_DISPLAY_TYPE
 			val bgOpacity = Vice.config.ITEMCD_BACKGROUND_OPACITY
 
-			val whiteColor = 0xFFFFFF
-			val redColor = 0xF70505
-			val greenColor = 0x1DF705
-
 			if (isOnCooldown()) {
 				val timeRemaining = remainingCooldown()
 				val progressLeft: Float = remainingCooldown() / cooldown
 
 				when (displayType) {
 					DisplayType.VANILLA.id -> {
-						val k = event.y + MathHelper.floor(16.0f * (1.0f - progressLeft))
-						val l = k + MathHelper.ceil(16.0f * progressLeft)
-						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, k, event.x + 16, l, 0, Int.MAX_VALUE)
+						val topLeft = event.y + MathHelper.floor(16.0f * (1.0f - progressLeft))
+						val bottomRight = topLeft + MathHelper.ceil(16.0f * progressLeft)
+
+						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, topLeft, event.x + 16, bottomRight, 0, Int.MAX_VALUE)
 					}
 
 					DisplayType.STATIC.id -> {
@@ -258,7 +258,7 @@ object ItemAbilityCooldown {
 
 					matrices.push()
 					matrices.translate(0.0f, 0.0f, 200.0f)
-					HudUtils.drawText(matrices, event.textRenderer, roundedFloat, event.x, event.y + 9, whiteColor, true, false)
+					HudUtils.drawText(matrices, event.textRenderer, roundedFloat, event.x, event.y + 9, shadow = true, centered = false)
 					matrices.pop()
 				}
 
@@ -273,7 +273,7 @@ object ItemAbilityCooldown {
 					matrices.push()
 					matrices.translate(0.0f, 0.0f, 200.0f)
 
-					var color = whiteColor
+					var color = Color(255, 255, 255, 255).rgb
 
 					if (ability == ItemAbility.ARCTIC_SCROLL) {
 						val hp = MinecraftClient.getInstance().player?.health ?: 0f

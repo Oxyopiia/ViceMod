@@ -43,6 +43,8 @@ public class MixinClientPlayNetworkHandler {
 	private void onEntitySpawn(Entity entity, CallbackInfo ci) {
 		if (MinecraftClient.getInstance().isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new EntitySpawnEvent(entity));
+
+			DevUtils.sendDebugChat("&&aENTITY SPAWN&&r " + entity.getName().getString(), "MOB_SPAWN_DEBUGGER");
 		}
 	}
 	

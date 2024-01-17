@@ -79,6 +79,14 @@ public class DevConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Mob Spawn",
+		description = "mobbobobobo",
+		category = "Debugs"
+	)
+	public boolean MOB_SPAWN_DEBUGGER = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "PredictProjectile",
 		description = "origin and end coordinates, calling patterns",
 		category = "Debugs"

@@ -12,11 +12,10 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.ItemUtils
+import net.oxyopia.vice.utils.Utils.clamp
 import net.oxyopia.vice.utils.Utils.getEquippedSets
 import java.awt.Color
 import kotlin.math.ceil
-import kotlin.math.max
-import kotlin.math.min
 
 /**
  * Inspired from SkyHanni's similar feature, partially adapted
@@ -204,7 +203,7 @@ object ItemAbilityCooldown {
 	fun onRenderItemSlot(event: RenderItemSlotEvent) {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
-		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(event.stack))
+		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(event.itemStack))
 
 		// May refactor code in the future, a bit too much indentation and ambiguity for my liking
 		ability?.apply {
@@ -231,12 +230,12 @@ object ItemAbilityCooldown {
 					}
 
 					DisplayType.COLORFADE.id -> {
-						var redness: Float = max(0f, min(1f, 2.7f * progressLeft))
-						var greenness: Float = max(0f, min(1f, 1.3f - (1.3f * progressLeft)))
+						var redness: Float = (2.7f * progressLeft).clamp(0f, 1f)
+						var greenness: Float = (1.3f - (1.3f * progressLeft)).clamp(0f, 1f)
 
 						if (Vice.config.DEVMODE) {
-							redness = max(0f, min(1f, Vice.devConfig.ITEMCD_RED_FADE_OVERRIDE * progressLeft))
-							greenness = max(0f, min(1f, Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE - (Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE * progressLeft)))
+							redness = (Vice.devConfig.ITEMCD_RED_FADE_OVERRIDE * progressLeft).clamp(0f, 1f)
+							greenness = (Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE - (Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE * progressLeft)).clamp(0f, 1f)
 						}
 
 						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, Color(redness, greenness, 0f, bgOpacity))
@@ -280,7 +279,7 @@ object ItemAbilityCooldown {
 						color = if (hp <= 10f) greenColor else redColor
 					}
 
-					HudUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, color, true, false)
+					HudUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, color, shadow = true, centered = false)
 					matrices.pop()
 				}
 			}

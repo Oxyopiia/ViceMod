@@ -13,16 +13,16 @@ import net.oxyopia.vice.utils.enums.Set
  * @author hannibal002
  */
 enum class ItemAbility(
-        val itemName: String,
-        val cooldown: Float,
-        val clickType: ClickType = ClickType.RIGHT,
-        val set: Set? = null,
-        val setAmount: Int = 0,
-        val sharedCooldownId : String? = null,
-        val displayCooldown: Boolean = true,
-        val soundOnUse: Boolean = true,
-        var lastActivated: Long = 0,
-        var lastClicked: Long = 0
+    val itemName: String,
+    val cooldown: Float,
+    val clickType: ClickType = ClickType.RIGHT,
+    val set: Set? = null,
+    val setAmount: Int = 0,
+    val sharedCooldownId : String? = null,
+    val displayCooldown: Boolean = true,
+    val soundOnUse: Boolean = true,
+    var lastActivated: Long = 0,
+    var lastClicked: Long = 0
 ) {
     VORTEX_LAUNCHER("Vortex Launcher", 5f, soundOnUse = false),
     CRYSTALINE_BLADE("Crystaline Blade", 10f),
@@ -84,7 +84,7 @@ enum class ItemAbility(
         fun getByName(name: String, clickType: ClickType? = null): ItemAbility? {
             return entries.firstOrNull {
                 it.itemName.replace(" ", "") == name.replace(" ", "") &&
-                (clickType == null || it.clickType == clickType)
+                        (clickType == null || it.clickType == clickType)
             }
         }
     }

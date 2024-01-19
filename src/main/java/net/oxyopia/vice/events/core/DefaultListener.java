@@ -1,6 +1,6 @@
 package net.oxyopia.vice.events.core;
 
-import net.oxyopia.vice.events.BaseEvent;
+import net.oxyopia.vice.events.ViceEvent;
 
 import java.lang.reflect.Method;
 
@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
  @author pvpb0t
  */
 public class DefaultListener{
-	private Class<? extends BaseEvent> event;
+	private Class<? extends ViceEvent> event;
 	private Method target;
 	private Object source;
 
@@ -39,7 +39,7 @@ public class DefaultListener{
 	 @param event the event class that this listener listens to
 	 @param target the target method that this listener calls when the event is fired
 	 */
-	public DefaultListener(Class<? extends BaseEvent> event, Method target) {
+	public DefaultListener(Class<? extends ViceEvent> event, Method target) {
 		this.event = event;
 		this.target = target;
 	}
@@ -48,7 +48,7 @@ public class DefaultListener{
 	 Sets the event class that this listener listens to.
 	 @param event the new event class of this listener
 	 */
-	public void setEvent(Class<? extends BaseEvent> event) {
+	public void setEvent(Class<? extends ViceEvent> event) {
 		this.event = event;
 	}
 
@@ -72,7 +72,7 @@ public class DefaultListener{
 	 Returns the event class that this listener listens to.
 	 @return the event class of this listener
 	 */
-	public Class<? extends BaseEvent> getEvent() {
+	public Class<? extends ViceEvent> getEvent() {
 		return event;
 	}
 }

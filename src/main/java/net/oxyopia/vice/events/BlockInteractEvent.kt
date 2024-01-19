@@ -7,6 +7,6 @@ import net.minecraft.util.hit.BlockHitResult
 import net.oxyopia.vice.events.core.Returnable
 
 @Returnable
-class BlockInteractEvent(val player: ClientPlayerEntity, val hand: Hand, val hitResult: BlockHitResult) : BaseEvent.Cancelable<Boolean>() {
+class BlockInteractEvent(val player: ClientPlayerEntity, val hand: Hand, val hitResult: BlockHitResult) : ViceEvent.Cancelable<Boolean>() {
 	val itemStack: ItemStack = if (hand == Hand.MAIN_HAND) player.mainHandStack else player.offHandStack
 }

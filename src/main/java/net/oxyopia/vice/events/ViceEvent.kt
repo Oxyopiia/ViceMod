@@ -7,8 +7,8 @@ package net.oxyopia.vice.events
  * @author pvpb0t
  * @author Oxyopiia
  */
-abstract class BaseEvent {
-	abstract class Cancelable<T: Any?> : BaseEvent() {
+abstract class ViceEvent {
+	abstract class Cancelable<T: Any?> : ViceEvent() {
 		private var returnValue: T? = null
 		var canceled: Boolean = false
 

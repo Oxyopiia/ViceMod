@@ -1,6 +1,6 @@
 package net.oxyopia.vice.events.core
 
-import net.oxyopia.vice.events.BaseEvent
+import net.oxyopia.vice.events.ViceEvent
 import net.oxyopia.vice.utils.DevUtils
 import java.lang.invoke.MethodHandles
 import java.util.*
@@ -21,7 +21,7 @@ class EventManager {
 	 * The subscribers map holds a list of listeners for each event type.
 	 * The ConcurrentHashMap class is used to ensure thread-safety.
 	 */
-	val subscribers: ConcurrentHashMap<Class<out BaseEvent>, ArrayList<DefaultListener>> = ConcurrentHashMap()
+	val subscribers: ConcurrentHashMap<Class<out ViceEvent>, ArrayList<DefaultListener>> = ConcurrentHashMap()
 
 	/**
 	 * Subscribes an object to events that it has specified methods for.
@@ -39,12 +39,12 @@ class EventManager {
 				if (method.isAnnotationPresent(SubscribeEvent::class.java)) {
 					val parameterTypes = method.parameterTypes
 
-					if (parameterTypes.isNotEmpty() && BaseEvent::class.java.isAssignableFrom(parameterTypes[0])) {
+					if (parameterTypes.isNotEmpty() && ViceEvent::class.java.isAssignableFrom(parameterTypes[0])) {
 						val eventClazz = parameterTypes[0]
 
-						if (BaseEvent::class.java.isAssignableFrom(eventClazz)) {
+						if (ViceEvent::class.java.isAssignableFrom(eventClazz)) {
 							val safeEventClazz = eventClazz.asSubclass(
-								BaseEvent::class.java
+								ViceEvent::class.java
 							)
 
 							val listener = DefaultListener(safeEventClazz, method)
@@ -54,12 +54,12 @@ class EventManager {
 								.add(listener)
 
 							for (subClazz in eventClazz.declaredClasses) {
-								if (eventClazz.isAssignableFrom(subClazz) && BaseEvent::class.java.isAssignableFrom(
+								if (eventClazz.isAssignableFrom(subClazz) && ViceEvent::class.java.isAssignableFrom(
 										subClazz
 									)
 								) {
 									val safeSubClazz = subClazz.asSubclass(
-										BaseEvent::class.java
+										ViceEvent::class.java
 									)
 									val subListener = DefaultListener(safeSubClazz, method)
 									subListener.source = obj
@@ -85,7 +85,7 @@ class EventManager {
 	 *
 	 * @param event the event to be hooked to listeners.
 	 */
-	fun publish(event: BaseEvent): Any {
+	fun publish(event: ViceEvent): ViceEvent {
 		var clazz: Class<*>? = event.javaClass
 
 		while (clazz != null) {
@@ -119,10 +119,10 @@ class EventManager {
 	 */
 	fun unsubscribe(`object`: Any) {
 		subscribers.values.forEach(Consumer { listeners: ArrayList<DefaultListener>? -> listeners!!.removeIf { listener: DefaultListener -> listener.source === `object` } })
-		subscribers.entries.removeIf { entry: Map.Entry<Class<out BaseEvent>, ArrayList<DefaultListener>?> -> entry.value!!.isEmpty() }
+		subscribers.entries.removeIf { entry: Map.Entry<Class<out ViceEvent>, ArrayList<DefaultListener>?> -> entry.value!!.isEmpty() }
 		subscribers.keys.stream()
-			.filter { clazz: Class<out BaseEvent> -> clazz.declaredClasses.isNotEmpty() }
-			.flatMap { clazz: Class<out BaseEvent> -> Arrays.stream(clazz.declaredClasses) }
+			.filter { clazz: Class<out ViceEvent> -> clazz.declaredClasses.isNotEmpty() }
+			.flatMap { clazz: Class<out ViceEvent> -> Arrays.stream(clazz.declaredClasses) }
 			.filter { subClazz: Class<*> -> subClazz.isAssignableFrom(subClazz.declaringClass) }
 			.forEach { subClazz: Class<*>? ->
 				val subListeners = subscribers[subClazz]

@@ -7,7 +7,7 @@ package net.oxyopia.vice.events
  * @link https://github.com/hannibal002/SkyHanni/blob/beta/LICENSE
  * @author hannibal002
  */
-class ClientTickEvent(val tick: Int) : BaseEvent() {
+class ClientTickEvent(val tick: Int) : ViceEvent() {
 	private fun isMod(i: Int) = tick % i == 0
 
 	fun repeatSeconds(i: Int) = isMod(20 * i)

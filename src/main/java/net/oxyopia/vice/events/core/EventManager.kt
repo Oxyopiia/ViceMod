@@ -3,6 +3,7 @@ package net.oxyopia.vice.events.core
 import net.oxyopia.vice.events.ViceEvent
 import net.oxyopia.vice.utils.DevUtils
 import java.lang.invoke.MethodHandles
+import java.lang.reflect.Method
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.Consumer
@@ -17,11 +18,13 @@ import java.util.function.Predicate
  * @author Oxyopiia
  */
 class EventManager {
+	data class EventListener(var event: Class<out ViceEvent?>, var target: Method, var source: Any? = null)
+
 	/**
 	 * The subscribers map holds a list of listeners for each event type.
 	 * The ConcurrentHashMap class is used to ensure thread-safety.
 	 */
-	val subscribers: ConcurrentHashMap<Class<out ViceEvent>, ArrayList<DefaultListener>> = ConcurrentHashMap()
+	val subscribers: ConcurrentHashMap<Class<out ViceEvent>, ArrayList<EventListener>> = ConcurrentHashMap()
 
 	/**
 	 * Subscribes an object to events that it has specified methods for.
@@ -39,32 +42,23 @@ class EventManager {
 				if (method.isAnnotationPresent(SubscribeEvent::class.java)) {
 					val parameterTypes = method.parameterTypes
 
-					if (parameterTypes.isNotEmpty() && ViceEvent::class.java.isAssignableFrom(parameterTypes[0])) {
+					if (parameterTypes.isNotEmpty() && (ViceEvent::class.java.isAssignableFrom(parameterTypes[0]))) {
 						val eventClazz = parameterTypes[0]
 
 						if (ViceEvent::class.java.isAssignableFrom(eventClazz)) {
-							val safeEventClazz = eventClazz.asSubclass(
-								ViceEvent::class.java
-							)
+							val safeEventClazz = eventClazz.asSubclass(ViceEvent::class.java)
 
-							val listener = DefaultListener(safeEventClazz, method)
+							val listener = EventListener(safeEventClazz, method)
 							listener.source = obj
 
-							subscribers.computeIfAbsent(safeEventClazz) { ArrayList() }
-								.add(listener)
+							subscribers.computeIfAbsent(safeEventClazz) { ArrayList() }.add(listener)
 
 							for (subClazz in eventClazz.declaredClasses) {
-								if (eventClazz.isAssignableFrom(subClazz) && ViceEvent::class.java.isAssignableFrom(
-										subClazz
-									)
-								) {
-									val safeSubClazz = subClazz.asSubclass(
-										ViceEvent::class.java
-									)
-									val subListener = DefaultListener(safeSubClazz, method)
+								if (eventClazz.isAssignableFrom(subClazz) && ViceEvent::class.java.isAssignableFrom(subClazz)) {
+									val safeSubClazz = subClazz.asSubclass(ViceEvent::class.java)
+									val subListener = EventListener(safeSubClazz, method)
 									subListener.source = obj
-									subscribers.computeIfAbsent(safeSubClazz) { ArrayList() }
-										.add(subListener)
+									subscribers.computeIfAbsent(safeSubClazz) { ArrayList() }.add(subListener)
 								}
 							}
 						}
@@ -89,6 +83,8 @@ class EventManager {
 		var clazz: Class<*>? = event.javaClass
 
 		while (clazz != null) {
+			val isCancelable = ViceEvent.Cancelable::class.java.isAssignableFrom(clazz)
+
 			if (subscribers.containsKey(clazz)) {
 				val listenersCopy = subscribers[clazz]?.let { ArrayList(it) } ?: return event
 				for (listener in listenersCopy) {
@@ -118,8 +114,8 @@ class EventManager {
 	 * @param object the object to unsubscribe
 	 */
 	fun unsubscribe(`object`: Any) {
-		subscribers.values.forEach(Consumer { listeners: ArrayList<DefaultListener>? -> listeners!!.removeIf { listener: DefaultListener -> listener.source === `object` } })
-		subscribers.entries.removeIf { entry: Map.Entry<Class<out ViceEvent>, ArrayList<DefaultListener>?> -> entry.value!!.isEmpty() }
+		subscribers.values.forEach(Consumer { listeners: ArrayList<EventListener>? -> listeners!!.removeIf { listener: EventListener -> listener.source === `object` } })
+		subscribers.entries.removeIf { entry: Map.Entry<Class<out ViceEvent>, ArrayList<EventListener>?> -> entry.value!!.isEmpty() }
 		subscribers.keys.stream()
 			.filter { clazz: Class<out ViceEvent> -> clazz.declaredClasses.isNotEmpty() }
 			.flatMap { clazz: Class<out ViceEvent> -> Arrays.stream(clazz.declaredClasses) }
@@ -127,7 +123,7 @@ class EventManager {
 			.forEach { subClazz: Class<*>? ->
 				val subListeners = subscribers[subClazz]
 				if (subListeners != null) {
-					subListeners.removeIf(Predicate { listener: DefaultListener -> listener.source === `object` })
+					subListeners.removeIf(Predicate { listener: EventListener -> listener.source === `object` })
 					if (subListeners.isEmpty()) {
 						subscribers.remove(subClazz)
 					}

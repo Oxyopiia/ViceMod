@@ -37,9 +37,6 @@ class EventManager {
 		while (clazz != null) {
 			for (method in clazz.declaredMethods) {
 				if (method.isAnnotationPresent(SubscribeEvent::class.java)) {
-					val subscribeEvent = method.getAnnotation(SubscribeEvent::class.java)
-					val prio = subscribeEvent.priority
-
 					val parameterTypes = method.parameterTypes
 
 					if (parameterTypes.isNotEmpty() && BaseEvent::class.java.isAssignableFrom(parameterTypes[0])) {
@@ -51,7 +48,6 @@ class EventManager {
 							)
 
 							val listener = DefaultListener(safeEventClazz, method)
-							listener.prio = prio
 							listener.source = obj
 
 							subscribers.computeIfAbsent(safeEventClazz) { ArrayList() }
@@ -66,7 +62,6 @@ class EventManager {
 										BaseEvent::class.java
 									)
 									val subListener = DefaultListener(safeSubClazz, method)
-									subListener.prio = prio
 									subListener.source = obj
 									subscribers.computeIfAbsent(safeSubClazz) { ArrayList() }
 										.add(subListener)

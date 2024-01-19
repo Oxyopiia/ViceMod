@@ -13,6 +13,4 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface SubscribeEvent {
-	int priority() default 0;
-}
+public @interface SubscribeEvent { }

@@ -9,7 +9,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Denotes that the specified event can be cancelled with {@link BaseEvent#setCanceled(boolean)}
+ * Denotes that the specified event can be cancelled with {@link BaseEvent.Cancelable#cancel()}
  */
 @Retention(value = RUNTIME)
 @Target(value = TYPE)

@@ -2,6 +2,7 @@ package net.oxyopia.vice.features.itemabilities
 
 import net.minecraft.util.ClickType
 import net.oxyopia.vice.utils.DevUtils
+import net.oxyopia.vice.utils.Utils.timeDelta
 import net.oxyopia.vice.utils.enums.Set
 
 /**
@@ -64,13 +65,13 @@ enum class ItemAbility(
 
     fun remainingCooldown() : Float {
         val lastActivation = sharedCooldownId?.let { sharedCooldowns[it] } ?: lastActivated
-        val diff = System.currentTimeMillis() - lastActivation
+        val diff = lastActivation.timeDelta()
 
         return maxOf(cooldown - (diff / 1000.0f), 0f)
     }
 
     fun onSound() {
-        val debounceTime = System.currentTimeMillis() - lastClicked
+        val debounceTime = lastClicked.timeDelta()
         DevUtils.sendDebugChat("&&bITEMABILITY &&eRecieved onSound as &&b$itemName", "ITEM_ABILITY_DEBUGGER")
 
         if (debounceTime < 500) {

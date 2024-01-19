@@ -13,6 +13,7 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.Utils.timeDelta
 import net.oxyopia.vice.utils.enums.World
 import java.awt.Color
 
@@ -129,7 +130,7 @@ object World4Features {
 
 		if (content.contains("NEW ORDER") || content.contains("BOSS ORDER")) {
 			lastSeenNewOrder = System.currentTimeMillis()
-		} else if (System.currentTimeMillis() - lastSeenNewOrder <= 1 * 1000) {
+		} else if (lastSeenNewOrder.timeDelta() <= 1 * 1000) {
 			val order = CookingOrder.getByName(content) ?: return
 			updateOrder(order)
 
@@ -237,6 +238,8 @@ object World4Features {
 		}
 	}
 
+	private var lastPlateInteract: Long = 0
+
 	@SubscribeEvent
 	fun onBlockInteract(event: BlockInteractEvent) {
 		if (!Vice.config.BLOCK_WRONG_COOKING_CLICKS || !World.Burger.isInWorld() || BlockClickOverride.isActive()) return
@@ -244,9 +247,11 @@ object World4Features {
 		val block = Utils.getWorld()?.getBlockState(event.hitResult.blockPos)?.block ?: return
 		if (block != Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE) return
 
-		if (currentOrder == CookingOrder.NONE || heldItem != currentOrder.recipe[orderCurrentItemIndex]) {
+		if (currentOrder == CookingOrder.NONE || lastPlateInteract.timeDelta() <= 100 || heldItem != currentOrder.recipe[orderCurrentItemIndex]) {
 			event.returnValue = ActionResult.FAIL
 		}
+
+		lastPlateInteract = System.currentTimeMillis()
 	}
 
 	private fun getStockColor(): String {

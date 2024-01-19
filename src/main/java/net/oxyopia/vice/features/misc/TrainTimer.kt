@@ -8,6 +8,7 @@ import net.oxyopia.vice.events.ServerChatMessageEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.Utils.timeDelta
 import net.oxyopia.vice.utils.enums.World
 import java.util.concurrent.TimeUnit
 
@@ -42,7 +43,7 @@ object TrainTimer {
 			aliveCount == 1 && World.Showdown.isInWorld() -> "&&aConductor Alive"
 
 			spawnTime > 0 -> {
-				val seconds = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - spawnTime) % SPAWN_COOLDOWN_TIME_SECONDS
+				val seconds = TimeUnit.MILLISECONDS.toSeconds(spawnTime.timeDelta()) % SPAWN_COOLDOWN_TIME_SECONDS
 				val formatted = Utils.formatDuration(SPAWN_COOLDOWN_TIME_SECONDS - seconds)
 				"&&6Next Train arrives in: &&a${formatted}"
 			}

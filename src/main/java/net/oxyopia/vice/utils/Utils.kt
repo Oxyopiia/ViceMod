@@ -134,4 +134,8 @@ object Utils {
 	fun Short.clamp(min: Short, max: Short): Short {
 		return maxOf(min, minOf(max, this))
 	}
+
+	fun Long.timeDelta(): Long {
+		return System.currentTimeMillis() - this
+	}
 }

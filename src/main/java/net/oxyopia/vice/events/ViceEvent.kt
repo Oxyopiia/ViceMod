@@ -8,12 +8,12 @@ package net.oxyopia.vice.events
  * @author Oxyopiia
  */
 abstract class ViceEvent {
-	abstract class Cancelable<T: Any?> : ViceEvent() {
+	abstract class Cancelable<T: Any> : ViceEvent() {
 		private var returnValue: T? = null
-		var canceled: Boolean = false
+		var isCanceled: Boolean = false
 
 		fun cancel() {
-			canceled = true
+			isCanceled = true
 		}
 
 		fun hasReturnValue(): Boolean {
@@ -21,7 +21,7 @@ abstract class ViceEvent {
 		}
 
 		fun setReturnValue(value: T) {
-			canceled = true
+			isCanceled = true
 			returnValue = value
 		}
 

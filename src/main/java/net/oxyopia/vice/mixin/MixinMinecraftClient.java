@@ -47,20 +47,17 @@ public class MixinMinecraftClient {
 
 	@Redirect(at = @At(value="INVOKE", target="Lnet/minecraft/entity/Entity;isGlowing()Z"), method = "hasOutline")
 	private boolean updateGlowing(Entity entity) {
+		MinecraftClient client = MinecraftClient.getInstance();
+		boolean shouldGlowDefault = entity.isGlowing() || client.player != null && client.player.isSpectator() && client.options.spectatorOutlinesKey.isPressed() && entity.getType() == EntityType.PLAYER;
+
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			MinecraftClient client = MinecraftClient.getInstance();
-			boolean shouldGlowDefault = entity.isGlowing() || client.player != null && client.player.isSpectator() && client.options.spectatorOutlinesKey.isPressed() && entity.getType() == EntityType.PLAYER;
+			EntityGlowEvent result = EVENT_MANAGER.publish(new EntityGlowEvent(entity));
 
-			Object result = EVENT_MANAGER.publish(new EntityGlowEvent(entity));
-
-			if (result instanceof Boolean) {
-				return (Boolean) result;
+			if (result.getReturnValue() != null) {
+				return result.getReturnValue();
 			}
-
-			return shouldGlowDefault;
 		}
 
-
-		return false;
+		return shouldGlowDefault;
 	}
 }

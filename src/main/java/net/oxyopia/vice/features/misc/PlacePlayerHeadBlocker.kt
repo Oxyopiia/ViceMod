@@ -12,7 +12,7 @@ object PlacePlayerHeadBlocker {
 		if (!Vice.config.PREVENT_PLACING_PLAYER_HEADS) return
 
 		if (event.itemStack.item === Items.PLAYER_HEAD) {
-			event.returnValue = ActionResult.PASS
+			event.setReturnValue(ActionResult.PASS)
 		}
 	}
 }

@@ -33,12 +33,13 @@ object ShadowGelato {
 			val diff = System.currentTimeMillis() - lastSpawned
 			val style = event.original.siblings.first().style.withObfuscated(false)
 
-			event.returnValue =
-				when (groupValues[2]) {
-					"1" -> event.original.copy().append(Utils.formatTimer(PHASE_1_MAX_TIME, diff)).setStyle(style)
-					"3" -> event.original.copy().append(Utils.formatTimer(PHASE_3_MAX_TIME, diff)).setStyle(style)
-					else -> event.original
-				}
+			val new = when (groupValues[2]) {
+				"1" -> event.original.copy().append(Utils.formatTimer(PHASE_1_MAX_TIME, diff)).setStyle(style)
+				"3" -> event.original.copy().append(Utils.formatTimer(PHASE_3_MAX_TIME, diff)).setStyle(style)
+				else -> return
+			}
+
+			event.setReturnValue(new)
 
 			try {
 				lastKnownHealth = groupValues[1].toInt()

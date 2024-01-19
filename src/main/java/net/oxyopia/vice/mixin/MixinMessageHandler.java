@@ -30,9 +30,9 @@ public class MixinMessageHandler {
 
 	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/ChatHud;addMessage(Lnet/minecraft/text/Text;)V"), method = "onGameMessage")
 	private void onGameMessageOverride(ChatHud instance, Text message) {
-		Object result = EVENT_MANAGER.publish(new ServerChatMessageEvent(message));
+		ServerChatMessageEvent result = EVENT_MANAGER.publish(new ServerChatMessageEvent(message));
 
-		if (result instanceof Boolean && !((boolean) result)) {
+		if (!result.isCanceled()) {
 			(this).client.inGameHud.getChatHud().addMessage(message);
 		}
 	}

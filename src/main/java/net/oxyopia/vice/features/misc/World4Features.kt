@@ -244,11 +244,10 @@ object World4Features {
 	fun onBlockInteract(event: BlockInteractEvent) {
 		if (!Vice.config.BLOCK_WRONG_COOKING_CLICKS || !World.Burger.isInWorld() || BlockClickOverride.isActive()) return
 
-		val block = Utils.getWorld()?.getBlockState(event.hitResult.blockPos)?.block ?: return
-		if (block != Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE) return
+		if (event.block != Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE) return
 
 		if (currentOrder == CookingOrder.NONE || heldItem != currentOrder.recipe[orderCurrentItemIndex] || lastPlateInteract.timeDelta() <= 300) {
-			event.returnValue = ActionResult.FAIL
+			event.setReturnValue(ActionResult.FAIL)
 		}
 
 		lastPlateInteract = System.currentTimeMillis()

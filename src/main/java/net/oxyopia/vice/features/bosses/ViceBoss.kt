@@ -28,7 +28,7 @@ object ViceBoss {
 			val diff = System.currentTimeMillis() - lastSpawned
 			val style = event.original.siblings.first().style.withObfuscated(false)
 
-			event.returnValue = event.original.copy().append(Utils.formatTimer(PHASE_1_MAX_TIME, diff)).setStyle(style)
+			event.setReturnValue(event.original.copy().append(Utils.formatTimer(PHASE_1_MAX_TIME, diff)).setStyle(style))
 		}
 	}
 }

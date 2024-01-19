@@ -1,7 +1,6 @@
 package net.oxyopia.vice.events
 
 import net.minecraft.client.sound.SoundInstance
-import net.oxyopia.vice.events.core.Returnable
 
-@Returnable
+// TODO - Make event Returnable with Float Type
 class ModifySoundEvent(val sound: SoundInstance) : ViceEvent()

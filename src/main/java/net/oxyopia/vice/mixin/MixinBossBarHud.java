@@ -31,10 +31,10 @@ public class MixinBossBarHud {
 			lastReportedTitle = instance.getName().getString();
 		}
 
-		Object modified = EVENT_MANAGER.publish(new ModifyBossBarEvent(instance, instance.getName()));
+		ModifyBossBarEvent result = EVENT_MANAGER.publish(new ModifyBossBarEvent(instance, instance.getName()));
 
-		if (modified instanceof Text) {
-			return (Text) modified;
+		if (result.hasReturnValue()) {
+			return result.getReturnValue();
 		}
 
 		return instance.getName();

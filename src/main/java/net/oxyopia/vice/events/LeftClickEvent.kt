@@ -1,3 +1,3 @@
 package net.oxyopia.vice.events
 
-class LeftClickEvent : BaseEvent()
+class LeftClickEvent : ViceEvent()

@@ -23,10 +23,10 @@ public abstract class MixinSoundSystem {
 	private float getAdjustedVolume(SoundSystem instance, float volume, SoundCategory category, @Local(ordinal=0) SoundInstance sound2) {
 		if (!Utils.INSTANCE.getInDoomTowers()) return this.getAdjustedVolume(volume, category);
 
-		Object multiplier = EVENT_MANAGER.publish(new ModifySoundEvent(sound2));
+		ModifySoundEvent result = EVENT_MANAGER.publish(new ModifySoundEvent(sound2));
 
-		if (multiplier instanceof Float) {
-			return (float) multiplier;
+		if (result.getReturnValue() != null) {
+			return result.getReturnValue();
 		}
 
 		return this.getAdjustedVolume(volume, category);

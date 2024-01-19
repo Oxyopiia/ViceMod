@@ -19,10 +19,10 @@ public abstract class MixinClientPlayerInteractionManager {
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/border/WorldBorder;contains(Lnet/minecraft/util/math/BlockPos;)Z"), method = "interactBlock", cancellable = true)
 	private void interactBlock(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			Object modified = EVENT_MANAGER.publish(new BlockInteractEvent(player, hand, hitResult));
+			BlockInteractEvent result = EVENT_MANAGER.publish(new BlockInteractEvent(player, hand, hitResult));
 
-			if (modified instanceof ActionResult) {
-				cir.setReturnValue((ActionResult) modified);
+			if (result.hasReturnValue()) {
+				cir.setReturnValue(result.getReturnValue());
 			}
 		}
 	}

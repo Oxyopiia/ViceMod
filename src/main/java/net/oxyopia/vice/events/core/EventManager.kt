@@ -1,14 +1,12 @@
-package net.oxyopia.vice.events.core;
+package net.oxyopia.vice.events.core
 
-import net.oxyopia.vice.events.BaseEvent;
-import net.oxyopia.vice.utils.DevUtils;
-import org.jetbrains.annotations.Nullable;
-
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import net.oxyopia.vice.events.BaseEvent
+import net.oxyopia.vice.utils.DevUtils
+import java.lang.invoke.MethodHandles
+import java.util.*
+import java.util.concurrent.ConcurrentHashMap
+import java.util.function.Consumer
+import java.util.function.Predicate
 
 /**
  * EventManager class for managing event subscriptions and handling event hooks.
@@ -18,19 +16,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author pvpb0t
  * @author Oxyopiia
  */
-public class EventManager {
-
+class EventManager {
 	/**
 	 * The subscribers map holds a list of listeners for each event type.
 	 * The ConcurrentHashMap class is used to ensure thread-safety.
 	 */
-	private final ConcurrentHashMap<Class<? extends BaseEvent>, ArrayList<DefaultListener>> subscribers = new ConcurrentHashMap<>();
+	val subscribers: ConcurrentHashMap<Class<out BaseEvent>, ArrayList<DefaultListener>> = ConcurrentHashMap()
 
-	public ConcurrentHashMap<Class<? extends BaseEvent>, ArrayList<DefaultListener>> getSubscribers() {
-		return subscribers;
-	}
-
-	// original code before i tried fixing an ide warning via ai: https://chat.openai.com/share/60845b26-3401-4a19-8246-520bd78659d2
 	/**
 	 * Subscribes an object to events that it has specified methods for.
 	 * This method scans the object's class and its superclasses for methods that are annotated with @EventHook.
@@ -38,44 +30,53 @@ public class EventManager {
 	 * The listener is added to the subscribers map for the corresponding event class.
 	 * If the event class has any inner classes that extend it, the method is also added as a listener for those classes.
 	 *
-	 * @param object the object to be subscribed to events.
+	 * @param obj the object to be subscribed to events.
 	 */
-	public void subscribe(final Object object) {
-		Class<?> clazz = object.getClass();
+	fun subscribe(obj: Any) {
+		var clazz: Class<*>? = obj.javaClass
 		while (clazz != null) {
-			for (Method method : clazz.getDeclaredMethods()) {
-				if (method.isAnnotationPresent(SubscribeEvent.class)) {
-					final SubscribeEvent subscribeEvent = method.getAnnotation(SubscribeEvent.class);
-					final int prio = subscribeEvent.priority();
-  
-					Class<?>[] parameterTypes = method.getParameterTypes();
+			for (method in clazz.declaredMethods) {
+				if (method.isAnnotationPresent(SubscribeEvent::class.java)) {
+					val subscribeEvent = method.getAnnotation(SubscribeEvent::class.java)
+					val prio = subscribeEvent.priority
 
-					if (parameterTypes.length > 0 && BaseEvent.class.isAssignableFrom(parameterTypes[0])) {
-						final Class<?> eventClazz = parameterTypes[0];
+					val parameterTypes = method.parameterTypes
 
-						if (BaseEvent.class.isAssignableFrom(eventClazz)) {
-							final Class<? extends BaseEvent> safeEventClazz = eventClazz.asSubclass(BaseEvent.class);
+					if (parameterTypes.isNotEmpty() && BaseEvent::class.java.isAssignableFrom(parameterTypes[0])) {
+						val eventClazz = parameterTypes[0]
 
-							DefaultListener listener = new DefaultListener(safeEventClazz, method);
-							listener.setPrio(prio);
-							listener.setSource(object);
+						if (BaseEvent::class.java.isAssignableFrom(eventClazz)) {
+							val safeEventClazz = eventClazz.asSubclass(
+								BaseEvent::class.java
+							)
 
-							subscribers.computeIfAbsent(safeEventClazz, k -> new ArrayList<>()).add(listener);
+							val listener = DefaultListener(safeEventClazz, method)
+							listener.prio = prio
+							listener.source = obj
 
-							for (Class<?> subClazz : eventClazz.getDeclaredClasses()) {
-								if (eventClazz.isAssignableFrom(subClazz) && BaseEvent.class.isAssignableFrom(subClazz)) {
-									final Class<? extends BaseEvent> safeSubClazz = subClazz.asSubclass(BaseEvent.class);
-									DefaultListener subListener = new DefaultListener(safeSubClazz, method);
-									subListener.setPrio(prio);
-									subListener.setSource(object);
-									subscribers.computeIfAbsent(safeSubClazz, k -> new ArrayList<>()).add(subListener);
+							subscribers.computeIfAbsent(safeEventClazz) { ArrayList() }
+								.add(listener)
+
+							for (subClazz in eventClazz.declaredClasses) {
+								if (eventClazz.isAssignableFrom(subClazz) && BaseEvent::class.java.isAssignableFrom(
+										subClazz
+									)
+								) {
+									val safeSubClazz = subClazz.asSubclass(
+										BaseEvent::class.java
+									)
+									val subListener = DefaultListener(safeSubClazz, method)
+									subListener.prio = prio
+									subListener.source = obj
+									subscribers.computeIfAbsent(safeSubClazz) { ArrayList() }
+										.add(subListener)
 								}
 							}
 						}
 					}
 				}
 			}
-			clazz = clazz.getSuperclass();
+			clazz = clazz.superclass
 		}
 	}
 
@@ -89,42 +90,27 @@ public class EventManager {
 	 *
 	 * @param event the event to be hooked to listeners.
 	 */
-	@Nullable
-	public Object publish(BaseEvent event) {
-		Class<?> clazz = event.getClass();
+	fun publish(event: BaseEvent): Any {
+		var clazz: Class<*>? = event.javaClass
 
 		while (clazz != null) {
 			if (subscribers.containsKey(clazz)) {
-				if (clazz.isAnnotationPresent(Cancelable.class) || clazz.isAnnotationPresent(Returnable.class)) {
-					event.setCancelable(true);
-
-					if (clazz.isAnnotationPresent(Returnable.class)) {
-						event.setReturnable(true);
-					}
-				}
-
-				final ArrayList<DefaultListener> listenersCopy = new ArrayList<>(subscribers.get(clazz));
-				for (DefaultListener listener : listenersCopy) {
-					if (event.isCanceled()) break;
-
+				val listenersCopy = subscribers[clazz]?.let { ArrayList(it) } ?: return event
+				for (listener in listenersCopy) {
 					try {
-						MethodHandles.Lookup lookup = MethodHandles.lookup();
-						MethodHandle handle = lookup.unreflect(listener.getTarget());
-						handle.invoke(listener.getSource(), event);
-
-					} catch (Throwable e) {
-						DevUtils.sendErrorMessage(e, "An error occurred invoking a " + clazz.getSimpleName());
+						val lookup = MethodHandles.lookup()
+						val handle = lookup.unreflect(listener.target)
+						handle.invoke(listener.source, event)
+					} catch (e: Throwable) {
+						DevUtils.sendErrorMessage(e, "An error occurred invoking a " + clazz.simpleName)
 					}
-				}
-
-				if (event.getReturnValue() != null) {
-					return event.getReturnValue();
 				}
 			}
-			clazz = clazz.getSuperclass();
+
+			clazz = clazz.superclass
 		}
 
-		return event.isCanceled();
+		return event
 	}
 
 
@@ -136,21 +122,21 @@ public class EventManager {
 	 *
 	 * @param object the object to unsubscribe
 	 */
-	public void unsubscribe(final Object object) {
-		subscribers.values().forEach(listeners -> listeners.removeIf(listener -> listener.getSource() == object));
-		subscribers.entrySet().removeIf(entry -> entry.getValue().isEmpty());
-		subscribers.keySet().stream()
-			.filter(clazz -> clazz.getDeclaredClasses().length > 0)
-			.flatMap(clazz -> Arrays.stream(clazz.getDeclaredClasses()))
-			.filter(subClazz -> subClazz.isAssignableFrom(subClazz.getDeclaringClass()))
-			.forEach(subClazz -> {
-				ArrayList<DefaultListener> subListeners = subscribers.get(subClazz);
+	fun unsubscribe(`object`: Any) {
+		subscribers.values.forEach(Consumer { listeners: ArrayList<DefaultListener>? -> listeners!!.removeIf { listener: DefaultListener -> listener.source === `object` } })
+		subscribers.entries.removeIf { entry: Map.Entry<Class<out BaseEvent>, ArrayList<DefaultListener>?> -> entry.value!!.isEmpty() }
+		subscribers.keys.stream()
+			.filter { clazz: Class<out BaseEvent> -> clazz.declaredClasses.isNotEmpty() }
+			.flatMap { clazz: Class<out BaseEvent> -> Arrays.stream(clazz.declaredClasses) }
+			.filter { subClazz: Class<*> -> subClazz.isAssignableFrom(subClazz.declaringClass) }
+			.forEach { subClazz: Class<*>? ->
+				val subListeners = subscribers[subClazz]
 				if (subListeners != null) {
-					subListeners.removeIf(listener -> listener.getSource() == object);
+					subListeners.removeIf(Predicate { listener: DefaultListener -> listener.source === `object` })
 					if (subListeners.isEmpty()) {
-						subscribers.remove(subClazz);
+						subscribers.remove(subClazz)
 					}
 				}
-			});
+			}
 	}
 }

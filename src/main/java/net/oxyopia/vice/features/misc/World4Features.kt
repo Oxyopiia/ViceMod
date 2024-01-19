@@ -247,7 +247,7 @@ object World4Features {
 		val block = Utils.getWorld()?.getBlockState(event.hitResult.blockPos)?.block ?: return
 		if (block != Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE) return
 
-		if (currentOrder == CookingOrder.NONE || lastPlateInteract.timeDelta() <= 100 || heldItem != currentOrder.recipe[orderCurrentItemIndex]) {
+		if (currentOrder == CookingOrder.NONE || heldItem != currentOrder.recipe[orderCurrentItemIndex] || lastPlateInteract.timeDelta() <= 300) {
 			event.returnValue = ActionResult.FAIL
 		}
 

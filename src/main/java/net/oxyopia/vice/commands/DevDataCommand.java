@@ -24,7 +24,7 @@ public class DevDataCommand {
 
 				Utils.INSTANCE.sendViceMessage("inDoomTowers: &&a" + Utils.INSTANCE.getInDoomTowers());
 
-				ItemStack heldItem = ItemUtils.getHeldItem();
+				ItemStack heldItem = ItemUtils.INSTANCE.getHeldItem();
 
 				if (heldItem.getNbt() != null) {
 					Utils.INSTANCE.sendViceMessage(new UTextComponent("§eClick to copy your held item's NBT.§r")

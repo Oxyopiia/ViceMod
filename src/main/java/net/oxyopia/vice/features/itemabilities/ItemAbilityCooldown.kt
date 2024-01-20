@@ -12,6 +12,7 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.ItemUtils
+import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
 import net.oxyopia.vice.utils.Utils.clamp
 import net.oxyopia.vice.utils.Utils.getEquippedSets
 import java.awt.Color
@@ -120,7 +121,7 @@ object ItemAbilityCooldown {
 	fun onRenderInGameHud(event: RenderInGameHudEvent) {
 		if (!(Vice.config.ITEM_COOLDOWN_DISPLAY && Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR)) return
 
-		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(ItemUtils.getHeldItem()))
+		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getHeldItem().nameWithoutEnchants())
 
 		ability?.apply {
 			if (!isOnCooldown() || !displayCooldown) return
@@ -157,7 +158,7 @@ object ItemAbilityCooldown {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
 		val stack: ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
-		val name = ItemUtils.getNameWithoutEnchants(stack)
+		val name = stack.nameWithoutEnchants()
 		val ability: ItemAbility = ItemAbility.getByName(name, ClickType.LEFT) ?: return
 
 		handleClickEventAbility(ability)
@@ -169,7 +170,7 @@ object ItemAbilityCooldown {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
 		val stack: ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
-		val name = ItemUtils.getNameWithoutEnchants(stack)
+		val name = stack.nameWithoutEnchants()
 		val ability: ItemAbility = ItemAbility.getByName(name, ClickType.RIGHT) ?: return
 
 		handleClickEventAbility(ability)
@@ -203,7 +204,7 @@ object ItemAbilityCooldown {
 	fun onRenderItemSlot(event: RenderItemSlotEvent) {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
-		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getNameWithoutEnchants(event.itemStack))
+		val ability: ItemAbility? = ItemAbility.getByName(event.itemStack.nameWithoutEnchants())
 
 		// May refactor code in the future, a bit too much indentation and ambiguity for my liking
 		ability?.apply {

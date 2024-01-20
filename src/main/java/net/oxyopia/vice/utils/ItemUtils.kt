@@ -1,55 +1,43 @@
-package net.oxyopia.vice.utils;
+package net.oxyopia.vice.utils
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.text.Text;
+import net.minecraft.client.MinecraftClient
+import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NbtElement
+import net.minecraft.text.Text
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ItemUtils {
-	public static String getNameWithoutEnchants(ItemStack itemStack) {
-		return getNameWithoutEnchants(itemStack.getName().getString());
+object ItemUtils{
+	fun ItemStack.nameWithoutEnchants(): String {
+		return nameWithoutEnchants(name.string)
 	}
 
-	public static String getNameWithoutEnchants(String string) {
-		return string.replaceAll("\\s\\(.*\\)", "").replaceAll(" §", "");
+	private fun nameWithoutEnchants(string: String): String {
+		return string.replace("\\s\\(.*\\)".toRegex(), "").replace(" §".toRegex(), "")
 	}
 
-	public static ItemStack getHeldItem() {
-		MinecraftClient client = MinecraftClient.getInstance();
-		return client.player != null ? client.player.getMainHandStack() : ItemStack.EMPTY;
-	}
-
-	public static String getHeldItemName() {
-		return getHeldItem().getName().getString();
-	}
+	fun getHeldItem(): ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
 
 	/**
 	 * @author Mojang
 	 */
-	public static List<String> getLore(ItemStack stack) {
-		List<String> lore = new ArrayList<>();
+	fun ItemStack.getLore(): List<String> {
+		val lore: MutableList<String> = ArrayList()
 
-		if (stack.hasNbt()) {
-			if (stack.getNbt().contains(ItemStack.DISPLAY_KEY, NbtElement.COMPOUND_TYPE)) {
-				NbtCompound nbtCompound = stack.getNbt().getCompound(ItemStack.DISPLAY_KEY);
+		if (this.hasNbt()) {
+			if (this.nbt!!.contains(ItemStack.DISPLAY_KEY, NbtElement.COMPOUND_TYPE.toInt())) {
+				val nbtCompound = this.nbt!!.getCompound(ItemStack.DISPLAY_KEY)
 
 				if (nbtCompound.getType(ItemStack.LORE_KEY) == NbtElement.LIST_TYPE) {
-					NbtList nbtList = nbtCompound.getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE);
+					val nbtList = nbtCompound.getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE.toInt())
 
-					for (int i = 0; i < nbtList.size(); ++i) {
-						Text lineLore = Text.Serializer.fromJson(nbtList.getString(i));
+					for (i in nbtList.indices) {
+						val lineLore: Text? = Text.Serializer.fromJson(nbtList.getString(i))
 
-						if (lineLore != null) lore.add(lineLore.getString());
+						if (lineLore != null) lore.add(lineLore.string)
 					}
 				}
 			}
 		}
 
-		return lore;
+		return lore
 	}
 }

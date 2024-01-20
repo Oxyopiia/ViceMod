@@ -13,6 +13,7 @@ import net.minecraft.sound.SoundEvent
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Set
+import net.oxyopia.vice.utils.ItemUtils.getLore
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.math.ceil
@@ -55,7 +56,7 @@ object Utils {
 		val pattern = Pattern.compile("♦ Set: (.*)")
 
 		armorItems?.forEach { itemStack ->
-			val lore = ItemUtils.getLore(itemStack)
+			val lore = itemStack.getLore()
 
 			lore.forEach { string ->
 				val matcher = pattern.matcher(string)

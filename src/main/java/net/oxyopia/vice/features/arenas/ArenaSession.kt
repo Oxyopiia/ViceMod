@@ -9,7 +9,7 @@ import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.WorldChangeEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.enums.World
+import net.oxyopia.vice.data.World
 import java.util.regex.Pattern
 import kotlin.math.round
 

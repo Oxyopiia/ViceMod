@@ -3,7 +3,7 @@ package net.oxyopia.vice.features.itemabilities
 import net.minecraft.util.ClickType
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.Utils.timeDelta
-import net.oxyopia.vice.utils.enums.Set
+import net.oxyopia.vice.data.Set
 
 /**
  * Inspired from SkyHanni's similar feature, partially adapted

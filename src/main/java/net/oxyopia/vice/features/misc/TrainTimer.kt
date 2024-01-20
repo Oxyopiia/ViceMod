@@ -9,7 +9,7 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.Utils.timeDelta
-import net.oxyopia.vice.utils.enums.World
+import net.oxyopia.vice.data.World
 import java.util.concurrent.TimeUnit
 
 object TrainTimer {

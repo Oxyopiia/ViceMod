@@ -14,7 +14,7 @@ import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.Utils.timeDelta
-import net.oxyopia.vice.utils.enums.World
+import net.oxyopia.vice.data.World
 import java.awt.Color
 
 object World4Features {

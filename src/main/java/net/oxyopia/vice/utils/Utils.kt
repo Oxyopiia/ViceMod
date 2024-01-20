@@ -12,7 +12,7 @@ import net.minecraft.nbt.StringNbtReader
 import net.minecraft.sound.SoundEvent
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.utils.enums.Set
+import net.oxyopia.vice.data.Set
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.math.ceil

@@ -1,4 +1,4 @@
-package net.oxyopia.vice.utils.enums
+package net.oxyopia.vice.data
 
 import net.oxyopia.vice.utils.Utils
 
@@ -47,8 +47,6 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	}
 
 	companion object {
-		fun getById(id: String): World? {
-			return entries.firstOrNull { it.id == id }
-		}
+		fun getById(id: String) = entries.firstOrNull { it.id == id }
 	}
 }

@@ -176,6 +176,15 @@ public class Config extends Vigilant {
     	subcategory = "Spam Hider"
     )
     public boolean HIDE_WORLDGUARD_MESSAGES = false;
+    
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Hide Set Requirement Messages",
+    	description = "Hides the 'You must be wearing [x] number of [Set] to use this item' messages",
+    	category = "General",
+    	subcategory = "Spam Hider"
+    )
+    public boolean HIDE_SET_REQUIREMENT_MESSAGES = false;
 
     // General/World 4
 

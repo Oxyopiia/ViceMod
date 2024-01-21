@@ -10,6 +10,7 @@ import net.oxyopia.vice.events.WorldChangeEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.data.World
+import net.oxyopia.vice.events.ArenaStartEvent
 import java.util.regex.Pattern
 import kotlin.math.round
 
@@ -32,6 +33,8 @@ object ArenaSession {
 		supplyDropsCollected = 0
 		setWave(0)
 		active = true
+
+		EVENT_MANAGER.publish(ArenaStartEvent(world, startTime))
 		DevUtils.sendDebugChat("&&dARENAS&&r &&aSession started", "ARENAS_DEBUGGER")
 	}
 

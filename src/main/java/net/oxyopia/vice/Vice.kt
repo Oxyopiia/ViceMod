@@ -20,7 +20,8 @@ import net.oxyopia.vice.commands.ViceCommand
 import net.oxyopia.vice.config.Config
 import net.oxyopia.vice.config.DevConfig
 import net.oxyopia.vice.events.core.EventManager
-import net.oxyopia.vice.features.arenas.ArenaEffectNotification
+import net.oxyopia.vice.features.arenas.ArenaAPI
+import net.oxyopia.vice.features.arenas.ArenaNotifications
 import net.oxyopia.vice.features.arenas.ArenaSession
 import net.oxyopia.vice.features.bosses.*
 import net.oxyopia.vice.features.hud.GamingMode
@@ -93,8 +94,9 @@ class Vice : ClientModInitializer {
 	}
 
 	private fun subscribeEventListeners() {
+		EVENT_MANAGER.subscribe(ArenaAPI)
 		EVENT_MANAGER.subscribe(ArenaSession)
-		EVENT_MANAGER.subscribe(ArenaEffectNotification)
+		EVENT_MANAGER.subscribe(ArenaNotifications)
 		EVENT_MANAGER.subscribe(AbilitySoundChanger)
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(PlacePlayerHeadBlocker)

@@ -348,10 +348,9 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Arenas Cooldown Notification",
-        description = "Displays a notification when an Arena cooldown has expired.",
+        description = "Sends a chat notification when an Arena cooldown has expired.",
         category = "Arenas",
-        subcategory = "Quality of Life",
-        hidden = true
+        subcategory = "Quality of Life"
     )
     public boolean ARENAS_COOLDOWN_NOTIFIER = true;
 

@@ -432,6 +432,15 @@ public class Config extends Vigilant {
         subcategory = "Quality of Life"
     )
     public boolean DISABLE_BOSS_SOUNDS = false;
+    
+    @Property(
+    	type = PropertyType.SWITCH,
+    	name = "Abyssal Vice Laser Warning",
+    	description = "Shows a warning title when Abyssal Vice is about to shoot its laser.",
+    	category = "Bosses",
+    	subcategory = "Abyssal Vice"
+    )
+    public boolean ABYSSAL_VICE_LASER_WARNING = true;
 
     // Sounds
 

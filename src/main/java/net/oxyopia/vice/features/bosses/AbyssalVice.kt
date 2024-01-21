@@ -6,6 +6,8 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.data.World
+import net.oxyopia.vice.events.SoundEvent
+import net.oxyopia.vice.utils.HudUtils
 import java.util.UUID
 
 object AbyssalVice {
@@ -17,6 +19,7 @@ object AbyssalVice {
 	private var lastSpawned = 0L
 	private var lastKnownUUID: UUID? = null
 	private var lastKnownHealth: Int? = null
+	private var lastKnownPhase: Int? = null
 
 	@SubscribeEvent
 	fun onBossBarModifyEvent(event: ModifyBossBarEvent) {
@@ -42,9 +45,19 @@ object AbyssalVice {
 
 			try {
 				lastKnownHealth = groupValues[1].toInt()
+				lastKnownPhase = groupValues[2].toInt()
+
 			} catch (e: NumberFormatException) {
 				DevUtils.sendErrorMessage(e, "An error occurred converting Bossbar Health of Dark Vice to an Int!")
 			}
 		}
+	}
+
+	@SubscribeEvent
+	fun onSound(event: SoundEvent) {
+		if (!Vice.config.ABYSSAL_VICE_LASER_WARNING || !World.DarkVice.isInWorld() || lastKnownPhase != 2) return
+		if (event.soundName != "entity.wither.break_block" || event.volume != 9999f) return
+
+		HudUtils.sendVanillaTitle("&&cLaser!", "", stayTime =  2.8f, fadeinout = 0.1f)
 	}
 }

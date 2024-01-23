@@ -31,7 +31,7 @@ object Utils {
 	fun getWorldString(): String? = client.world?.registryKey?.value?.path
 
 	fun sendViceMessage(msg: String) {
-		UChat.chat("${Vice.CHAT_PREFIX}${msg.replaceFormatting()}")
+		UChat.chat("${Vice.CHAT_PREFIX}${msg.convertFormatting()}")
 	}
 
 	fun sendViceMessage(msg: UTextComponent) {
@@ -112,8 +112,15 @@ object Utils {
 	/**
 	 * Converts any two consecutive ampersands in a string to a section character, useful for formatting Minecraft Texts
 	 */
-	fun String.replaceFormatting(): String {
+	fun String.convertFormatting(): String {
 		return this.replace("&&", "§")
+	}
+
+	/**
+	 * Removes any two consecutive ampersands, or sections signs, which are followed by a character in a string
+	 */
+	fun String.removeFormatting(): String {
+		return this.replace("(&&|§)[a-r0-9]", "", ignoreCase = true)
 	}
 
 	fun Int.clamp(min: Int, max: Int): Int {

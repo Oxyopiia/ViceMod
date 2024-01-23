@@ -8,7 +8,7 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.Text
 import net.minecraft.util.math.ColorHelper
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.utils.Utils.replaceFormatting
+import net.oxyopia.vice.utils.Utils.convertFormatting
 import java.awt.Color
 
 object HudUtils {
@@ -65,7 +65,7 @@ object HudUtils {
 			xPos = x - (width / 2).toDouble().toInt()
 		}
 
-		val i = textRenderer.draw(text.replaceFormatting(), xPos.toFloat(), y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
+		val i = textRenderer.draw(text.convertFormatting(), xPos.toFloat(), y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
 		RenderSystem.disableDepthTest()
 		vertexConsumers.draw()
 		RenderSystem.enableDepthTest()
@@ -79,8 +79,8 @@ object HudUtils {
 	fun sendVanillaTitle(title: String, subtitle: String, stayTime: Float = 1f, fadeinout: Float = 0.25f) {
 		val client = MinecraftClient.getInstance()
 
-		client.inGameHud.setSubtitle(Text.of(subtitle.replaceFormatting()))
-		client.inGameHud.setTitle(Text.of(title.replaceFormatting()))
+		client.inGameHud.setSubtitle(Text.of(subtitle.convertFormatting()))
+		client.inGameHud.setTitle(Text.of(title.convertFormatting()))
 		client.inGameHud.setTitleTicks((20 * fadeinout).toInt(), (20 * stayTime).toInt(), (20 * fadeinout).toInt())
 	}
 }

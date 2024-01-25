@@ -44,6 +44,8 @@ enum class ItemAbility(
     BARTENDER_GLOVE("Bartender's Glove", 15f, set = Set.CHEF, setAmount = 1),
     DYNAMITE_BARREL("Dynamite Barrel", 10f, set = Set.DEMOLITIONIST, setAmount = 1),
     FLESH_HATCHET("Flesh Hatchet", 10f, set = Set.FLESHCRAWLER, setAmount = 2),
+    VIRTUASWORD("VIRTUASWORD", 10f, set = Set.DIGITAL, setAmount = 2),
+    GLITCHMALLET("Glitch Mallet", 15f, set = Set.HEAVY, setAmount = 3),
 
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, displayCooldown = false),
     SNOWBALL_CANNON("Snowball Cannon", 0.5f, displayCooldown = false);

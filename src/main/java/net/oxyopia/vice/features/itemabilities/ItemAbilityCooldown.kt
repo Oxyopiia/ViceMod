@@ -40,13 +40,8 @@ object ItemAbilityCooldown {
 
 		when {
 
-			// Glitch Mallet
-			event.soundName == "block.respawn_anchor.deplete" && event.pitch == 1.0f && event.volume == 1f -> {
-				ItemAbility.GLITCH_MALLET.onSound()
-			}
-
 			// VIRTUASWORD
-			event.soundName == "entity.zombie_villager.cure" && event.pitch == 2.0f && event.volume == 3f -> {
+			event.soundName == "entity.zombie_villager.cure" && event.pitch == 2f && event.volume == 3f -> {
 				ItemAbility.VIRTUASWORD.onSound()
 			}
 

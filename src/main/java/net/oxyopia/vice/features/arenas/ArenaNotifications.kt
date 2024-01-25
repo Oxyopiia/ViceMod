@@ -33,18 +33,17 @@ object ArenaNotifications {
 
 	@SubscribeEvent
 	fun onClientTick(event: ClientTickEvent) {
-		if (event.repeatSeconds(2)) {
-			if (!Vice.config.ARENAS_COOLDOWN_NOTIFIER) return
+		if (!event.repeatSeconds(2)) return
+		if (!Vice.config.ARENAS_COOLDOWN_NOTIFIER) return
 
-			ArenaAPI.storedArenaTimestamps
-				.filterNot { (world, ts) -> lastNotifiedTimestamps.getOrDefault(world, 0) == ts }
-				.forEach { (world, ts) ->
+		ArenaAPI.storedArenaTimestamps
+			.filterNot { (world, ts) -> lastNotifiedTimestamps.getOrDefault(world, 0) == ts }
+			.forEach { (world, ts) ->
 				if (ts.timeDelta() >= TimeUnit.MINUTES.toMillis(30)) {
 					Utils.sendViceMessage("Your Cooldown for the &&b${world.displayName}&&r Arena has passed.")
 					Utils.playSound("block.note_block.pling", 1.4f)
 					lastNotifiedTimestamps[world] = ts
 				}
 			}
-		}
 	}
 }

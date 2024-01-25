@@ -6,16 +6,14 @@ import com.mojang.brigadier.context.CommandContext
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.Utils.timeDelta
 import java.util.concurrent.TimeUnit
 
 object BlockClickOverride {
 	private var blockClickTime = 0L
 
-	private val delta: Long
-		get() = System.currentTimeMillis() - blockClickTime
-
 	fun isActive(): Boolean {
-		return delta <= TimeUnit.SECONDS.toMillis(10)
+		return blockClickTime.timeDelta() <= TimeUnit.SECONDS.toMillis(10)
 	}
 
 	fun register(dispatcher: CommandDispatcher<FabricClientCommandSource?>) {

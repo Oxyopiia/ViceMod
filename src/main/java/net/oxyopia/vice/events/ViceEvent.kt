@@ -12,7 +12,7 @@ abstract class ViceEvent {
 		private var returnValue: T? = null
 		var isCanceled: Boolean = false
 
-		fun cancel() {
+		open fun cancel() {
 			isCanceled = true
 		}
 

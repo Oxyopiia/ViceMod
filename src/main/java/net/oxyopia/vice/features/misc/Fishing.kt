@@ -16,7 +16,7 @@ object Fishing {
 	private const val MAX_SOUND_DETECTION_TIME: Long = 600
 
 	private const val BITE_SOUND = "block.note_block.pling"
-	private const val SPLASH_SOUND = "minecraft:entity.fishing_bobber.splash"
+	private const val SPLASH_SOUND = "minecraft:entity.experience_orb.pickup"
 
 	private var lastDetectedSound: Long = -1
 	private var lastHandled: Long = -1

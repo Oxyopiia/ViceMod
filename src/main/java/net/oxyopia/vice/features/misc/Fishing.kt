@@ -16,7 +16,7 @@ object Fishing {
 	private const val MAX_SOUND_DETECTION_TIME: Long = 600
 
 	private const val BITE_SOUND = "block.note_block.pling"
-	private const val SPLASH_SOUND = "minecraft:entity.experience_orb.pickup"
+	private const val FISHING_PING = "minecraft:entity.experience_orb.pickup"
 
 	private var lastDetectedSound: Long = -1
 	private var lastHandled: Long = -1
@@ -24,7 +24,7 @@ object Fishing {
 
 	@SubscribeEvent
 	fun onSound(event: SoundEvent) {
-		if (!Vice.config.FISHING_DING || event.soundName != SPLASH_SOUND) return
+		if (!Vice.config.FISHING_DING || event.soundName != FISHING_PING) return
 		val fishHook = MinecraftClient.getInstance().player?.fishHook ?: return
 		if (!fishHook.isTouchingWater) return
 

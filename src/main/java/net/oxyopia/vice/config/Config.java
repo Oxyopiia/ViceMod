@@ -305,23 +305,11 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Fishing Bite Ding",
-        description = "Plays a ding sound when your bobber is bitten.\n" +
-            "§eRequires semi-close proximity if Don't Detect with Sound Packets is disabled.",
+        description = "Plays a unique ding sound and title when your bobber is bitten.",
         category = "General",
         subcategory = "Fishing"
     )
     public boolean FISHING_DING = true;
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Don't Detect Bite with Sound Packets",
-        description = "Allows for infinite range of Fishing Bite Ding by not using Sound packets, only relying on Velocity packets.\n"+
-            "§eNot extensively tested, may provide false positives.\n" +
-            "§aWhen within normal setting range, works as usual.",
-        category = "General",
-        subcategory = "Fishing"
-    )
-    public boolean FISHING_DING_DONT_DETECT_SOUND_PACKET = true;
 
     // Arenas/Quality of Life
 
@@ -503,7 +491,6 @@ public class Config extends Vigilant {
         addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
         addDependency("SNOWBALL_CANNON_PROJECTION_COLOR", "SNOWBALL_CANNON_PROJECTION");
         addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
-        addDependency("FISHING_DING_DONT_DETECT_SOUND_PACKET", "FISHING_DING");
 
         addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
         addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");

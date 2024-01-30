@@ -13,7 +13,7 @@ object Fishing {
 
 	@SubscribeEvent
 	fun onSound(event: ModifySoundEvent) {
-		if (!Vice.config.FISHING_DING || event.soundName != FISHING_PING) return
+		if (!Vice.config.FISHING_DING || event.soundName != FISHING_PING || event.volume != 3f) return
 		val fishHook = MinecraftClient.getInstance().player?.fishHook ?: return
 		if (!fishHook.isInOpenWater) return
 

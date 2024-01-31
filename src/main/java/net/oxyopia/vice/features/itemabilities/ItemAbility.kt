@@ -46,6 +46,8 @@ enum class ItemAbility(
     FLESH_HATCHET("Flesh Hatchet", 10f, set = Set.FLESHCRAWLER, setAmount = 2),
     VIRTUASWORD("VIRTUASWORD", 10f, set = Set.DIGITAL, setAmount = 2),
     GLITCHMALLET("Glitch Mallet", 15f, set = Set.HEAVY, setAmount = 3),
+    WARPED_GRENADE("Warped Grenade", 3f),
+    POSEIDONS_FURY("Poseidon's Fury", 15f),
 
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, displayCooldown = false),
     SNOWBALL_CANNON("Snowball Cannon", 0.5f, displayCooldown = false);

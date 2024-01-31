@@ -20,6 +20,7 @@ import java.awt.Color
 object World4Features {
 	private var currentOrder = CookingOrder.NONE
 	private var orderCurrentItemIndex = 0
+	private var stock: Int = -10000
 	private var heldItem = CookingItem.NONE
 	private var lastSeenNewOrder = 0L
 
@@ -161,8 +162,8 @@ object World4Features {
 
 		stockRegex.find(content)?.apply {
 			try {
-				data.stock = groupValues[1].toInt()
-				DevUtils.sendDebugChat("&&6COOKING &&Updated Stock to ${data.stock}", "COOKING_DEBUGGER")
+				stock = groupValues[1].toInt()
+				DevUtils.sendDebugChat("&&6COOKING &&Updated Stock to ${stock}", "COOKING_DEBUGGER")
 
 				if (hideHandledMessages) event.cancel()
 
@@ -180,7 +181,7 @@ object World4Features {
 
 	@SubscribeEvent
 	fun onTitle(event: TitleEvent) {
-		if (event.title.contains("+1 Stock")) data.stock += 1
+		if (event.title.contains("+1 Stock")) stock += 1
 	}
 
 	@SubscribeEvent
@@ -188,14 +189,19 @@ object World4Features {
 		if (MinecraftClient.getInstance().player == null || !World.Burger.isInWorld()) return
 		if (MinecraftClient.getInstance().player?.y!! <= 100.0) return
 
-		val xPos = event.scaledWidth / 2
+		var xPos = event.scaledWidth / 2
 		var yPos = 8
+
+		if (Vice.config.DEVMODE) {
+			xPos = event.scaledWidth / 2 + Vice.devConfig.COOKING_ORDER_HUD_X_OFFSET_LOCATION
+			yPos = event.scaledHeight / 2 + Vice.devConfig.COOKING_ORDER_HUD_Y_OFFSET_LOCATION
+		}
 
 		if (Vice.config.SHOW_NEXT_COOKING_ITEM && currentOrder == CookingOrder.NONE) {
 			var text = "&&cNo Order"
 
-			if (Vice.config.SIMPLIFY_COOKING_DISPLAYS && data.stock >= 0) {
-				text += "&&7 (&&${getStockColor()}${data.stock}&&7)"
+			if (Vice.config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) {
+				text += "&&7 (&&${getStockColor()}${stock}&&7)"
 			}
 
 			HudUtils.drawText(event.context.matrices, MinecraftClient.getInstance().textRenderer, text, xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
@@ -214,8 +220,8 @@ object World4Features {
 			if (Vice.config.SIMPLIFY_COOKING_DISPLAYS) {
 				text = text.removePrefix("&&7Next Ingredient: ")
 
-				if (Vice.config.SHOW_COOKING_STOCK_INFO && data.stock >= 0) {
-					text += "&&7 (&&${getStockColor()}${data.stock}&&7)"
+				if (Vice.config.SHOW_COOKING_STOCK_INFO && stock >= 0) {
+					text += "&&7 (&&${getStockColor()}${stock}&&7)"
 				}
 			}
 
@@ -232,8 +238,8 @@ object World4Features {
 			yPos += 20
 		}
 
-		if (Vice.config.SHOW_COOKING_STOCK_INFO && !Vice.config.SIMPLIFY_COOKING_DISPLAYS && data.stock >= 0) {
-			HudUtils.drawText(event.context.matrices, MinecraftClient.getInstance().textRenderer, "&&7Stock: &&${getStockColor()}${data.stock}", xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
+		if (Vice.config.SHOW_COOKING_STOCK_INFO && !Vice.config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) {
+			HudUtils.drawText(event.context.matrices, MinecraftClient.getInstance().textRenderer, "&&7Stock: &&${getStockColor()}${stock}", xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
 		}
 	}
 
@@ -253,13 +259,12 @@ object World4Features {
 	}
 
 	private fun getStockColor(): String {
+		@Suppress("KotlinConstantConditions")
 		return when {
-			data.stock >= 25 -> "a"
-			data.stock in 11..24 -> "e"
-			data.stock <= 10 -> "c"
+			stock >= 25 -> "a"
+			stock in 11..24 -> "e"
+			stock <= 10 -> "c"
 			else -> "7"
 		}
 	}
-
-	private val data get() = Vice.storage.worlds.cooking
 }

@@ -40,6 +40,16 @@ object ItemAbilityCooldown {
 
 		when {
 
+			// Warped Grenade
+			event.soundName == "entity.generic.explode" && event.pitch == 1f && event.volume == 9999f -> {
+				ItemAbility.WARPED_GRENADE.onSound()
+			}
+
+			// Poseidon's Fury
+			event.soundName == "item.trident.throw" && event.pitch == 2f && event.volume == 9999f -> {
+				ItemAbility.POSEIDONS_FURY.onSound()
+			}
+
 			// Glitch Mallet
 			event.soundName == "block.respawn_anchor.deplete" && event.pitch == 1.0f && event.volume == 1f -> {
 				ItemAbility.GLITCH_MALLET.onSound()

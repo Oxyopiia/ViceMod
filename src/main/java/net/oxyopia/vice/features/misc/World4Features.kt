@@ -183,9 +183,6 @@ object World4Features {
 		if (event.title.contains("+1 Stock")) data.stock += 1
 	}
 
-//		event.subscribe("Current Order Display", 150, 10, 200, 100)
-//		event.subscribe("Cooking Tracker", 30, 100, 100, 300)
-
 	@SubscribeEvent
 	fun onHudRender(event: RenderInGameHudEvent) {
 		if (MinecraftClient.getInstance().player == null || !World.Burger.isInWorld()) return

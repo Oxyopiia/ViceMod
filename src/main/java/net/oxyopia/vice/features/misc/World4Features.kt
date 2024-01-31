@@ -189,8 +189,13 @@ object World4Features {
 		if (MinecraftClient.getInstance().player == null || !World.Burger.isInWorld()) return
 		if (MinecraftClient.getInstance().player?.y!! <= 100.0) return
 
-		val xPos = event.scaledWidth / 2
+		var xPos = event.scaledWidth / 2
 		var yPos = 8
+
+		if (Vice.config.DEVMODE) {
+			xPos = event.scaledWidth / 2 + Vice.devConfig.COOKING_ORDER_HUD_X_OFFSET_LOCATION
+			yPos = event.scaledHeight / 2 + Vice.devConfig.COOKING_ORDER_HUD_Y_OFFSET_LOCATION
+		}
 
 		if (Vice.config.SHOW_NEXT_COOKING_ITEM && currentOrder == CookingOrder.NONE) {
 			var text = "&&cNo Order"

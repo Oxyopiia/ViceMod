@@ -83,4 +83,6 @@ object HudUtils {
 		client.inGameHud.setTitle(Text.of(title.convertFormatting()))
 		client.inGameHud.setTitleTicks((20 * fadeinout).toInt(), (20 * stayTime).toInt(), (20 * fadeinout).toInt())
 	}
+
+
 }

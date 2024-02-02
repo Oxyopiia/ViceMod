@@ -1,27 +1,19 @@
 package net.oxyopia.vice.config;
 
 import com.google.gson.annotations.Expose;
+import net.oxyopia.vice.config.HudManager.Position;
 import net.oxyopia.vice.Vice;
-import net.oxyopia.vice.config.storage.HudPositionStorage;
 
 import java.io.File;
 import java.util.HashMap;
 
 public class Storage extends PersistentSave {
 	/*
+	EXPECTED EXAMPLE RESULT
+
 	{
 		"isFirstUse": true,
 		"lastVersion": "1.0.0",
-		"hud": {
-			"cooking": {
-				"currentOrderDisplay": {
-					"x": 505,
-					"y": 30,
-					"scale": 1.0,
-					"centered": true
-				}
-			}
-		},
 		"arenas": {
 			"startTimes": {
 				"f2arenas": 1792578383625134
@@ -46,9 +38,21 @@ public class Storage extends PersistentSave {
 				"ULTIMEATIUM": 62,
 				"OBESE_VICE_BURGER": 4
 			},
+			"currentOrderPos": {
+				"x": 0.5,
+				"y": 0.05,
+				"scale": 1.0,
+				"centered": true
+			}
 		},
 		"showdown": {
-			"lastKnownTrainSpawn": -1
+			"lastKnownTrainSpawn": -1,
+			"trainTimerPos": {
+				"x": 0.5,
+				"y": 0.8,
+				"scale": 1.0,
+				"centered": true
+			}
 		}
 	}
 	 */
@@ -58,9 +62,6 @@ public class Storage extends PersistentSave {
 
 	@Expose
 	public String lastVersion = Vice.Companion.getVersion().getFriendlyString();
-
-	@Expose
-	public HudPositionStorage hud = new HudPositionStorage();
 
 	@Expose
 	public WorldData worlds = new WorldData();
@@ -94,6 +95,9 @@ public class Storage extends PersistentSave {
 			@Expose
 			public HashMap<String, Integer> totalBurgersComplete = new HashMap<>();
 
+			@Expose
+			public Position currentOrderPos = new Position(0.5f, 0.05f);
+
 		}
 
 		@Expose
@@ -103,6 +107,9 @@ public class Storage extends PersistentSave {
 
 			@Expose
 			public long lastKnownTrainSpawn = -1L;
+
+			@Expose
+			public Position trainTimerPos = new Position(0.5f, 0.8f);
 
 		}
 	}

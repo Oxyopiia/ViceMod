@@ -64,8 +64,8 @@ class Vice : ClientModInitializer {
 		@JvmField
 		val devConfig: DevConfig = DevConfig()
 
+		@JvmField
 		var storage: Storage = Storage()
-			private set
 
 		@JvmField
 		val gson: Gson = GsonBuilder()

@@ -1,11 +1,12 @@
 package net.oxyopia.vice.config;
 
 import com.google.gson.annotations.Expose;
-import net.oxyopia.vice.config.HudManager.Position;
 import net.oxyopia.vice.Vice;
+import net.oxyopia.vice.config.features.worlds.ArenaConfig;
+import net.oxyopia.vice.config.features.worlds.CookingConfig;
+import net.oxyopia.vice.config.features.worlds.ShowdownConfig;
 
 import java.io.File;
-import java.util.HashMap;
 
 public class Storage extends PersistentSave {
 	/*
@@ -69,49 +70,14 @@ public class Storage extends PersistentSave {
 	public static class WorldData {
 
 		@Expose
-		public ArenaStorage arenas = new ArenaStorage();
-
-		public static class ArenaStorage {
-
-			@Expose
-			public HashMap<String, Long> startTimes = new HashMap<>();
-
-		}
+		public ArenaConfig arenas = new ArenaConfig();
 
 		@Expose
-		public CookingStorage cooking = new CookingStorage();
-
-		public static class CookingStorage {
-
-			@Expose
-			public String currentOrder = "";
-
-			@Expose
-			public int stock = -10000;
-
-			@Expose
-			public HashMap<String, Integer> totalBurgerRequests = new HashMap<>();
-
-			@Expose
-			public HashMap<String, Integer> totalBurgersComplete = new HashMap<>();
-
-			@Expose
-			public Position currentOrderPos = new Position(0.5f, 0.05f);
-
-		}
+		public CookingConfig cooking = new CookingConfig();
 
 		@Expose
-		public ShowdownStorage showdown = new ShowdownStorage();
+		public ShowdownConfig showdown = new ShowdownConfig();
 
-		public static class ShowdownStorage {
-
-			@Expose
-			public long lastKnownTrainSpawn = -1L;
-
-			@Expose
-			public Position trainTimerPos = new Position(0.5f, 0.8f);
-
-		}
 	}
 
 	public Storage() {

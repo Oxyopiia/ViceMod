@@ -209,7 +209,7 @@ public class Config extends Vigilant {
     @Property(
     	type = PropertyType.SWITCH,
     	name = "Simplify Cooking Displays",
-    	description = "Shows cooking displays in a more simplified manner",
+    	description = "Shows Cooking displays in a more simplified form.",
     	category = "General",
     	subcategory = "World 4"
     )
@@ -227,11 +227,20 @@ public class Config extends Vigilant {
     @Property(
     	type = PropertyType.SWITCH,
     	name = "Hide Handled Chat Messages",
-    	description = "Hides chat messages handled by the Cooking UI (held item, stock info, etc)",
+    	description = "Hides chat messages displayed by Cooking features",
     	category = "General",
     	subcategory = "World 4"
     )
     public boolean HIDE_HANDLED_COOKING_MESSAGES = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Auto Apply Bread",
+		description = "Normally, Bread is not removed when completing an order, but can sometimes bug out and lock the order. Vice removes Bread for each new order, but can be removed with this feature.\n§eCan bug out from time to time!§8 (no clue why)",
+		category = "General",
+		subcategory = "World 4"
+	)
+	public boolean AUTO_APPLY_BREAD = false;
 
     // General/Item Cooldowns
 
@@ -502,9 +511,11 @@ public class Config extends Vigilant {
         addDependency("LIVE_ARENA_TOTAL_TIMER", "LIVE_ARENA_TOGGLE");
         addDependency("LIVE_ARENA_ROUND_TIMER", "LIVE_ARENA_TOGGLE");
         addDependency("LIVE_ARENA_DROPS", "LIVE_ARENA_TOGGLE");
+
+//		TODO("Implement Migration logic")
     }
 
-    public static class ConfigSorting extends SortingBehavior {
+	public static class ConfigSorting extends SortingBehavior {
         @NotNull
         @Override
         public Comparator<? super Category> getCategoryComparator() {

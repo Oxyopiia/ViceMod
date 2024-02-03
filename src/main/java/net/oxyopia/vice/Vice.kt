@@ -24,6 +24,9 @@ import net.oxyopia.vice.features.arenas.ArenaAPI
 import net.oxyopia.vice.features.arenas.ArenaNotifications
 import net.oxyopia.vice.features.arenas.ArenaSession
 import net.oxyopia.vice.features.bosses.*
+import net.oxyopia.vice.features.cooking.CookingAPI
+import net.oxyopia.vice.features.cooking.CurrentOrderDisplay
+import net.oxyopia.vice.features.cooking.IncorrectClickBlocker
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
@@ -32,7 +35,6 @@ import net.oxyopia.vice.features.misc.TrainTimer
 import net.oxyopia.vice.features.misc.Fishing
 import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker
 import net.oxyopia.vice.features.misc.RevolverBlindnessHider
-import net.oxyopia.vice.features.misc.World4Features
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger
 
@@ -94,24 +96,30 @@ class Vice : ClientModInitializer {
 	}
 
 	private fun subscribeEventListeners() {
-		EVENT_MANAGER.subscribe(ArenaAPI)
-		EVENT_MANAGER.subscribe(ArenaSession)
-		EVENT_MANAGER.subscribe(ArenaNotifications)
-		EVENT_MANAGER.subscribe(AbilitySoundChanger)
-		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
-		EVENT_MANAGER.subscribe(PlacePlayerHeadBlocker)
-		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
-		EVENT_MANAGER.subscribe(GamingMode)
+		EVENT_MANAGER.subscribe(ChatFilter)
 		EVENT_MANAGER.subscribe(Fishing)
+		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
+		EVENT_MANAGER.subscribe(PlacePlayerHeadBlocker)
+		EVENT_MANAGER.subscribe(TrainTimer)
+		EVENT_MANAGER.subscribe(GamingMode)
+
+		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
+		EVENT_MANAGER.subscribe(AbilitySoundChanger)
+
 		EVENT_MANAGER.subscribe(ViceBoss)
 		EVENT_MANAGER.subscribe(MinehutBoss)
 		EVENT_MANAGER.subscribe(AbyssalVice)
 		EVENT_MANAGER.subscribe(ShadowGelato)
 		EVENT_MANAGER.subscribe(ElGelato)
 		EVENT_MANAGER.subscribe(PPP)
-		EVENT_MANAGER.subscribe(World4Features)
-		EVENT_MANAGER.subscribe(TrainTimer)
-		EVENT_MANAGER.subscribe(ChatFilter)
+
+		EVENT_MANAGER.subscribe(ArenaAPI)
+		EVENT_MANAGER.subscribe(ArenaSession)
+		EVENT_MANAGER.subscribe(ArenaNotifications)
+
+		EVENT_MANAGER.subscribe(CookingAPI)
+		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
+		EVENT_MANAGER.subscribe(IncorrectClickBlocker)
 	}
 }
 

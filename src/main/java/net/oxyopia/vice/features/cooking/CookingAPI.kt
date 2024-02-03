@@ -7,7 +7,9 @@ import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.Utils.ms
 import net.oxyopia.vice.utils.Utils.timeDelta
+import kotlin.time.Duration.Companion.seconds
 
 object CookingAPI {
 	var currentOrder = CookingOrder.NONE
@@ -45,7 +47,7 @@ object CookingAPI {
 		}
 
 		// Matches a new Order if logic above has recently ran
-		else if (lastSeenNewOrder.timeDelta() <= 1 * 1000) {
+		else if (lastSeenNewOrder.timeDelta() <= 1.seconds.ms()) {
 			val order = CookingOrder.getByName(content) ?: return
 			updateOrder(order)
 

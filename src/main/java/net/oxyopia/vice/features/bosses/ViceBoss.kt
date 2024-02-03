@@ -4,8 +4,8 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ModifyBossBarEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.data.World
+import net.oxyopia.vice.utils.Utils.formatTimer
 import java.util.UUID
 
 object ViceBoss {
@@ -27,8 +27,9 @@ object ViceBoss {
 
 			val diff = System.currentTimeMillis() - lastSpawned
 			val style = event.original.siblings.first().style.withObfuscated(false)
+			val timer = diff.formatTimer(PHASE_1_MAX_TIME)
 
-			event.setReturnValue(event.original.copy().append(Utils.formatTimer(PHASE_1_MAX_TIME, diff)).setStyle(style))
+			event.setReturnValue(event.original.copy().append(timer).setStyle(style))
 		}
 	}
 }

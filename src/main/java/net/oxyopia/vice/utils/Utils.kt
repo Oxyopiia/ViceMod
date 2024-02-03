@@ -95,10 +95,9 @@ object Utils {
 		return formatDuration(seconds * 1000, false)
 	}
 
-	fun formatTimer(timeLimit: Int, elapsedMilliseconds: Long): String {
-		return " \uD83D\uDD51 " + formatDuration(ceil(timeLimit - (elapsedMilliseconds / 1000f)))
+	fun Long.formatTimer(timeLimit: Int): String {
+		return " \uD83D\uDD51 " + formatDuration(ceil(timeLimit - (this / 1000f)))
 	}
-
 
 	fun parseNbt(nbt: String): NbtCompound? {
 		try {

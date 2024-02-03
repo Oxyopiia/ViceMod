@@ -4,8 +4,8 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ModifyBossBarEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.data.World
+import net.oxyopia.vice.utils.Utils.formatTimer
 import java.util.UUID
 
 object MinehutBoss {
@@ -34,9 +34,9 @@ object MinehutBoss {
 			val style = event.original.siblings.first().style.withObfuscated(false)
 
 			val new = when (groupValues[2]) {
-				"1" -> event.original.copy().append(Utils.formatTimer(PHASE_1_MAX_TIME, diff)).setStyle(style)
-				"2" -> event.original.copy().append(Utils.formatTimer(PHASE_2_MAX_TIME, diff)).setStyle(style)
-				"3" -> event.original.copy().append(Utils.formatTimer(PHASE_3_MAX_TIME, diff)).setStyle(style)
+				"1" -> event.original.copy().append(diff.formatTimer(PHASE_1_MAX_TIME)).setStyle(style)
+				"2" -> event.original.copy().append(diff.formatTimer(PHASE_2_MAX_TIME)).setStyle(style)
+				"3" -> event.original.copy().append(diff.formatTimer(PHASE_3_MAX_TIME)).setStyle(style)
 				else -> return
 			}
 

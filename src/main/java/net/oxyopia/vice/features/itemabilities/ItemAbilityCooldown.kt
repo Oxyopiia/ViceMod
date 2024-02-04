@@ -40,6 +40,11 @@ object ItemAbilityCooldown {
 
 		when {
 
+			// Zip Bomb
+			event.soundName == "block.note_block.bit" && event.pitch == 2f && event.volume == 9999f -> {
+				ItemAbility.ZIP_BOMB.onSound()
+			}
+
 			// Warped Grenade
 			event.soundName == "entity.generic.explode" && event.pitch == 1f && event.volume == 9999f -> {
 				ItemAbility.WARPED_GRENADE.onSound()

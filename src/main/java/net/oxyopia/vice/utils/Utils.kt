@@ -148,4 +148,5 @@ object Utils {
 	}
 
 	fun Duration.ms() = this.inWholeMilliseconds
+	fun Int.ms() = this * 1000
 }

@@ -6,17 +6,13 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.utils.Utils.formatTimer
-import java.util.UUID
 
-object ViceBoss {
+object ViceBoss : Boss() {
 	private const val PHASE_1_MAX_TIME = 5 * 60
 
-	private var lastSpawned = 0L
-	private var lastKnownUUID: UUID? = null
-
 	@SubscribeEvent
-	fun onBossBarModifyEvent(event: ModifyBossBarEvent) {
-		if (!Vice.config.BOSS_DESPAWN_TIMERS || !World.Vice.isInWorld()) return
+	override fun onBossBarModifyEvent(event: ModifyBossBarEvent) {
+		if (!Vice.config.BOSS_DESPAWN_TIMERS || !isInWorld()) return
 
 		if (event.original.string.contains("VICE")) {
 			if (lastKnownUUID != event.instance.uuid) {
@@ -27,9 +23,20 @@ object ViceBoss {
 
 			val diff = System.currentTimeMillis() - lastSpawned
 			val style = event.original.siblings.first().style.withObfuscated(false)
-			val timer = diff.formatTimer(PHASE_1_MAX_TIME)
+			val timer = diff.formatTimer(getPhaseTimeSec())
 
 			event.setReturnValue(event.original.copy().append(timer).setStyle(style))
+			lastBarUpdate = System.currentTimeMillis()
 		}
 	}
+
+	override fun getPhaseTimeSec(phase: String): Int {
+		return PHASE_1_MAX_TIME
+	}
+
+	private fun getPhaseTimeSec(): Int {
+		return getPhaseTimeSec("")
+	}
+
+	override fun isInWorld(): Boolean = World.Vice.isInWorld()
 }

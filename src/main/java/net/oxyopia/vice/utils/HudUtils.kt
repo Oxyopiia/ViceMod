@@ -5,9 +5,13 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.math.ColorHelper
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.events.ClientTickEvent
+import net.oxyopia.vice.events.RenderInGameHudEvent
+import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils.convertFormatting
 import java.awt.Color
 
@@ -62,7 +66,7 @@ object HudUtils {
 
 		if (centered) {
 			val width = textRenderer.getSpecialTextWidth(text)
-			xPos = x - (width / 2).toDouble().toInt()
+			xPos = x - (width / 2)
 		}
 
 		val i = textRenderer.draw(text.convertFormatting(), xPos.toFloat(), y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
@@ -70,6 +74,26 @@ object HudUtils {
 		vertexConsumers.draw()
 		RenderSystem.enableDepthTest()
 		return i
+	}
+
+	fun MatrixStack.drawText(
+		text: String,
+		x: Int,
+		y: Int,
+		textRenderer: TextRenderer = MinecraftClient.getInstance().textRenderer,
+		color: Int = Color(255, 255, 255, 255).rgb,
+		shadow: Boolean = Vice.config.HUD_TEXT_SHADOW,
+		centered: Boolean = false) {
+
+		val consumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
+		var xPos = x.toFloat()
+
+		if (centered) {
+			val width = textRenderer.getSpecialTextWidth(text)
+			xPos = x - (width / 2f)
+		}
+
+		textRenderer.draw(text.convertFormatting(), xPos, y.toFloat(), color, shadow, this.peek().positionMatrix, consumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
 	}
 
 	fun TextRenderer.getSpecialTextWidth(text: String, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW): Int {
@@ -82,5 +106,42 @@ object HudUtils {
 		client.inGameHud.setSubtitle(Text.of(subtitle.convertFormatting()))
 		client.inGameHud.setTitle(Text.of(title.convertFormatting()))
 		client.inGameHud.setTitleTicks((20 * fadeinout).toInt(), (20 * stayTime).toInt(), (20 * fadeinout).toInt())
+	}
+
+
+
+
+	private var title = MutableText.EMPTY
+	private var titleStayTicks = 0
+
+	fun sendViceTitle(title: String, stayTime: Float = 1f) {
+		this.title = Text.of(title.convertFormatting())
+		this.titleStayTicks = (20 * stayTime).toInt()
+	}
+
+	@SubscribeEvent
+	fun onHudRender(event: RenderInGameHudEvent) {
+		if (titleStayTicks <= 0) return
+
+		val stack = event.context.matrices
+
+		stack.push()
+		stack.translate((event.scaledWidth / 2).toFloat(), (event.scaledHeight / 2).toFloat(), 0.0f)
+		RenderSystem.enableBlend()
+		stack.push()
+		stack.scale(3.0f, 3.0f, 3.0f)
+
+		stack.drawText(title.string, 0, -10, centered = true)
+
+		stack.pop()
+		RenderSystem.disableBlend()
+		stack.pop()
+	}
+
+	@SubscribeEvent
+	fun tick(event: ClientTickEvent) {
+		if (titleStayTicks > 0) {
+			titleStayTicks--
+		}
 	}
 }

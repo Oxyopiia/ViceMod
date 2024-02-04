@@ -236,7 +236,7 @@ public class Config extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Auto Apply Bread",
-		description = "Normally, Bread is not removed when completing an order, but can sometimes bug out and lock the order. Vice removes Bread for each new order, but can be removed with this feature.\n§eCan bug out from time to time!§8 (no clue why)",
+		description = "Normally, Bread is not removed when completing an order, but can sometimes bug out and lock the order. As a result, Vice automatically deselects Bread for each new order, but this functionality can be bypassed with this feature.\n§eCan bug out from time to time!§8 (no clue why)",
 		category = "General",
 		subcategory = "World 4"
 	)
@@ -419,6 +419,15 @@ public class Config extends Vigilant {
         subcategory = "Quality of Life"
     )
     public boolean BOSS_DESPAWN_TIMERS = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Low Time Warning",
+		description = "Displays a warning when the Boss is relatively close to despawning.",
+		category = "Bosses",
+		subcategory = "Quality of Life"
+	)
+	public boolean BOSS_DESPAWN_WARNING = true;
 
     @Property(
         type = PropertyType.SWITCH,

@@ -35,6 +35,7 @@ import net.oxyopia.vice.features.misc.TrainTimer
 import net.oxyopia.vice.features.misc.Fishing
 import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker
 import net.oxyopia.vice.features.misc.RevolverBlindnessHider
+import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger
 
@@ -102,6 +103,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(PlacePlayerHeadBlocker)
 		EVENT_MANAGER.subscribe(TrainTimer)
 		EVENT_MANAGER.subscribe(GamingMode)
+		EVENT_MANAGER.subscribe(HudUtils)
 
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(AbilitySoundChanger)

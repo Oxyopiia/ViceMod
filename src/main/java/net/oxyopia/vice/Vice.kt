@@ -41,7 +41,7 @@ import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.misc.ChatFilter
 import net.oxyopia.vice.features.misc.TrainTimer
 import net.oxyopia.vice.features.misc.Fishing
-import net.oxyopia.vice.features.misc.PlacePlayerHeadBlocker
+import net.oxyopia.vice.features.misc.ConsumeItemBlocker
 import net.oxyopia.vice.features.misc.RevolverBlindnessHider
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
@@ -129,7 +129,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ChatFilter)
 		EVENT_MANAGER.subscribe(Fishing)
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
-		EVENT_MANAGER.subscribe(PlacePlayerHeadBlocker)
+		EVENT_MANAGER.subscribe(ConsumeItemBlocker)
 		EVENT_MANAGER.subscribe(TrainTimer)
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(HudUtils)

@@ -160,7 +160,7 @@ public class DevConfig extends Vigilant {
 			min = -100,
 			max = 100
 	)
-	public int TRAIN_TIMER_HUD_X_OFFSET_LOCATION = 3;
+	public int TRAIN_TIMER_HUD_X_OFFSET_LOCATION = 0;
 
 	@Property(
 			type = PropertyType.NUMBER,
@@ -171,7 +171,7 @@ public class DevConfig extends Vigilant {
 			min = -100,
 			max = 100
 	)
-	public int TRAIN_TIMER_HUD_Y_OFFSET_LOCATION = 3;
+	public int TRAIN_TIMER_HUD_Y_OFFSET_LOCATION = 0;
 
 	@Property(
 			type = PropertyType.NUMBER,
@@ -205,7 +205,7 @@ public class DevConfig extends Vigilant {
 			min = -100,
 			max = 100
 	)
-	public int COOKING_ORDER_HUD_X_OFFSET_LOCATION = 3;
+	public int COOKING_ORDER_HUD_X_OFFSET_LOCATION = 0;
 
 	@Property(
 			type = PropertyType.NUMBER,
@@ -216,7 +216,7 @@ public class DevConfig extends Vigilant {
 			min = -100,
 			max = 100
 	)
-	public int COOKING_ORDER_HUD_Y_OFFSET_LOCATION = 3;
+	public int COOKING_ORDER_HUD_Y_OFFSET_LOCATION = 0;
 
 	public DevConfig() {
 		super(new File("./config/vice/developerSettings.toml"), "Vice Developer Menu");

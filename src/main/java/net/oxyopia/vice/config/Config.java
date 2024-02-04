@@ -20,12 +20,14 @@ import static net.oxyopia.vice.Vice.devConfig;
 
 public class Config extends Vigilant {
 
-    @Property(
+    @SuppressWarnings("unused")
+	@Property(
         type = PropertyType.BUTTON,
         name = "Edit HUD Locations",
-        description = "Edit the position of HUD Elements\n" +
-            " - Drag elements around in the menu to reposition,\n" +
-            " - Use the Scroll Wheel on an element to resize.",
+        description = """
+			Edit the positions of HUD Elements:
+			 - Click on elements to change properties, like scale.
+			 - Drag elements to reposition.""",
         category = "General",
         subcategory = "Vice",
         placeholder = "Edit HUD Locations"
@@ -43,7 +45,9 @@ public class Config extends Vigilant {
     )
     public boolean HUD_TEXT_SHADOW = true;
 
-    @Property(
+
+	@SuppressWarnings("unused")
+	@Property(
         type = PropertyType.BUTTON,
         name = "Vice Discord",
         description = "Join the vice Discord to recieve updates, post suggestions, and more!",
@@ -67,7 +71,8 @@ public class Config extends Vigilant {
     )
     public boolean DEVMODE = false;
 
-    @Property(
+    @SuppressWarnings("unused")
+	@Property(
         type = PropertyType.BUTTON,
         name = "Dev Menu",
         description = "Open the developer menu",
@@ -90,26 +95,6 @@ public class Config extends Vigilant {
     public int DEV_GAMING_MODE = 0;
 
     // General/Quality of Life
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Snowball Cannon Projection",
-        description = "Displays a line of projection of where the Snowball Cannon can reach.\n§cComing soon!",
-        category = "General",
-        subcategory = "Quality of Life",
-        hidden = true
-    )
-    public boolean SNOWBALL_CANNON_PROJECTION = false;
-
-    @Property(
-        type = PropertyType.COLOR,
-        name = "Snowball Projection Colour",
-        description = "Color the thing",
-        category = "General",
-        subcategory = "Quality of Life",
-        allowAlpha = false
-    )
-    public Color SNOWBALL_CANNON_PROJECTION_COLOR = new Color(0, 200, 255);
 
     @Property(
         type = PropertyType.SWITCH,
@@ -428,15 +413,6 @@ public class Config extends Vigilant {
 		subcategory = "Quality of Life"
 	)
 	public boolean BOSS_DESPAWN_WARNING = true;
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Silence Boss Sounds",
-        description = "Silences boss sound effects, may be separated into a per-boss basis the future.\n§cComing in a future release!",
-        category = "Bosses",
-        subcategory = "Quality of Life"
-    )
-    public boolean DISABLE_BOSS_SOUNDS = false;
     
     @Property(
     	type = PropertyType.SWITCH,
@@ -507,7 +483,6 @@ public class Config extends Vigilant {
         markDirty();
 
         addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
-        addDependency("SNOWBALL_CANNON_PROJECTION_COLOR", "SNOWBALL_CANNON_PROJECTION");
         addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
 
         addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");

@@ -69,8 +69,8 @@ abstract class Boss constructor(
 			(lastDespawnNotify > 0 && lastDespawnNotify.timeDelta() <= phaseTime * warningPercentage)
 		) return
 
-		Utils.playSound("random.orb", pitch = 0.8f, volume = 3f)
-		HudUtils.sendViceTitle("&&cBoss Time Low!", 2f)
+		Utils.playSound("block.note_block.pling", pitch = 0.8f, volume = 3f)
+		HudUtils.sendViceTitle("&&cLow boss time!", 2f)
 
 		lastDespawnNotify = System.currentTimeMillis()
 	}

@@ -5,6 +5,7 @@ import net.oxyopia.vice.data.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawString
+import net.oxyopia.vice.utils.HudUtils.drawStrings
 
 object RenderTest {
 	@SubscribeEvent
@@ -33,19 +34,17 @@ object RenderTest {
 
 		// Anchor center to (300, 50)
 		val scalar1 = Position(300f, 50f, scale = 1f)
-		scalar1.drawString("&&aScalar 1 Test 1", event.context)
+		scalar1.drawStrings(listOf(
+			"&&aScalar 1 Test 1",
+			"&&aScalar 1 Test 2",
+		), event.context)
 
-		// Anchor center to (300, 50), offset by (0, 10) to effectively anchor center at (300, 60)
-		val scalar2 = Position(300f, 50f, scale = 1f)
-		scalar2.drawString("&&aScalar 1 Test 2", event.context, offsetY = 10f)
-
-		// Anchor center to (300, 100)
-		val scalar3 = Position(300f, 100f, scale = 2f)
-		scalar3.drawString("&&aScalar 2 Test 1", event.context)
-
-		// Anchor center to (300, 100), offset by (0, 10) with scale 2 to effectively anchor center at (300, 70)
-		val scalar4 = Position(300f, 100f, scale = 2f)
-		scalar4.drawString("&&aScalar 2 Test 2", event.context, offsetY = 10f)
+		// Anchor center to (300, 100) with scale 2
+		val scalar2 = Position(300f, 100f, scale = 2f, centered = false)
+		scalar2.drawStrings(listOf(
+			"&&aScalar 2 Test 1",
+			"&&aScalar 2 Test 2",
+		), event.context)
 
 	}
 }

@@ -113,12 +113,18 @@ object HudUtils {
 			matrices.translate(-textRenderer.getSpecialTextWidth(text) / 2f * scale, 0f, 0f)
 		}
 
-		matrices.translate(scale * offsetX, scale * offsetY, 0f)
+		matrices.translate(offsetX, offsetY, 0f)
 		matrices.scale(scale, scale, 1f)
 
 		textRenderer.draw(display, 0f, 0f, defaultColor, Vice.config.HUD_TEXT_SHADOW, matrices.peek().positionMatrix, consumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
 
 		matrices.pop()
+	}
+
+	fun Position.drawStrings(list: List<String>, context: DrawContext, offsetY: Float = 10f) {
+		list.forEachIndexed { index, text ->
+			drawString(text, context, offsetY = index * offsetY * scale)
+		}
 	}
 
 	private fun TextRenderer.getSpecialTextWidth(text: String, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW): Int {

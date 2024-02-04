@@ -20,6 +20,9 @@ object AbyssalVice: Boss(
 		}
 	}
 
+	override val warningPercentage: Double
+		get() = 0.1
+
 	@SubscribeEvent
 	fun onSound(event: SoundEvent) {
 		if (!Vice.config.ABYSSAL_VICE_LASER_WARNING || !isInWorld() || lastKnownPhase != 2) return

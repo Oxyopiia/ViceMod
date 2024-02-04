@@ -19,6 +19,7 @@ import java.util.regex.Pattern
 import kotlin.math.ceil
 
 import kotlin.math.floor
+import kotlin.time.Duration
 
 object Utils {
 	var inDoomTowers = false
@@ -145,4 +146,7 @@ object Utils {
 	fun Long.timeDelta(): Long {
 		return System.currentTimeMillis() - this
 	}
+
+	fun Duration.ms() = this.inWholeMilliseconds
+	fun Int.ms() = this * 1000
 }

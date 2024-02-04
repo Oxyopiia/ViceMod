@@ -14,7 +14,7 @@ object ChatFilter {
 			return
 		}
 
-		if (Vice.config.HIDE_SET_REQUIREMENT_MESSAGES && event.string.startsWith("You must be wearing at least")) {
+		else if (Vice.config.HIDE_SET_REQUIREMENT_MESSAGES && event.string.startsWith("You must be wearing at least")) {
 			event.cancel()
 			return
 		}

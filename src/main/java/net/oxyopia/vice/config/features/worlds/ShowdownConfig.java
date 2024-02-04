@@ -1,7 +1,7 @@
 package net.oxyopia.vice.config.features.worlds;
 
 import com.google.gson.annotations.Expose;
-import net.oxyopia.vice.config.HudManager;
+import net.oxyopia.vice.data.Position;
 
 public class ShowdownConfig {
 
@@ -9,6 +9,6 @@ public class ShowdownConfig {
 	public long lastKnownTrainSpawn = -1L;
 
 	@Expose
-	public HudManager.Position trainTimerPos = new HudManager.Position(0.5f, 0.8f);
+	public Position trainTimerPos = new Position(175f, 150f);
 
 }

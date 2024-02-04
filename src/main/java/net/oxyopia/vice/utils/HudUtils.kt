@@ -58,24 +58,14 @@ object HudUtils {
 		RenderSystem.enableDepthTest()
 	}
 
-	fun drawText(stack: MatrixStack, textRenderer: TextRenderer, text: String?, x: Int, y: Int, color: Int = Color.white.rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
-		if (text == null) {
-			return 0
-		}
-
-		var xPos = x
+	fun drawText(stack: MatrixStack, textRenderer: TextRenderer, text: String, x: Int, y: Int, color: Int = Color.white.rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false) {
 		val vertexConsumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
 
-		if (centered) {
-			val width = textRenderer.getSpecialTextWidth(text)
-			xPos = x - (width / 2)
-		}
+		val xPos = if (centered) {
+			x - (textRenderer.getSpecialTextWidth(text) / 2f)
+		} else x.toFloat()
 
-		val i = textRenderer.draw(text.convertFormatting(), xPos.toFloat(), y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
-		RenderSystem.disableDepthTest()
-		vertexConsumers.draw()
-		RenderSystem.enableDepthTest()
-		return i
+		textRenderer.draw(text.convertFormatting(), xPos, y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
 	}
 
 	fun Position.drawString(text: String, context: DrawContext, offsetX: Float = 0f, offsetY: Float = 0f, defaultColor: Color = Color.white) {

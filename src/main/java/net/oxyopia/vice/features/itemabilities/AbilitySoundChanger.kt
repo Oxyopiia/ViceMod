@@ -1,6 +1,5 @@
 package net.oxyopia.vice.features.itemabilities
 
-import net.minecraft.client.sound.SoundInstance
 import net.oxyopia.vice.Vice.Companion.config
 import net.oxyopia.vice.events.ModifySoundEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
@@ -8,34 +7,33 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 object AbilitySoundChanger {
 	@SubscribeEvent
 	fun onSound(event: ModifySoundEvent) {
-		val sound = event.sound
+		val sound = event.soundName
+		val volume = event.volume
 
 		when {
-			(sound.soundName() == "block.note_block.bit" || sound.soundName() == "entity.player.attack.crit") && ItemAbility.EIGHT_BIT_KATANA.remainingCooldown() >= 8f -> {
+			(sound == "block.note_block.bit" || sound == "entity.player.attack.crit") && ItemAbility.EIGHT_BIT_KATANA.remainingCooldown() >= 8f -> {
 				event.setReturnValue(config.EIGHT_BIT_KATANA_VOLUME)
 			}
 
-			(sound.soundName() == "entity.blaze.shoot" || sound.soundName() == "entity.generic.explode") && ItemAbility.BARBED_SHOTGUN.remainingCooldown() >= 4.25f -> {
+			(sound == "entity.blaze.shoot" || sound == "entity.generic.explode") && ItemAbility.BARBED_SHOTGUN.remainingCooldown() >= 4.25f -> {
 				event.setReturnValue(config.BARBED_SHOTGUN_VOLUME)
 			}
 
-			sound.soundName() == "entity.snowball.throw" && sound.volume == 9999f && ItemAbility.SNOWBALL_CANNON.remainingCooldown() >= 0.2f -> {
+			sound == "entity.snowball.throw" && volume == 9999f && ItemAbility.SNOWBALL_CANNON.remainingCooldown() >= 0.2f -> {
 				event.setReturnValue(config.SNOWBALL_CANNON_VOLUME)
 			}
 
-			(sound.soundName() == "entity.snowball.throw" || sound.soundName() == "entity.generic.explode") && sound.volume == 9999f && ItemAbility.ARCTIC_CORE.remainingCooldown() > 0f -> {
+			(sound == "entity.snowball.throw" || sound == "entity.generic.explode") && volume == 9999f && ItemAbility.ARCTIC_CORE.remainingCooldown() > 0f -> {
 				event.setReturnValue(config.ARCTIC_CORE_VOLUME)
 			}
 
-			(sound.soundName() == "block.note_block.bit" || sound.soundName() == "entity.generic.explode") && ItemAbility.LASER_POINT_MINIGUN.remainingCooldown() > 0.05f -> {
+			(sound == "block.note_block.bit" || sound == "entity.generic.explode") && ItemAbility.LASER_POINT_MINIGUN.remainingCooldown() > 0.05f -> {
 				event.setReturnValue(config.LASER_POINT_MINIGUN_VOLUME)
 			}
 
-			(sound.soundName() == "entity.bat.takeoff" || sound.soundName() == "block.beacon.activate" || sound.soundName() == "entity.wither.break_block") && sound.volume == 9999f && ItemAbility.BEDROCK_BREAKER.remainingCooldown() >= 1f -> {
+			(sound == "entity.bat.takeoff" || sound == "block.beacon.activate" || sound == "entity.wither.break_block") && volume == 9999f && ItemAbility.BEDROCK_BREAKER.remainingCooldown() >= 1f -> {
 				event.setReturnValue(config.BEDROCK_BREAKER_VOLUME)
 			}
 		}
 	}
-
-	private fun SoundInstance.soundName(): String = this.id.path
 }

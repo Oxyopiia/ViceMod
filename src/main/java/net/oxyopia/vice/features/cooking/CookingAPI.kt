@@ -37,74 +37,58 @@ object CookingAPI {
 	@SubscribeEvent
 	fun onChatMessage(event: ServerChatMessageEvent) {
 		if (!World.Burger.isInWorld()) return
+
 		val content = event.string
 		val hideHandledMessages = Vice.config.HIDE_HANDLED_COOKING_MESSAGES
 
-		if (content.contains("NEW ORDER") || content.contains("BOSS ORDER")) {
-			lastSeenNewOrder = System.currentTimeMillis()
-			return
+		when {
+			content.contains("NEW ORDER") || content.contains("BOSS ORDER") -> {
+				lastSeenNewOrder = System.currentTimeMillis()
+			}
 
-		}
+			lastSeenNewOrder.timeDelta() <= 1.seconds.ms() -> {
+				val order = CookingOrder.getByName(content) ?: return
+				updateOrder(order)
+			}
 
-		// Matches a new Order if logic above has recently ran
-		else if (lastSeenNewOrder.timeDelta() <= 1.seconds.ms()) {
-			val order = CookingOrder.getByName(content) ?: return
-			updateOrder(order)
+			content.contains("Order Complete") || content.contains("Incorrect Ingredient ") -> {
+				updateOrder(CookingOrder.NONE)
+				if (!Vice.config.AUTO_APPLY_BREAD) heldItem = CookingItem.NONE
+			}
 
-			return
-		}
+			heldItemRegex.find(content.removeSuffix(".")) != null -> {
+				val match = heldItemRegex.find(content.removeSuffix("."))?.groupValues?.get(1)
+				heldItem = CookingItem.getByName(match.toString()) ?: CookingItem.NONE
 
-		else if (content.contains("Order Complete") || content.contains("Incorrect Ingredient ")) {
-			updateOrder(CookingOrder.NONE)
-			if (!Vice.config.AUTO_APPLY_BREAD) heldItem = CookingItem.NONE
+				DevUtils.sendDebugChat("&&6COOKING &&rUpdated held item to &&d${heldItem.name}", "COOKING_DEBUGGER")
 
-			return
-		}
-
-		heldItemRegex.find(content.removeSuffix("."))?.let {
-			heldItem = CookingItem.getByName(it.groupValues[1]) ?: CookingItem.NONE
-			DevUtils.sendDebugChat("&&6COOKING &&rUpdated held item to &&d${heldItem.name}", "COOKING_DEBUGGER")
-
-			if (hideHandledMessages) {
-				event.cancel()
-
-				if (heldItem == CookingItem.COOKED_MEAT) {
-					Utils.playSound("block.note_block.pling", pitch = 1.5f, volume = 3f)
+				if (hideHandledMessages) {
+					event.cancel()
+					if (heldItem == CookingItem.COOKED_MEAT) {
+						Utils.playSound("block.note_block.pling", pitch = 1.5f, volume = 3f)
+					}
 				}
 			}
-			return
-		}
 
-		ingredientsRegex.find(content)?.apply {
-			if (currentOrder == CookingOrder.NONE) return
+			ingredientsRegex.find(content) != null -> {
+				val ingredientsRemaining = ingredientsRegex.find(content)?.groupValues?.get(1)?.toIntOrNull() ?: return
 
-			try {
-				val ingredientsRemaining = groupValues[1].toInt()
-				if (ingredientsRemaining > 0) {
+				if (currentOrder != CookingOrder.NONE && ingredientsRemaining > 0) {
 					orderCurrentItemIndex = currentOrder.recipe.size - ingredientsRemaining
 					DevUtils.sendDebugChat("&&6COOKING &&rNext Item: ${currentOrder.recipe[orderCurrentItemIndex]}", "COOKING_DEBUGGER")
 				}
 
 				if (hideHandledMessages) event.cancel()
-			} catch (e: NumberFormatException) {
-				DevUtils.sendErrorMessage(e, "An error occurred casting a regex group value (${groupValues[1]}) to an Int!")
 			}
 
-			return
-		}
+			stockRegex.find(content) != null -> {
+				val stockValue = stockRegex.find(content)?.groupValues?.get(1)?.toIntOrNull() ?: return
 
-		stockRegex.find(content)?.apply {
-			try {
-				stock = groupValues[1].toInt()
+				stock = stockValue
 				DevUtils.sendDebugChat("&&6COOKING &&Updated Stock to $stock", "COOKING_DEBUGGER")
 
 				if (hideHandledMessages) event.cancel()
-
-			} catch (e: NumberFormatException) {
-				DevUtils.sendErrorMessage(e, "An error occurred casting a regex group value (${groupValues[1]}) to an Int!")
 			}
-
-			return
 		}
 	}
 }

@@ -98,8 +98,8 @@ public class Config extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Prevent Placing Player Heads",
-        description = "Blocks place block packets when using player heads to prevent consuming some player heads, such as Ancient Cells.",
+        name = "Prevent Placing Special Items",
+        description = "Blocks place block packets with Player Heads or Train Keys to prevent accidental consumption.",
         category = "General",
         subcategory = "Quality of Life"
     )

@@ -2,9 +2,10 @@ package net.oxyopia.vice.config;
 
 import com.google.gson.annotations.Expose;
 import net.oxyopia.vice.Vice;
-import net.oxyopia.vice.config.features.worlds.ArenaConfig;
-import net.oxyopia.vice.config.features.worlds.CookingConfig;
-import net.oxyopia.vice.config.features.worlds.ShowdownConfig;
+import net.oxyopia.vice.config.features.MiscStorage;
+import net.oxyopia.vice.config.features.worlds.ArenaStorage;
+import net.oxyopia.vice.config.features.worlds.CookingStorage;
+import net.oxyopia.vice.config.features.worlds.ShowdownStorage;
 
 import java.io.File;
 
@@ -54,6 +55,9 @@ public class Storage extends PersistentSave {
 				"scale": 1.0,
 				"centered": true
 			}
+		},
+		"misc": {
+			"lastDailyReward": -1
 		}
 	}
 	 */
@@ -65,20 +69,16 @@ public class Storage extends PersistentSave {
 	public String lastVersion = Vice.Companion.getVersion().getFriendlyString();
 
 	@Expose
-	public WorldData worlds = new WorldData();
+	public ArenaStorage arenas = new ArenaStorage();
 
-	public static class WorldData {
+	@Expose
+	public CookingStorage cooking = new CookingStorage();
 
-		@Expose
-		public ArenaConfig arenas = new ArenaConfig();
+	@Expose
+	public ShowdownStorage showdown = new ShowdownStorage();
 
-		@Expose
-		public CookingConfig cooking = new CookingConfig();
-
-		@Expose
-		public ShowdownConfig showdown = new ShowdownConfig();
-
-	}
+	@Expose
+	public MiscStorage misc = new MiscStorage();
 
 	public Storage() {
 		super(new File("./config/vice/storage.json"));

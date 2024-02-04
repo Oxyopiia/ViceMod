@@ -5,7 +5,7 @@ import net.oxyopia.vice.data.Position;
 
 import java.util.HashMap;
 
-public class CookingConfig {
+public class CookingStorage {
 
 	@Expose
 	public String currentOrder = "";

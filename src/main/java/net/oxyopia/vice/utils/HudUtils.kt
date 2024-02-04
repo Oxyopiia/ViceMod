@@ -78,33 +78,12 @@ object HudUtils {
 		return i
 	}
 
-	fun MatrixStack.drawText(
-		text: String,
-		x: Int,
-		y: Int,
-		textRenderer: TextRenderer = MinecraftClient.getInstance().textRenderer,
-		color: Int = Color.white.rgb,
-		shadow: Boolean = Vice.config.HUD_TEXT_SHADOW,
-		centered: Boolean = false) {
-
-		val consumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
-		var xPos = x.toFloat()
-
-		if (centered) {
-			val width = textRenderer.getSpecialTextWidth(text)
-			xPos = x - (width / 2f)
-		}
-
-		textRenderer.draw(text.convertFormatting(), xPos, y.toFloat(), color, shadow, this.peek().positionMatrix, consumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
-	}
-
-	fun Position.drawString(text: String, context: DrawContext, offsetX: Float = 0f, offsetY: Float = 0f) {
+	fun Position.drawString(text: String, context: DrawContext, offsetX: Float = 0f, offsetY: Float = 0f, defaultColor: Color = Color.white) {
 		val matrices = context.matrices
 		val consumers = context.vertexConsumers
 		val textRenderer = MinecraftClient.getInstance().textRenderer
 
 		val display = text.convertFormatting()
-		val defaultColor = Color.white.rgb
 
 		matrices.push()
 
@@ -116,14 +95,14 @@ object HudUtils {
 		matrices.translate(offsetX, offsetY, 0f)
 		matrices.scale(scale, scale, 1f)
 
-		textRenderer.draw(display, 0f, 0f, defaultColor, Vice.config.HUD_TEXT_SHADOW, matrices.peek().positionMatrix, consumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
+		textRenderer.draw(display, 0f, 0f, defaultColor.rgb, Vice.config.HUD_TEXT_SHADOW, matrices.peek().positionMatrix, consumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
 
 		matrices.pop()
 	}
 
-	fun Position.drawStrings(list: List<String>, context: DrawContext, offsetY: Float = 10f) {
+	fun Position.drawStrings(list: List<String>, context: DrawContext, gap: Float = 10f) {
 		list.forEachIndexed { index, text ->
-			drawString(text, context, offsetY = index * offsetY * scale)
+			drawString(text, context, offsetY = index * gap * scale)
 		}
 	}
 
@@ -154,19 +133,8 @@ object HudUtils {
 	fun onHudRender(event: HudRenderEvent) {
 		if (titleStayTicks <= 0) return
 
-		val stack = event.context.matrices
-
-		stack.push()
-		stack.translate((event.scaledWidth / 2).toFloat(), (event.scaledHeight / 2).toFloat(), 0.0f)
-		RenderSystem.enableBlend()
-		stack.push()
-		stack.scale(3.0f, 3.0f, 3.0f)
-
-		stack.drawText(title.string, 0, -10, centered = true)
-
-		stack.pop()
-		RenderSystem.disableBlend()
-		stack.pop()
+		val pos = Position(event.scaledWidth / 2f, event.scaledHeight / 2f, scale = 3f)
+		pos.drawString(title.string, event.context, offsetY = -20f)
 	}
 
 	@SubscribeEvent

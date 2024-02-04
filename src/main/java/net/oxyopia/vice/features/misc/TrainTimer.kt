@@ -1,15 +1,15 @@
 package net.oxyopia.vice.features.misc
 
-import net.minecraft.client.MinecraftClient
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Position
 import net.oxyopia.vice.events.EntityDeathEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.ServerChatMessageEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.Utils.timeDelta
 import net.oxyopia.vice.data.World
+import net.oxyopia.vice.utils.HudUtils.drawStrings
 import java.util.concurrent.TimeUnit
 
 object TrainTimer {
@@ -26,16 +26,13 @@ object TrainTimer {
 		if (!Vice.config.TRAIN_TIMER) return
 		if (!Vice.config.TRAIN_TIMER_OUTSIDE && !World.Showdown.isInWorld()) return
 
-		var xPos = event.scaledWidth / 2
-		var yPos = 260
+		val pos = Position(event.scaledWidth / 2f, 260f)
+		val list: MutableList<String> = mutableListOf()
 
 		if (Vice.config.DEVMODE) {
-			xPos = (event.scaledWidth / 2 - 1) + Vice.devConfig.TRAIN_TIMER_HUD_X_OFFSET_LOCATION
-			yPos = (event.scaledHeight / 2 - 1) + Vice.devConfig.TRAIN_TIMER_HUD_Y_OFFSET_LOCATION
+			pos.x = (event.scaledWidth / 2f - 1) + Vice.devConfig.TRAIN_TIMER_HUD_X_OFFSET_LOCATION
+			pos.y = (event.scaledHeight / 2f - 1) + Vice.devConfig.TRAIN_TIMER_HUD_Y_OFFSET_LOCATION
 		}
-
-		val matrices = event.context.matrices
-		val textRenderer = MinecraftClient.getInstance().textRenderer
 
 		val secondaryText = when {
 			aliveCount > 1 && World.Showdown.isInWorld() -> "&&6${aliveCount - 1} Porters"
@@ -52,11 +49,11 @@ object TrainTimer {
 		}
 
 		if (aliveCount > 0) {
-			HudUtils.drawText(matrices, textRenderer, "&&6&&lTrain Arrived", xPos, yPos, centered = true)
-			yPos += 10
+			list.add("&&6&&lTrain Arrived!")
 		}
 
-		HudUtils.drawText(matrices, textRenderer, secondaryText, xPos, yPos, centered = true)
+		list.add(secondaryText)
+		pos.drawStrings(list, event.context)
 	}
 
 	@SubscribeEvent

@@ -7,10 +7,12 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.ClickType
 import net.minecraft.util.math.MathHelper
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Position
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
+import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
 import net.oxyopia.vice.utils.Utils.clamp
@@ -151,28 +153,18 @@ object ItemAbilityCooldown {
 		ability?.apply {
 			if (!isOnCooldown() || !displayCooldown) return
 
-			val matrices = MatrixStack()
-
-			var centered = false
-			var xPos = (event.scaledWidth / 2 - 1) + 3
-			var yPos = (event.scaledHeight / 2 - 1) - 1 + 3
+			val pos = Position(event.scaledWidth / 2f + 2, event.scaledHeight / 2f + 1, centered = false)
 			var color = Color(0, 236, 255, 255)
 
 			if (Vice.config.DEVMODE) {
-				xPos = (event.scaledWidth / 2 - 1) + Vice.devConfig.ITEMCD_CURSORCD_X_OFFSET
-				yPos = (event.scaledHeight / 2 - 1) + Vice.devConfig.ITEMCD_CURSORCD_Y_OFFSET
-				centered = Vice.devConfig.ITEMCD_CURSORCD_CENTER_TEXT
+				pos.x = (event.scaledWidth / 2f - 1) + Vice.devConfig.ITEMCD_CURSORCD_X_OFFSET
+				pos.y = (event.scaledHeight / 2f - 1) + Vice.devConfig.ITEMCD_CURSORCD_Y_OFFSET
+				pos.centered = Vice.devConfig.ITEMCD_CURSORCD_CENTER_TEXT
 				color = Vice.devConfig.ITEMCD_CURSORCD_COLOR
 			}
 
-			matrices.push()
-			matrices.translate(0.0f, 0.0f, 200.0f)
-
 			val roundedFloat: String = String.format("%.0f", ceil(remainingCooldown().toDouble()))
-			HudUtils.drawText(matrices,
-				MinecraftClient.getInstance().textRenderer, roundedFloat, xPos, yPos, color.rgb, Vice.config.HUD_TEXT_SHADOW, centered)
-
-			matrices.pop()
+			pos.drawString(roundedFloat, event.context, defaultColor = color)
 		}
 	}
 

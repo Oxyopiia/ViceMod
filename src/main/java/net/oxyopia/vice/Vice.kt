@@ -27,6 +27,7 @@ import net.oxyopia.vice.config.DevConfig
 import net.oxyopia.vice.config.Storage
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.core.EventManager
+import net.oxyopia.vice.features.RenderTest
 import net.oxyopia.vice.features.arenas.ArenaAPI
 import net.oxyopia.vice.features.arenas.ArenaNotifications
 import net.oxyopia.vice.features.arenas.ArenaSession
@@ -150,6 +151,8 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(CookingAPI)
 		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
 		EVENT_MANAGER.subscribe(IncorrectClickBlocker)
+
+		EVENT_MANAGER.subscribe(RenderTest)
 	}
 }
 

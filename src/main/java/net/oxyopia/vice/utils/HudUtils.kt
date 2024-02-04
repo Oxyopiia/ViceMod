@@ -3,12 +3,14 @@ package net.oxyopia.vice.utils
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.math.ColorHelper
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Position
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
@@ -56,7 +58,7 @@ object HudUtils {
 		RenderSystem.enableDepthTest()
 	}
 
-	fun drawText(stack: MatrixStack, textRenderer: TextRenderer, text: String?, x: Int, y: Int, color: Int = Color(255, 255, 255, 255).rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
+	fun drawText(stack: MatrixStack, textRenderer: TextRenderer, text: String?, x: Int, y: Int, color: Int = Color.white.rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
 		if (text == null) {
 			return 0
 		}
@@ -81,7 +83,7 @@ object HudUtils {
 		x: Int,
 		y: Int,
 		textRenderer: TextRenderer = MinecraftClient.getInstance().textRenderer,
-		color: Int = Color(255, 255, 255, 255).rgb,
+		color: Int = Color.white.rgb,
 		shadow: Boolean = Vice.config.HUD_TEXT_SHADOW,
 		centered: Boolean = false) {
 
@@ -96,7 +98,30 @@ object HudUtils {
 		textRenderer.draw(text.convertFormatting(), xPos, y.toFloat(), color, shadow, this.peek().positionMatrix, consumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
 	}
 
-	fun TextRenderer.getSpecialTextWidth(text: String, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW): Int {
+	fun Position.drawString(text: String, context: DrawContext, offsetX: Float = 0f, offsetY: Float = 0f) {
+		val matrices = context.matrices
+		val consumers = context.vertexConsumers
+		val textRenderer = MinecraftClient.getInstance().textRenderer
+
+		val display = text.convertFormatting()
+		val defaultColor = Color.white.rgb
+
+		matrices.push()
+
+		matrices.translate(x, y, 0f)
+		if (centered) {
+			matrices.translate(-textRenderer.getSpecialTextWidth(text) / 2f * scale, 0f, 0f)
+		}
+
+		matrices.translate(scale * offsetX, scale * offsetY, 0f)
+		matrices.scale(scale, scale, 1f)
+
+		textRenderer.draw(display, 0f, 0f, defaultColor, Vice.config.HUD_TEXT_SHADOW, matrices.peek().positionMatrix, consumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
+
+		matrices.pop()
+	}
+
+	private fun TextRenderer.getSpecialTextWidth(text: String, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW): Int {
 		return this.getWidth(text.replace(Regex("&&[a-zA-Z0-9]"), "").replace("§", "")) + if (shadow) 1 else 0
 	}
 

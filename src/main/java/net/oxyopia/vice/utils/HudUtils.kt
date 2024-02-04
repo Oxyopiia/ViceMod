@@ -10,7 +10,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.math.ColorHelper
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ClientTickEvent
-import net.oxyopia.vice.events.RenderInGameHudEvent
+import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils.convertFormatting
 import java.awt.Color
@@ -120,7 +120,7 @@ object HudUtils {
 	}
 
 	@SubscribeEvent
-	fun onHudRender(event: RenderInGameHudEvent) {
+	fun onHudRender(event: HudRenderEvent) {
 		if (titleStayTicks <= 0) return
 
 		val stack = event.context.matrices

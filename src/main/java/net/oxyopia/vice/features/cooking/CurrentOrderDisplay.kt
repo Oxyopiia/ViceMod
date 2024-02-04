@@ -3,14 +3,14 @@ package net.oxyopia.vice.features.cooking
 import net.minecraft.client.MinecraftClient
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
-import net.oxyopia.vice.events.RenderInGameHudEvent
+import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils
 import java.awt.Color
 
 object CurrentOrderDisplay {
 	@SubscribeEvent
-	fun onHudRender(event: RenderInGameHudEvent) {
+	fun onHudRender(event: HudRenderEvent) {
 		val mc = MinecraftClient.getInstance()
 		if (mc.player == null || !World.Burger.isInWorld() || mc.player!!.y <= 100.0) return
 

@@ -143,7 +143,7 @@ object ItemAbilityCooldown {
 	}
 
 	@SubscribeEvent
-	fun onRenderInGameHud(event: RenderInGameHudEvent) {
+	fun onRenderInGameHud(event: HudRenderEvent) {
 		if (!(Vice.config.ITEM_COOLDOWN_DISPLAY && Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR)) return
 
 		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getHeldItem().nameWithoutEnchants())

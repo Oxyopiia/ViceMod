@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
-import net.oxyopia.vice.events.RenderInGameHudEvent;
+import net.oxyopia.vice.events.HudRenderEvent;
 import net.oxyopia.vice.events.RenderItemSlotEvent;
 import net.oxyopia.vice.events.SubtitleEvent;
 import net.oxyopia.vice.events.TitleEvent;
@@ -41,7 +41,7 @@ public class MixinInGameHud {
 	@Inject(at = @At(value="INVOKE", target="Lnet/minecraft/client/gui/hud/SubtitlesHud;render(Lnet/minecraft/client/gui/DrawContext;)V"), method = "render")
 	private void hudRenderEvent(DrawContext context, float tickDelta, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new RenderInGameHudEvent(context, this.scaledWidth, this.scaledHeight));
+			EVENT_MANAGER.publish(new HudRenderEvent(context, this.scaledWidth, this.scaledHeight));
 		}
 	}
 

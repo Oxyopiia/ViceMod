@@ -3,7 +3,7 @@ package net.oxyopia.vice.features.misc
 import net.minecraft.client.MinecraftClient
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.EntityDeathEvent
-import net.oxyopia.vice.events.RenderInGameHudEvent
+import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.ServerChatMessageEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils
@@ -22,7 +22,7 @@ object TrainTimer {
 	private var aliveCount = 0
 
 	@SubscribeEvent
-	fun onHudRender(event: RenderInGameHudEvent) {
+	fun onHudRender(event: HudRenderEvent) {
 		if (!Vice.config.TRAIN_TIMER) return
 		if (!Vice.config.TRAIN_TIMER_OUTSIDE && !World.Showdown.isInWorld()) return
 

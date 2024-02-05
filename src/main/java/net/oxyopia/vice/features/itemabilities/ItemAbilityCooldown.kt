@@ -13,6 +13,7 @@ import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
+import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.Utils.clamp
 import net.oxyopia.vice.utils.Utils.getEquippedSets
 import java.awt.Color
@@ -227,12 +228,33 @@ object ItemAbilityCooldown {
 
 	@SubscribeEvent
 	fun onRenderItemSlot(event: RenderItemSlotEvent) {
-		if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
-
 		val ability: ItemAbility? = ItemAbility.getByName(event.itemStack.nameWithoutEnchants())
 
 		// May refactor code in the future, a bit too much indentation and ambiguity for my liking
 		ability?.apply {
+
+			if(Vice.config.ITEM_SET_DISPLAY) {
+				if (ability.set !== null) {
+					if ((MinecraftClient.getInstance().player?.getEquippedSets()?.getOrDefault(ability.set, 0)
+							?: 0) < ability.setAmount
+					) {
+						val matrices = MatrixStack()
+						HudUtils.fillUIArea(
+							matrices,
+							RenderLayer.getGuiOverlay(),
+							event.x,
+							event.y,
+							event.x + 16,
+							event.y + 16,
+							-500,
+							Color(0.9f, 0f, 0f, 0.4f)
+						)
+					}
+				}
+			}
+
+			if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
+
 			if (!displayCooldown) return
 
 			val matrices = MatrixStack()

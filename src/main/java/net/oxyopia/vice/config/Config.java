@@ -237,6 +237,15 @@ public class Config extends Vigilant {
         subcategory = "Item Cooldowns"
     )
     public boolean ITEM_COOLDOWN_DISPLAY = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Item Wrong Set Overlay",
+            description = "Display Red Overlay on item if you dont have the requirement sets equiped",
+            category = "General",
+            subcategory = "Item Cooldowns"
+    )
+    public boolean ITEM_SET_DISPLAY = false;
     @Property(
         type = PropertyType.SELECTOR,
         name = "Cooldown Display Type",

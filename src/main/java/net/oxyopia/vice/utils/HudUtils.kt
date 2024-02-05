@@ -10,7 +10,8 @@ import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.math.ColorHelper
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.data.Position
+import net.oxyopia.vice.data.gui.Position
+import net.oxyopia.vice.data.gui.Quad
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
@@ -18,11 +19,15 @@ import net.oxyopia.vice.utils.Utils.convertFormatting
 import java.awt.Color
 
 object HudUtils {
-	fun fillUIArea(stack: MatrixStack, layer: RenderLayer?, x1: Int, y1: Int, x2: Int, y2: Int, z: Int, color: Color) {
+	fun fillUIArea(stack: MatrixStack, layer: RenderLayer, x1: Int, y1: Int, x2: Int, y2: Int, z: Int, color: Color) {
 		fillUIArea(stack, layer, x1, y1, x2, y2, z, color.rgb)
 	}
 
-	fun fillUIArea(stack: MatrixStack, layer: RenderLayer?, x1: Int, y1: Int, x2: Int, y2: Int, z: Int, color: Int) {
+	private fun fillUIArea(stack: MatrixStack, layer: RenderLayer, x1: Float, y1: Float, x2: Float, y2: Float, color: Color, z: Float = 0f) {
+		fillUIArea(stack, layer, x1.toInt(), y1.toInt(), x2.toInt(), y2.toInt(), z.toInt(), color.rgb)
+	}
+
+	fun fillUIArea(stack: MatrixStack, layer: RenderLayer, x1: Int, y1: Int, x2: Int, y2: Int, z: Int, color: Int) {
 		var ax = x1
 		var ay = y1
 		var bx = x2
@@ -58,6 +63,19 @@ object HudUtils {
 		RenderSystem.enableDepthTest()
 	}
 
+	fun Position.drawBackground(size: Pair<Float, Float>, context: DrawContext, color: Color = Color.gray, padding: Float = 0f): Quad {
+		if (size.first <= 0 || size.second <= 0) return Quad(0f, 0f, 0f, 0f)
+
+		val width = size.first + padding
+		val height = size.second + padding
+
+		val pureX = x - (if (centered) (width / 2f) else 0f)
+
+		return Quad(pureX, y, x + width / 2f, y + height)
+			.addPadding(padding)
+			.apply { fillUIArea(context.matrices, RenderLayer.getGuiOverlay(), minX, minY, maxX, maxY, color) }
+	}
+
 	fun drawText(stack: MatrixStack, textRenderer: TextRenderer, text: String, x: Int, y: Int, color: Int = Color.white.rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false) {
 		val vertexConsumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
 
@@ -68,7 +86,7 @@ object HudUtils {
 		textRenderer.draw(text.convertFormatting(), xPos, y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
 	}
 
-	fun Position.drawString(text: String, context: DrawContext, offsetX: Float = 0f, offsetY: Float = 0f, defaultColor: Color = Color.white) {
+	fun Position.drawString(text: String, context: DrawContext, offsetX: Float = 0f, offsetY: Float = 0f, defaultColor: Color = Color.white): Int {
 		val matrices = context.matrices
 		val consumers = context.vertexConsumers
 		val textRenderer = MinecraftClient.getInstance().textRenderer
@@ -85,15 +103,36 @@ object HudUtils {
 		matrices.translate(offsetX, offsetY, 0f)
 		matrices.scale(scale, scale, 1f)
 
-		textRenderer.draw(display, 0f, 0f, defaultColor.rgb, Vice.config.HUD_TEXT_SHADOW, matrices.peek().positionMatrix, consumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
+		val i = textRenderer.draw(display, 0f, 0f, defaultColor.rgb, Vice.config.HUD_TEXT_SHADOW, matrices.peek().positionMatrix, consumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
 
 		matrices.pop()
+
+		return i
 	}
 
-	fun Position.drawStrings(list: List<String>, context: DrawContext, gap: Float = 10f) {
+	/**
+	 * @return Width and Height as an Int Pair respectively
+	 */
+	fun Position.drawStrings(list: List<String>, context: DrawContext, gap: Float = 10f): Pair<Float, Float> {
+		var i = 0
+
 		list.forEachIndexed { index, text ->
-			drawString(text, context, offsetY = index * gap * scale)
+			i = drawString(text, context, offsetY = index * gap * scale).coerceAtLeast(i)
 		}
+
+		// Subtract 3 for final line not having a gap to account for
+		return Pair(i * scale, list.size * gap * scale - 3)
+	}
+
+	fun Position.getMultilineSize(list: List<String>, gap: Float = 10f): Pair<Float, Float> {
+		val textRenderer = MinecraftClient.getInstance().textRenderer
+		var i = 0
+
+		list.forEachIndexed { _, text ->
+			i = textRenderer.getSpecialTextWidth(text).coerceAtLeast(i)
+		}
+
+		return Pair(i.toFloat(), list.size * gap * scale - 3)
 	}
 
 	private fun TextRenderer.getSpecialTextWidth(text: String, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW): Int {

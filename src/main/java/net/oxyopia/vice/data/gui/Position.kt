@@ -1,4 +1,4 @@
-package net.oxyopia.vice.data
+package net.oxyopia.vice.data.gui
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

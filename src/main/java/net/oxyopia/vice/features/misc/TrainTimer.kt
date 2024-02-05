@@ -1,7 +1,7 @@
 package net.oxyopia.vice.features.misc
 
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.data.Position
+import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.EntityDeathEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.ServerChatMessageEvent

@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.ClickType
 import net.minecraft.util.math.MathHelper
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.data.Position
+import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils

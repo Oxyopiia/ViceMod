@@ -3,6 +3,7 @@ package net.oxyopia.vice.utils
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.MutableText
@@ -56,6 +57,31 @@ object HudUtils {
 		RenderSystem.enableDepthTest()
 	}
 
+	fun drawText(text: String, x: Int, y: Int, context: DrawContext, color: Int = Color(255, 255, 255, 255).rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
+		val textRenderer = MinecraftClient.getInstance().textRenderer
+		val vertexConsumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
+		var xPos = x
+
+		if (centered) {
+			val width = textRenderer.getSpecialTextWidth(text)
+			xPos = x - (width / 2)
+		}
+
+		val i = textRenderer.draw(text.convertFormatting(), xPos.toFloat(), y.toFloat(), color, shadow, context.matrices.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
+		RenderSystem.disableDepthTest()
+		vertexConsumers.draw()
+		RenderSystem.enableDepthTest()
+		return i
+	}
+
+	@Deprecated(
+		message = "This form of drawText is no longer supported",
+		replaceWith = ReplaceWith(
+			"drawText(text, x, y, context, color, shadow, centered)",
+			"import your.package.DrawContext",
+			"import java.awt.Color"
+		)
+	)
 	fun drawText(stack: MatrixStack, textRenderer: TextRenderer, text: String?, x: Int, y: Int, color: Int = Color(255, 255, 255, 255).rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
 		if (text == null) {
 			return 0

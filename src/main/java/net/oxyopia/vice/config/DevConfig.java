@@ -3,7 +3,6 @@ package net.oxyopia.vice.config;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
 
-import java.awt.*;
 import java.io.File;
 
 @SuppressWarnings("unused")
@@ -31,16 +30,6 @@ public class DevConfig extends Vigilant {
 		subcategory = "Item Cooldown Display"
 	)
 	public float ITEMCD_GREEN_FADE_OVERRIDE = 1.3f;
-
-	@Property(
-		type = PropertyType.COLOR,
-		name = "Cursor Cooldown Text Color",
-		description = "Color text cursor cooldown",
-		category = "Experiments",
-		subcategory = "Item Cooldown Display",
-		allowAlpha = false
-	)
-	public Color ITEMCD_CURSORCD_COLOR = new Color(0, 236, 255, 255);
 
 	@Property(
 		type = PropertyType.SWITCH,

@@ -20,8 +20,9 @@ abstract class
 	abstract fun updatePosition(position: Position)
 	abstract fun Position.drawPreview(context: DrawContext): Pair<Float, Float>
 
-	open fun shouldDraw(): Boolean {
-		return MinecraftClient.getInstance().currentScreen == HudEditor
+	open fun shouldDraw(): Boolean = true
+	private fun shouldDrawInternal(): Boolean {
+		return shouldDraw() && MinecraftClient.getInstance().currentScreen == HudEditor
 	}
 
 	@SubscribeEvent
@@ -30,7 +31,7 @@ abstract class
 	}
 
 	override fun renderButton(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
-		if (!shouldDraw()) return
+		if (!shouldDrawInternal()) return
 
 		val previewPos = Position(context.scaledWindowWidth.toFloat() / 2, 10f)
 		val previewText = listOf(

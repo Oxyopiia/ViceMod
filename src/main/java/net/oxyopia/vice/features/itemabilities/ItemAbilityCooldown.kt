@@ -327,6 +327,16 @@ object ItemAbilityCooldown {
 						color = if (hp <= 10f) greenColor else redColor
 					}
 
+					if(Vice.config.ITEM_SET_DISPLAY) {
+						if (ability.set !== null) {
+							if ((MinecraftClient.getInstance().player?.getEquippedSets()?.getOrDefault(ability.set, 0)
+									?: 0) < ability.setAmount
+							) {
+								color = redColor
+							}
+						}
+					}
+
 					HudUtils.drawText(matrices, event.textRenderer, "R", event.x, event.y + 9, color, shadow = true, centered = false)
 					matrices.pop()
 				}

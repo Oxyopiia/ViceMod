@@ -26,14 +26,15 @@ public class Config extends Vigilant {
         name = "Edit HUD Locations",
         description = """
 			Edit the positions of HUD Elements:
-			 - Click on elements to change properties, like scale.
-			 - Drag elements to reposition.""",
+			 - Drag to reposition.
+			 - Scroll to scale.
+			 - Middle Click to toggle centering.""",
         category = "General",
         subcategory = "Vice",
         placeholder = "Edit HUD Locations"
     )
     public void EDIT_HUD_LOCATIONS() {
-        EssentialAPI.getNotifications().push("Vice", "HUD Manager coming soon\n§eUse Developer Mode as an alternative for now!", 3f);
+		UScreen.displayScreen(HudEditor.INSTANCE);
     }
 
     @Property(

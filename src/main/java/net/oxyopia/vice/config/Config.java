@@ -26,9 +26,9 @@ public class Config extends Vigilant {
         name = "Edit HUD Locations",
         description = """
 			Edit the positions of HUD Elements:
-			 - Drag to reposition.
-			 - Scroll to scale.
-			 - Middle Click to toggle centering.
+			 - Drag to reposition. §8(WASD/Arrow Keys)§7
+			 - Scroll to scale. §8(+/-)§7
+			 - Middle Click to toggle centering. §8(TAB)§7
 			 - Press H or V to center horizontally/vertically.""",
         category = "General",
         subcategory = "Vice",

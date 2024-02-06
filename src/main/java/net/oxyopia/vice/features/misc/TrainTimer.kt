@@ -75,9 +75,9 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 		Vice.storage.showdown.trainTimerPos = position
 	}
 
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float>? {
-		if (!Vice.config.TRAIN_TIMER) return null
+	override fun shouldDraw(): Boolean = Vice.config.TRAIN_TIMER
 
+	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
 		val list = listOf(
 			"&&6&&lTrain Arrived!",
 			"&&6Next Train arrives in: &&a13:56"

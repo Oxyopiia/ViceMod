@@ -1,13 +1,15 @@
 package net.oxyopia.vice.features
 
+import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 
-object RenderTest {
+object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
 		if (!Vice.config.DEVMODE) return
@@ -46,5 +48,23 @@ object RenderTest {
 			"&&aScalar 2 Test 2",
 		), event.context)
 
+	}
+
+	override fun updatePosition(position: Position) {}
+
+	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+		val list = listOf(
+			"&&b&&lCryonic Caverns",
+			"&&bWave 26",
+			"",
+			"&&c00:26",
+			"",
+			"&&fCommon Drop &&733x",
+			"&&fArctic Scroll &&b6.5%",
+			"",
+			"&&fMobs Remaining &&c7"
+		)
+
+		return position.drawStrings(list, context)
 	}
 }

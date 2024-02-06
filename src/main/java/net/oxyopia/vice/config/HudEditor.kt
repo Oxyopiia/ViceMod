@@ -15,7 +15,10 @@ object HudEditor : Screen(Text.of("Vice GUI Editor")) {
 	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
 		if (keyCode == GLFW.GLFW_KEY_T) Utils.sendViceMessage("Still in HUD Editor!")
 
-		HudElement.hoveredElement?.keyPressed(keyCode, scanCode, modifiers)
+		if (HudElement.hoveredElement != null) {
+			HudElement.hoveredElement?.keyPressed(keyCode, scanCode, modifiers)
+		} else HudElement.selectedElement?.keyPressed(keyCode, scanCode, modifiers)
+
 		return super.keyPressed(keyCode, scanCode, modifiers)
 	}
 
@@ -30,8 +33,14 @@ object HudEditor : Screen(Text.of("Vice GUI Editor")) {
 	}
 
 	override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-		if (HudElement.draggedElement == null) {
-			HudElement.draggedElement = HudElement.hoveredElement
+		when (button) {
+			GLFW.GLFW_MOUSE_BUTTON_MIDDLE -> HudElement.hoveredElement?.invertCentering()
+			GLFW.GLFW_MOUSE_BUTTON_RIGHT -> HudElement.hoveredElement?.onRightClick()
+			GLFW.GLFW_MOUSE_BUTTON_LEFT -> {
+				HudElement.resettingElement = null
+				HudElement.selectedElement = HudElement.hoveredElement
+				HudElement.draggedElement = HudElement.hoveredElement
+			}
 		}
 
 		return super.mouseClicked(mouseX, mouseY, button)

@@ -10,8 +10,8 @@ import net.oxyopia.vice.events.HudEditorRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawBackground
 import net.oxyopia.vice.utils.HudUtils.drawStrings
-import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.Utils.clamp
+import net.oxyopia.vice.utils.Utils.getClient
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
 import kotlin.math.round
@@ -39,10 +39,11 @@ abstract class
 		if (!shouldDrawInternal()) return
 		syncHoverState()
 
+		val color = if (isResetting()) Color.red else Color.gray
 		val alpha = if (isHovered) 0.5f else 0.3f
 
 		position.drawPreview(context)?.run {
-			position.drawBackground(this, context, padding = padding, color = Color.gray.withAlpha(alpha)).apply {
+			position.drawBackground(this, context, padding = padding, color = color.withAlpha(alpha)).apply {
 				x = minX.toInt()
 				y = minY.toInt()
 				width = width().toInt()
@@ -71,6 +72,7 @@ abstract class
 
 		position.x += deltaX.toFloat()
 		position.y += deltaY.toFloat()
+		limitPosition()
 
 		return true
 	}
@@ -85,7 +87,7 @@ abstract class
 	}
 
 	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-		if (!isHovered) return false
+		if (!isHovered && !isSelected) return false
 
 		when (keyCode) {
 			GLFW.GLFW_KEY_W -> position.y -= 1
@@ -105,22 +107,42 @@ abstract class
 
 			GLFW.GLFW_KEY_TAB -> position.centered = !position.centered
 
-			GLFW.GLFW_KEY_V -> position.y = Utils.getClient().window.scaledHeight / 2f
+			GLFW.GLFW_KEY_V -> position.y = getClient().window.scaledHeight / 2f
 			GLFW.GLFW_KEY_H -> {
-				position.x = (Utils.getClient().window.scaledWidth / 2f)
+				position.x = (getClient().window.scaledWidth / 2f)
 				position.centered = true
 			}
 
 			else -> return false
 		}
 
+		limitPosition()
 		limitScale()
+		selectedElement = this
 		return true
+	}
+
+	fun onRightClick() {
+		if (isResetting()) {
+			position = Position(0f, 0f, scale = 1f, centered = false)
+			resettingElement = null
+			return
+		}
+
+		resettingElement = this
+	}
+
+	fun invertCentering() {
+		position.centered = !position.centered
 	}
 
 	override fun isHovered(): Boolean = (visible && hoveredElement == this)
 
+	override fun isSelected(): Boolean = (visible && selectedElement == this)
+
 	private fun isDragging(): Boolean = (visible && draggedElement == this)
+
+	private fun isResetting(): Boolean = (visible && resettingElement == this)
 
 	private fun syncHoverState() {
 		hoveredElements.removeAll { it.displayName == this.displayName }
@@ -134,8 +156,15 @@ abstract class
 		position.scale = position.scale.clamp(0.5f, 3f)
 	}
 
+	private fun limitPosition() {
+		position.x.clamp(0f, getClient().window.scaledWidth - padding - 1f)
+		position.y.clamp(0f, getClient().window.scaledWidth - padding - 1f)
+	}
+
 	companion object {
+		var selectedElement: HudElement? = null
 		var draggedElement: HudElement? = null
+		var resettingElement: HudElement? = null
 
 		val hoveredElements = mutableListOf<HudElement>()
 		val hoveredElement: HudElement?

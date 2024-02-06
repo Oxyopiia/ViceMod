@@ -66,12 +66,13 @@ object HudUtils {
 	fun Position.drawBackground(size: Pair<Float, Float>, context: DrawContext, color: Color = Color.gray, padding: Float = 0f): Quad {
 		if (size.first <= 0 || size.second <= 0) return Quad(0f, 0f, 0f, 0f)
 
-		val width = size.first + padding
+		var width = size.first + padding
 		val height = size.second + padding
 
 		val pureX = x - (if (centered) (width / 2f) else 0f)
+		if (centered) width /= 2f
 
-		return Quad(pureX, y, x + width / 2f, y + height)
+		return Quad(pureX, y, x + width, y + height)
 			.addPadding(padding)
 			.apply { fillUIArea(context.matrices, RenderLayer.getGuiOverlay(), minX, minY, maxX, maxY, color) }
 	}

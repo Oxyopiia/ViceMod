@@ -157,8 +157,8 @@ abstract class
 	}
 
 	private fun limitPosition() {
-		position.x.clamp(0f, getClient().window.scaledWidth - padding - 1f)
-		position.y.clamp(0f, getClient().window.scaledWidth - padding - 1f)
+		position.x = position.x.clamp(0f, getClient().window.scaledWidth - padding - 1f)
+		position.y = position.y.clamp(0f, getClient().window.scaledHeight - padding - 1f)
 	}
 
 	companion object {

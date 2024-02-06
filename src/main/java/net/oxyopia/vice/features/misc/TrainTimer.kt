@@ -1,5 +1,6 @@
 package net.oxyopia.vice.features.misc
 
+import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.EntityDeathEvent
@@ -9,10 +10,11 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.Utils.timeDelta
 import net.oxyopia.vice.data.World
+import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import java.util.concurrent.TimeUnit
 
-object TrainTimer {
+object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPos){
 	private const val SPAWN_COOLDOWN_TIME_SECONDS = 45 * 60
 	private const val SPAWN_MESSAGE = "The Train Conductor has returned!"
 	private const val CONDUCTOR_NAME = "The Train Conductor"
@@ -26,13 +28,7 @@ object TrainTimer {
 		if (!Vice.config.TRAIN_TIMER) return
 		if (!Vice.config.TRAIN_TIMER_OUTSIDE && !World.Showdown.isInWorld()) return
 
-		val pos = Position(event.scaledWidth / 2f, 260f)
 		val list: MutableList<String> = mutableListOf()
-
-		if (Vice.config.DEVMODE) {
-			pos.x = (event.scaledWidth / 2f - 1) + Vice.devConfig.TRAIN_TIMER_HUD_X_OFFSET_LOCATION
-			pos.y = (event.scaledHeight / 2f - 1) + Vice.devConfig.TRAIN_TIMER_HUD_Y_OFFSET_LOCATION
-		}
 
 		val secondaryText = when {
 			aliveCount > 1 && World.Showdown.isInWorld() -> "&&6${aliveCount - 1} Porters"
@@ -53,7 +49,7 @@ object TrainTimer {
 		}
 
 		list.add(secondaryText)
-		pos.drawStrings(list, event.context)
+		position.drawStrings(list, event.context)
 	}
 
 	@SubscribeEvent
@@ -73,5 +69,20 @@ object TrainTimer {
 		if (event.entity.customName.toString().contains(CONDUCTOR_NAME) || event.entity.customName.toString().contains(PORTER_NAME)) {
 			aliveCount--
 		}
+	}
+
+	override fun updatePosition(position: Position) {
+		Vice.storage.showdown.trainTimerPos = position
+	}
+
+	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float>? {
+		if (!Vice.config.TRAIN_TIMER) return null
+
+		val list = listOf(
+			"&&6&&lTrain Arrived!",
+			"&&6Next Train arrives in: &&a13:56"
+		)
+
+		return position.drawStrings(list, context)
 	}
 }

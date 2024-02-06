@@ -3,14 +3,18 @@ package net.oxyopia.vice.data.gui
 import gg.essential.elementa.utils.withAlpha
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
+import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder
 import net.minecraft.client.gui.widget.ClickableWidget
 import net.oxyopia.vice.config.HudEditor
 import net.oxyopia.vice.events.HudEditorRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawBackground
 import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.Utils.clamp
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
+import kotlin.math.round
 
 abstract class
 	HudElement(private val displayName: String, defaultState: Position, private val padding: Float = 2f) :
@@ -18,7 +22,7 @@ abstract class
 	var position: Position = defaultState
 
 	abstract fun updatePosition(position: Position)
-	abstract fun Position.drawPreview(context: DrawContext): Pair<Float, Float>
+	abstract fun Position.drawPreview(context: DrawContext): Pair<Float, Float>?
 
 	open fun shouldDraw(): Boolean = true
 	private fun shouldDrawInternal(): Boolean {
@@ -30,55 +34,59 @@ abstract class
 		render(event.context, event.mouseX, event.mouseY, event.tickDelta)
 	}
 
+
 	override fun renderButton(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
 		if (!shouldDrawInternal()) return
+		syncHoverState()
 
-		val previewPos = Position(context.scaledWindowWidth.toFloat() / 2, 10f)
-		val previewText = listOf(
-			"&&b$displayName",
-			"&&7x: &&a${position.x.toInt()}&&7, y: &&a${position.y.toInt()}&&7, scale: &&a${position.scale}"
-		)
+		val alpha = if (isHovered) 0.5f else 0.3f
 
-		val alpha = if (isHovered) {
-			previewPos.drawStrings(previewText, context)
-			0.5f
-		} else 0.3f
-
-		position.drawPreview(context).run {
+		position.drawPreview(context)?.run {
 			position.drawBackground(this, context, padding = padding, color = Color.gray.withAlpha(alpha)).apply {
 				x = minX.toInt()
 				y = minY.toInt()
-				width = (maxX - minX).toInt()
-				height = (maxY - minY).toInt()
+				width = width().toInt()
+				height = height().toInt()
 			}
+
+			position.drawInfo(context)
+			visible = true
+		}
+	}
+
+	fun Position.drawInfo(context: DrawContext) {
+		val previewPos = Position(context.scaledWindowWidth.toFloat() / 2, 10f)
+		val previewText = listOf(
+			"&&b$displayName",
+			"&&7x: &&a${x.toInt()}&&7, y: &&a${y.toInt()}&&7, scale: &&a${round(scale * 10) / 10.0}"
+		)
+
+		if (isHovered) {
+			previewPos.drawStrings(previewText, context, 1000)
 		}
 	}
 
 	override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, deltaX: Double, deltaY: Double): Boolean {
-		if (hovered) {
+		if (isHovered) {
 			position.x += deltaX.toFloat()
 			position.y += deltaY.toFloat()
 		}
 
-		return hovered
-	}
-
-	override fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
-		return hovered
+		return isHovered
 	}
 
 	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-		if (!hovered) return false
+		if (!isHovered) return false
 
 		when (keyCode) {
-			GLFW.GLFW_KEY_W -> position.y += 1
+			GLFW.GLFW_KEY_W -> position.y -= 1
 			GLFW.GLFW_KEY_A -> position.x -= 1
-			GLFW.GLFW_KEY_S -> position.y -= 1
+			GLFW.GLFW_KEY_S -> position.y += 1
 			GLFW.GLFW_KEY_D -> position.x += 1
 
-			GLFW.GLFW_KEY_UP -> position.y += 1
+			GLFW.GLFW_KEY_UP -> position.y -= 1
 			GLFW.GLFW_KEY_LEFT -> position.x -= 1
-			GLFW.GLFW_KEY_DOWN -> position.y -= 1
+			GLFW.GLFW_KEY_DOWN -> position.y += 1
 			GLFW.GLFW_KEY_RIGHT -> position.x += 1
 
 			GLFW.GLFW_KEY_EQUAL -> position.scale += 0.1f
@@ -86,9 +94,37 @@ abstract class
 			GLFW.GLFW_KEY_MINUS -> position.scale -= 0.1f
 			GLFW.GLFW_KEY_KP_SUBTRACT -> position.scale -= 0.1f
 
+			GLFW.GLFW_KEY_TAB -> position.centered = !position.centered
+
+			GLFW.GLFW_KEY_V -> position.y = Utils.getClient().window.scaledHeight / 2f
+			GLFW.GLFW_KEY_H -> {
+				position.x = (Utils.getClient().window.scaledWidth / 2f)
+				position.centered = true
+			}
+
 			else -> return false
 		}
 
+		position.scale = position.scale.clamp(0.3f, 3f)
 		return true
 	}
+
+	override fun isHovered(): Boolean = (visible && hoveredElement == this)
+
+	private fun syncHoverState() {
+		hoveredElements.removeAll { it.displayName == this.displayName }
+
+		if (hovered) {
+			hoveredElements.add(this)
+		}
+	}
+
+	companion object {
+		val hoveredElements = mutableListOf<HudElement>()
+
+		val hoveredElement: HudElement?
+			get() = hoveredElements.sortedBy { it.displayName }.getOrNull(0)
+	}
+
+	override fun appendClickableNarrations(builder: NarrationMessageBuilder?) {}
 }

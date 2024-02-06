@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
+import net.oxyopia.vice.config.HudEditor;
 import net.oxyopia.vice.events.*;
 import net.oxyopia.vice.utils.Utils;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,15 +40,19 @@ public class MixinInGameHud {
 	
 	@Inject(at = @At(value="INVOKE", target="Lnet/minecraft/util/profiler/Profiler;push(Ljava/lang/String;)V", ordinal = 4), method = "render")
 	private void hudRenderEvent(DrawContext context, float tickDelta, CallbackInfo ci) {
-		MinecraftClient client = MinecraftClient.getInstance();
-		Window window = client.getWindow();
-
-		int mouseX = MathHelper.floor(client.mouse.getX() * (double)window.getScaledWidth() / (double)window.getWidth());
-		int mouseY = MathHelper.floor(client.mouse.getY() * (double)window.getScaledHeight() / (double)window.getHeight());
-
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new HudRenderEvent(context, this.scaledWidth, this.scaledHeight));
-			EVENT_MANAGER.publish(new HudEditorRenderEvent(context, mouseX, mouseY, tickDelta));
+			if (Utils.INSTANCE.getClient().currentScreen == HudEditor.INSTANCE) {
+				MinecraftClient client = MinecraftClient.getInstance();
+				Window window = client.getWindow();
+
+				int mouseX = MathHelper.floor(client.mouse.getX() * (double)window.getScaledWidth() / (double)window.getWidth());
+				int mouseY = MathHelper.floor(client.mouse.getY() * (double)window.getScaledHeight() / (double)window.getHeight());
+
+				EVENT_MANAGER.publish(new HudEditorRenderEvent(context, mouseX, mouseY, tickDelta));
+
+			} else {
+				EVENT_MANAGER.publish(new HudRenderEvent(context, this.scaledWidth, this.scaledHeight));
+			}
 		}
 	}
 

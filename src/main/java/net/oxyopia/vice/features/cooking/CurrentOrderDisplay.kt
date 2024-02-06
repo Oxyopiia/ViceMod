@@ -2,7 +2,6 @@ package net.oxyopia.vice.features.cooking
 
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -77,6 +76,10 @@ object CurrentOrderDisplay : HudElement("Cooking Display", Vice.storage.cooking.
 		Vice.storage.cooking.currentOrderPos = position
 	}
 
+	override fun shouldDraw(): Boolean {
+		return Vice.config.SHOW_NEXT_COOKING_ITEM || Vice.config.SHOW_COOKING_STOCK_INFO
+	}
+
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
 		val list = mutableListOf<String>()
 		val simplified = Vice.config.SIMPLIFY_COOKING_DISPLAYS
@@ -102,6 +105,4 @@ object CurrentOrderDisplay : HudElement("Cooking Display", Vice.storage.cooking.
 
 		return position.drawStrings(list, context)
 	}
-
-	override fun appendClickableNarrations(builder: NarrationMessageBuilder?) {}
 }

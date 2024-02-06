@@ -15,4 +15,7 @@ data class Quad(
 
 		return this
 	}
+
+	fun width() = maxX - minX
+	fun height() = maxY - minY
 }

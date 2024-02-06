@@ -71,7 +71,7 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 		}
 	}
 
-	override fun updatePosition(position: Position) {
+	override fun storePosition(position: Position) {
 		Vice.storage.showdown.trainTimerPos = position
 	}
 

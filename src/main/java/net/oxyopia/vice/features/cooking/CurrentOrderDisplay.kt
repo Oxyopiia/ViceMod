@@ -72,7 +72,7 @@ object CurrentOrderDisplay : HudElement("Cooking Display", Vice.storage.cooking.
 		}
 	}
 
-	override fun updatePosition(position: Position) {
+	override fun storePosition(position: Position) {
 		Vice.storage.cooking.currentOrderPos = position
 	}
 

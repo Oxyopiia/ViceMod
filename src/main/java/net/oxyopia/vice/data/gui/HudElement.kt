@@ -18,11 +18,13 @@ import kotlin.math.round
 
 abstract class
 	HudElement(private val displayName: String, defaultState: Position, private val padding: Float = 2f) :
-	ClickableWidget(-1, 0, 0, 0, null) {
-
+	ClickableWidget(-1, 0, 0, 0, null)
+{
 	var position: Position = defaultState
 
-	abstract fun updatePosition(position: Position)
+	// TODO("Save Storage file across instances.")
+	// TODO("Storing position into Storage file.")
+	abstract fun storePosition(position: Position)
 	abstract fun Position.drawPreview(context: DrawContext): Pair<Float, Float>?
 
 	open fun shouldDraw(): Boolean = true

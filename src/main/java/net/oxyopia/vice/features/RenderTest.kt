@@ -50,7 +50,7 @@ object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 
 	}
 
-	override fun updatePosition(position: Position) {}
+	override fun storePosition(position: Position) {}
 
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
 		val list = listOf(

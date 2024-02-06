@@ -19,6 +19,7 @@ import kotlin.math.round
 abstract class
 	HudElement(private val displayName: String, defaultState: Position, private val padding: Float = 2f) :
 	ClickableWidget(-1, 0, 0, 0, null) {
+
 	var position: Position = defaultState
 
 	abstract fun updatePosition(position: Position)
@@ -33,7 +34,6 @@ abstract class
 	fun drawHudEditor(event: HudEditorRenderEvent) {
 		render(event.context, event.mouseX, event.mouseY, event.tickDelta)
 	}
-
 
 	override fun renderButton(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
 		if (!shouldDrawInternal()) return
@@ -54,7 +54,7 @@ abstract class
 		}
 	}
 
-	fun Position.drawInfo(context: DrawContext) {
+	private fun Position.drawInfo(context: DrawContext) {
 		val previewPos = Position(context.scaledWindowWidth.toFloat() / 2, 10f)
 		val previewText = listOf(
 			"&&b$displayName",
@@ -67,12 +67,21 @@ abstract class
 	}
 
 	override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, deltaX: Double, deltaY: Double): Boolean {
-		if (isHovered) {
-			position.x += deltaX.toFloat()
-			position.y += deltaY.toFloat()
-		}
+		if (!isDragging()) return false
 
-		return isHovered
+		position.x += deltaX.toFloat()
+		position.y += deltaY.toFloat()
+
+		return true
+	}
+
+	override fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
+		if (!isHovered) return false
+
+		position.scale += amount.toFloat() / 10
+		limitScale()
+
+		return true
 	}
 
 	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
@@ -105,11 +114,13 @@ abstract class
 			else -> return false
 		}
 
-		position.scale = position.scale.clamp(0.3f, 3f)
+		limitScale()
 		return true
 	}
 
 	override fun isHovered(): Boolean = (visible && hoveredElement == this)
+
+	private fun isDragging(): Boolean = (visible && draggedElement == this)
 
 	private fun syncHoverState() {
 		hoveredElements.removeAll { it.displayName == this.displayName }
@@ -119,9 +130,14 @@ abstract class
 		}
 	}
 
-	companion object {
-		val hoveredElements = mutableListOf<HudElement>()
+	private fun limitScale() {
+		position.scale = position.scale.clamp(0.5f, 3f)
+	}
 
+	companion object {
+		var draggedElement: HudElement? = null
+
+		val hoveredElements = mutableListOf<HudElement>()
 		val hoveredElement: HudElement?
 			get() = hoveredElements.sortedBy { it.displayName }.getOrNull(0)
 	}

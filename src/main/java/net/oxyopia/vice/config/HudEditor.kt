@@ -3,6 +3,7 @@ package net.oxyopia.vice.config
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
+import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.utils.Utils
 import org.lwjgl.glfw.GLFW
@@ -43,12 +44,19 @@ object HudEditor : Screen(Text.of("Vice GUI Editor")) {
 			}
 		}
 
+		HudElement.hoveredElement?.save()
 		return super.mouseClicked(mouseX, mouseY, button)
 	}
 
 	override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
+		HudElement.draggedElement?.save()
 		HudElement.draggedElement = null
 
 		return super.mouseReleased(mouseX, mouseY, button)
+	}
+
+	override fun close() {
+		Vice.storage.forceSave()
+		super.close()
 	}
 }

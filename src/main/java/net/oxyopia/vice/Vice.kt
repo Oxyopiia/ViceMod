@@ -98,6 +98,7 @@ class Vice : ClientModInitializer {
 	override fun onInitializeClient() {
 		config.init()
 		devConfig.init()
+		storage.initialize()
 
 		subscribeEventListeners()
 		initConnectionEvents()

@@ -73,6 +73,7 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 
 	override fun storePosition(position: Position) {
 		Vice.storage.showdown.trainTimerPos = position
+		Vice.storage.markDirty()
 	}
 
 	override fun shouldDraw(): Boolean = Vice.config.TRAIN_TIMER

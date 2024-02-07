@@ -50,8 +50,10 @@ public class DevUtils {
 				.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, joinedStackTrace))
 				.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("§7Click to copy the error to your clipboard!\n§c"+msg))));
 
-		MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(errorChat);
 		Vice.Companion.getLogger().error(throwable.getMessage(), throwable);
+		if (MinecraftClient.getInstance().inGameHud.getChatHud() != null) {
+			MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(errorChat);
+		}
 	}
 
 	public static void sendWarningMessage(String msg) {

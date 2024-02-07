@@ -32,6 +32,8 @@ abstract class
 		return shouldDraw() && MinecraftClient.getInstance().currentScreen == HudEditor
 	}
 
+	fun save() = storePosition(position)
+
 	@SubscribeEvent
 	fun drawHudEditor(event: HudEditorRenderEvent) {
 		render(event.context, event.mouseX, event.mouseY, event.tickDelta)
@@ -84,6 +86,7 @@ abstract class
 
 		position.scale += amount.toFloat() / 10
 		limitScale()
+		save()
 
 		return true
 	}
@@ -107,7 +110,7 @@ abstract class
 			GLFW.GLFW_KEY_MINUS -> position.scale -= 0.1f
 			GLFW.GLFW_KEY_KP_SUBTRACT -> position.scale -= 0.1f
 
-			GLFW.GLFW_KEY_TAB -> position.centered = !position.centered
+			GLFW.GLFW_KEY_TAB -> invertCentering()
 
 			GLFW.GLFW_KEY_V -> position.y = getClient().window.scaledHeight / 2f
 			GLFW.GLFW_KEY_H -> {
@@ -120,6 +123,7 @@ abstract class
 
 		limitPosition()
 		limitScale()
+		save()
 		selectedElement = this
 		return true
 	}
@@ -128,6 +132,7 @@ abstract class
 		if (isResetting()) {
 			position = Position(0f, 0f, scale = 1f, centered = false)
 			resettingElement = null
+			save()
 			return
 		}
 

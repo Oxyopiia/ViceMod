@@ -1,15 +1,17 @@
-package net.oxyopia.vice.config;
+package net.oxyopia.vice.config
 
-import com.google.gson.annotations.Expose;
-import net.oxyopia.vice.Vice;
-import net.oxyopia.vice.config.features.MiscStorage;
-import net.oxyopia.vice.config.features.worlds.ArenaStorage;
-import net.oxyopia.vice.config.features.worlds.CookingStorage;
-import net.oxyopia.vice.config.features.worlds.ShowdownStorage;
+import com.google.gson.annotations.Expose
+import net.oxyopia.vice.Vice
+import net.oxyopia.vice.Vice.Companion.version
+import net.oxyopia.vice.config.features.MiscStorage
+import net.oxyopia.vice.config.features.worlds.ArenaStorage
+import net.oxyopia.vice.config.features.worlds.CookingStorage
+import net.oxyopia.vice.config.features.worlds.ShowdownStorage
+import java.io.File
+import java.io.Reader
+import java.io.Writer
 
-import java.io.File;
-
-public class Storage extends PersistentSave {
+class Storage : PersistentSave(File("./config/vice/storage.json")) {
 	/*
 	EXPECTED EXAMPLE RESULT
 
@@ -61,26 +63,30 @@ public class Storage extends PersistentSave {
 		}
 	}
 	 */
+	@Expose
+	var isFirstUse: Boolean = true
 
 	@Expose
-	public boolean isFirstUse = true;
+	var lastVersion: String = version.friendlyString
 
 	@Expose
-	public String lastVersion = Vice.Companion.getVersion().getFriendlyString();
+	var arenas: ArenaStorage = ArenaStorage()
 
 	@Expose
-	public ArenaStorage arenas = new ArenaStorage();
+	var cooking: CookingStorage = CookingStorage()
 
 	@Expose
-	public CookingStorage cooking = new CookingStorage();
+	var showdown: ShowdownStorage = ShowdownStorage()
 
 	@Expose
-	public ShowdownStorage showdown = new ShowdownStorage();
+	var misc: MiscStorage = MiscStorage()
 
-	@Expose
-	public MiscStorage misc = new MiscStorage();
-
-	public Storage() {
-		super(new File("./config/vice/storage.json"));
+	override fun write(writer: Writer) {
+		Vice.gson.toJson(this, writer)
 	}
+
+	override fun read(reader: Reader) {
+		Vice.storage = Vice.gson.fromJson(reader, this.javaClass)
+	}
+
 }

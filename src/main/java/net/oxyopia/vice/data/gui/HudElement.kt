@@ -22,7 +22,6 @@ abstract class
 {
 	var position: Position = defaultState
 
-	// TODO("Save Storage file across instances.")
 	// TODO("Storing position into Storage file.")
 	abstract fun storePosition(position: Position)
 	abstract fun Position.drawPreview(context: DrawContext): Pair<Float, Float>?

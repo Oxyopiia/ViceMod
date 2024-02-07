@@ -29,6 +29,8 @@ object Utils {
 
 	fun getClient(): MinecraftClient = MinecraftClient.getInstance()
 
+	fun getPlayer(): ClientPlayerEntity? = client.player
+
 	fun getWorld(): ClientWorld? = client.world
 
 	fun getWorldString(): String? = client.world?.registryKey?.value?.path

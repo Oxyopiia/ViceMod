@@ -50,7 +50,8 @@ enum class ItemAbility(
     POSEIDONS_FURY("Poseidon's Fury", 15f),
     ZIP_BOMB("Zip Bomb", 5f, set = Set.DEMOLITIONIST, setAmount = 2),
 
-    LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, displayCooldown = false),
+    LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, displayCooldown = false, set = Set.HEAVY, setAmount = 2),
+    CARNAGE_RIFLE("Carnage Rifle", 0.5f, displayCooldown = false, set = Set.FLESHCRAWLER, setAmount = 2),
     SNOWBALL_CANNON("Snowball Cannon", 0.5f, displayCooldown = false);
 
     // Detecting whether the ability has ACTUALLY happened is performed in /features/itemabilities/ItemAbilityCooldown.kt

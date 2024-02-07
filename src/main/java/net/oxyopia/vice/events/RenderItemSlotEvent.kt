@@ -1,6 +1,6 @@
 package net.oxyopia.vice.events
 
-import net.minecraft.client.font.TextRenderer
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.item.ItemStack
 
-class RenderItemSlotEvent(val textRenderer: TextRenderer, val itemStack: ItemStack, val x: Int, val y: Int) : ViceEvent()
+class RenderItemSlotEvent(val context: DrawContext, val itemStack: ItemStack, val x: Int, val y: Int) : ViceEvent()

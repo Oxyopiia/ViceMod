@@ -245,6 +245,7 @@ public class Config extends Vigilant {
         subcategory = "Item Cooldowns"
     )
     public boolean ITEM_COOLDOWN_DISPLAY = false;
+
     @Property(
         type = PropertyType.SELECTOR,
         name = "Cooldown Display Type",
@@ -301,6 +302,15 @@ public class Config extends Vigilant {
         subcategory = "Item Cooldowns"
     )
     public boolean HIDE_ITEM_COOLDOWN_TITLES = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Wrong Set Indicator",
+		description = "Display a red overlay on an item if you do not have the required Set equipped.",
+		category = "General",
+		subcategory = "Item Cooldowns"
+	)
+	public boolean WRONG_SET_INDICATOR = false;
 
     // General/Fishing
 

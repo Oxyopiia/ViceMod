@@ -63,6 +63,23 @@ object HudUtils {
 		RenderSystem.enableDepthTest()
 	}
 
+	fun drawText(text: String, x: Int, y: Int, context: DrawContext, color: Int = Color(255, 255, 255, 255).rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
+		val textRenderer = MinecraftClient.getInstance().textRenderer
+		val vertexConsumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
+		var xPos = x
+
+		if (centered) {
+			val width = textRenderer.getSpecialTextWidth(text)
+			xPos = x - (width / 2)
+		}
+
+		val i = textRenderer.draw(text.convertFormatting(), xPos.toFloat(), y.toFloat(), color, shadow, context.matrices.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
+		RenderSystem.disableDepthTest()
+		vertexConsumers.draw()
+		RenderSystem.enableDepthTest()
+		return i
+	}
+
 	fun Position.drawBackground(size: Pair<Float, Float>, context: DrawContext, color: Color = Color.gray, padding: Float = 0f): Quad {
 		if (size.first <= 0 || size.second <= 0) return Quad(0f, 0f, 0f, 0f)
 

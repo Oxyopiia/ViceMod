@@ -160,12 +160,6 @@ object ItemAbilityCooldown {
 			val pos = Position(event.scaledWidth / 2f + 2, event.scaledHeight / 2f + 1, centered = false)
 			val color = Color(0, 236, 255, 255)
 
-			if (Vice.config.DEVMODE) {
-				pos.x = (event.scaledWidth / 2f - 1) + Vice.devConfig.ITEMCD_CURSORCD_X_OFFSET
-				pos.y = (event.scaledHeight / 2f - 1) + Vice.devConfig.ITEMCD_CURSORCD_Y_OFFSET
-				pos.centered = Vice.devConfig.ITEMCD_CURSORCD_CENTER_TEXT
-			}
-
 			val roundedFloat: String = String.format("%.0f", ceil(remainingCooldown().toDouble()))
 			pos.drawString(roundedFloat, event.context, defaultColor = color)
 		}

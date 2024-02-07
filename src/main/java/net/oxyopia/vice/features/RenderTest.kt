@@ -52,6 +52,10 @@ object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 
 	override fun storePosition(position: Position) {}
 
+	override fun shouldDraw(): Boolean {
+		return Vice.config.DEVMODE && Vice.devConfig.LIVE_ARENA_OVERLAY_THING
+	}
+
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
 		val list = listOf(
 			"&&b&&lCryonic Caverns",

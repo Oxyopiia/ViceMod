@@ -6,7 +6,7 @@ data class Quad(
 	var maxX: Float,
 	var maxY: Float
 ) {
-	fun addPadding(padding: Int): Quad {
+	fun addPadding(padding: Float): Quad {
 		minX -= padding
 		minY -= padding
 

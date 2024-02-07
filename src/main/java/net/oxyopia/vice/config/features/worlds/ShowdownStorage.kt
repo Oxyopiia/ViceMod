@@ -1,14 +1,14 @@
-package net.oxyopia.vice.config.features.worlds;
+package net.oxyopia.vice.config.features.worlds
 
-import com.google.gson.annotations.Expose;
-import net.oxyopia.vice.data.gui.Position;
+import com.google.gson.annotations.Expose
+import net.oxyopia.vice.data.gui.Position
 
-public class ShowdownStorage {
-
-	@Expose
-	public long lastKnownTrainSpawn = -1L;
+class ShowdownStorage {
 
 	@Expose
-	public Position trainTimerPos = new Position(175f, 150f);
+	var lastKnownTrainSpawn: Long = -1L
+
+	@Expose
+	var trainTimerPos: Position = Position(175f, 150f)
 
 }

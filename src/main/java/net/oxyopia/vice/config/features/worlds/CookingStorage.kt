@@ -1,25 +1,23 @@
-package net.oxyopia.vice.config.features.worlds;
+package net.oxyopia.vice.config.features.worlds
 
-import com.google.gson.annotations.Expose;
-import net.oxyopia.vice.data.gui.Position;
+import com.google.gson.annotations.Expose
+import net.oxyopia.vice.data.gui.Position
 
-import java.util.HashMap;
-
-public class CookingStorage {
+class CookingStorage {
 
 	@Expose
-	public String currentOrder = "";
+	var currentOrder: String = ""
 
 	@Expose
-	public int stock = -10000;
+	var stock: Int = -10000
 
 	@Expose
-	public HashMap<String, Integer> totalBurgerRequests = new HashMap<>();
+	var totalBurgerRequests: HashMap<String, Int> = HashMap()
 
 	@Expose
-	public HashMap<String, Integer> totalBurgersComplete = new HashMap<>();
+	var totalBurgersComplete: HashMap<String, Int> = HashMap()
 
 	@Expose
-	public Position currentOrderPos = new Position(175f, 10f);
+	var currentOrderPos: Position = Position(175f, 10f)
 
 }

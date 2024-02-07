@@ -1,10 +1,10 @@
-package net.oxyopia.vice.config.features;
+package net.oxyopia.vice.config.features
 
-import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.Expose
 
-public class MiscStorage {
+class MiscStorage {
 
 	@Expose
-	public Long lastDailyReward = -1L;
+	var lastDailyReward: Long = -1L
 
 }

@@ -12,57 +12,7 @@ import java.io.Reader
 import java.io.Writer
 
 class Storage : PersistentSave(File("./config/vice/storage.json")) {
-	/*
-	EXPECTED EXAMPLE RESULT
 
-	{
-		"isFirstUse": true,
-		"lastVersion": "1.0.0",
-		"arenas": {
-			"startTimes": {
-				"f2arenas": 1792578383625134
-				"f3arenas": 1792578383637216
-				"f4arenas": 1792578384012349
-			}
-		},
-		"cooking": {
-			"currentOrder": "",
-			"stock": -10000,
-			"totalBurgerRequests": {
-				"HAMBURGER": 72,
-				"CHEESEBURGER": 74,
-				"DOUBLE_CHEESEBURGER": 65,
-				"ULTIMEATIUM": 79,
-				"OBESE_VICE_BURGER": 4
-			},
-			"totalBurgersComplete": {
-				"HAMBURGER": 70,
-				"CHEESEBURGER": 71,
-				"DOUBLE_CHEESEBURGER": 42,
-				"ULTIMEATIUM": 62,
-				"OBESE_VICE_BURGER": 4
-			},
-			"currentOrderPos": {
-				"x": 0.5,
-				"y": 0.05,
-				"scale": 1.0,
-				"centered": true
-			}
-		},
-		"showdown": {
-			"lastKnownTrainSpawn": -1,
-			"trainTimerPos": {
-				"x": 0.5,
-				"y": 0.8,
-				"scale": 1.0,
-				"centered": true
-			}
-		},
-		"misc": {
-			"lastDailyReward": -1
-		}
-	}
-	 */
 	@Expose
 	var isFirstUse: Boolean = true
 
@@ -88,5 +38,4 @@ class Storage : PersistentSave(File("./config/vice/storage.json")) {
 	override fun read(reader: Reader) {
 		Vice.storage = Vice.gson.fromJson(reader, this.javaClass)
 	}
-
 }

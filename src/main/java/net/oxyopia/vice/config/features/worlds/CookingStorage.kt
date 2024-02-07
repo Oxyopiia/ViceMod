@@ -9,6 +9,9 @@ class CookingStorage {
 	var currentOrder: String = ""
 
 	@Expose
+	var currentOrderProgress: Int = 0
+
+	@Expose
 	var stock: Int = -10000
 
 	@Expose

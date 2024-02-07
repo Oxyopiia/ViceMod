@@ -127,6 +127,8 @@ object Utils {
 		return this.replace("(&&|§)[a-r0-9]", "", ignoreCase = true)
 	}
 
+	// TODO("Add NumberUtils")
+
 	fun Int.clamp(min: Int, max: Int): Int {
 		return maxOf(min, minOf(max, this))
 	}

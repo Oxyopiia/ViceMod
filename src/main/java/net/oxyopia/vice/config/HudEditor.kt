@@ -14,7 +14,10 @@ object HudEditor : Screen(Text.of("Vice GUI Editor")) {
 	}
 
 	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-		if (keyCode == GLFW.GLFW_KEY_T) Utils.sendViceMessage("Still in HUD Editor!")
+		if (keyCode == GLFW.GLFW_KEY_T || keyCode == GLFW.GLFW_KEY_SLASH) {
+			Utils.sendViceMessage("Still in HUD Editor!")
+			Utils.playSound("block.note_block.pling", volume = 3f)
+		}
 
 		if (HudElement.hoveredElement != null) {
 			HudElement.hoveredElement?.keyPressed(keyCode, scanCode, modifiers)

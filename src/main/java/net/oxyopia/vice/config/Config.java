@@ -6,6 +6,7 @@ import gg.essential.universal.UScreen;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
 import net.oxyopia.vice.Vice;
+import net.oxyopia.vice.utils.Utils;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -26,14 +27,21 @@ public class Config extends Vigilant {
         name = "Edit HUD Locations",
         description = """
 			Edit the positions of HUD Elements:
-			 - Click on elements to change properties, like scale.
-			 - Drag elements to reposition.""",
+			 - Drag to reposition. §8(WASD/Arrow Keys)§7
+			 - Scroll to scale. §8(+/-)§7
+			 - Middle Click to toggle centering. §8(TAB)§7
+			 - Press H or V to center horizontally/vertically.""",
         category = "General",
         subcategory = "Vice",
         placeholder = "Edit HUD Locations"
     )
     public void EDIT_HUD_LOCATIONS() {
-        EssentialAPI.getNotifications().push("Vice", "HUD Manager coming soon\n§eUse Developer Mode as an alternative for now!", 3f);
+		if (!Utils.INSTANCE.getInDoomTowers()) {
+			EssentialAPI.getNotifications().push("HUD Manager", "Please open while in DoomTowers!", 3f);
+			return;
+		}
+
+		UScreen.displayScreen(HudEditor.INSTANCE);
     }
 
     @Property(

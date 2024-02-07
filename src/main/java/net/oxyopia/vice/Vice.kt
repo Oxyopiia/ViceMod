@@ -1,5 +1,10 @@
 package net.oxyopia.vice
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.TypeAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonWriter
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.logging.LogUtils
 import net.fabricmc.api.ClientModInitializer
@@ -19,7 +24,10 @@ import net.oxyopia.vice.commands.EventTreeCommand
 import net.oxyopia.vice.commands.ViceCommand
 import net.oxyopia.vice.config.Config
 import net.oxyopia.vice.config.DevConfig
+import net.oxyopia.vice.config.Storage
+import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.core.EventManager
+import net.oxyopia.vice.features.RenderTest
 import net.oxyopia.vice.features.arenas.ArenaAPI
 import net.oxyopia.vice.features.arenas.ArenaNotifications
 import net.oxyopia.vice.features.arenas.ArenaSession
@@ -60,6 +68,27 @@ class Vice : ClientModInitializer {
 		@JvmField
 		val devConfig: DevConfig = DevConfig()
 
+		@JvmField
+		var storage: Storage = Storage()
+
+		@JvmField
+		val gson: Gson = GsonBuilder()
+			.setPrettyPrinting()
+			.excludeFieldsWithoutExposeAnnotation()
+			.serializeSpecialFloatingPointValues()
+			.enableComplexMapKeySerialization()
+			.registerTypeAdapter(World::class.java, object : TypeAdapter<World>() {
+				override fun write(out: JsonWriter, value: World) {
+					out.value(value.id)
+				}
+
+				override fun read(reader: JsonReader): World {
+					val text = reader.nextString()
+					return World.getById(text) ?: error("Could not parse World from $text")
+				}
+			}.nullSafe())
+			.create()
+
 		const val CHAT_PREFIX: String = "§bVice §7|§r "
 		const val ERROR_PREFIX: String = "§cVice §cERROR §7|§c "
 		const val WARNING_PREFIX: String = "§eVice §eWARN §7|§e "
@@ -69,6 +98,7 @@ class Vice : ClientModInitializer {
 	override fun onInitializeClient() {
 		config.init()
 		devConfig.init()
+		storage.initialize()
 
 		subscribeEventListeners()
 		initConnectionEvents()
@@ -122,6 +152,8 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(CookingAPI)
 		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
 		EVENT_MANAGER.subscribe(IncorrectClickBlocker)
+
+		EVENT_MANAGER.subscribe(RenderTest)
 	}
 }
 

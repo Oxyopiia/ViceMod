@@ -25,7 +25,9 @@ object Utils {
 	var inDoomTowers = false
 		get() = field || (Vice.config.DEVMODE && Vice.devConfig.BYPASS_INSTANCE_CHECK)
 
-	private val client: MinecraftClient = MinecraftClient.getInstance()
+	private val client = MinecraftClient.getInstance()
+
+	fun getClient(): MinecraftClient = MinecraftClient.getInstance()
 
 	fun getPlayer(): ClientPlayerEntity? = client.player
 

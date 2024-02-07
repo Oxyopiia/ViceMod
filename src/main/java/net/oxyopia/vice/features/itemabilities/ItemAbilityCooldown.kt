@@ -8,10 +8,12 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.ClickType
 import net.minecraft.util.math.MathHelper
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
+import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
 import net.oxyopia.vice.utils.Utils
@@ -147,7 +149,7 @@ object ItemAbilityCooldown {
 	}
 
 	@SubscribeEvent
-	fun onRenderInGameHud(event: RenderInGameHudEvent) {
+	fun onRenderInGameHud(event: HudRenderEvent) {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY && !Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR) return
 
 		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getHeldItem().nameWithoutEnchants())
@@ -155,17 +157,11 @@ object ItemAbilityCooldown {
 		ability?.apply {
 			if (!isOnCooldown() || !displayCooldown) return
 
-			var centered = false
-			var xPos = (event.scaledWidth / 2 - 1) + 3
-			var yPos = (event.scaledHeight / 2 - 1) - 1 + 3
+			val pos = Position(event.scaledWidth / 2f + 2, event.scaledHeight / 2f + 1, centered = false)
+			val color = Color(0, 236, 255, 255)
 
-			if (Vice.config.DEVMODE) {
-				xPos = (event.scaledWidth / 2 - 1) + Vice.devConfig.ITEMCD_CURSORCD_X_OFFSET
-				yPos = (event.scaledHeight / 2 - 1) + Vice.devConfig.ITEMCD_CURSORCD_Y_OFFSET
-				centered = Vice.devConfig.ITEMCD_CURSORCD_CENTER_TEXT
-			}
-
-			drawStatus(xPos, yPos, event.context, centered = centered, defaultColor = Color(0, 236, 255, 255))
+			val roundedFloat: String = String.format("%.0f", ceil(remainingCooldown().toDouble()))
+			pos.drawString(roundedFloat, event.context, defaultColor = color)
 		}
 	}
 

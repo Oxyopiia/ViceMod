@@ -1,76 +1,64 @@
 package net.oxyopia.vice.features.cooking
 
 import net.minecraft.client.MinecraftClient
-import net.oxyopia.vice.Vice
+import net.minecraft.client.gui.DrawContext
+import net.oxyopia.vice.Vice.Companion.config
+import net.oxyopia.vice.Vice.Companion.storage
+import net.oxyopia.vice.data.gui.HudElement
+import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.data.World
-import net.oxyopia.vice.events.RenderInGameHudEvent
+import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils
-import java.awt.Color
+import net.oxyopia.vice.utils.HudUtils.drawStrings
 
-object CurrentOrderDisplay {
+object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.currentOrderPos) {
 	@SubscribeEvent
-	fun onHudRender(event: RenderInGameHudEvent) {
+	fun onHudRender(event: HudRenderEvent) {
 		val mc = MinecraftClient.getInstance()
 		if (mc.player == null || !World.Burger.isInWorld() || mc.player!!.y <= 100.0) return
+
+		val displayList: MutableList<String> = mutableListOf()
 
 		val stock = CookingAPI.stock
 		val currentOrder = CookingAPI.currentOrder
 		val currentItemIndex = CookingAPI.orderCurrentItemIndex
 		val heldItem = CookingAPI.heldItem
 
-		var xPos = event.scaledWidth / 2
-		var yPos = 8
-
-		if (Vice.config.DEVMODE) {
-			xPos = event.scaledWidth / 2 + Vice.devConfig.COOKING_ORDER_HUD_X_OFFSET_LOCATION
-			yPos = event.scaledHeight / 2 + Vice.devConfig.COOKING_ORDER_HUD_Y_OFFSET_LOCATION
-		}
-
-		if (Vice.config.SHOW_NEXT_COOKING_ITEM && currentOrder == CookingOrder.NONE) {
+		if (config.SHOW_NEXT_COOKING_ITEM && currentOrder == CookingOrder.NONE) {
 			var text = "&&cNo Order"
 
-			if (Vice.config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) {
+			if (config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) {
 				text += "&&7 (&&${getStockColor()}${stock}&&7)"
 			}
 
-			HudUtils.drawText(event.context.matrices, mc.textRenderer, text, xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
-			yPos += 10
+			displayList.add(text)
 
-		} else if (Vice.config.SHOW_NEXT_COOKING_ITEM) {
+		} else if (config.SHOW_NEXT_COOKING_ITEM) {
 			val recipe = currentOrder.recipe
 
 			val orderDisplayColor = if (currentOrder.isBossOrder) "&&5" else "&&a"
-			HudUtils.drawText(event.context.matrices, mc.textRenderer, orderDisplayColor + "&&l${currentOrder.displayName}", xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
+			displayList.add(orderDisplayColor + "&&l${currentOrder.displayName}")
 
 			var text = "&&7Next Ingredient: &&6${recipe[currentItemIndex].displayName}"
 			if (recipe[currentItemIndex] == heldItem) text = text.replace("&&6", "&&a")
 			if ((recipe.size - 1) > currentItemIndex) text += "&&8 -> ${recipe[currentItemIndex + 1].displayName}"
 
-			if (Vice.config.SIMPLIFY_COOKING_DISPLAYS) {
+			if (config.SIMPLIFY_COOKING_DISPLAYS) {
 				text = text.removePrefix("&&7Next Ingredient: ")
 
-				if (Vice.config.SHOW_COOKING_STOCK_INFO && stock >= 0) {
+				if (config.SHOW_COOKING_STOCK_INFO && stock >= 0) {
 					text += "&&7 (&&${getStockColor()}${stock}&&7)"
 				}
 			}
 
-			HudUtils.drawText(
-				event.context.matrices,
-				mc.textRenderer,
-				text,
-				xPos,
-				yPos + 10,
-				Color(0, 0, 0, 255).rgb,
-				centered = true
-			)
-
-			yPos += 20
+			displayList.add(text)
 		}
 
-		if (Vice.config.SHOW_COOKING_STOCK_INFO && !Vice.config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) {
-			HudUtils.drawText(event.context.matrices, mc.textRenderer, "&&7Stock: &&${getStockColor()}${stock}", xPos, yPos, Color(0, 0, 0, 255).rgb, centered = true)
+		if (config.SHOW_COOKING_STOCK_INFO && !config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) {
+			displayList.add("&&7Stock: &&${getStockColor()}${stock}")
 		}
+
+		position.drawStrings(displayList, event.context)
 	}
 
 	private fun getStockColor(): String {
@@ -83,5 +71,40 @@ object CurrentOrderDisplay {
 			stock <= 10 -> "c"
 			else -> "7"
 		}
+	}
+
+	override fun storePosition(position: Position) {
+		storage.cooking.currentOrderPos = position
+		storage.markDirty()
+	}
+
+	override fun shouldDraw(): Boolean {
+		return config.SHOW_NEXT_COOKING_ITEM || config.SHOW_COOKING_STOCK_INFO
+	}
+
+	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+		val list = mutableListOf<String>()
+		val simplified = config.SIMPLIFY_COOKING_DISPLAYS
+
+		if (config.SHOW_NEXT_COOKING_ITEM) {
+			list.add("&&6&&lHamburger")
+
+			var text = "&&7Next Ingredient: &&aBread&&8 -> Cooked Burger"
+			if (simplified) {
+				text = text.removePrefix("&&7Next Ingredient: ")
+
+				if (config.SHOW_COOKING_STOCK_INFO) {
+					text += "&&7 (&&a25&&7)"
+				}
+			}
+
+			list.add(text)
+		}
+
+		if (config.SHOW_COOKING_STOCK_INFO && !simplified) {
+			list.add("&&7Stock: &&a25")
+		}
+
+		return position.drawStrings(list, context)
 	}
 }

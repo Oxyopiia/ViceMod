@@ -7,7 +7,7 @@ import net.minecraft.client.render.VertexFormat
 import net.minecraft.client.render.VertexFormats
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.events.RenderInGameHudEvent
+import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import org.joml.Matrix4f
 
@@ -16,7 +16,7 @@ object GamingMode {
 	private val Z_LAYER: Float = 1000f
 
 	@SubscribeEvent
-	fun onRenderInGameHud(event: RenderInGameHudEvent) {
+	fun onRenderInGameHud(event: HudRenderEvent) {
 		val data: ImageData = when (Vice.config.DEV_GAMING_MODE) {
 			1 -> ImageData("icon.png", 500, 500, 0.12f)
 			2 -> ImageData("doomtowersisbloodybrilliant.png", 800, 600, 0.15f)

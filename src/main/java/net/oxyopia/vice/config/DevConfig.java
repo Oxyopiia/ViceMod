@@ -33,12 +33,12 @@ public class DevConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Cursor Cooldown Text Centered",
-		description = "Text center",
+		name = "Show Live Arena Overlay in HUD Manager",
+		description = "DOES NOTHING!! literally just a mockup graphic and test for HudManager",
 		category = "Experiments",
-		subcategory = "Item Cooldown Display"
+		subcategory = "HudManager"
 	)
-	public boolean ITEMCD_CURSORCD_CENTER_TEXT = false;
+	public boolean LIVE_ARENA_OVERLAY_THING = false;
 
 	/** BYPASSES */
 	@Property(
@@ -138,75 +138,6 @@ public class DevConfig extends Vigilant {
 	)
 	public boolean BOSS_DETECTION_INFO = false;
 
-	/** HUD MANAGER THING FOR NOW */
-
-	@Property(
-			type = PropertyType.NUMBER,
-			name = "X Offset Location",
-			description = "Change X Offset",
-			category = "HUD Manager Experiments",
-			subcategory = "Train Timer",
-			min = -100,
-			max = 100
-	)
-	public int TRAIN_TIMER_HUD_X_OFFSET_LOCATION = 0;
-
-	@Property(
-			type = PropertyType.NUMBER,
-			name = "Y Offset Location",
-			description = "Change Y Offset",
-			category = "HUD Manager Experiments",
-			subcategory = "Train Timer",
-			min = -100,
-			max = 100
-	)
-	public int TRAIN_TIMER_HUD_Y_OFFSET_LOCATION = 0;
-
-	@Property(
-			type = PropertyType.NUMBER,
-			name = "X Offset Location",
-			description = "Change X Offset",
-			category = "HUD Manager Experiments",
-			subcategory = "Item Cooldown",
-			min = -100,
-			max = 100
-	)
-	public int ITEMCD_CURSORCD_X_OFFSET = 3;
-
-	@Property(
-			type = PropertyType.NUMBER,
-			name = "y Offset Location",
-			description = "Change y Offset",
-			category = "HUD Manager Experiments",
-			subcategory = "Item Cooldown",
-			min = -100,
-			max = 100
-	)
-	public int ITEMCD_CURSORCD_Y_OFFSET = 3;
-
-
-	@Property(
-			type = PropertyType.NUMBER,
-			name = "X Offset Location",
-			description = "Change X Offset",
-			category = "HUD Manager Experiments",
-			subcategory = "Cooking Order",
-			min = -100,
-			max = 100
-	)
-	public int COOKING_ORDER_HUD_X_OFFSET_LOCATION = 0;
-
-	@Property(
-			type = PropertyType.NUMBER,
-			name = "Y Offset Location",
-			description = "Change Y Offset",
-			category = "HUD Manager Experiments",
-			subcategory = "Cooking Order",
-			min = -100,
-			max = 100
-	)
-	public int COOKING_ORDER_HUD_Y_OFFSET_LOCATION = 0;
-
 	public DevConfig() {
 		super(new File("./config/vice/developerSettings.toml"), "Vice Developer Menu");
 	}
@@ -216,6 +147,5 @@ public class DevConfig extends Vigilant {
 		markDirty();
 
 		setSubcategoryDescription("Experiments", "Item Cooldown Display", "this is here as i haven't made the HUD manager yet, will be removed when that is added");
-		setCategoryDescription("HUD Manager Experiments", "this is here as i haven't made the HUD manager yet, will be removed when that is added, cheers");
 	}
 }

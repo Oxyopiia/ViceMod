@@ -65,6 +65,8 @@ object ArenaSession {
 
 	private val totalBossWaves get() = waveNumber / 5
 
+	val mobsRemaining get() = if (isBossWave()) 1 else totalWaveMobs() - waveMobsKilled
+
 	fun totalWaveMobs(): Int {
 		return if (isBossWave()) 1 else {
 			(3 + (waveNumber * 2) - (totalBossWaves * 2)).coerceAtMost(35)

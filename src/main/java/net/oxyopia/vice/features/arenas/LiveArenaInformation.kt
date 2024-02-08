@@ -24,7 +24,6 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 		val world = session.relatedWorld
 		val color = "&&${world.displayColor}"
 		val dropName = ArenaAPI.getUniqueDropName(world)
-		val mobsRemaining = session.totalWaveMobs() - session.waveMobsKilled
 
 		val list = mutableListOf(
 			"${color}&&l${world.displayName}",
@@ -40,15 +39,13 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 		if (showDropsState != 0) {
 			list.add("")
 
-			when {
-				showDropsState == 1 || showDropsState == 3 -> list.add("&&fCommon Drop &&7${session.calcCommonDrops()}x")
-				showDropsState >= 2 -> list.add("${color}${dropName} &&7${session.calcUniqueDropChance()}%")
-			}
+			if (showDropsState == 1 || showDropsState == 3) list.add("&&fCommon Drop &&7${session.calcCommonDrops()}x")
+			if (showDropsState >= 2) list.add("${color}${dropName} &&7${session.calcUniqueDropChance()}%")
 		}
 
 		if (Vice.config.LIVE_ARENA_MOBS) {
 			list.add("")
-			list.add("&&fMobs Remaining &&c${mobsRemaining}")
+			list.add("&&fMobs Remaining &&c${session.mobsRemaining.coerceAtLeast(0)}")
 		}
 
 		position.drawStrings(list, event.context)

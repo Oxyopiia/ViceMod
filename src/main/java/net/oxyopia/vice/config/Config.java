@@ -208,6 +208,15 @@ public class Config extends Vigilant {
     )
     public boolean SIMPLIFY_COOKING_DISPLAYS = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Order Tracker",
+		description = "Displays a HUD graphic showing the total number of requests, completions and completion rate of each order in World 4.",
+		category = "General",
+		subcategory = "World 4"
+	)
+	public boolean COOKING_ORDER_TRACKER = false;
+
     @Property(
     	type = PropertyType.SWITCH,
     	name = "Block Wrong Cooking Clicks",

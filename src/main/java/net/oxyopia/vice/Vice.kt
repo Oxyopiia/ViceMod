@@ -33,6 +33,7 @@ import net.oxyopia.vice.features.arenas.ArenaNotifications
 import net.oxyopia.vice.features.arenas.ArenaSession
 import net.oxyopia.vice.features.bosses.*
 import net.oxyopia.vice.features.cooking.CookingAPI
+import net.oxyopia.vice.features.cooking.OrderTracker
 import net.oxyopia.vice.features.cooking.CurrentOrderDisplay
 import net.oxyopia.vice.features.cooking.IncorrectClickBlocker
 import net.oxyopia.vice.features.hud.GamingMode
@@ -150,6 +151,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ArenaNotifications)
 
 		EVENT_MANAGER.subscribe(CookingAPI)
+		EVENT_MANAGER.subscribe(OrderTracker)
 		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
 		EVENT_MANAGER.subscribe(IncorrectClickBlocker)
 

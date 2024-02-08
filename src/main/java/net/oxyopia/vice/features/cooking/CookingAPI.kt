@@ -1,6 +1,7 @@
 package net.oxyopia.vice.features.cooking
 
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.config.features.worlds.CookingStorage
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.ServerChatMessageEvent
 import net.oxyopia.vice.events.TitleEvent
@@ -12,9 +13,11 @@ import net.oxyopia.vice.utils.Utils.timeDelta
 import kotlin.time.Duration.Companion.seconds
 
 object CookingAPI {
-	var currentOrder = CookingOrder.NONE
-	var orderCurrentItemIndex = 0
-	var stock: Int = -10000
+	private val cooking: CookingStorage get() = Vice.storage.cooking
+	val currentOrder: CookingOrder get() = CookingOrder.getByName(cooking.currentOrder) ?: CookingOrder.NONE
+	val orderCurrentItemIndex get() = cooking.currentOrderProgress
+	val stock: Int get() = cooking.stock
+
 	var heldItem = CookingItem.NONE
 
 	private var lastSeenNewOrder = 0L
@@ -24,14 +27,23 @@ object CookingAPI {
 	private val stockRegex = Regex("Your current stock is (\\d*)/\\d*")
 
 	private fun updateOrder(order: CookingOrder) {
-		currentOrder = order
-		orderCurrentItemIndex = 0
+		cooking.currentOrder = order.displayName
+		cooking.currentOrderProgress = 0
+		if (order != CookingOrder.NONE) {
+			cooking.totalBurgerRequests[order.name] = cooking.totalBurgerRequests.getOrDefault(order.name, 0) + 1
+		}
+
+		Vice.storage.markDirty()
+
 		DevUtils.sendDebugChat("&&6COOKING &&rUpdated current order to &&e${currentOrder.name}", "COOKING_DEBUGGER")
 	}
 
 	@SubscribeEvent
 	fun onTitle(event: TitleEvent) {
-		if (event.title.contains("+1 Stock")) stock += 1
+		if (event.title.contains("+1 Stock")) {
+			cooking.stock += 1
+			Vice.storage.markDirty()
+		}
 	}
 
 	@SubscribeEvent
@@ -52,6 +64,10 @@ object CookingAPI {
 			}
 
 			content.contains("Order Complete") || content.contains("Incorrect Ingredient ") -> {
+				if (content.contains("Order Complete")) {
+					cooking.totalBurgersComplete[currentOrder.name] = cooking.totalBurgersComplete.getOrDefault(currentOrder.name, 0) + 1
+				}
+
 				updateOrder(CookingOrder.NONE)
 				if (!Vice.config.AUTO_APPLY_BREAD) heldItem = CookingItem.NONE
 			}
@@ -74,7 +90,8 @@ object CookingAPI {
 				val ingredientsRemaining = ingredientsRegex.find(content)?.groupValues?.get(1)?.toIntOrNull() ?: return
 
 				if (currentOrder != CookingOrder.NONE && ingredientsRemaining > 0) {
-					orderCurrentItemIndex = currentOrder.recipe.size - ingredientsRemaining
+					cooking.currentOrderProgress = currentOrder.recipe.size - ingredientsRemaining
+					Vice.storage.markDirty()
 					DevUtils.sendDebugChat("&&6COOKING &&rNext Item: ${currentOrder.recipe[orderCurrentItemIndex]}", "COOKING_DEBUGGER")
 				}
 
@@ -84,7 +101,8 @@ object CookingAPI {
 			stockRegex.find(content) != null -> {
 				val stockValue = stockRegex.find(content)?.groupValues?.get(1)?.toIntOrNull() ?: return
 
-				stock = stockValue
+				cooking.stock = stockValue
+				Vice.storage.markDirty()
 				DevUtils.sendDebugChat("&&6COOKING &&Updated Stock to $stock", "COOKING_DEBUGGER")
 
 				if (hideHandledMessages) event.cancel()

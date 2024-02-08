@@ -208,14 +208,14 @@ public class Config extends Vigilant {
     )
     public boolean SIMPLIFY_COOKING_DISPLAYS = false;
 
-    @Property(
-    	type = PropertyType.SWITCH,
-    	name = "Block Wrong Cooking Clicks",
-    	description = "Blocks clicks when clicking on a Cooking plate with the wrong item for your current order.\n§eUse /viceclickoverride to override!",
-    	category = "General",
-    	subcategory = "World 4"
-    )
-    public boolean BLOCK_WRONG_COOKING_CLICKS = true;
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Order Tracker",
+		description = "Displays a HUD graphic showing the total number of requests, completions and completion rate of each order in World 4.",
+		category = "General",
+		subcategory = "World 4"
+	)
+	public boolean COOKING_ORDER_TRACKER = false;
 
     @Property(
     	type = PropertyType.SWITCH,

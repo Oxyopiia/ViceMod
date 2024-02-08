@@ -52,5 +52,7 @@ enum class CookingOrder(val displayName: String, val recipe: List<CookingItem>, 
 		fun getByName(displayName: String): CookingOrder? {
 			return entries.filterNot { it == NONE }.firstOrNull { it.displayName.lowercase() == displayName.lowercase() }
 		}
+
+		fun getById(id: String): CookingOrder? = entries.firstOrNull { it.name.lowercase() == id.lowercase() }
 	}
 }

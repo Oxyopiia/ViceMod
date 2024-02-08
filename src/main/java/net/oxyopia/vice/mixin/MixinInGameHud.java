@@ -38,7 +38,7 @@ public class MixinInGameHud {
 		}
 	}
 	
-	@Inject(at = @At(value="INVOKE", target="Lnet/minecraft/util/profiler/Profiler;push(Ljava/lang/String;)V", ordinal = 4), method = "render")
+	@Inject(at = @At(value="INVOKE", target="Lnet/minecraft/client/network/ClientPlayerEntity;getSleepTimer()I", ordinal = 0), method = "render")
 	private void hudRenderEvent(DrawContext context, float tickDelta, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			if (Utils.INSTANCE.getClient().currentScreen == HudEditor.INSTANCE) {

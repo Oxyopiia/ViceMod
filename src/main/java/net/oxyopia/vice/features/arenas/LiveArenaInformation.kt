@@ -40,8 +40,10 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 		if (showDropsState != 0) {
 			list.add("")
 
-			if (showDropsState == 1 || showDropsState == 3) list.add("&&fCommon Drop &&7${session.calcCommonDrops()}")
-			if (showDropsState >= 2) list.add("${color}${dropName} &&7${session.calcUniqueDropChance()}%")
+			when {
+				showDropsState == 1 || showDropsState == 3 -> list.add("&&fCommon Drop &&7${session.calcCommonDrops()}x")
+				showDropsState >= 2 -> list.add("${color}${dropName} &&7${session.calcUniqueDropChance()}%")
+			}
 		}
 
 		if (Vice.config.LIVE_ARENA_MOBS) {

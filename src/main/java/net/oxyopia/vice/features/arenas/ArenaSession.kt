@@ -26,7 +26,7 @@ object ArenaSession {
 
 	// Setters
 
-	fun begin(world: World) {
+	private fun begin(world: World) {
 		relatedWorld = world
 		startTime = System.currentTimeMillis()
 		totalMobsKilled = 0
@@ -38,12 +38,12 @@ object ArenaSession {
 		DevUtils.sendDebugChat("&&dARENAS&&r &&aSession started", "ARENAS_DEBUGGER")
 	}
 
-	fun dispose() {
+	private fun dispose() {
 		active = false
 		DevUtils.sendDebugChat("&&dARENAS&&r &&cSession disposed", "ARENAS_DEBUGGER")
 	}
 
-	fun setWave(n: Int) {
+	private fun setWave(n: Int) {
 		waveNumber = n
 		waveMobsKilled = if (n != 1) -1 else 0 // This is done because DoomTowers starts the next wave in the same tick as the death event
 		waveStartTime = System.currentTimeMillis()
@@ -51,7 +51,7 @@ object ArenaSession {
 		DevUtils.sendDebugChat("&&dARENAS&&r Wave Updated to &&a$n &&r($waveStartTime)", "ARENAS_DEBUGGER")
 	}
 
-	fun addKill() {
+	private fun addKill() {
 		totalMobsKilled += 1
 		waveMobsKilled += 1
 		DevUtils.sendDebugChat("&&dARENAS&&r Kills Updated to &&b$waveMobsKilled &&r(total $totalMobsKilled)","ARENAS_DEBUGGER")
@@ -63,9 +63,11 @@ object ArenaSession {
 		return waveNumber % 5 == 0
 	}
 
+	private val totalBossWaves get() = waveNumber / 5
+
 	fun totalWaveMobs(): Int {
 		return if (isBossWave()) 1 else {
-			(3 + (waveNumber * 2)).coerceAtMost(43)
+			(3 + (waveNumber * 2) - (totalBossWaves * 2)).coerceAtMost(35)
 		}
 	}
 

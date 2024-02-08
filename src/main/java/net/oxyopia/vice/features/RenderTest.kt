@@ -12,7 +12,7 @@ import net.oxyopia.vice.utils.HudUtils.drawStrings
 object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!Vice.config.DEVMODE) return
+		if (!shouldDraw()) return
 
 		// Anchor top left to (50, 20)
 		val pos50201uc = Position(50f, 20f, centered = false)

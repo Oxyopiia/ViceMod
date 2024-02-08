@@ -9,12 +9,10 @@ import net.oxyopia.vice.config.HudEditor
 import net.oxyopia.vice.events.HudEditorRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawBackground
-import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.Utils.clamp
 import net.oxyopia.vice.utils.Utils.getClient
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
-import kotlin.math.round
 
 abstract class
 	HudElement(private val displayName: String, defaultState: Position, private val padding: Float = 2f) :
@@ -53,20 +51,7 @@ abstract class
 				height = height().toInt()
 			}
 
-			position.drawInfo(context)
 			visible = true
-		}
-	}
-
-	private fun Position.drawInfo(context: DrawContext) {
-		val previewPos = Position(context.scaledWindowWidth.toFloat() / 2, 10f)
-		val previewText = listOf(
-			"&&b$displayName",
-			"&&7x: &&a${x.toInt()}&&7, y: &&a${y.toInt()}&&7, scale: &&a${round(scale * 10) / 10.0}"
-		)
-
-		if (isHovered) {
-			previewPos.drawStrings(previewText, context, 1000)
 		}
 	}
 
@@ -149,6 +134,8 @@ abstract class
 	private fun isDragging(): Boolean = (visible && draggedElement == this)
 
 	private fun isResetting(): Boolean = (visible && resettingElement == this)
+
+	fun getDisplayName(): String = displayName
 
 	private fun syncHoverState() {
 		hoveredElements.removeAll { it.displayName == this.displayName }

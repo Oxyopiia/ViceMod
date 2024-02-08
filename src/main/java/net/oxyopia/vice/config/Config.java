@@ -219,15 +219,6 @@ public class Config extends Vigilant {
 
     @Property(
     	type = PropertyType.SWITCH,
-    	name = "Block Wrong Cooking Clicks",
-    	description = "Blocks clicks when clicking on a Cooking plate with the wrong item for your current order.\n§eUse /viceclickoverride to override!",
-    	category = "General",
-    	subcategory = "World 4"
-    )
-    public boolean BLOCK_WRONG_COOKING_CLICKS = true;
-
-    @Property(
-    	type = PropertyType.SWITCH,
     	name = "Hide Handled Chat Messages",
     	description = "Hides chat messages displayed by Cooking features",
     	category = "General",

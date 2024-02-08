@@ -12,7 +12,9 @@ import net.oxyopia.vice.utils.Utils.timeDelta
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.Utils.ms
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.hours
 
 object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPos){
 	private const val SPAWN_COOLDOWN_TIME_SECONDS = 45 * 60
@@ -20,7 +22,7 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 	private const val CONDUCTOR_NAME = "The Train Conductor"
 	private const val PORTER_NAME = "Porter"
 
-	private var spawnTime = 0L
+	private val spawnTime get() = Vice.storage.showdown.lastKnownTrainSpawn
 	private var aliveCount = 0
 
 	@SubscribeEvent
@@ -38,10 +40,15 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 			spawnTime > 0 -> {
 				val seconds = TimeUnit.MILLISECONDS.toSeconds(spawnTime.timeDelta()) % SPAWN_COOLDOWN_TIME_SECONDS
 				val formatted = Utils.formatDuration(SPAWN_COOLDOWN_TIME_SECONDS - seconds)
-				"&&6Next Train arrives in: &&a${formatted}"
+
+				if (spawnTime.timeDelta() >= 6.hours.ms()) {
+					"&&6Train arrives in: &&cUnknown"
+				} else {
+					"&&6Train arrives in: &&a${formatted}"
+				}
 			}
 
-			else -> "&&6Next Train arrives in: &&cUnknown"
+			else -> "&&6Train arrives in: &&cUnknown"
 		}
 
 		if (aliveCount > 0) {
@@ -55,7 +62,8 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 	@SubscribeEvent
 	fun onChatEvent(event: ServerChatMessageEvent) {
 		if (event.string.contains(SPAWN_MESSAGE)) {
-			spawnTime = System.currentTimeMillis()
+			Vice.storage.showdown.lastKnownTrainSpawn = System.currentTimeMillis()
+			Vice.storage.markDirty()
 			aliveCount = 3
 
 			if (Vice.config.TRAIN_TIMER) Utils.playSound("block.bell.use", volume = 9999f)

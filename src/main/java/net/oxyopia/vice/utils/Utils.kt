@@ -13,6 +13,7 @@ import net.minecraft.sound.SoundEvent
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Set
+import net.oxyopia.vice.data.World
 import net.oxyopia.vice.utils.ItemUtils.getLore
 import java.util.*
 import java.util.regex.Pattern
@@ -34,6 +35,10 @@ object Utils {
 	fun getWorld(): ClientWorld? = client.world
 
 	fun getWorldString(): String? = client.world?.registryKey?.value?.path
+
+	fun getDTWorld(): World? {
+		return World.getById(getWorldString().toString())
+	}
 
 	fun sendViceMessage(msg: String) {
 		UChat.chat("${Vice.CHAT_PREFIX}${msg.convertFormatting()}")

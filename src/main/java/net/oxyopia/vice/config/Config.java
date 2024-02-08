@@ -361,8 +361,7 @@ public class Config extends Vigilant {
         name = "Live Arena Information",
         description = "Display useful statistics during an Arena session. At base, displays current Wave.",
         category = "Arenas",
-        subcategory = "Live Arena Info",
-        hidden = true
+        subcategory = "Live Arena Info"
     )
     public boolean LIVE_ARENA_TOGGLE = false;
 
@@ -374,15 +373,6 @@ public class Config extends Vigilant {
         subcategory = "Live Arena Info"
     )
     public boolean LIVE_ARENA_MOBS = false;
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Display Time Elapsed",
-        description = "Displays the time elapsed during your Session.",
-        category = "Arenas",
-        subcategory = "Live Arena Info"
-    )
-    public boolean LIVE_ARENA_TOTAL_TIMER = true;
 
     @Property(
         type = PropertyType.SWITCH,
@@ -510,7 +500,6 @@ public class Config extends Vigilant {
         addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY");
 
         addDependency("LIVE_ARENA_MOBS", "LIVE_ARENA_TOGGLE");
-        addDependency("LIVE_ARENA_TOTAL_TIMER", "LIVE_ARENA_TOGGLE");
         addDependency("LIVE_ARENA_ROUND_TIMER", "LIVE_ARENA_TOGGLE");
         addDependency("LIVE_ARENA_DROPS", "LIVE_ARENA_TOGGLE");
 

@@ -2,7 +2,7 @@ package net.oxyopia.vice.data
 
 import net.oxyopia.vice.utils.Utils
 
-enum class World(val id: String, val displayName: String, val type: WorldType = WorldType.NORMAL) {
+enum class World(val id: String, val displayName: String, val type: WorldType = WorldType.NORMAL, val displayColor: String = "") {
 	RealityPeak("realitypeak", "Reality Peak"),
 	Desert("deserteddunes", "Deserted Dunes"),
 	Space("spaceescape", "World 3 or 4"),
@@ -25,9 +25,9 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	DarkVice("darkvice", "Abyssal Vice", type = WorldType.BOSS),
 	ShadowGelato("shadowgelato", "Shadow Gelato", type = WorldType.BOSS),
 
-	Floor2Arena("f2arenas", "Void Voyage", type = WorldType.ARENA),
-	Floor3Arena("f3arenas", "Cryonic Caverns", type = WorldType.ARENA),
-	Floor4Arena("f4arenas", "Tidal Zone", type = WorldType.ARENA),
+	Floor2Arena("f2arenas", "Void Voyage", type = WorldType.ARENA, displayColor = "a"),
+	Floor3Arena("f3arenas", "Cryonic Caverns", type = WorldType.ARENA, displayColor = "b"),
+	Floor4Arena("f4arenas", "Tidal Zone", type = WorldType.ARENA, displayColor = "3"),
 
 	Tower("overworld", "The Tower", type = WorldType.TOWER);
 

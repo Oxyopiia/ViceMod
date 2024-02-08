@@ -57,27 +57,13 @@ object ArenaSession {
 		DevUtils.sendDebugChat("&&dARENAS&&r Kills Updated to &&b$waveMobsKilled &&r(total $totalMobsKilled)","ARENAS_DEBUGGER")
 	}
 
-	fun addSupplyDrop() {
-		supplyDropsCollected += 1
-		DevUtils.sendDebugChat("&&dARENAS&&r Supply Drops Updated to &&e$supplyDropsCollected", "ARENAS_DEBUGGER")
-	}
-
 	// Getters
 
-	fun isBossWave(): Boolean {
+	private fun isBossWave(): Boolean {
 		return waveNumber % 5 == 0
 	}
 
-	fun totalTimeElapsed(): Long {
-		return System.currentTimeMillis() - startTime
-	}
-
-	fun waveTimeElapsed(): Long {
-		return System.currentTimeMillis() - waveStartTime
-	}
-
 	fun totalWaveMobs(): Int {
-		// First round has 5 mobs, adding 2 each round until round 20, where it caps at 43
 		return if (isBossWave()) 1 else {
 			(3 + (waveNumber * 2)).coerceAtMost(43)
 		}
@@ -89,12 +75,6 @@ object ArenaSession {
 
 	fun calcUniqueDropChance(): Double {
 		return (waveNumber * 0.25).coerceAtMost(100.0)
-	}
-
-	fun calcAverageWaveTime(): Long {
-		if (waveNumber == 0) return 0
-
-		return (totalTimeElapsed() - 5) / waveNumber
 	}
 
 	@SubscribeEvent

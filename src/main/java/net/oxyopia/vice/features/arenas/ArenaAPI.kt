@@ -9,6 +9,15 @@ object ArenaAPI {
 	var storedArenaTimestamps = HashMap<World, Long>()
 		private set
 
+	fun getUniqueDropName(world: World): String {
+		return when (world) {
+			World.Floor2Arena -> "Galactic Hand Cannon"
+			World.Floor3Arena -> "Arctic Scroll"
+			World.Floor4Arena -> "Poseidon's Fury"
+			else -> "Unique Item"
+		}
+	}
+
 	@SubscribeEvent
 	fun onArenaStart(event: ArenaStartEvent) {
 		storedArenaTimestamps[event.world] = event.timestamp

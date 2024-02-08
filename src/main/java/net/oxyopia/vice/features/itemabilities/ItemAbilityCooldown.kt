@@ -150,7 +150,7 @@ object ItemAbilityCooldown {
 
 	@SubscribeEvent
 	fun onRenderInGameHud(event: HudRenderEvent) {
-		if (!Vice.config.ITEM_COOLDOWN_DISPLAY && !Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR) return
+		if (!Vice.config.ITEM_COOLDOWN_DISPLAY || !Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR) return
 
 		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getHeldItem().nameWithoutEnchants())
 
@@ -248,7 +248,7 @@ object ItemAbilityCooldown {
 						val topLeft = event.y + MathHelper.floor(16.0f * (1.0f - progressLeft))
 						val bottomRight = topLeft + MathHelper.ceil(16.0f * progressLeft)
 
-						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, topLeft, event.x + 16, bottomRight, 0, Color.white.rgb)
+						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, topLeft, event.x + 16, bottomRight, 0, Int.MAX_VALUE)
 					}
 
 					DisplayType.STATIC -> {

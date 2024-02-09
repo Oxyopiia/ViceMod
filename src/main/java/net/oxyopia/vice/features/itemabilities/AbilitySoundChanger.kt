@@ -34,6 +34,10 @@ object AbilitySoundChanger {
 			(sound == "entity.bat.takeoff" || sound == "block.beacon.activate" || sound == "entity.wither.break_block") && volume == 9999f && ItemAbility.BEDROCK_BREAKER.remainingCooldown() >= 1f -> {
 				event.setReturnValue(config.BEDROCK_BREAKER_VOLUME)
 			}
+
+			sound == "block.respawn_anchor.deplete" && ItemAbility.GLITCH_MALLET.remainingCooldown() >= 4f -> {
+				event.setReturnValue(config.GLITCH_MALLET_VOLUME)
+			}
 		}
 	}
 }

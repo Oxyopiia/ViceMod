@@ -440,6 +440,14 @@ public class Config extends Vigilant {
         maxF = 2f
     )
     public float EIGHT_BIT_KATANA_VOLUME = 1f;
+	
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Glitch Mallet Volume",
+		category = "Sounds",
+		maxF = 2f
+	)
+	public float GLITCH_MALLET_VOLUME = 1f;
 
     @Property(
         type = PropertyType.DECIMAL_SLIDER,

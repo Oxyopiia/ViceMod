@@ -36,11 +36,11 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 		}
 
 		val showDropsState = Vice.config.LIVE_ARENA_DROPS
-		if (showDropsState != 0) {
+		if (showDropsState != DisplayType.NONE) {
 			list.add("")
 
-			if (showDropsState == 1 || showDropsState == 3) list.add("&&fCommon Drop &&7${session.calcCommonDrops()}x")
-			if (showDropsState >= 2) list.add("${color}${dropName} &&7${session.calcUniqueDropChance()}%")
+			if (showDropsState != DisplayType.UNIQUE_DROPS_ONLY) list.add("&&fCommon Drop &&7${session.calcCommonDrops()}x")
+			if (showDropsState != DisplayType.BASIC_DROPS_ONLY) list.add("${color}${dropName} &&7${session.calcUniqueDropChance()}%")
 		}
 
 		if (Vice.config.LIVE_ARENA_MOBS) {
@@ -72,11 +72,11 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 		}
 
 		val showDropsState = Vice.config.LIVE_ARENA_DROPS
-		if (showDropsState != 0) {
+		if (showDropsState != DisplayType.NONE) {
 			list.add("")
 
-			if (showDropsState == 1 || showDropsState == 3) list.add("&&fCommon Drop &&733x")
-			if (showDropsState >= 2) list.add("&&bArctic Scroll &&76.5%")
+			if (showDropsState != DisplayType.UNIQUE_DROPS_ONLY) list.add("&&fCommon Drop &&733x")
+			if (showDropsState != DisplayType.BASIC_DROPS_ONLY) list.add("&&bArctic Scroll &&76.5%")
 		}
 
 		if (Vice.config.LIVE_ARENA_MOBS) {
@@ -85,5 +85,13 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 		}
 
 		return position.drawStrings(list, context)
+	}
+
+	private class DisplayType {
+		companion object {
+			const val NONE = 0
+			const val BASIC_DROPS_ONLY = 1
+			const val UNIQUE_DROPS_ONLY = 2
+		}
 	}
 }

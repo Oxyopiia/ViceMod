@@ -104,7 +104,7 @@ object ArenaSession {
 			} catch (err: NumberFormatException) {
 				DevUtils.sendErrorMessage(err, "An error occurred parsing Wave Number regex!")
 			}
-		} else if (event.title.contains("MINIBOSS")) {
+		} else if (event.title.contains("MINIBOSS") || event.title.contains("MERRY CHRISTMAS!") || event.title.contains("TIDES UP!")) {
 			setWave(waveNumber + 1)
 		}
 	}

@@ -268,7 +268,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Show Timer/Ready Text near Crosshair",
-        description = "Displays a text stating the cooldown remaining or when ready near your crosshair.\n§eCan be customized in Developer options (search 'dev'), will be migrated to HUD Manager soon!",
+        description = "Displays a text stating the cooldown remaining or when ready near your crosshair.",
         category = "General",
         subcategory = "Item Cooldowns"
     )

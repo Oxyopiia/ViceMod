@@ -37,7 +37,8 @@ object ArenaNotifications {
 		if (!event.repeatSeconds(2)) return
 		if (!Vice.config.ARENAS_COOLDOWN_NOTIFIER) return
 
-		ArenaAPI.storedArenaTimestamps
+		Vice.storage.arenas.startTimes
+			.mapKeys { World.getById(it.key) ?: return }
 			.filterNot { (world, ts) -> lastNotifiedTimestamps.getOrDefault(world, 0) == ts }
 			.forEach { (world, ts) ->
 				if (ts.timeDelta() >= 30.minutes.ms()) {

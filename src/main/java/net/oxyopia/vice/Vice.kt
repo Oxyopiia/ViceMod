@@ -62,6 +62,8 @@ class Vice : ClientModInitializer {
 
 		val logger: Logger = LogUtils.getLogger()
 
+		var isFirstUse = false
+
 		@JvmField
 		val EVENT_MANAGER: EventManager = EventManager()
 
@@ -106,6 +108,13 @@ class Vice : ClientModInitializer {
 		subscribeEventListeners()
 		initConnectionEvents()
 		registerCommands()
+
+		storage.lastVersion = version.friendlyString
+
+		if (storage.isFirstUse) {
+			isFirstUse = true
+			storage.isFirstUse = false
+		}
 	}
 
 	private fun registerCommands() {

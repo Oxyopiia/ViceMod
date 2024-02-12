@@ -148,6 +148,15 @@ public class Config extends Vigilant {
         subcategory = "Quality of Life"
     )
     public boolean BETTER_TOWER_BEACON_UI = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Player Stats",
+            description = "Show Player Stats like total defense and total speed",
+            category = "General",
+            subcategory = "Quality of Life"
+    )
+    public boolean PLAYER_STATS = false;
     
     // General/Spam Hider
 

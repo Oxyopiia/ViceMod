@@ -5,7 +5,7 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.EntityDeathEvent
 import net.oxyopia.vice.events.HudRenderEvent
-import net.oxyopia.vice.events.ServerChatMessageEvent
+import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.Utils.timeDelta
@@ -60,7 +60,7 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 	}
 
 	@SubscribeEvent
-	fun onChatEvent(event: ServerChatMessageEvent) {
+	fun onChatEvent(event: ChatEvent) {
 		if (event.string.contains(SPAWN_MESSAGE)) {
 			Vice.storage.showdown.lastKnownTrainSpawn = System.currentTimeMillis()
 			Vice.storage.markDirty()

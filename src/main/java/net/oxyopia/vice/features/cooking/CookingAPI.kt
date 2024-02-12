@@ -3,7 +3,7 @@ package net.oxyopia.vice.features.cooking
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.config.features.worlds.CookingStorage
 import net.oxyopia.vice.data.World
-import net.oxyopia.vice.events.ServerChatMessageEvent
+import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
@@ -47,7 +47,7 @@ object CookingAPI {
 	}
 
 	@SubscribeEvent
-	fun onChatMessage(event: ServerChatMessageEvent) {
+	fun onChatMessage(event: ChatEvent) {
 		if (!World.Burger.isInWorld()) return
 
 		val content = event.string

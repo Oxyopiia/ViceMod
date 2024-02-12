@@ -5,7 +5,7 @@ import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.network.message.MessageHandler;
 import net.minecraft.text.Text;
 import net.oxyopia.vice.events.ActionBarEvent;
-import net.oxyopia.vice.events.ServerChatMessageEvent;
+import net.oxyopia.vice.events.ChatEvent;
 import net.oxyopia.vice.utils.Utils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,7 +30,7 @@ public class MixinMessageHandler {
 
 	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/ChatHud;addMessage(Lnet/minecraft/text/Text;)V"), method = "onGameMessage")
 	private void onGameMessageOverride(ChatHud instance, Text message) {
-		ServerChatMessageEvent result = EVENT_MANAGER.publish(new ServerChatMessageEvent(message));
+		ChatEvent result = EVENT_MANAGER.publish(new ChatEvent(message));
 
 		if (!result.isCanceled()) {
 			(this).client.inGameHud.getChatHud().addMessage(message);

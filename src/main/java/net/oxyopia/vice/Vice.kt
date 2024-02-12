@@ -109,11 +109,15 @@ class Vice : ClientModInitializer {
 		initConnectionEvents()
 		registerCommands()
 
-		storage.lastVersion = version.friendlyString
+		if (storage.lastVersion != version.friendlyString) {
+			storage.lastVersion = version.friendlyString
+			storage.markDirty()
+		}
 
 		if (storage.isFirstUse) {
 			isFirstUse = true
 			storage.isFirstUse = false
+			storage.markDirty()
 		}
 	}
 

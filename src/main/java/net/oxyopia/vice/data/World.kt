@@ -29,6 +29,8 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	Floor3Arena("f3arenas", "Cryonic Caverns", type = WorldType.ARENA, displayColor = "b"),
 	Floor4Arena("f4arenas", "Tidal Zone", type = WorldType.ARENA, displayColor = "3"),
 
+	Exonitas("bigcity", "Exonitas", type = WorldType.AUXILARY),
+
 	Tower("overworld", "The Tower", type = WorldType.TOWER);
 
 	fun isInWorld(): Boolean {
@@ -43,6 +45,7 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 		NORMAL,
 		BOSS,
 		ARENA,
+		AUXILARY,
 		TOWER
 	}
 

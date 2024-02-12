@@ -32,6 +32,8 @@ import net.oxyopia.vice.features.arenas.ArenaAPI
 import net.oxyopia.vice.features.arenas.ArenaNotifications
 import net.oxyopia.vice.features.arenas.ArenaSession
 import net.oxyopia.vice.features.arenas.LiveArenaInformation
+import net.oxyopia.vice.features.auxiliary.exonitas.CitySpamHiders
+import net.oxyopia.vice.features.auxiliary.exonitas.PowerBoxTimer
 import net.oxyopia.vice.features.bosses.*
 import net.oxyopia.vice.features.cooking.CookingAPI
 import net.oxyopia.vice.features.cooking.OrderTracker
@@ -139,21 +141,24 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(AbilitySoundChanger)
 
-		EVENT_MANAGER.subscribe(ViceBoss)
-		EVENT_MANAGER.subscribe(MinehutBoss)
-		EVENT_MANAGER.subscribe(AbyssalVice)
-		EVENT_MANAGER.subscribe(ShadowGelato)
-		EVENT_MANAGER.subscribe(ElGelato)
-		EVENT_MANAGER.subscribe(PPP)
+		EVENT_MANAGER.subscribe(CookingAPI)
+		EVENT_MANAGER.subscribe(OrderTracker)
+		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
 
 		EVENT_MANAGER.subscribe(ArenaAPI)
 		EVENT_MANAGER.subscribe(ArenaSession)
 		EVENT_MANAGER.subscribe(ArenaNotifications)
 		EVENT_MANAGER.subscribe(LiveArenaInformation)
 
-		EVENT_MANAGER.subscribe(CookingAPI)
-		EVENT_MANAGER.subscribe(OrderTracker)
-		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
+		EVENT_MANAGER.subscribe(CitySpamHiders)
+		EVENT_MANAGER.subscribe(PowerBoxTimer)
+
+		EVENT_MANAGER.subscribe(ViceBoss)
+		EVENT_MANAGER.subscribe(MinehutBoss)
+		EVENT_MANAGER.subscribe(AbyssalVice)
+		EVENT_MANAGER.subscribe(ShadowGelato)
+		EVENT_MANAGER.subscribe(ElGelato)
+		EVENT_MANAGER.subscribe(PPP)
 
 		EVENT_MANAGER.subscribe(RenderTest)
 	}

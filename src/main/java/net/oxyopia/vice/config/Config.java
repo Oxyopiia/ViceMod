@@ -402,6 +402,26 @@ public class Config extends Vigilant {
     )
     public boolean ARENAS_MOB_EFFECT_NOTIFICATION = true;
 
+	// Auxilary/Exonitas
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Power Box Timer",
+		description = "Draws a HUD graphic displaying the time of power boxes in Exonitas.",
+		category = "Auxiliary",
+		subcategory = "Exonitas"
+	)
+	public boolean EXONITAS_POWER_BOX_TIMER = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Hide Bloat Messages",
+		description = "Hides the chat and titles when entering a level in Exonitas.",
+		category = "Auxiliary",
+		subcategory = "Exonitas"
+	)
+	public boolean HIDE_BLOAT_EXONITAS_MESSAGES = false;
+
     // Bosses/Quality of Life
 
     @Property(

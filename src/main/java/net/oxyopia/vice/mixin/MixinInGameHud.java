@@ -12,6 +12,7 @@ import net.minecraft.util.math.MathHelper;
 import net.oxyopia.vice.config.HudEditor;
 import net.oxyopia.vice.events.*;
 import net.oxyopia.vice.utils.Utils;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,6 +26,8 @@ public class MixinInGameHud {
 
 	@Shadow private int scaledWidth;
 	@Shadow private int scaledHeight;
+
+	@Shadow private @Nullable Text title;
 
 	@Inject(at = @At("HEAD"), method = "renderScoreboardSidebar")
 	private void onRenderScoreboardSidebar(DrawContext context, ScoreboardObjective objective, CallbackInfo ci) {
@@ -59,7 +62,7 @@ public class MixinInGameHud {
 	@Inject(at = @At("HEAD"), method = "setSubtitle", cancellable = true)
 	private void onSubtitle(Text subtitle, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new SubtitleEvent(subtitle.getString(), ci));
+			EVENT_MANAGER.publish(new SubtitleEvent(subtitle.getString(), title != null ? title.getString() : "", ci));
 		}
 	}
 

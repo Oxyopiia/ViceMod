@@ -5,6 +5,7 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.Vice.Companion.version
 import net.oxyopia.vice.config.features.MiscStorage
 import net.oxyopia.vice.config.features.worlds.ArenaStorage
+import net.oxyopia.vice.config.features.worlds.AuxiliaryStorage
 import net.oxyopia.vice.config.features.worlds.CookingStorage
 import net.oxyopia.vice.config.features.worlds.ShowdownStorage
 import java.io.File
@@ -21,6 +22,9 @@ class Storage : PersistentSave(File("./config/vice/storage.json")) {
 
 	@Expose
 	var arenas: ArenaStorage = ArenaStorage()
+
+	@Expose
+	var auxiliary: AuxiliaryStorage = AuxiliaryStorage()
 
 	@Expose
 	var cooking: CookingStorage = CookingStorage()

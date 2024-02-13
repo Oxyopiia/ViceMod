@@ -32,6 +32,7 @@ import net.oxyopia.vice.features.arenas.ArenaAPI
 import net.oxyopia.vice.features.arenas.ArenaNotifications
 import net.oxyopia.vice.features.arenas.ArenaSession
 import net.oxyopia.vice.features.arenas.LiveArenaInformation
+import net.oxyopia.vice.features.auxiliary.exonitas.BabyMode
 import net.oxyopia.vice.features.auxiliary.exonitas.CitySpamHiders
 import net.oxyopia.vice.features.auxiliary.exonitas.PowerBoxTimer
 import net.oxyopia.vice.features.bosses.*
@@ -167,6 +168,7 @@ class Vice : ClientModInitializer {
 
 		EVENT_MANAGER.subscribe(CitySpamHiders)
 		EVENT_MANAGER.subscribe(PowerBoxTimer)
+		EVENT_MANAGER.subscribe(BabyMode)
 
 		EVENT_MANAGER.subscribe(ViceBoss)
 		EVENT_MANAGER.subscribe(MinehutBoss)

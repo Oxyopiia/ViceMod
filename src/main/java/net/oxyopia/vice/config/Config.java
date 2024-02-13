@@ -102,6 +102,15 @@ public class Config extends Vigilant {
     )
     public int DEV_GAMING_MODE = 0;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Baby Mode",
+		description = "Baby mode from other thing but everywhere\n§eDoes not change hitboxes! Works globally!",
+		category = "General",
+		subcategory = "Developer"
+	)
+	public boolean DEV_BABY_MODE = false;
+
     // General/Quality of Life
 
     @Property(
@@ -430,6 +439,15 @@ public class Config extends Vigilant {
 		subcategory = "Exonitas"
 	)
 	public boolean HIDE_BLOAT_EXONITAS_MESSAGES = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Baby Mode",
+		description = "Make nearby players babies when in Exonitas\n§eDoes not change player hitboxes!",
+		category = "Auxiliary",
+		subcategory = "Exonitas"
+	)
+	public boolean EXONITAS_BABY_MODE = true;
 
     // Bosses/Quality of Life
 

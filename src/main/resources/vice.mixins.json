@@ -7,12 +7,14 @@
   },
   "client": [
     "MixinBossBarHud",
+    "MixinCapeRenderer",
     "MixinClientPlayerInteractionManager",
     "MixinClientPlayNetworkHandler",
     "MixinDownloadingTerrainScreen",
     "MixinDrawContext",
     "MixinGameRenderer",
     "MixinInGameHud",
+    "MixinLivingEntity",
     "MixinMessageHandler",
     "MixinMinecraftClient",
     "MixinSoundSystem"

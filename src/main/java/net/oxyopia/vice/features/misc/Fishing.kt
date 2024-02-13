@@ -17,18 +17,9 @@ object Fishing {
 		val fishHook = MinecraftClient.getInstance().player?.fishHook ?: return
 		if (!fishHook.isInOpenWater) return
 
-		sendBiteNotification()
-		event.cancel()
-	}
-
-	/*
-	 If server-side Fishing Ding becomes toggleable in the future, please see to the following file to re-integrate velocity detection:
-
-	 https://github.com/Oxyopiia/ViceMod/blob/1.0-Beta5/src/main/java/net/oxyopia/vice/features/misc/Fishing.kt
-	*/
-
-	private fun sendBiteNotification() {
 		Utils.playSound(BITE_SOUND, 1.4f, 3f)
 		HudUtils.sendVanillaTitle("", "&&bBite!", 0.8f, 0.1f)
+
+		event.cancel()
 	}
 }

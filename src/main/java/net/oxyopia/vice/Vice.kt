@@ -151,6 +151,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ConsumeItemBlocker)
 		EVENT_MANAGER.subscribe(TrainTimer)
 		EVENT_MANAGER.subscribe(PlayerStats)
+
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(HudUtils)
 

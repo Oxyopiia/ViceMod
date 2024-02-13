@@ -16,7 +16,7 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
         if(!Vice.config.PLAYER_STATS) return
 
         val defenseRegex = Regex("Defence: ([+-]?\\d+)")
-        val speedRegex = Regex("Speed: ([+-]?\\d+)%")
+        val speedRegex = Regex("Speed: ([+-]?\\d+(?:\\.\\d+)?)%")
 
         val player = MinecraftClient.getInstance().player
 
@@ -26,7 +26,6 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 
         player?.armorItems?.forEach { itemStack ->
             val lore = itemStack.getLore()
-            if (lore.isEmpty()) return@forEach
 
             lore.forEach { line ->
                 defenseRegex.find(line)?.apply {
@@ -58,8 +57,8 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
     override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
         val list = listOf(
             "&&6&&lPlayer Stats",
-            "&&aDefence: 23",
-            "&&eSpeed: 30.0% (19.5)"
+            "&&7Defence: &&a\uD83D\uDEE1 16",
+            "&&7Speed: &&e⚡ 30.0% &&7(19.5)"
         )
 
         return position.drawStrings(list, context)

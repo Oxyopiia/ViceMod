@@ -16,7 +16,7 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
         if(!Vice.config.PLAYER_STATS) return
 
         val defenseRegex = Regex("Defence: ([+-]?\\d+)")
-        val speedRegex = Regex("Speed: ([+-]?\\d+)%")
+        val speedRegex = Regex("Speed: ([+-]?\\d+(?:\\.\\d+)?)%")
 
         val player = MinecraftClient.getInstance().player
 

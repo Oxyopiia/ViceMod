@@ -5,7 +5,7 @@ import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.network.packet.s2c.play.*;
-import net.oxyopia.vice.events.BlockUpdatePacketEvent;
+import net.oxyopia.vice.events.BlockUpdateEvent;
 import net.oxyopia.vice.events.EntityDeathEvent;
 import net.oxyopia.vice.events.EntitySpawnEvent;
 import net.oxyopia.vice.events.EntityVelocityPacketEvent;
@@ -62,7 +62,7 @@ public class MixinClientPlayNetworkHandler {
 	@Inject(at = @At("HEAD"), method = "onBlockUpdate")
 	private void onBlockUpdate(BlockUpdateS2CPacket packet, CallbackInfo ci) {
 		if (MinecraftClient.getInstance().isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new BlockUpdatePacketEvent(packet));
+			EVENT_MANAGER.publish(new BlockUpdateEvent(packet));
 		}
 	}
 }

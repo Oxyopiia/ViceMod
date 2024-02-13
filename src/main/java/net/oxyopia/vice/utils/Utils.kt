@@ -34,10 +34,14 @@ object Utils {
 
 	fun getWorld(): ClientWorld? = client.world
 
-	fun getWorldString(): String? = client.world?.registryKey?.value?.path
+	fun getWorldString(): String? = client.world?.name()
 
 	fun getDTWorld(): World? {
 		return World.getById(getWorldString().toString())
+	}
+
+	fun net.minecraft.world.World.name(): String {
+		return registryKey.value.path
 	}
 
 	fun sendViceMessage(msg: String) {

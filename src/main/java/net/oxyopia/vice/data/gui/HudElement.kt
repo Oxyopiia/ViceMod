@@ -23,7 +23,7 @@ abstract class
 	abstract fun storePosition(position: Position)
 	abstract fun Position.drawPreview(context: DrawContext): Pair<Float, Float>?
 
-	open fun shouldDraw(): Boolean = true
+	abstract fun shouldDraw(): Boolean
 	private fun shouldDrawInternal(): Boolean {
 		return shouldDraw() && MinecraftClient.getInstance().currentScreen == HudEditor
 	}

@@ -9,52 +9,41 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.ItemUtils.getLore
-import net.oxyopia.vice.utils.Utils
 
-
-object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos){
+object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos) {
     @SubscribeEvent
     fun onHudRender(event: HudRenderEvent) {
-        if (!Utils.inDoomTowers) return
         if(!Vice.config.PLAYER_STATS) return
 
         val defenseRegex = Regex("Defence: ([+-]?\\d+)")
-        val speedRegex = Regex("Speed: ([+-]?\\d+(?:\\.\\d+)?)%")
+        val speedRegex = Regex("Speed: ([+-]?\\d+)%")
 
-        val player = MinecraftClient.getInstance().player;
+        val player = MinecraftClient.getInstance().player
 
         var defence = 0
-
-        if(player == null) return
-
         var speed = 0f
+        val movementSpeed = player?.movementSpeed ?: 1f
 
-        if (player.armorItems != null) {
-            for (i in 0 until player.armorItems.count()) {
-                val lore = player.armorItems.elementAt(i).getLore()
-                if (lore.isEmpty()) {
-                    defence += 0
-                } else {
-                    for (i in lore.indices) {
-                        defenseRegex.find(lore[i])?.apply {
-                            val defenceValue = groupValues[1].toIntOrNull() ?: 0
-                            defence += defenceValue
-                        }
+        player?.armorItems?.forEach { itemStack ->
+            val lore = itemStack.getLore()
+            if (lore.isEmpty()) return@forEach
 
-                        speedRegex.find(lore[i])?.apply {
-                            val speedValue = groupValues[1].toFloatOrNull() ?: 0f
-                            speed += speedValue
-                        }
-                    }
+            lore.forEach { line ->
+                defenseRegex.find(line)?.apply {
+                    defence += groupValues[1].toIntOrNull() ?: 0
+                }
+
+                speedRegex.find(line)?.apply {
+                    speed += groupValues[1].toFloatOrNull() ?: 0f
                 }
             }
         }
 
         val list: MutableList<String> = mutableListOf()
 
-        list.add("&&6&&lPlayer Stats:")
-        list.add("&&aDefence: $defence")
-        list.add("&&eSpeed: $speed% (${String.format("%.2f", player.movementSpeed * 100).toFloat()})")
+        list.add("&&6&&lPlayer Stats")
+        list.add("&&7Defence: &&a\uD83D\uDEE1 $defence")
+        list.add("&&7Speed: &&e⚡ $speed% &&7(${String.format("%.2f", movementSpeed * 100).toFloat()})")
 
         position.drawStrings(list, event.context)
     }
@@ -68,7 +57,7 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 
     override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
         val list = listOf(
-            "&&6&&lPlayer Stats:",
+            "&&6&&lPlayer Stats",
             "&&aDefence: 23",
             "&&eSpeed: 30.0% (19.5)"
         )

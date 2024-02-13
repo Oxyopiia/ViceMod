@@ -84,12 +84,14 @@ object ArenaSession {
 	@SubscribeEvent
 	fun onWorldChange(event: WorldChangeEvent) {
 		val worldPath: String? = event.world.registryKey?.value?.path
-		val world2: World? = worldPath?.let { World.getById(it) }
+		worldPath?.let {
+			val world = World.getById(it) ?: return
 
-		if (!active && world2?.type == World.WorldType.ARENA) {
-			begin(world2)
-		} else if (active && world2?.type != World.WorldType.ARENA) {
-			dispose()
+			if (!active && world.type == World.WorldType.ARENA) {
+				begin(world)
+			} else if (active && world.type != World.WorldType.ARENA) {
+				dispose()
+			}
 		}
 	}
 

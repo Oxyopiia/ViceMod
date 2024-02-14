@@ -145,6 +145,11 @@ object ItemAbilityCooldown {
 			event.soundName == "entity.snowball.throw" && event.pitch == 1f && event.volume == 9999f -> {
 				ItemAbility.SNOWBALL_CANNON.onSound()
 			}
+
+			// Jynx Chain Gun
+			event.soundName == "entity.guardian.attack" && event.pitch == 1.25f && !ItemAbility.JYNX_CHAIN_GUN.isOnCooldown() -> {
+				ItemAbility.JYNX_CHAIN_GUN.onSound()
+			}
 		}
 	}
 

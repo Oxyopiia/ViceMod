@@ -537,6 +537,14 @@ public class Config extends Vigilant {
     )
     public float SNOWBALL_CANNON_VOLUME = 1f;
 
+	@Property(
+		type = PropertyType.DECIMAL_SLIDER,
+		name = "Jynx's Chain Gun Volume",
+		category = "Sounds",
+		maxF = 2f
+	)
+	public float JYNX_CHAIN_GUN_VOLUME = 1f;
+
     public Config() {
         super(new File("./config/vice/config.toml"), "Vice §b" + Vice.Companion.getVersion(), new JVMAnnotationPropertyCollector(), new ConfigSorting());
     }

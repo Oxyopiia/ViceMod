@@ -38,6 +38,10 @@ object AbilitySoundChanger {
 			sound == "block.respawn_anchor.deplete" && ItemAbility.GLITCH_MALLET.remainingCooldown() >= 4f -> {
 				event.setReturnValue(config.GLITCH_MALLET_VOLUME)
 			}
+
+			(sound == "entity.guardian.attack" && ItemAbility.JYNX_CHAIN_GUN.isOnCooldown()) -> {
+				event.setReturnValue(config.JYNX_CHAIN_GUN_VOLUME)
+			}
 		}
 	}
 }

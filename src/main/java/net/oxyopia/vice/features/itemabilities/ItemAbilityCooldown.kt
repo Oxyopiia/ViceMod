@@ -162,7 +162,7 @@ object ItemAbilityCooldown {
 		ability?.apply {
 			if (!isOnCooldown() || !displayCooldown) return
 
-			val pos = Position(event.scaledWidth / 2f + 2, event.scaledHeight / 2f + 1, centered = false)
+			val pos = Position(event.scaledWidth / 2f + 2, event.scaledHeight / 2f + 2, centered = false)
 			val color = Color(0, 236, 255, 255)
 
 			val roundedFloat: String = String.format("%.0f", ceil(remainingCooldown().toDouble()))

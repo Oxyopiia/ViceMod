@@ -14,6 +14,7 @@
     "MixinDrawContext",
     "MixinGameRenderer",
     "MixinInGameHud",
+    "MixinItemStack",
     "MixinLivingEntity",
     "MixinMessageHandler",
     "MixinMinecraftClient",

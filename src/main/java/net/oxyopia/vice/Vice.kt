@@ -42,6 +42,7 @@ import net.oxyopia.vice.features.cooking.CurrentOrderDisplay
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
+import net.oxyopia.vice.features.misc.BackpackRenaming
 import net.oxyopia.vice.features.misc.ChatFilter
 import net.oxyopia.vice.features.misc.ConsumeItemBlocker
 import net.oxyopia.vice.features.misc.Fishing
@@ -125,11 +126,12 @@ class Vice : ClientModInitializer {
 
 	private fun registerCommands() {
 		ClientCommandRegistrationCallback.EVENT.register(ClientCommandRegistrationCallback { dispatcher: CommandDispatcher<FabricClientCommandSource?>?, _: CommandRegistryAccess? ->
-			ViceCommand.register(dispatcher)
-			DevDataCommand.register(dispatcher)
 			dispatcher?.let {
+				ViceCommand.register(it)
+				DevDataCommand.register(it)
 				EventTreeCommand.register(it)
 				BlockClickOverride.register(it)
+				BackpackRenaming.registerCommand(it)
 			}
 		})
 	}
@@ -145,6 +147,7 @@ class Vice : ClientModInitializer {
 	}
 
 	private fun subscribeEventListeners() {
+		EVENT_MANAGER.subscribe(BackpackRenaming)
 		EVENT_MANAGER.subscribe(ChatFilter)
 		EVENT_MANAGER.subscribe(Fishing)
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)

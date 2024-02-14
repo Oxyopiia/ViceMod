@@ -122,6 +122,15 @@ public class Config extends Vigilant {
     )
     public boolean PREVENT_PLACING_PLAYER_HEADS = true;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Backpack Renaming",
+		description = "Master toggle for Backpack Renaming.\nUse /vicebackpackrename (name|reset) to change!\nNormal Minecraft Color codes are valid.",
+		category = "General",
+		subcategory = "Quality of Life"
+	)
+	public boolean BACKPACK_RENAMING = true;
+
     @Property(
             type = PropertyType.SWITCH,
             name = "Train Timer",
@@ -159,11 +168,11 @@ public class Config extends Vigilant {
     public boolean BETTER_TOWER_BEACON_UI = true;
 
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Player Stats",
-            description = "Show Player Stats like total defense and total speed",
-            category = "General",
-            subcategory = "Quality of Life"
+		type = PropertyType.SWITCH,
+		name = "Player Stats",
+		description = "Displays a HUD graphic showing stats such as Speed and Defence in DoomTowers.",
+		category = "General",
+		subcategory = "Quality of Life"
     )
     public boolean PLAYER_STATS = false;
     
@@ -443,7 +452,7 @@ public class Config extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Baby Mode",
-		description = "Make nearby players babies when in Exonitas\n§eDoes not change player hitboxes!",
+		description = "Turns nearby players into babies when in Exonitas, useful for the Security segment.\n§eDoes not change player hitboxes!",
 		category = "Auxiliary",
 		subcategory = "Exonitas"
 	)

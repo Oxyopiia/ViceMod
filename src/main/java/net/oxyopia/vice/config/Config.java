@@ -113,14 +113,32 @@ public class Config extends Vigilant {
 
     // General/Quality of Life
 
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Prevent Consuming Items",
-        description = "Blocks block place packets when using consumable items, like Player Heads or Train Keys.\nItem Abilities still activate when enabled.",
-        category = "General",
-        subcategory = "Quality of Life"
-    )
-    public boolean PREVENT_PLACING_PLAYER_HEADS = true;
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Prevent Consuming Items",
+		description = "Blocks block place packets when using consumable items, like Player Heads or Train Keys.\nItem Abilities still activate when enabled.",
+		category = "General",
+		subcategory = "Quality of Life"
+	)
+	public boolean PREVENT_PLACING_PLAYER_HEADS = true;
+	
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Zip Bomb Projection",
+		description = "Draws a line displaying where a Zip Bomb will land and its radius.",
+		category = "General",
+		subcategory = "Quality of Life"
+	)
+	public boolean ZIP_BOMB_PROJECTION = true;
+
+	@Property(
+		type = PropertyType.COLOR,
+		name = "Zip Bomb Projection Color",
+		description = "Color the thing",
+		category = "General",
+		subcategory = "Quality of Life"
+	)
+	public Color ZIP_BOMB_PROJECTION_COLOR = new Color(0, 236, 255, 255);
 
     @Property(
             type = PropertyType.SWITCH,
@@ -545,8 +563,8 @@ public class Config extends Vigilant {
         initialize();
         markDirty();
 
-        addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
-        addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
+		addDependency("ZIP_BOMB_PROJECTION_COLOR", "ZIP_BOMB_PROJECTION");
+		addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
 
         addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
         addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");
@@ -554,10 +572,10 @@ public class Config extends Vigilant {
         addDependency("HIDE_ITEMCD_WHEN_READY", "ITEM_COOLDOWN_DISPLAY");
         addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY");
 
+		addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
         addDependency("LIVE_ARENA_MOBS", "LIVE_ARENA_TOGGLE");
         addDependency("LIVE_ARENA_ROUND_TIMER", "LIVE_ARENA_TOGGLE");
         addDependency("LIVE_ARENA_DROPS", "LIVE_ARENA_TOGGLE");
-
 //		TODO("Implement Migration logic")
     }
 

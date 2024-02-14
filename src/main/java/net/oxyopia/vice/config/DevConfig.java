@@ -31,15 +31,6 @@ public class DevConfig extends Vigilant {
 	)
 	public float ITEMCD_GREEN_FADE_OVERRIDE = 1.3f;
 
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Show Live Arena Overlay in HUD Manager",
-		description = "DOES NOTHING!! literally just a mockup graphic and test for HudManager",
-		category = "Experiments",
-		subcategory = "HudManager"
-	)
-	public boolean LIVE_ARENA_OVERLAY_THING = false;
-
 	/** BYPASSES */
 	@Property(
 		type = PropertyType.SWITCH,

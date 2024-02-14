@@ -8,7 +8,7 @@ import net.minecraft.network.packet.s2c.play.*;
 import net.oxyopia.vice.events.BlockUpdateEvent;
 import net.oxyopia.vice.events.EntityDeathEvent;
 import net.oxyopia.vice.events.EntitySpawnEvent;
-import net.oxyopia.vice.events.EntityVelocityPacketEvent;
+import net.oxyopia.vice.events.EntityVelocityEvent;
 import net.oxyopia.vice.events.SoundEvent;
 import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
@@ -35,7 +35,7 @@ public class MixinClientPlayNetworkHandler {
 	@Inject(at = @At("HEAD"), method = "onEntityVelocityUpdate")
 	private void onEntityVelocityUpdate(EntityVelocityUpdateS2CPacket packet, CallbackInfo callbackInfo){
 		if (MinecraftClient.getInstance().isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new EntityVelocityPacketEvent(packet));
+			EVENT_MANAGER.publish(new EntityVelocityEvent(packet));
 		}
 	}
 

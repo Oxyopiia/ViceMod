@@ -1,9 +1,11 @@
 package net.oxyopia.vice.features.itemabilities
 
 import net.minecraft.util.ClickType
+import net.oxyopia.vice.Vice.Companion.EVENT_MANAGER
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.Utils.timeDelta
 import net.oxyopia.vice.data.Set
+import net.oxyopia.vice.events.AbilityUseEvent
 
 /**
  * Inspired from SkyHanni's similar feature, partially adapted
@@ -63,6 +65,7 @@ enum class ItemAbility(
 
         sharedCooldownId?.let { sharedCooldowns[it] = now }
         lastActivated = now
+        EVENT_MANAGER.publish(AbilityUseEvent(this))
     }
 
     fun isOnCooldown() : Boolean {

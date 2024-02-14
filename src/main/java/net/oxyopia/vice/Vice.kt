@@ -27,7 +27,6 @@ import net.oxyopia.vice.config.DevConfig
 import net.oxyopia.vice.config.Storage
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.core.EventManager
-import net.oxyopia.vice.features.RenderTest
 import net.oxyopia.vice.features.arenas.ArenaAPI
 import net.oxyopia.vice.features.arenas.ArenaNotifications
 import net.oxyopia.vice.features.arenas.ArenaSession
@@ -48,6 +47,7 @@ import net.oxyopia.vice.features.misc.Fishing
 import net.oxyopia.vice.features.misc.PlayerStats
 import net.oxyopia.vice.features.misc.RevolverBlindnessHider
 import net.oxyopia.vice.features.misc.TrainTimer
+import net.oxyopia.vice.features.misc.ZipBombProjection
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger
@@ -151,6 +151,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ConsumeItemBlocker)
 		EVENT_MANAGER.subscribe(TrainTimer)
 		EVENT_MANAGER.subscribe(PlayerStats)
+		EVENT_MANAGER.subscribe(ZipBombProjection)
 
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(HudUtils)
@@ -177,8 +178,6 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ShadowGelato)
 		EVENT_MANAGER.subscribe(ElGelato)
 		EVENT_MANAGER.subscribe(PPP)
-
-		EVENT_MANAGER.subscribe(RenderTest)
 	}
 }
 

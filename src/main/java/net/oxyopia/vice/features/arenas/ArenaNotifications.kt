@@ -39,7 +39,7 @@ object ArenaNotifications {
 
 		Vice.storage.arenas.startTimes
 			.mapKeys { World.getById(it.key) ?: return }
-			.filterNot { (world, ts) -> lastNotifiedTimestamps.getOrDefault(world, 0) == ts }
+			.filterNot { (world, ts) -> lastNotifiedTimestamps.getOrDefault(world, ts) == ts }
 			.forEach { (world, ts) ->
 				if (ts.timeDelta() >= 30.minutes.ms()) {
 					Utils.sendViceMessage("Your Cooldown for the &&b${world.displayName}&&r Arena has passed.")

@@ -11,6 +11,8 @@ import net.oxyopia.vice.utils.Utils.timeDelta
 import kotlin.time.Duration.Companion.minutes
 
 object ArenaNotifications {
+	val arenas get() = Vice.storage.arenas
+
 	@SubscribeEvent
 	fun onWaveUpdate(event: ArenaWaveChangeEvent) {
 		if (Vice.config.ARENAS_MOB_EFFECT_NOTIFICATION) {
@@ -30,21 +32,20 @@ object ArenaNotifications {
 		}
 	}
 
-	private var lastNotifiedTimestamps = HashMap<World, Long>()
-
 	@SubscribeEvent
 	fun onClientTick(event: ClientTickEvent) {
 		if (!event.repeatSeconds(2)) return
 		if (!Vice.config.ARENAS_COOLDOWN_NOTIFIER) return
 
-		Vice.storage.arenas.startTimes
+		arenas.startTimes
+			.filterNot { (world, ts) -> arenas.notifiedInstances.getOrDefault(world, 0) == ts }
 			.mapKeys { World.getById(it.key) ?: return }
-			.filterNot { (world, ts) -> lastNotifiedTimestamps.getOrDefault(world, ts) == ts }
 			.forEach { (world, ts) ->
 				if (ts.timeDelta() >= 30.minutes.ms()) {
 					Utils.sendViceMessage("Your Cooldown for the &&b${world.displayName}&&r Arena has passed.")
 					Utils.playSound("block.note_block.pling", 1.4f)
-					lastNotifiedTimestamps[world] = ts
+					arenas.notifiedInstances[world.id] = ts
+					Vice.storage.markDirty()
 				}
 			}
 	}

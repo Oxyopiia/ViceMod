@@ -158,6 +158,15 @@ public class Config extends Vigilant {
     )
     public boolean HIDE_REVOLVER_BLINDNESS = true;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Daily Rewards Notification",
+		description = "Reminds you when your Daily Rewards are ready, every 30 minutes.",
+		category = "General",
+		subcategory = "Quality of Life"
+	)
+	public boolean DAILY_REWARDS_NOTIFICATION = true;
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Better Tower Beacon UI",

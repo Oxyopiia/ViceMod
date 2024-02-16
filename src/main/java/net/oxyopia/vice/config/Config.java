@@ -175,6 +175,15 @@ public class Config extends Vigilant {
 		subcategory = "Quality of Life"
     )
     public boolean PLAYER_STATS = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Boss Counter",
+            description = "Count how much times you killed a boss",
+            category = "General",
+            subcategory = "Quality of Life"
+    )
+    public boolean BOSS_COUNTER = false;
     
     // General/Spam Hider
 

@@ -40,9 +40,9 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 
         val list: MutableList<String> = mutableListOf()
 
-        list.add("&&6&&lPlayer Stats")
-        list.add("&&7Defence: &&a\uD83D\uDEE1 $defence")
-        list.add("&&7Speed: &&e⚡ $speed% &&7(${String.format("%.2f", movementSpeed * 100).toFloat()})")
+        list.add("&&b&&lPlayer Stats")
+        list.add("&&fDefence: &&a\uD83D\uDEE1 $defence")
+        list.add("&&fSpeed: &&e⚡ $speed% &&7(${String.format("%.2f", movementSpeed * 100).toFloat()})")
 
         position.drawStrings(list, event.context)
     }
@@ -56,9 +56,9 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 
     override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
         val list = listOf(
-            "&&6&&lPlayer Stats",
-            "&&7Defence: &&a\uD83D\uDEE1 16",
-            "&&7Speed: &&e⚡ 30.0% &&7(19.5)"
+            "&&b&&lPlayer Stats",
+            "&&fDefence: &&a\uD83D\uDEE1 16",
+            "&&fSpeed: &&e⚡ 30.0% &&7(19.5)"
         )
 
         return position.drawStrings(list, context)

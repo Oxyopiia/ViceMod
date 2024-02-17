@@ -9,6 +9,9 @@ class ArenaStorage {
 	var startTimes: HashMap<String, Long> = HashMap()
 
 	@Expose
+	var notifiedInstances: HashMap<String, Long> = HashMap()
+
+	@Expose
 	var liveArenaPos: Position = Position(100f, 100f)
 
 }

@@ -45,6 +45,7 @@ import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.misc.BackpackRenaming
 import net.oxyopia.vice.features.misc.ChatFilter
 import net.oxyopia.vice.features.misc.ConsumeItemBlocker
+import net.oxyopia.vice.features.misc.DailyRewardsNotification
 import net.oxyopia.vice.features.misc.Fishing
 import net.oxyopia.vice.features.misc.PlayerStats
 import net.oxyopia.vice.features.misc.RevolverBlindnessHider
@@ -152,6 +153,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(Fishing)
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
 		EVENT_MANAGER.subscribe(ConsumeItemBlocker)
+		EVENT_MANAGER.subscribe(DailyRewardsNotification)
 		EVENT_MANAGER.subscribe(TrainTimer)
 		EVENT_MANAGER.subscribe(PlayerStats)
 

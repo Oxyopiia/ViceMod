@@ -46,6 +46,7 @@ import net.oxyopia.vice.features.misc.BackpackRenaming
 import net.oxyopia.vice.features.misc.ChatFilter
 import net.oxyopia.vice.features.misc.ConsumeItemBlocker
 import net.oxyopia.vice.features.misc.DailyRewardsNotification
+import net.oxyopia.vice.features.misc.EvanSolver
 import net.oxyopia.vice.features.misc.Fishing
 import net.oxyopia.vice.features.misc.PlayerStats
 import net.oxyopia.vice.features.misc.RevolverBlindnessHider
@@ -166,6 +167,8 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(CookingAPI)
 		EVENT_MANAGER.subscribe(OrderTracker)
 		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
+
+		EVENT_MANAGER.subscribe(EvanSolver)
 
 		EVENT_MANAGER.subscribe(ArenaAPI)
 		EVENT_MANAGER.subscribe(ArenaSession)

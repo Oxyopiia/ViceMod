@@ -271,6 +271,17 @@ public class Config extends Vigilant {
 	)
 	public boolean AUTO_APPLY_BREAD = false;
 
+	// General/JTGHQ
+	
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Evan Solver",
+		description = "Solves Evan Minigame in the Glitch HQ. Changes the title to 'TRUE' or 'FALSE' depending on the answer.",
+		category = "General",
+		subcategory = "Journey to the Glitch HQ"
+	)
+	public boolean GLITCH_HQ_EVAN_SOLVER = true;
+
     // General/Item Cooldowns
 
     @Property(

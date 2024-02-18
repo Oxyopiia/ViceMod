@@ -16,6 +16,7 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	Arcade("arcade", "The Arcade"),
 	ArcadeVirtualWorld("tutorial", "The Arcade: Virtual World"),
 	Showdown("showdown", "Showdown"),
+	GlitchHQ("glitchhq", "Journey to the Glitch HQ"),
 
 	Vice("viceboss", "Vice", type = WorldType.BOSS),
 	Wasteyard("wasteyard", "Wasteyard", type = WorldType.BOSS),

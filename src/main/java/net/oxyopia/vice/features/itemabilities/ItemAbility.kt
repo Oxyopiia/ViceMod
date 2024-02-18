@@ -49,6 +49,7 @@ enum class ItemAbility(
     WARPED_GRENADE("Warped Grenade", 3f),
     POSEIDONS_FURY("Poseidon's Fury", 15f),
     ZIP_BOMB("Zip Bomb", 5f, set = Set.DEMOLITIONIST, setAmount = 2),
+    THE_SYNTHFLESH("The Synthflesh", 3f, set = Set.FLESHCRAWLER, setAmount = 2), // 2 for 1st ability, 3 for 2nd ability
 
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, displayCooldown = false, set = Set.HEAVY, setAmount = 2),
     CARNAGE_RIFLE("Carnage Rifle", 0.5f, displayCooldown = false, set = Set.FLESHCRAWLER, setAmount = 2),

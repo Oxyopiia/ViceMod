@@ -169,8 +169,12 @@ object HudUtils {
 		client.inGameHud.setTitleTicks((20 * fadeinout).toInt(), (20 * stayTime).toInt(), (20 * fadeinout).toInt())
 	}
 
+	fun sendVanillaTitle(title: String, subtitle: String) {
+		val client = MinecraftClient.getInstance()
 
-
+		client.inGameHud.setTitle(Text.of(title.convertFormatting()))
+		client.inGameHud.setSubtitle(Text.of(subtitle.convertFormatting()))
+	}
 
 	private var title = MutableText.EMPTY
 	private var titleStayTicks = 0

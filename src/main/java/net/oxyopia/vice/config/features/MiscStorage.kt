@@ -8,6 +8,9 @@ class MiscStorage {
     @Expose
 	var lastDailyReward: Long = -1L
 
+    @Expose
+    var lastEvanQuiz: Long = -1L
+
 	@Expose
 	var backpackNames: HashMap<String, String> = HashMap()
 

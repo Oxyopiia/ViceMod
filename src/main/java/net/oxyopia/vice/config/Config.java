@@ -281,7 +281,16 @@ public class Config extends Vigilant {
 	public boolean AUTO_APPLY_BREAD = false;
 
 	// General/JTGHQ
-	
+
+	@Property(
+			type = PropertyType.SWITCH,
+			name = "Evan Notification",
+			description = "Notify when Evan is ready to enter",
+			category = "General",
+			subcategory = "Journey to the Glitch HQ"
+	)
+	public boolean EVAN_NOTIFICATION = false;
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Evan Solver",

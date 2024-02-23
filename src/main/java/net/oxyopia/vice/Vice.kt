@@ -42,15 +42,7 @@ import net.oxyopia.vice.features.cooking.CurrentOrderDisplay
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
-import net.oxyopia.vice.features.misc.BackpackRenaming
-import net.oxyopia.vice.features.misc.ChatFilter
-import net.oxyopia.vice.features.misc.ConsumeItemBlocker
-import net.oxyopia.vice.features.misc.DailyRewardsNotification
-import net.oxyopia.vice.features.misc.EvanSolver
-import net.oxyopia.vice.features.misc.Fishing
-import net.oxyopia.vice.features.misc.PlayerStats
-import net.oxyopia.vice.features.misc.RevolverBlindnessHider
-import net.oxyopia.vice.features.misc.TrainTimer
+import net.oxyopia.vice.features.misc.*
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger
@@ -160,6 +152,7 @@ class Vice : ClientModInitializer {
 
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(HudUtils)
+		EVENT_MANAGER.subscribe(BossCounter)
 
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(AbilitySoundChanger)
@@ -168,6 +161,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(OrderTracker)
 		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
 
+		EVENT_MANAGER.subscribe(EvanNotification)
 		EVENT_MANAGER.subscribe(EvanSolver)
 
 		EVENT_MANAGER.subscribe(ArenaAPI)

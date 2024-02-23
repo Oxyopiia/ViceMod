@@ -150,6 +150,11 @@ object ItemAbilityCooldown {
 			event.soundName == "entity.guardian.attack" && event.pitch == 1.25f && !ItemAbility.JYNX_CHAIN_GUN.isOnCooldown() -> {
 				ItemAbility.JYNX_CHAIN_GUN.onSound()
 			}
+
+			// The Synthflesh
+			event.soundName == "entity.player.burp" && (event.pitch == 0.5f ||event.pitch == 1f) && event.volume == 9999f -> {
+				ItemAbility.THE_SYNTHFLESH.onSound()
+			}
 		}
 	}
 

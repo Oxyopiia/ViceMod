@@ -13,7 +13,6 @@ import kotlin.time.Duration.Companion.minutes
 object EvanNotification {
 
     private val misc get() = storage.misc
-    private val lastEvanQuiz get() = misc.lastEvanQuiz
 
     @SubscribeEvent
     fun onTitle(event: TitleEvent) {
@@ -25,10 +24,9 @@ object EvanNotification {
 
     @SubscribeEvent
     fun onTick(event: ClientTickEvent) {
-        if (!Vice.config.EVAN_NOTIFICATION) return
-        if(misc.lastEvanQuiz == -1L) return
+        if (!Vice.config.EVAN_NOTIFICATION || misc.lastEvanQuiz == -1L) return
 
-        if (lastEvanQuiz.timeDelta() >= 30.minutes.ms()) {
+        if (misc.lastEvanQuiz.timeDelta() >= 30.minutes.ms()) {
             misc.lastEvanQuiz = -1L
             storage.markDirty()
 

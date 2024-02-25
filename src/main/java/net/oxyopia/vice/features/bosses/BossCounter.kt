@@ -64,7 +64,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
     }
 
 	private fun draw(context: DrawContext): Pair<Float, Float> {
-		val list: MutableList<String> = mutableListOf()
+		val list: MutableList<String> = mutableListOf("&&b&&lBosses")
 
 		list.addBossStat("&&5Vice", bosses.vice.completions)
 		list.addBossStat("&&4Wasteyard", bosses.wasteyard.completions)
@@ -73,6 +73,10 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 		list.addBossStat("&&bMinehut", bosses.minehut.completions)
 		list.addBossStat("&&dShadow Gelato", bosses.shadowGelato.completions)
 		list.addBossStat("&&8Abyssal Vice", bosses.abyssalVice.completions)
+
+		if (list.size == 1) {
+			list.add("&&cNo bosses slain yet!")
+		}
 
 		return position.drawStrings(list, context)
 	}
@@ -83,7 +87,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 
     @SubscribeEvent
     fun onHudRender(event: HudRenderEvent) {
-        if (shouldDraw()) return
+        if (!shouldDraw()) return
 		draw(event.context)
     }
 

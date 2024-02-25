@@ -31,6 +31,7 @@ object EvanSolver {
 		"Does the World 11 Train spawn every 45m?" to true,
 		"Is \"Quaking Quarry\" a real scrapped world?" to true,
 		"Is World 9 called \"Glimpse\"" to true,
+		"The answer is not False" to true,
 
 		"Was DoomTowers made on the 6th May 2023?" to false,
 		"Is Exonitas after World 12?" to false,
@@ -39,7 +40,8 @@ object EvanSolver {
 		"Are there only 6 bosses in-game?" to false,
 		"Does PPP (Boss 4) have 3 phases?" to false,
 		"Is World 10 called \"Arcade\"" to false,
-		"Is the Jelly NPC on Floor 5?" to false
+		"Is the Jelly NPC on Floor 5?" to false,
+		"Is the max Carnage Level 4?" to false
 	)
 		get() = field.mapKeys { (key, _) -> key.lowercase() }
 }

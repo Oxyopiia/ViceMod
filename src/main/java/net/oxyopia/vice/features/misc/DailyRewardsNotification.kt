@@ -28,6 +28,7 @@ object DailyRewardsNotification {
 
 	@SubscribeEvent
 	fun onTick(event: ClientTickEvent) {
+		if (!event.repeatSeconds(1)) return
 		if (!Vice.config.DAILY_REWARDS_NOTIFICATION || storage.misc.lastDailyReward == -1L) return
 
 		if (hasReminded.timeDelta() >= 30.minutes.ms() && storage.misc.lastDailyReward.timeDelta() >= 24.hours.ms()) {

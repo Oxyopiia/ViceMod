@@ -24,13 +24,14 @@ object EvanNotification {
 
     @SubscribeEvent
     fun onTick(event: ClientTickEvent) {
+        if (!event.repeatSeconds(1)) return
         if (!Vice.config.EVAN_NOTIFICATION || misc.lastEvanQuiz == -1L) return
 
         if (misc.lastEvanQuiz.timeDelta() >= 30.minutes.ms()) {
             misc.lastEvanQuiz = -1L
             storage.markDirty()
 
-            Utils.sendViceMessage("Evan Quiz are ready to enter!")
+            Utils.sendViceMessage("Your Evan Quiz is ready to begin!")
             Utils.playSound("block.note_block.pling", 2f)
         }
     }

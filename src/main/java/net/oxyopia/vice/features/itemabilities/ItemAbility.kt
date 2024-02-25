@@ -22,7 +22,7 @@ enum class ItemAbility(
     val sharedCooldownId : String? = null,
     val displayCooldown: Boolean = true,
     val soundOnUse: Boolean = true,
-    var lastActivated: Long = 0,
+    private var lastActivated: Long = 0,
     var lastClicked: Long = 0
 ) {
     VORTEX_LAUNCHER("Vortex Launcher", 5f, soundOnUse = false),
@@ -80,7 +80,7 @@ enum class ItemAbility(
 
     fun onSound() {
         val debounceTime = lastClicked.timeDelta()
-        DevUtils.sendDebugChat("&&bITEMABILITY &&eRecieved onSound as &&b$itemName", "ITEM_ABILITY_DEBUGGER")
+        DevUtils.sendDebugChat("&&bITEMABILITY &&eReceived onSound as &&b$itemName", "ITEM_ABILITY_DEBUGGER")
 
         if (debounceTime < 500) {
             activate()

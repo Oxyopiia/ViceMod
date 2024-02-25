@@ -13,7 +13,7 @@ import org.joml.Matrix4f
 
 object GamingMode {
 	data class ImageData(val path: String, val width: Int, val height: Int, val scale: Float = 0.05f)
-	private val Z_LAYER: Float = 1000f
+	private const val Z_LAYER: Float = 1000f
 
 	@SubscribeEvent
 	fun onRenderInGameHud(event: HudRenderEvent) {

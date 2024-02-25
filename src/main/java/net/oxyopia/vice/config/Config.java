@@ -58,7 +58,7 @@ public class Config extends Vigilant {
 	@Property(
         type = PropertyType.BUTTON,
         name = "Vice Discord",
-        description = "Join the vice Discord to recieve updates, post suggestions, and more!",
+        description = "Join the vice Discord to receive updates, post suggestions, and more!",
         category = "General",
         subcategory = "Vice",
         placeholder = "Join"
@@ -280,12 +280,12 @@ public class Config extends Vigilant {
 	)
 	public boolean AUTO_APPLY_BREAD = false;
 
-	// General/JTGHQ
+	// General/Journey to the Glitch HQ
 
 	@Property(
 			type = PropertyType.SWITCH,
 			name = "Evan Notification",
-			description = "Notify when Evan is ready to enter",
+			description = "Reminds you when your cooldown for Evan's Quiz has passed.",
 			category = "General",
 			subcategory = "Journey to the Glitch HQ"
 	)
@@ -294,7 +294,7 @@ public class Config extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Evan Solver",
-		description = "Solves Evan Minigame in the Glitch HQ. Changes the title to 'TRUE' or 'FALSE' depending on the answer.",
+		description = "Solves Evan minigame in the Glitch HQ. Changes the title to 'TRUE' or 'FALSE' depending on the answer.",
 		category = "General",
 		subcategory = "Journey to the Glitch HQ"
 	)
@@ -467,7 +467,7 @@ public class Config extends Vigilant {
     )
     public boolean ARENAS_MOB_EFFECT_NOTIFICATION = true;
 
-	// Auxilary/Exonitas
+	// Auxiliary/Exonitas
 
 	@Property(
 		type = PropertyType.SWITCH,

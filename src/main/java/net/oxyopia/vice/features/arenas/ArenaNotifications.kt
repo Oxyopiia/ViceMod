@@ -11,7 +11,7 @@ import net.oxyopia.vice.utils.Utils.timeDelta
 import kotlin.time.Duration.Companion.minutes
 
 object ArenaNotifications {
-	val arenas get() = Vice.storage.arenas
+	private val arenas get() = Vice.storage.arenas
 
 	@SubscribeEvent
 	fun onWaveUpdate(event: ArenaWaveChangeEvent) {

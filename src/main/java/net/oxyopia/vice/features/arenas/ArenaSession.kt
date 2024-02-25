@@ -17,12 +17,12 @@ import kotlin.math.round
 object ArenaSession {
 	lateinit var relatedWorld: World
 	var active: Boolean = false
-	var startTime: Long = 0
 	var waveNumber: Int = 0
 	var waveStartTime: Long = 0
-	var waveMobsKilled: Int = 0
-	var totalMobsKilled: Int = 0
-	var supplyDropsCollected: Int = 0
+	private var startTime: Long = 0
+	private var waveMobsKilled: Int = 0
+	private var totalMobsKilled: Int = 0
+	private var supplyDropsCollected: Int = 0
 
 	// Setters
 
@@ -67,7 +67,7 @@ object ArenaSession {
 
 	val mobsRemaining get() = if (isBossWave()) 1 else totalWaveMobs() - waveMobsKilled
 
-	fun totalWaveMobs(): Int {
+	private fun totalWaveMobs(): Int {
 		return if (isBossWave()) 1 else {
 			(3 + (waveNumber * 2) - (totalBossWaves * 2)).coerceAtMost(35)
 		}

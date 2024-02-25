@@ -31,7 +31,7 @@ object EvanNotification {
             misc.lastEvanQuiz = -1L
             storage.markDirty()
 
-            Utils.sendViceMessage("Your Evan Quiz is ready to begin!")
+            Utils.sendViceMessage("Your Evan Quiz is ready to start!")
             Utils.playSound("block.note_block.pling", 2f)
         }
     }

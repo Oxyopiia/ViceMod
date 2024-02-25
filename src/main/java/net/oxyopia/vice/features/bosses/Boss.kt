@@ -13,8 +13,8 @@ import net.oxyopia.vice.utils.Utils.timeDelta
 import java.util.*
 import kotlin.time.Duration.Companion.seconds
 
-abstract class Boss constructor(
-	val bossbarRegex: Regex = Regex("")
+abstract class Boss (
+	private val bossbarRegex: Regex = Regex("")
 ){
 	var lastSpawned = 0L
 	var lastBarUpdate = 0L

@@ -32,6 +32,7 @@ object EvanSolver {
 		"Is \"Quaking Quarry\" a real scrapped world?" to true,
 		"Is World 9 called \"Glimpse\"" to true,
 		"The answer is not False" to true,
+		"Is the Jelly NPC on Floor 4?" to true,
 
 		"Was DoomTowers made on the 6th May 2023?" to false,
 		"Is Exonitas after World 12?" to false,
@@ -43,6 +44,7 @@ object EvanSolver {
 		"Is the Jelly NPC on Floor 5?" to false,
 		"Is the max Carnage Level 4?" to false,
 		"The answer is not True" to false,
+		"Is the Adventurer's Hook from World 4?" to false,
 	)
 		get() = field.mapKeys { (key, _) -> key.lowercase() }
 }

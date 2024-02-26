@@ -185,15 +185,6 @@ public class Config extends Vigilant {
     )
     public boolean PLAYER_STATS = false;
 
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "Boss Counter",
-            description = "Count how much times you killed a boss",
-            category = "General",
-            subcategory = "Quality of Life"
-    )
-    public boolean BOSS_COUNTER = false;
-    
     // General/Spam Hider
 
     @Property(
@@ -205,7 +196,7 @@ public class Config extends Vigilant {
         hidden = true
     )
     public boolean HIDE_SERVER_TIPS = false;
-    
+
     @Property(
     	type = PropertyType.SWITCH,
     	name = "Hide Worldguard Messages",
@@ -214,7 +205,7 @@ public class Config extends Vigilant {
     	subcategory = "Spam Hider"
     )
     public boolean HIDE_WORLDGUARD_MESSAGES = false;
-    
+
     @Property(
     	type = PropertyType.SWITCH,
     	name = "Hide Set Requirement Messages",
@@ -229,7 +220,7 @@ public class Config extends Vigilant {
     @Property(
     	type = PropertyType.SWITCH,
     	name = "Show Next Cooking Item",
-    	description = "Displays a HUD graphic showing the next required item for your order in World 4.",
+    	description = "Displays the next required items for your order.",
     	category = "General",
     	subcategory = "World 4"
     )
@@ -238,7 +229,7 @@ public class Config extends Vigilant {
     @Property(
     	type = PropertyType.SWITCH,
     	name = "Show Stock Information",
-    	description = "Displays a HUD graphic showing your stock in World 4.",
+    	description = "Adds your stock to the Cooking HUD.",
     	category = "General",
     	subcategory = "World 4"
     )
@@ -251,7 +242,7 @@ public class Config extends Vigilant {
     	category = "General",
     	subcategory = "World 4"
     )
-    public boolean SIMPLIFY_COOKING_DISPLAYS = false;
+    public boolean SIMPLIFY_COOKING_DISPLAYS = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -515,7 +506,18 @@ public class Config extends Vigilant {
 		subcategory = "Quality of Life"
 	)
 	public boolean BOSS_DESPAWN_WARNING = true;
-    
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Boss Counter",
+		description = "Displays the number of times you have killed each boss.",
+		category = "Bosses",
+		subcategory = "Quality of Life"
+	)
+	public boolean BOSS_COUNTER = false;
+
+	// Bosses/Abyssal Vice
+
     @Property(
     	type = PropertyType.SWITCH,
     	name = "Abyssal Vice Laser Warning",
@@ -534,7 +536,7 @@ public class Config extends Vigilant {
         maxF = 2f
     )
     public float EIGHT_BIT_KATANA_VOLUME = 1f;
-	
+
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
 		name = "Glitch Mallet Volume",
@@ -606,7 +608,7 @@ public class Config extends Vigilant {
         addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
         addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");
         addDependency("SHOW_ITEMCD_TEXT_CROSSHAIR", "ITEM_COOLDOWN_DISPLAY");
-        addDependency("HIDE_ITEMCD_WHEN_READY", "ITEM_COOLDOWN_DISPLAY");
+		addDependency("HIDE_ITEMCD_WHEN_READY", "ITEMCD_DISPLAY_TYPE", (value) -> ITEM_COOLDOWN_DISPLAY && (int) value != 0 && (int) value != 4);
         addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY");
 
         addDependency("LIVE_ARENA_MOBS", "LIVE_ARENA_TOGGLE");

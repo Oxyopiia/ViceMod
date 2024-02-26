@@ -40,6 +40,7 @@ object EvanSolver {
 		"Is the Blowpipe the first Ability Item?" to false,
 		"Are there only 6 bosses in-game?" to false,
 		"Does PPP (Boss 4) have 3 phases?" to false,
+		"Does PPP (Boss 4) have 4 phases?" to false,
 		"Is World 10 called \"Arcade\"" to false,
 		"Is the Jelly NPC on Floor 5?" to false,
 		"Is the max Carnage Level 4?" to false,

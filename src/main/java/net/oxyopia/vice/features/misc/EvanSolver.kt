@@ -34,6 +34,7 @@ object EvanSolver {
 		"The answer is not False" to true,
 		"Is the Jelly NPC on Floor 4?" to true,
 		"Is Exonitas after World 11?" to true,
+		"Is \"Chef\" a real set?" to true,
 
 		"Was DoomTowers made on the 6th May 2023?" to false,
 		"Is Exonitas after World 12?" to false,
@@ -49,7 +50,10 @@ object EvanSolver {
 		"Is the Adventurer's Hook from World 4?" to false,
 		"Is the max Carnage Level 5?" to false,
 		"Is the max amount of silver 850?" to false,
-		"Does the World 11 Train spawn every 40m?" to false
+		"Does the World 11 Train spawn every 40m?" to false,
+		"Is the \"Whopper\" a World 4 Recipe?" to false,
+		"Are there 6 Mystic Items in World 5?" to false,
+		"Is \"Glitch\" a real set?" to false
 	)
 		get() = field.mapKeys { (key, _) -> key.lowercase() }
 }

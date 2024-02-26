@@ -54,6 +54,7 @@ object EvanSolver {
 		"Is the max Carnage Level 5?" to false,
 		"The answer is not True" to false,
 		"Is the Adventurer's Hook from World 4?" to false,
+		"Is the max Carnage Level 5?" to false,
 		"Is the max amount of silver 850?" to false,
 		"Does the World 11 Train spawn every 40m?" to false,
 		"Is the \"Whopper\" a World 4 Recipe?" to false,

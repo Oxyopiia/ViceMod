@@ -41,7 +41,8 @@ object EvanSolver {
 		"Does PPP (Boss 4) have 3 phases?" to false,
 		"Is World 10 called \"Arcade\"" to false,
 		"Is the Jelly NPC on Floor 5?" to false,
-		"Is the max Carnage Level 4?" to false
+		"Is the max Carnage Level 4?" to false,
+		"The answer is not True" to false,
 	)
 		get() = field.mapKeys { (key, _) -> key.lowercase() }
 }

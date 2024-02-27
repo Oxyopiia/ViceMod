@@ -62,6 +62,7 @@ object EvanSolver {
 		"What colour am I?" to false,
 		"Is \"Glitch\" a real set?" to false,
 		"Is \"Carnage\" a real set?" to false,
+		"Is \"8-Bit\" a real set?" to false,
 		"Is the \"Large Backpack\" the 4th Backpack Upgrade?" to false,
 	)
 		get() = field.mapKeys { (key, _) -> key.lowercase() }

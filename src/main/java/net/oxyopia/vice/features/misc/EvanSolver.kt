@@ -52,8 +52,10 @@ object EvanSolver {
 		"Is the max amount of silver 850?" to false,
 		"Does the World 11 Train spawn every 40m?" to false,
 		"Is the \"Whopper\" a World 4 Recipe?" to false,
+		"Is the \"Whoppa\" a World 4 Recipe?" to false,
 		"Are there 6 Mystic Items in World 5?" to false,
-		"Is \"Glitch\" a real set?" to false
+		"Is \"Glitch\" a real set?" to false,
+		"What colour am I?" to false
 	)
 		get() = field.mapKeys { (key, _) -> key.lowercase() }
 }

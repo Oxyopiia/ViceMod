@@ -36,6 +36,7 @@ object EvanSolver {
 		"Is Exonitas after World 11?" to true,
 		"Is \"Chef\" a real set?" to true,
 		"Do Pistons heal 2 hearts?" to true,
+		"Is the \"Barrel\" the 5th Backpack Upgrade?" to true,
 
 		"Was DoomTowers made on the 6th May 2023?" to false,
 		"Is Exonitas after World 12?" to false,

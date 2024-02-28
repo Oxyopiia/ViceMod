@@ -1,6 +1,5 @@
 package net.oxyopia.vice.features.misc
 
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.HudElement
@@ -10,26 +9,25 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.ItemUtils.getLore
 import net.oxyopia.vice.utils.ItemUtils.isRod
-import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
+import net.oxyopia.vice.utils.Utils
 
 object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos) {
+	private val defenseRegex = Regex("Defence: ([+-]?\\d+)")
+	private val speedRegex = Regex("Speed: ([+-]?\\d+(?:\\.\\d+)?)%")
+	private val fishReduceTimeRegex = Regex("Fish Time: ([+-]?\\d+\\.\\d+)s")
+	private val fishTimeRegex = Regex("Fish Time: (\\d+)-(\\d+(\\.\\d+)?)s")
+
     @SubscribeEvent
     fun onHudRender(event: HudRenderEvent) {
         if (!Vice.config.PLAYER_STATS) return
-
-        val defenseRegex = Regex("Defence: ([+-]?\\d+)")
-        val speedRegex = Regex("Speed: ([+-]?\\d+(?:\\.\\d+)?)%")
-        val fishTimeRegex = Regex("Fish Time: (\\d+)-(\\d+(\\.\\d+)?)s")
-        val fishReduceTimeRegex = Regex("Fish Time: -?(\\d+(?:\\.\\d+)?)s")
-
-        val player = MinecraftClient.getInstance().player
+        val player = Utils.getPlayer() ?: return
 
         var defence = 0
         var speed = 0f
-        var fishReduce = 0f
-        val movementSpeed = player?.movementSpeed ?: 1f
+        val movementSpeed = player.movementSpeed
+		val fishingTime = getFishingTime()
 
-        player?.armorItems?.forEach { itemStack ->
+        player.armorItems?.forEach { itemStack ->
             val lore = itemStack.getLore()
 
             lore.forEach { line ->
@@ -40,30 +38,6 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
                 speedRegex.find(line)?.apply {
                     speed += groupValues[1].toFloatOrNull() ?: 0f
                 }
-
-                fishReduceTimeRegex.find(line)?.apply {
-                    fishReduce -= groupValues[1].toFloat()
-                }
-            }
-        }
-
-        var fishTimeNum = (0 - (fishReduce * -1))
-
-        var fishTime = "${fishTimeNum}s"
-
-        val itemStack = player?.mainHandStack
-
-        if (itemStack != null) {
-            if (itemStack.isRod()) {
-                val lore = itemStack.getLore()
-
-                lore.forEach { line ->
-                    fishTimeRegex.find(line)?.apply {
-                        fishTime = "${groupValues[1]}-${groupValues[2].toFloat() - (fishReduce * -1)}s"
-                    }
-                }
-            } else {
-                fishTime = "Hold Fishing Rod"
             }
         }
 
@@ -72,10 +46,45 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
         list.add("&&b&&lPlayer Stats")
         list.add("&&fDefence: &&a\uD83D\uDEE1 $defence")
         list.add("&&fSpeed: &&e⚡ $speed% &&7(${String.format("%.2f", movementSpeed * 100).toFloat()})")
-        list.add("&&fFish Time: &&b\uD83D\uDD51 $fishTime")
+
+		if (!fishingTime.isNone()) {
+			list.add("&&fFish Time: &&b\uD83D\uDD51 ${fishingTime.min}-${fishingTime.max}s")
+		}
 
         position.drawStrings(list, event.context)
     }
+
+
+    private fun getFishingTime(): FishingTime {
+		var min = 0.0
+		var max = 0.0
+
+		Utils.getPlayer()?.mainHandStack?.let {
+		    if (it.isRod()) {
+				it.getLore().forEach { line ->
+					fishTimeRegex.find(line)?.apply {
+						min = groupValues[1].toDoubleOrNull() ?: 0.0
+						max = groupValues[2].toDoubleOrNull() ?: 0.0
+					}
+				}
+			}
+		}
+
+        Utils.getPlayer()?.armorItems?.forEach { itemStack ->
+			itemStack.getLore().forEach { line ->
+			    fishReduceTimeRegex.find(line)?.apply {
+				    max -= groupValues[1].toDoubleOrNull() ?: 0.0
+			    }
+		    }
+		}
+
+        return FishingTime(min, max)
+    }
+
+    data class FishingTime(val min: Double, val max: Double) {
+		fun isNone() = min == 0.0 && max == 0.0
+	}
+
 
     override fun storePosition(position: Position) {
         Vice.storage.misc.playerStatsPos = position

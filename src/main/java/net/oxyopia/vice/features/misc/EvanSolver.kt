@@ -37,9 +37,9 @@ object EvanSolver {
 		"Is \"Chef\" a real set?" to true,
 		"Do Pistons heal 2 hearts?" to true,
 		"Is the \"Barrel\" the 5th Backpack Upgrade?" to true,
-		"Are there 3 Porters with the Train?" to true, // change after curzee fix it, it suppost be 2 porters so "false",
 		"Is the \"Ultimeatium\" a World 4 Recipe?" to true,
 		"Are there 3 Secret Blocks in Wasteyard?" to true,
+		"Are there 3 Porters with the Train?" to true, // This is wrong, but Curzee is an IDIOT!!
 
 		"Was DoomTowers made on the 6th May 2023?" to false,
 		"Is Exonitas after World 12?" to false,

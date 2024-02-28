@@ -153,6 +153,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(HudUtils)
 		EVENT_MANAGER.subscribe(BossCounter)
+		EVENT_MANAGER.subscribe(CooldownBar)
 
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(AbilitySoundChanger)

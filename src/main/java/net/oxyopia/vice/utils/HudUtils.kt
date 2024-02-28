@@ -176,6 +176,11 @@ object HudUtils {
 		client.inGameHud.setSubtitle(Text.of(subtitle.convertFormatting()))
 	}
 
+    fun sendVanillaAuctionBar(message: String) {
+			val client = MinecraftClient.getInstance()
+				client.player?.sendMessage(Text.of(message.convertFormatting()), true)
+		}
+
 	private var title = MutableText.EMPTY
 	private var titleStayTicks = 0
 

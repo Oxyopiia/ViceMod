@@ -4,8 +4,9 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtElement
 import net.minecraft.text.Text
+import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
 
-object ItemUtils{
+object ItemUtils {
 	fun ItemStack.nameWithoutEnchants(): String {
 		return nameWithoutEnchants(name.string)
 	}
@@ -39,5 +40,27 @@ object ItemUtils{
 		}
 
 		return lore
+	}
+
+	fun ItemStack.isRod(): Boolean {
+
+		val itemName = this.nameWithoutEnchants()
+
+		return itemName.contains("Basic Fishing Rod") ||
+				itemName.contains("Reinforced Fishing Rod") ||
+				itemName.contains("Frigid Fishing Rod") ||
+				itemName.contains("Polar Rod") ||
+				itemName.contains("Gilded Fishing Rod") ||
+				itemName.contains("RGB Rod")
+	}
+
+	fun ItemStack.isHook(): Boolean {
+
+		val itemName = this.nameWithoutEnchants()
+
+		return itemName.contains("Adventurer's Hook") ||
+				itemName.contains("Slime Hook") ||
+				itemName.contains("Luminescent Hook") ||
+				itemName.contains("Genhook")
 	}
 }

@@ -360,13 +360,14 @@ public class Config extends Vigilant {
     public float ITEMCD_BACKGROUND_OPACITY = 0.2f;
 
     @Property(
-        type = PropertyType.SWITCH,
+        type = PropertyType.SELECTOR,
         name = "Hide Cooldown Titles",
-        description = "Hides the Cooldown titles when trying to use an item while on Cooldown.",
+        description = "Change the Cooldown titles Display when have Cooldown.",
         category = "General",
-        subcategory = "Item Cooldowns"
+        subcategory = "Item Cooldowns",
+		options = {"Show", "Auction Bar", "Hide"}
     )
-    public boolean HIDE_ITEM_COOLDOWN_TITLES = false;
+    public int HIDE_ITEM_COOLDOWN_TITLES = 0;
 
 	@Property(
 		type = PropertyType.SWITCH,

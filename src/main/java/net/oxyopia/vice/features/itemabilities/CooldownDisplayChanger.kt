@@ -20,9 +20,9 @@ object CooldownDisplayChanger {
     @SubscribeEvent
     fun onSubtitle(event: SubtitleEvent) {
         if (!event.subtitle.contains("Cooldown")) return
-        if (Vice.config.HIDE_ITEM_COOLDOWN_TITLES == DisplayType.NORMAL) return
+        if (Vice.config.ITEM_COOLDOWN_TITLE_TYPE == DisplayType.NORMAL) return
 
-        if (Vice.config.HIDE_ITEM_COOLDOWN_TITLES == DisplayType.ACTION_BAR) {
+        if (Vice.config.ITEM_COOLDOWN_TITLE_TYPE == DisplayType.ACTION_BAR) {
             HudUtils.sendVanillaActionBar(event.subtitle)
         }
 

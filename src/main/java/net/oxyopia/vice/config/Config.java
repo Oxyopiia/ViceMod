@@ -352,13 +352,13 @@ public class Config extends Vigilant {
 
     @Property(
         type = PropertyType.SELECTOR,
-        name = "Hide Cooldown Titles",
-        description = "Change the Cooldown titles Display when have Cooldown.",
+        name = "Display Cooldown Titles",
+        description = "Change the title displayed when using an item on Cooldown.",
         category = "General",
         subcategory = "Item Cooldowns",
-		options = {"Show", "Auction Bar", "Hide"}
+		options = {"Normal", "Action Bar", "Hidden"}
     )
-    public int HIDE_ITEM_COOLDOWN_TITLES = 0;
+    public int ITEM_COOLDOWN_TITLE_TYPE = 0;
 
 	@Property(
 		type = PropertyType.SWITCH,

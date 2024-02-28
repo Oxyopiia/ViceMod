@@ -213,15 +213,6 @@ object ItemAbilityCooldown {
 	}
 
 	@SubscribeEvent
-	fun onSubtitle(event: SubtitleEvent) {
-		// Known Bug: will clear other cooldowns (daily rewards/arenas)
-		if (Vice.config.HIDE_ITEM_COOLDOWN_TITLES != 0 && event.subtitle.contains("Cooldown")) {
-			MinecraftClient.getInstance().inGameHud.clearTitle()
-			event.callbackInfo.cancel()
-		}
-	}
-
-	@SubscribeEvent
 	fun onRenderItemSlot(event: RenderItemSlotEvent) {
 		val ability: ItemAbility? = ItemAbility.getByName(event.itemStack.nameWithoutEnchants())
 

@@ -9,6 +9,7 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.ItemUtils.getLore
+import net.oxyopia.vice.utils.ItemUtils.isRod
 import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
 
 object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos) {
@@ -51,16 +52,9 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
         var fishTime = "${fishTimeNum}s"
 
         val itemStack = player?.mainHandStack
-        val itemName = itemStack?.nameWithoutEnchants()
 
-        if (itemName != null) {
-            if (itemName.contains("Basic Fishing Rod") ||
-                itemName.contains("Reinforced Fishing Rod") ||
-                itemName.contains("Frigid Fishing Rod") ||
-                itemName.contains("Polar Rod") ||
-                itemName.contains("Gilded Fishing Rod") ||
-                itemName.contains("RGB Rod")
-            ) {
+        if (itemStack != null) {
+            if (itemStack.isRod()) {
                 val lore = itemStack.getLore()
 
                 lore.forEach { line ->

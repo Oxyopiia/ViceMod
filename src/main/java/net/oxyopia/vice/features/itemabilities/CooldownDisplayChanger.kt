@@ -23,7 +23,7 @@ object CooldownDisplayChanger {
         if (Vice.config.ITEM_COOLDOWN_TITLE_TYPE == DisplayType.NORMAL) return
 
         if (Vice.config.ITEM_COOLDOWN_TITLE_TYPE == DisplayType.ACTION_BAR) {
-            HudUtils.sendVanillaActionBar(event.subtitle)
+            HudUtils.sendVanillaActionBar(event.rawSubtitle)
         }
 
         MinecraftClient.getInstance().inGameHud.clearTitle()

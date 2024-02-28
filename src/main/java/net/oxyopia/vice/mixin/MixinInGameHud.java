@@ -62,7 +62,7 @@ public class MixinInGameHud {
 	@Inject(at = @At("HEAD"), method = "setSubtitle", cancellable = true)
 	private void onSubtitle(Text subtitle, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new SubtitleEvent(subtitle.getString(), title != null ? title.getString() : "", ci));
+			EVENT_MANAGER.publish(new SubtitleEvent(subtitle, title != null ? title : Text.empty(), ci));
 		}
 	}
 

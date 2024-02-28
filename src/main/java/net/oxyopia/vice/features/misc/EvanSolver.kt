@@ -35,7 +35,7 @@ object EvanSolver {
 		"Is the Jelly NPC on Floor 4?" to true,
 		"Is Exonitas after World 11?" to true,
 		"Is \"Chef\" a real set?" to true,
-		"Do Pistons heal 2 hearts?" to true, // change after curzee fix it, it suppost be 1 heart so "false"
+		"Do Pistons heal 2 hearts?" to true,
 		"Is the \"Barrel\" the 5th Backpack Upgrade?" to true,
 		"Are there 3 Porters with the Train?" to true, // change after curzee fix it, it suppost be 2 porters so "false",
 		"Is the \"Ultimeatium\" a World 4 Recipe?" to true,
@@ -64,6 +64,7 @@ object EvanSolver {
 		"Is \"Carnage\" a real set?" to false,
 		"Is \"8-Bit\" a real set?" to false,
 		"Is the \"Large Backpack\" the 4th Backpack Upgrade?" to false,
+		"Does the Train Drop the Revolver?" to false
 	)
 		get() = field.mapKeys { (key, _) -> key.lowercase() }
 }

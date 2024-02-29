@@ -47,7 +47,7 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
         list.add("&&fDefence: &&a\uD83D\uDEE1 $defence")
         list.add("&&fSpeed: &&e⚡ $speed% &&7(${String.format("%.2f", movementSpeed * 100).toFloat()})")
 
-		if (!fishingTime.isNone()) {
+		if (!fishingTime.isNone() && player.mainHandStack.isRod()) {
 			list.add("&&fFish Time: &&b\uD83D\uDD51 ${fishingTime.min}-${fishingTime.max}s")
 		}
 
@@ -73,7 +73,7 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
         Utils.getPlayer()?.armorItems?.forEach { itemStack ->
 			itemStack.getLore().forEach { line ->
 			    fishReduceTimeRegex.find(line)?.apply {
-				    max -= groupValues[1].toDoubleOrNull() ?: 0.0
+				    max -= (groupValues[1].toDoubleOrNull() ?: 0.0) * -1 // groupValues[1].toDoubleOrNull() for some reason return positive instead negative
 			    }
 		    }
 		}

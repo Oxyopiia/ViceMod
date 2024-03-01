@@ -146,14 +146,19 @@ object ItemAbilityCooldown {
 				ItemAbility.SNOWBALL_CANNON.onSound()
 			}
 
-			// Jynx Chain Gun
+			// Jynx's Chain Gun
 			event.soundName == "entity.guardian.attack" && event.pitch == 1.25f && !ItemAbility.JYNX_CHAIN_GUN.isOnCooldown() -> {
 				ItemAbility.JYNX_CHAIN_GUN.onSound()
 			}
 
 			// The Synthflesh
-			event.soundName == "entity.player.burp" && (event.pitch == 0.5f ||event.pitch == 1f) && event.volume == 9999f -> {
+			event.soundName == "entity.player.burp" && (event.pitch == 0.5f || event.pitch == 1f) && event.volume == 9999f -> {
 				ItemAbility.THE_SYNTHFLESH.onSound()
+			}
+
+			// Shadow Gelato's Drum Gun
+			event.soundName == "entity.illusioner.cast_spell" && event.volume == 9999f -> {
+				ItemAbility.SHADOW_GELATO_DRUM_GUN.onSound()
 			}
 		}
 	}

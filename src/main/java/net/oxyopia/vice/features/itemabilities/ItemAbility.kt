@@ -54,6 +54,7 @@ enum class ItemAbility(
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, displayCooldown = false, set = Set.HEAVY, setAmount = 2),
     CARNAGE_RIFLE("Carnage Rifle", 0.5f, displayCooldown = false, set = Set.FLESHCRAWLER, setAmount = 2),
     SNOWBALL_CANNON("Snowball Cannon", 0.5f, displayCooldown = false),
+    SHADOW_GELATO_DRUM_GUN("Shadow Gelato's Drum Gun", 0.1f, displayCooldown = false),
     JYNX_CHAIN_GUN("Jynx's Chain Gun", 0.5f, displayCooldown = false, set = Set.DIGITAL, setAmount = 2);
 
     // Detecting whether the ability has ACTUALLY happened is performed in /features/itemabilities/ItemAbilityCooldown.kt

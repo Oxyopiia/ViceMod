@@ -59,13 +59,13 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 		var min = 0.0
 		var max = 0.0
 
-		Utils.getPlayer()?.mainHandStack?.let {
-		    if (it.isRod()) {
-				it.getLore().forEach { line ->
-					fishTimeRegex.find(line)?.apply {
-						min = groupValues[1].toDoubleOrNull() ?: 0.0
-						max = groupValues[2].toDoubleOrNull() ?: 0.0
-					}
+		Utils.getPlayer()?.mainHandStack?.let { item ->
+			if (!item.isRod()) return FishingTime.NONE
+
+			item.getLore().forEach { line ->
+				fishTimeRegex.find(line)?.apply {
+					min = groupValues[1].toDoubleOrNull() ?: 0.0
+					max = groupValues[2].toDoubleOrNull() ?: 0.0
 				}
 			}
 		}
@@ -73,7 +73,7 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
         Utils.getPlayer()?.armorItems?.forEach { itemStack ->
 			itemStack.getLore().forEach { line ->
 			    fishReduceTimeRegex.find(line)?.apply {
-				    max -= groupValues[1].toDoubleOrNull() ?: 0.0
+				    max += groupValues[1].toDoubleOrNull() ?: 0.0
 			    }
 		    }
 		}
@@ -82,7 +82,11 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
     }
 
     data class FishingTime(val min: Double, val max: Double) {
-		fun isNone() = min == 0.0 && max == 0.0
+		fun isNone() = this == NONE
+
+		companion object {
+			val NONE by lazy { FishingTime(0.0, 0.0) }
+		}
 	}
 
 

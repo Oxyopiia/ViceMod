@@ -287,7 +287,7 @@ public class Config extends Vigilant {
 		category = "General",
 		subcategory = "Journey to the Glitch HQ"
 	)
-	public boolean GLITCH_HQ_EVAN_SOLVER = true;
+	public boolean GLITCH_HQ_EVAN_SOLVER = false;
 
     // General/Item Cooldowns
 

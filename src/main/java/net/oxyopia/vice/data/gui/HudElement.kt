@@ -36,7 +36,7 @@ abstract class
 	}
 
 	override fun renderButton(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
-		if (!shouldDrawInternal()) return
+		if (!shouldDrawInternal()) { return }
 		syncHoverState()
 
 		val color = if (isResetting()) Color.red else Color.gray
@@ -137,7 +137,7 @@ abstract class
 	fun getDisplayName(): String = displayName
 
 	private fun syncHoverState() {
-		hoveredElements.removeAll { it.displayName == this.displayName }
+		hoveredElements.removeAll { it.displayName == displayName }
 
 		if (hovered) {
 			hoveredElements.add(this)

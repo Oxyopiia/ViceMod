@@ -32,8 +32,6 @@ public class DevDataCommand {
 						.setHover(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackContent(heldItem)));
 				}
 
-				DevUtils.sendErrorMessage(new Exception("Random exception lmao there isnt anything wrong"), "This is an error test");
-
 				return Command.SINGLE_SUCCESS;
 			})
 		);

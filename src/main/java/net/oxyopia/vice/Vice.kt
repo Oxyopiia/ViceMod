@@ -126,7 +126,6 @@ class Vice : ClientModInitializer {
 				ViceCommand.register(it)
 				DevDataCommand.register(it)
 				EventTreeCommand.register(it)
-				BlockClickOverride.register(it)
 				BackpackRenaming.registerCommand(it)
 			}
 		})

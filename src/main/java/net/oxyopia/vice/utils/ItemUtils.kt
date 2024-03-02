@@ -4,15 +4,14 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtElement
 import net.minecraft.text.Text
-import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
 
 object ItemUtils {
 	fun ItemStack.nameWithoutEnchants(): String {
-		return nameWithoutEnchants(name.string)
+		return name.string.nameWithoutEnchants()
 	}
 
-	private fun nameWithoutEnchants(string: String): String {
-		return string.replace("\\s\\(.*\\)".toRegex(), "").replace(" §".toRegex(), "")
+	fun String.nameWithoutEnchants(): String {
+		return replace("\\s\\(.*\\)".toRegex(), "").replace(" §".toRegex(), "")
 	}
 
 	fun getHeldItem(): ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY

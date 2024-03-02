@@ -12,10 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 import java.io.File;
 import java.net.URI;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import static net.oxyopia.vice.Vice.devConfig;
 
@@ -350,25 +348,6 @@ public class Config extends Vigilant {
     )
     public float ITEMCD_BACKGROUND_OPACITY = 0.2f;
 
-    @Property(
-        type = PropertyType.SELECTOR,
-        name = "Display Cooldown Titles",
-        description = "Change the title displayed when using an item on Cooldown.",
-        category = "General",
-        subcategory = "Item Cooldowns",
-		options = {"Normal", "Action Bar", "Hidden"}
-    )
-    public int ITEM_COOLDOWN_TITLE_TYPE = 0;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Wrong Set Indicator",
-		description = "Display a red overlay on an item if you do not have the required Set equipped.",
-		category = "General",
-		subcategory = "Item Cooldowns"
-	)
-	public boolean WRONG_SET_INDICATOR = false;
-
     // General/Fishing
 
     @Property(
@@ -379,6 +358,36 @@ public class Config extends Vigilant {
         subcategory = "Fishing"
     )
     public boolean FISHING_DING = true;
+
+	// Abilities/Item Detail Display
+	
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Bonus Item Details",
+		description = "Adds more details to an ability item's lore, such as Cooldown and bonus Set info.",
+		category = "Abilities",
+		subcategory = "Quality of Life"
+	)
+	public boolean ITEM_DETAIL_DISPLAY = true;
+
+	@Property(
+		type = PropertyType.SELECTOR,
+		name = "Display Cooldown Titles",
+		description = "Change the title displayed when using an item on Cooldown.",
+		category = "Abilities",
+		subcategory = "Quality of Life",
+		options = {"Normal", "Action Bar", "Hidden"}
+	)
+	public int ITEM_COOLDOWN_TITLE_TYPE = 0;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Wrong Set Indicator",
+		description = "Display a red overlay on an item if you do not have the required Set equipped.",
+		category = "Abilities",
+		subcategory = "Quality of Life"
+	)
+	public boolean WRONG_SET_INDICATOR = false;
 
     // Arenas/Quality of Life
 
@@ -586,6 +595,14 @@ public class Config extends Vigilant {
         maxF = 2f
     )
     public float SNOWBALL_CANNON_VOLUME = 1f;
+
+	@Property(
+		type = PropertyType.DECIMAL_SLIDER,
+		name = "Shadow Gelato Drum Gun Volume",
+		category = "Sounds",
+		maxF = 2f
+	)
+	public float SHADOW_DRUM_GUN_VOLUME = 1f;
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,

@@ -43,6 +43,7 @@ import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.itemabilities.CooldownDisplayChanger
+import net.oxyopia.vice.features.itemabilities.ItemDetailDisplay
 import net.oxyopia.vice.features.misc.*
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
@@ -158,6 +159,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(AbilitySoundChanger)
 		EVENT_MANAGER.subscribe(CooldownDisplayChanger)
+		EVENT_MANAGER.subscribe(ItemDetailDisplay)
 
 		EVENT_MANAGER.subscribe(CookingAPI)
 		EVENT_MANAGER.subscribe(OrderTracker)

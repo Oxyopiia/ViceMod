@@ -1,7 +1,6 @@
 package net.oxyopia.vice.features.misc
 
 import com.mojang.brigadier.Command
-import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType.greedyString
 import com.mojang.brigadier.context.CommandContext
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument
@@ -10,6 +9,7 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.events.CommandRegisterEvent
 import net.oxyopia.vice.events.ItemRenameEvent
 import net.oxyopia.vice.events.ModifyChestNameEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
@@ -78,8 +78,9 @@ object BackpackRenaming {
 
 	private fun warnEmpty() = DevUtils.sendWarningMessage("You are not holding a backpack!", false)
 
-	fun registerCommand(dispatcher: CommandDispatcher<FabricClientCommandSource?>) {
-		dispatcher.register(
+	@SubscribeEvent
+	fun registerCommand(event: CommandRegisterEvent) {
+		event.register(
 			literal(COMMAND_NAME)
 				.then(argument("name", greedyString())
 					.executes { context ->

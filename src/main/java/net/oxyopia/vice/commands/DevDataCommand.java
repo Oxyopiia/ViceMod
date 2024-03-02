@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
-import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.ItemUtils;
 import net.oxyopia.vice.utils.Utils;
 

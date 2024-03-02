@@ -18,7 +18,6 @@ import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayNetworkHandler
 import net.minecraft.command.CommandRegistryAccess
-import net.oxyopia.vice.commands.BlockClickOverride
 import net.oxyopia.vice.commands.DevDataCommand
 import net.oxyopia.vice.commands.EventTreeCommand
 import net.oxyopia.vice.commands.ViceCommand
@@ -26,6 +25,7 @@ import net.oxyopia.vice.config.Config
 import net.oxyopia.vice.config.DevConfig
 import net.oxyopia.vice.config.Storage
 import net.oxyopia.vice.data.World
+import net.oxyopia.vice.events.CommandRegisterEvent
 import net.oxyopia.vice.events.core.EventManager
 import net.oxyopia.vice.features.RenderTest
 import net.oxyopia.vice.features.arenas.ArenaAPI
@@ -126,7 +126,7 @@ class Vice : ClientModInitializer {
 				ViceCommand.register(it)
 				DevDataCommand.register(it)
 				EventTreeCommand.register(it)
-				BackpackRenaming.registerCommand(it)
+				EVENT_MANAGER.publish(CommandRegisterEvent(it))
 			}
 		})
 	}

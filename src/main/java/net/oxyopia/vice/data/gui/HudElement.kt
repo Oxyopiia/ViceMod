@@ -36,7 +36,7 @@ abstract class
 	}
 
 	override fun renderButton(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
-		if (!shouldDrawInternal()) { return }
+		if (!shouldDrawInternal()) return setInvisible()
 		syncHoverState()
 
 		val color = if (isResetting()) Color.red else Color.gray
@@ -142,6 +142,15 @@ abstract class
 		if (hovered) {
 			hoveredElements.add(this)
 		}
+	}
+
+	private fun setInvisible() {
+		if (!visible) return
+
+		if (isHovered) syncHoverState()
+		if (isSelected) selectedElement = null
+
+		visible = false
 	}
 
 	private fun limitScale() {

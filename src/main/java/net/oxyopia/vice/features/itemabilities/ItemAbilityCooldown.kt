@@ -295,7 +295,7 @@ object ItemAbilityCooldown {
 
 	private fun ItemAbility.drawStatus(x: Int, y: Int, context: DrawContext, centered: Boolean = false, defaultColor: Color = Color.white) {
 		if (!Vice.config.SHOW_ITEMCD_TEXT && Vice.config.ITEMCD_DISPLAY_TYPE != DisplayType.TEXT_ONLY) return
-		if (!displayCooldown) return
+		if (!Vice.config.ITEM_COOLDOWN_DISPLAY || !displayCooldown) return
 
 		val matrices = context.matrices
 

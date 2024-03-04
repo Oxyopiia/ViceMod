@@ -30,4 +30,10 @@ class MiscStorage {
 	@Expose
 	var playerStatsPos: Position = Position(175f, 150f)
 
+	@Expose
+	var wastelandTimePos: Position = Position(175f, 150f)
+
+	@Expose
+	var raceTimePos: Position = Position(175f, 150f)
+
 }

@@ -183,6 +183,33 @@ public class Config extends Vigilant {
     )
     public boolean PLAYER_STATS = false;
 
+	@Property(
+			type = PropertyType.SWITCH,
+			name = "Wasteland Time",
+			description = "Displays timer left inside Wasteland.",
+			category = "General",
+			subcategory = "Quality of Life"
+	)
+	public boolean WASTELAND_TIME = false;
+
+	@Property(
+			type = PropertyType.SWITCH,
+			name = "Scrap Race Time",
+			description = "Displays timer left in Scrap Race.",
+			category = "General",
+			subcategory = "Quality of Life"
+	)
+	public boolean RACE_TIME = false;
+
+	@Property(
+			type = PropertyType.SWITCH,
+			name = "Steel Forge Time",
+			description = "Displays timer left steel to be ready.",
+			category = "General",
+			subcategory = "Quality of Life"
+	)
+	public boolean STEEL_FORGE_TIME = false;
+
     // General/Spam Hider
 
     @Property(
@@ -268,6 +295,15 @@ public class Config extends Vigilant {
 		subcategory = "World 4"
 	)
 	public boolean AUTO_APPLY_BREAD = false;
+
+	@Property(
+			type = PropertyType.SWITCH,
+			name = "Display Cooking Time",
+			description = "Show on screen timer when Meat is ready",
+			category = "General",
+			subcategory = "World 4"
+	)
+	public boolean COOKING_TIME = false;
 
 	// General/Journey to the Glitch HQ
 

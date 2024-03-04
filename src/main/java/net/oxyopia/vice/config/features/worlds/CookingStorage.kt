@@ -5,7 +5,7 @@ import net.oxyopia.vice.data.gui.Position
 
 class CookingStorage {
 
-	@Expose
+    @Expose
 	var currentOrder: String = ""
 
 	@Expose
@@ -25,5 +25,8 @@ class CookingStorage {
 
 	@Expose
 	var orderTrackerPos: Position = Position(10f, 50f, centered = false)
+
+	@Expose
+	var cookingTimePos: Position = Position(175f, 10f)
 
 }

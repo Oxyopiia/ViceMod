@@ -19,13 +19,15 @@ A feature-rich Minecraft Utility Mod made for the DoomTowers Minehut server.
 Please submit bug reports or suggestions in the [Discord Server](https://discord.gg/7nb9KcZHug).
 
 ## Notable Features
-<details><summary>- Highly Customisable Item Cooldown Display</summary>
+<ol>
+	<li><details><summary>- Highly Customisable Item Cooldown Display</summary>
 	Renders a cooldown background for specific DoomTowers items, such as the Burger Blade, in the hotbar.
 	- 4 Unique Display Modes: Vanilla, Static, Fade, and Text Only,
 	- A toggleable timer to accompany the background,
 	- A toggleable timer next to the crosshair for quick viewing,
 	- A toggle to display if a Cooldown is locked behind an unequipped set.
-</details>
+</details></li>
+</ol>
 	- Ability Volume Changers 
 	- Daily Rewards and Evan Notifications
 	- Improved Fishing Bite Indicator

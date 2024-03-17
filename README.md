@@ -32,7 +32,7 @@ Please submit bug reports or suggestions in the [Discord Server](https://discord
  	<li>Daily Rewards and Evan Notifications</li>
 	<li>Improved Fishing Bite Indicator</li>
 	<li>Chat Spam Hiders</li>
-	<li><details><summary>- Live Arena Information</summary>
+	<li><details><summary>Live Arena Information</summary>
 	Displays useful statistics on-screen during an Arena session, with many optional settings for customisability:
 	- Wave Time
 	- Mobs Remaining

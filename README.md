@@ -21,11 +21,13 @@ Please submit bug reports or suggestions in the [Discord Server](https://discord
 ## Notable Features
 <ul>
 	<li><details><summary>Highly Customisable Item Cooldown Display</summary>
-	Renders a cooldown background for specific DoomTowers items, such as the Burger Blade, in the hotbar.<br />
-	- 4 Unique Display Modes: Vanilla, Static, Fade, and Text Only,<br />
-	- A toggleable timer to accompany the background,<br />
-	- A toggleable timer next to the crosshair for quick viewing,<br />
-	- A toggle to display if a Cooldown is locked behind an unequipped set.<br />
+		
+	Renders a cooldown background for specific DoomTowers items, such as the Burger Blade, in the hotbar.
+	- 4 Unique Display Modes: Vanilla, Static, Fade, and Text Only,
+	- A toggleable timer to accompany the background,
+	- A toggleable timer next to the crosshair for quick viewing,
+	- A toggle to display if a Cooldown is locked behind an unequipped set.
+ 
 </details></li>
 	<li>Ability Volume Changers</li>
 	<li>Daily Rewards Notification </li>

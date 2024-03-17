@@ -21,25 +21,27 @@ Please submit bug reports or suggestions in the [Discord Server](https://discord
 ## Notable Features
 <ul>
 	<li><details><summary>Highly Customisable Item Cooldown Display</summary>
-		
-	Renders a cooldown background for specific DoomTowers items, such as the Burger Blade, in the hotbar.
-	- 4 Unique Display Modes: Vanilla, Static, Fade, and Text Only,
-	- A toggleable timer to accompany the background,
-	- A toggleable timer next to the crosshair for quick viewing,
-	- A toggle to display if a Cooldown is locked behind an unequipped set.
- 
-</details></li>
+	Renders a cooldown background for specific DoomTowers items, such as the Burger Blade, in the hotbar.<br />
+	<ul>
+		<li>4 Unique Display Modes: Vanilla, Static, Fade, and Text Only,</li>
+		<li>A toggleable timer to accompany the background,</li>
+		<li>A toggleable timer next to the crosshair for quick viewing,</li>
+		<li>A toggle to display if a Cooldown is locked behind an unequipped set.</li>
+	</ul>
+	</details></li>
 	<li>Ability Volume Changers</li>
 	<li>Daily Rewards Notification </li>
  	<li>Daily Rewards and Evan Notifications</li>
 	<li>Improved Fishing Bite Indicator</li>
 	<li>Chat Spam Hiders</li>
 	<li><details><summary>Live Arena Information</summary>
-	Displays useful statistics on-screen during an Arena session, with many optional settings for customisability:
-	- Wave Time
-	- Mobs Remaining
-	- Mob Effects
-	- Projected Drops and Drop Rates
+	Displays useful statistics on-screen during an Arena session, with many optional settings for customisability:<br />
+	<ul>
+		<li>Wave Time</li>
+		<li>Mobs Remaining</li>
+		<li>Mob Effects</li>
+		<li>Projected Drops and Drop Rates</li>
+   	</ul>
 </details></li>
 	<li>World 4 Cooking Timers</li>
  	<li>Train Timer</li>

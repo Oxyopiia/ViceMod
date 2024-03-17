@@ -2,9 +2,6 @@
 A feature-rich Minecraft Utility Mod for the DoomTowers Minehut server.
 
 <div align="center">
-	[![Discord](https://img.shields.io/discord/1146499076033097808?label=discord&color=9089DA&logo=discord&style=for-the-badge)](https://discord.gg/7nb9KcZHug)]
-	[![Powered by Kotlin](https://img.shields.io/badge/Made%20With-Kotlin-orange?style=for-the-badge&logo=kotlin&logocolor=white)](https://kotlinlang.org/)]
-	[![Releases](https://img.shields.io/github/downloads/Oxyopiia/ViceMod/total?label=downloads&color=208a19&logo=github&style=for-the-badge)](https://github.com/Oxyopiia/ViceMod/releases)] 
 	<a href="https://github.com/Oxyopiia/ViceMod/releases" target="_blank">
     		<img alt="downloads" src="https://img.shields.io/github/v/release/Oxyopiia/ViceMod?color=4166f5&style=for-the-badge"/>
   	</a>

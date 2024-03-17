@@ -20,32 +20,30 @@ Please submit bug reports or suggestions in the [Discord Server](https://discord
 
 ## Notable Features
 <ul>
-	<li><details><summary>- Highly Customisable Item Cooldown Display</summary>
+	<li><details><summary>Highly Customisable Item Cooldown Display</summary>
 	Renders a cooldown background for specific DoomTowers items, such as the Burger Blade, in the hotbar.<br />
 	- 4 Unique Display Modes: Vanilla, Static, Fade, and Text Only,<br />
 	- A toggleable timer to accompany the background,<br />
 	- A toggleable timer next to the crosshair for quick viewing,<br />
 	- A toggle to display if a Cooldown is locked behind an unequipped set.<br />
 </details></li>
-	<li> Ability Volume Changers</li>
-	<li> Daily Rewards Notification </li>
- 
-</ul>
-	
-	- Daily Rewards and Evan Notifications
-	- Improved Fishing Bite Indicator
-	- Chat Spam Hiders
-<details><summary>- Live Arena Information</summary>
+	<li>Ability Volume Changers</li>
+	<li>Daily Rewards Notification </li>
+ 	<li>Daily Rewards and Evan Notifications</li>
+	<li>Improved Fishing Bite Indicator</li>
+	<li>Chat Spam Hiders</li>
+	<li><details><summary>- Live Arena Information</summary>
 	Displays useful statistics on-screen during an Arena session, with many optional settings for customisability:
 	- Wave Time
 	- Mobs Remaining
 	- Mob Effects
 	- Projected Drops and Drop Rates
-</details>
-	- World 4 Cooking Helpers
-	- Train Timer
-	- Revolver Blindness Hider
-	- Exonitas Helpers
+</details></li>
+	<li>World 4 Cooking Timers</li>
+ 	<li>Train Timer</li>
+	<li>Revolver Blindness Hider</li>
+	<li>Exonitas Helpers</li>
+</ul>
 
 ## Credits
 Vice would not be where it is without open-source projects, which can be found in our [Credits Page](https://github.com/Oxyopiia/ViceMod/blob/master/CREDITS.md "Credits"), check it out!

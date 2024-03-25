@@ -23,6 +23,7 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	Gelato("corruptedvice", "El Gelato", type = WorldType.BOSS),
 	PPP("fakeplayer", "PPP", type = WorldType.BOSS),
 	Minehut("minehutboss", "Minehut Boss", type = WorldType.BOSS),
+	Diox("dioxarena", "Diox", type = WorldType.BOSS),
 	DarkVice("darkvice", "Abyssal Vice", type = WorldType.BOSS),
 	ShadowGelato("shadowgelato", "Shadow Gelato", type = WorldType.BOSS),
 

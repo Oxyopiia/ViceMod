@@ -29,4 +29,6 @@ abstract class ViceEvent {
 			return this.returnValue
 		}
 	}
+
+	open fun onceSent() {}
 }

@@ -76,6 +76,7 @@ class EventManager {
 			clazz = clazz.superclass
 		}
 
+		event.onceSent()
 		return event
 	}
 }

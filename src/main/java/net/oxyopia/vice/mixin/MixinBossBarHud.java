@@ -1,22 +1,33 @@
 package net.oxyopia.vice.mixin;
 
+import gg.essential.lib.mixinextras.sugar.Local;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.BossBarHud;
 import net.minecraft.client.gui.hud.ClientBossBar;
+import net.minecraft.entity.boss.BossBar;
 import net.minecraft.text.Text;
-import net.oxyopia.vice.events.ModifyBossBarEvent;
+import net.oxyopia.vice.events.BossBarEvent;
 import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import static net.oxyopia.vice.Vice.EVENT_MANAGER;
 
+@Debug(export=true)
 @Mixin(BossBarHud.class)
-public class MixinBossBarHud {
+public abstract class MixinBossBarHud {
+	@Shadow protected abstract void renderBossBar(DrawContext context, int x, int y, BossBar bossBar);
+
+	@Shadow @Final private MinecraftClient client;
 	@Unique private String lastReportedTitle = "";
 
 	@Redirect(
@@ -31,12 +42,46 @@ public class MixinBossBarHud {
 			lastReportedTitle = instance.getName().getString();
 		}
 
-		ModifyBossBarEvent result = EVENT_MANAGER.publish(new ModifyBossBarEvent(instance, instance.getName()));
+		BossBarEvent.Override result = EVENT_MANAGER.publish(new BossBarEvent.Override(instance, instance.getName()));
 
 		if (result.hasReturnValue()) {
 			return result.getReturnValue();
 		}
 
 		return instance.getName();
+	}
+
+	@Redirect(
+		at = @At(value="INVOKE", target="Ljava/util/Map;isEmpty()Z"),
+		method = "render"
+	)
+	private boolean cancelChecks(Map<UUID, ClientBossBar> instance) {
+		if (!Utils.INSTANCE.getInDoomTowers()) return instance.isEmpty();
+		return false;
+	}
+
+	@Inject(
+		at = @At("TAIL"),
+		method = "render"
+	)
+	private void addBossbarEntries(DrawContext context, CallbackInfo ci, @Local(ordinal = 0) int i, @Local(ordinal = 1) int j) {
+		if (!Utils.INSTANCE.getInDoomTowers()) return;
+
+		BossBarEvent.Insert result = EVENT_MANAGER.publish(new BossBarEvent.Insert());
+
+		if (result.getReturnValue() == null || result.getReturnValue().isEmpty()) return;
+
+		for (ClientBossBar clientBossBar : result.getReturnValue().values()) {
+			int k = i / 2 - 91;
+			int l = j;
+			renderBossBar(context, k, l, clientBossBar);
+			Text text = clientBossBar.getName();
+			int m = client.textRenderer.getWidth(text);
+			int n = i / 2 - m / 2;
+			int o = l - 9;
+			context.drawTextWithShadow(client.textRenderer, text, n, o, 0xFFFFFF);
+			if ((j += 10 + client.textRenderer.fontHeight) < context.getScaledWindowHeight() / 3) continue;
+			break;
+		}
 	}
 }

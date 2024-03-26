@@ -2,7 +2,7 @@ package net.oxyopia.vice.features.bosses
 
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ClientTickEvent
-import net.oxyopia.vice.events.ModifyBossBarEvent
+import net.oxyopia.vice.events.BossBarEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
@@ -27,7 +27,7 @@ abstract class Boss (
 	private var lastDespawnNotify: Long = -1
 
 	@SubscribeEvent
-	open fun onBossBarModifyEvent(event: ModifyBossBarEvent) {
+	open fun onBossBarModifyEvent(event: BossBarEvent.Override) {
 		if (!Vice.config.BOSS_DESPAWN_TIMERS || !isInWorld()) return
 
 		bossbarRegex.find(event.original.string)?.apply {

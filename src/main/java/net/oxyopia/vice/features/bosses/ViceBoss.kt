@@ -1,7 +1,7 @@
 package net.oxyopia.vice.features.bosses
 
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.events.ModifyBossBarEvent
+import net.oxyopia.vice.events.BossBarEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.data.World
@@ -11,7 +11,7 @@ object ViceBoss : Boss() {
 	private const val PHASE_1_MAX_TIME = 5 * 60
 
 	@SubscribeEvent
-	override fun onBossBarModifyEvent(event: ModifyBossBarEvent) {
+	override fun onBossBarModifyEvent(event: BossBarEvent.Override) {
 		if (!Vice.config.BOSS_DESPAWN_TIMERS || !isInWorld()) return
 
 		if (event.original.string.contains("VICE")) {

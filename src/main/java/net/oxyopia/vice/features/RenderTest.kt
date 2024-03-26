@@ -1,15 +1,27 @@
 package net.oxyopia.vice.features
 
 import net.minecraft.client.gui.DrawContext
+import net.minecraft.entity.boss.BossBar
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
+import net.oxyopia.vice.events.BossBarEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 
 object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
+	@SubscribeEvent
+	fun onBossbarAfter(event: BossBarEvent.Insert) {
+		if (!shouldDraw()) return
+
+		event.add("Hello World!", 0.72f, BossBar.Color.PINK, BossBar.Style.PROGRESS)
+		event.add("He3llo World!", 0.2f, BossBar.Color.YELLOW, BossBar.Style.NOTCHED_10)
+		event.add("Hello2 World!", 1f, BossBar.Color.RED, BossBar.Style.NOTCHED_12)
+		event.add("Hel4lo World!", 0f, BossBar.Color.WHITE, BossBar.Style.PROGRESS)
+	}
+
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
 		if (!shouldDraw()) return
@@ -47,7 +59,6 @@ object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 			"&&aScalar 2 Test 1",
 			"&&aScalar 2 Test 2",
 		), event.context)
-
 	}
 
 	override fun storePosition(position: Position) {}

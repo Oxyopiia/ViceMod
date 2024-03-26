@@ -13,7 +13,6 @@
     "MixinDownloadingTerrainScreen",
     "MixinDrawContext",
     "MixinGameRenderer",
-    "MixinHandledScreen",
     "MixinInGameHud",
     "MixinItemStack",
     "MixinLivingEntity",

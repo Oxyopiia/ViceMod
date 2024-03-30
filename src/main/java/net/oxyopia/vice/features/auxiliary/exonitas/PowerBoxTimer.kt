@@ -11,8 +11,8 @@ import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils.drawString
-import net.oxyopia.vice.utils.Utils.ms
-import net.oxyopia.vice.utils.Utils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.ms
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.seconds
 
 object PowerBoxTimer : HudElement("Power Box Timer", Vice.storage.auxiliary.city.powerBoxTimerPos) {

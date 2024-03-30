@@ -8,9 +8,9 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.Utils.formatTimer
-import net.oxyopia.vice.utils.Utils.ms
-import net.oxyopia.vice.utils.Utils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.ms
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import kotlin.time.Duration.Companion.seconds
 
 object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.arenas.liveArenaPos) {

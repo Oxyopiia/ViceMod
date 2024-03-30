@@ -5,7 +5,7 @@ import net.oxyopia.vice.events.BossBarEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.data.World
-import net.oxyopia.vice.utils.Utils.formatTimer
+import net.oxyopia.vice.utils.TimeUtils.formatTimer
 
 object ViceBoss : Boss() {
 	private const val PHASE_1_MAX_TIME = 5 * 60

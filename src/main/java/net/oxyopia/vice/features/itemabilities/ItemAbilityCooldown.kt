@@ -16,9 +16,9 @@ import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
+import net.oxyopia.vice.utils.ItemUtils.getEquippedSets
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.Utils.clamp
-import net.oxyopia.vice.utils.Utils.getEquippedSets
+import net.oxyopia.vice.utils.NumberUtils.clamp
 import java.awt.Color
 import kotlin.math.ceil
 

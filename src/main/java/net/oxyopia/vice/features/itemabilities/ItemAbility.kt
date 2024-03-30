@@ -2,7 +2,7 @@ package net.oxyopia.vice.features.itemabilities
 
 import net.minecraft.util.ClickType
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.Utils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.data.Set
 
 /**

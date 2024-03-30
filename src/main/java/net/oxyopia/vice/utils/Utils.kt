@@ -12,15 +12,7 @@ import net.minecraft.nbt.StringNbtReader
 import net.minecraft.sound.SoundEvent
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.data.Set
 import net.oxyopia.vice.data.World
-import net.oxyopia.vice.utils.ItemUtils.getLore
-import java.util.*
-import java.util.regex.Pattern
-import kotlin.math.ceil
-
-import kotlin.math.floor
-import kotlin.time.Duration
 
 object Utils {
 	var inDoomTowers = false
@@ -36,13 +28,9 @@ object Utils {
 
 	fun getWorldString(): String? = client.world?.name()
 
-	fun getDTWorld(): World? {
-		return World.getById(getWorldString().toString())
-	}
+	fun getDTWorld(): World? = World.getById(getWorldString().toString())
 
-	fun net.minecraft.world.World.name(): String {
-		return registryKey.value.path
-	}
+	fun net.minecraft.world.World.name(): String = registryKey.value.path
 
 	fun sendViceMessage(msg: String) {
 		UChat.chat("${Vice.CHAT_PREFIX}${msg.convertFormatting()}")
@@ -63,54 +51,6 @@ object Utils {
 
 	fun playSound(string: String, pitch: Float = 1f, volume: Float = 1f) {
 		playSound(Identifier("minecraft", string), pitch, volume)
-	}
-
-	fun ClientPlayerEntity.getEquippedSets(): Map<Set, Int> {
-		val setsMap: MutableMap<Set, Int> = EnumMap(Set::class.java)
-		val pattern = Pattern.compile("♦ Set: (.*)")
-
-		armorItems?.forEach { itemStack ->
-			val lore = itemStack.getLore()
-
-			lore.forEach { string ->
-				val matcher = pattern.matcher(string)
-
-				if (matcher.find()) {
-					val set = Set.getByName(matcher.group(1))
-					setsMap[set] = setsMap.getOrDefault(set, 0) + 1
-				}
-			}
-		}
-		return setsMap
-	}
-
-	/**
-	 * Formats a duration as dd:hh:MM:SS
-	 * @param ms Time in Milliseconds
-	 */
-	fun formatDuration(ms: Long, showMs: Boolean = false): String {
-		val hours = floor(ms.toDouble() / (1000 * 60 * 60)).toLong()
-		val mins = floor((ms / (1000 * 60)).toDouble() % 60).toLong()
-		val secs = floor((ms / 1000).toDouble() % 60).toLong()
-		val millis = ms % 1000
-
-		return buildString {
-			if (hours > 0) append(String.format("%02d:", hours))
-			append(String.format("%02d:%02d", mins, secs))
-			if (showMs) append(String.format(".%03d", millis))
-		}
-	}
-
-	fun formatDuration(seconds: Float): String {
-		return formatDuration((seconds).toLong())
-	}
-
-	fun formatDuration(seconds: Long): String {
-		return formatDuration(seconds * 1000, false)
-	}
-
-	fun Long.formatTimer(timeLimit: Int): String {
-		return " \uD83D\uDD51 " + formatDuration(ceil(timeLimit - (this / 1000f)))
 	}
 
 	fun parseNbt(nbt: String): NbtCompound? {
@@ -135,33 +75,4 @@ object Utils {
 	fun String.removeFormatting(): String {
 		return this.replace("(&&|§)[a-r0-9]", "", ignoreCase = true)
 	}
-
-	// TODO("Add NumberUtils")
-
-	fun Int.clamp(min: Int, max: Int): Int {
-		return maxOf(min, minOf(max, this))
-	}
-
-	fun Double.clamp(min: Double, max: Double): Double {
-		return maxOf(min, minOf(max, this))
-	}
-
-	fun Float.clamp(min: Float, max: Float): Float {
-		return maxOf(min, minOf(max, this))
-	}
-
-	fun Long.clamp(min: Long, max: Long): Long {
-		return maxOf(min, minOf(max, this))
-	}
-
-	fun Short.clamp(min: Short, max: Short): Short {
-		return maxOf(min, minOf(max, this))
-	}
-
-	fun Long.timeDelta(): Long {
-		return System.currentTimeMillis() - this
-	}
-
-	fun Duration.ms() = this.inWholeMilliseconds
-	fun Int.ms() = this * 1000
 }

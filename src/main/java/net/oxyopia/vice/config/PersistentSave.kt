@@ -1,7 +1,7 @@
 package net.oxyopia.vice.config
 
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.Utils.ms
+import net.oxyopia.vice.utils.TimeUtils.ms
 import java.io.File
 import java.io.Reader
 import java.io.Writer

@@ -5,9 +5,9 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.DrawHoverTooltipEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
+import net.oxyopia.vice.utils.ItemUtils.getEquippedSets
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.Utils.convertFormatting
-import net.oxyopia.vice.utils.Utils.getEquippedSets
 
 /**
  * This feature is currently disabled, due to an error that I can't really seem to reproduce.

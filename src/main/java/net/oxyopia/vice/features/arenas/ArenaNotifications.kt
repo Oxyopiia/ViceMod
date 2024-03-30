@@ -6,8 +6,8 @@ import net.oxyopia.vice.events.ArenaWaveChangeEvent
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.Utils.ms
-import net.oxyopia.vice.utils.Utils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.ms
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.minutes
 
 object ArenaNotifications {

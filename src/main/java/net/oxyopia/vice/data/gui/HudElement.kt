@@ -9,7 +9,7 @@ import net.oxyopia.vice.config.HudEditor
 import net.oxyopia.vice.events.HudEditorRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawBackground
-import net.oxyopia.vice.utils.Utils.clamp
+import net.oxyopia.vice.utils.NumberUtils.clamp
 import net.oxyopia.vice.utils.Utils.getClient
 import org.lwjgl.glfw.GLFW
 import java.awt.Color

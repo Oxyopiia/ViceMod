@@ -8,11 +8,12 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.Utils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.utils.HudUtils.drawStrings
-import net.oxyopia.vice.utils.Utils.ms
+import net.oxyopia.vice.utils.TimeUtils
+import net.oxyopia.vice.utils.TimeUtils.ms
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.hours
 
@@ -39,7 +40,7 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 
 			spawnTime > 0 -> {
 				val seconds = TimeUnit.MILLISECONDS.toSeconds(spawnTime.timeDelta()) % SPAWN_COOLDOWN_TIME_SECONDS
-				val formatted = Utils.formatDuration(SPAWN_COOLDOWN_TIME_SECONDS - seconds)
+				val formatted = TimeUtils.formatDuration(SPAWN_COOLDOWN_TIME_SECONDS - seconds)
 
 				if (spawnTime.timeDelta() >= 6.hours.ms()) {
 					"&&6Train arrives in: &&cUnknown"

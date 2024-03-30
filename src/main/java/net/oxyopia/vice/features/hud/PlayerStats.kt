@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.misc
+package net.oxyopia.vice.features.hud
 
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice

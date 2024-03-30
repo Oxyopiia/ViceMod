@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.misc
+package net.oxyopia.vice.features.hud
 
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
@@ -74,7 +74,9 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 	fun onEntityDeath(event: EntityDeathEvent) {
 		if (!World.Showdown.isInWorld()) return
 
-		if (event.entity.customName.toString().contains(CONDUCTOR_NAME) || event.entity.customName.toString().contains(PORTER_NAME)) {
+		if (event.entity.customName.toString().contains(CONDUCTOR_NAME) || event.entity.customName.toString().contains(
+				PORTER_NAME
+			)) {
 			aliveCount--
 		}
 	}

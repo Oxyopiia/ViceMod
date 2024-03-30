@@ -40,6 +40,8 @@ import net.oxyopia.vice.features.cooking.CookingAPI
 import net.oxyopia.vice.features.cooking.OrderTracker
 import net.oxyopia.vice.features.cooking.CurrentOrderDisplay
 import net.oxyopia.vice.features.hud.GamingMode
+import net.oxyopia.vice.features.hud.PlayerStats
+import net.oxyopia.vice.features.hud.TrainTimer
 import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.itemabilities.CooldownDisplayChanger

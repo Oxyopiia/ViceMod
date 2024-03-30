@@ -9,6 +9,12 @@ import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.Utils.convertFormatting
 import net.oxyopia.vice.utils.Utils.getEquippedSets
 
+/**
+ * This feature is currently disabled, due to an error that I can't really seem to reproduce.
+ * There is an issue with implementing the Mixin, MixinHandledScreen, function onDrawMouseoverTooltip().
+ *
+ * If you can help fix this, that would be awesome!
+ */
 object ItemDetailDisplay {
 	@SubscribeEvent
 	fun onItemTooltip(event: DrawHoverTooltipEvent) {

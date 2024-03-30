@@ -13,11 +13,6 @@ base {
 
 repositories {
 	mavenCentral()
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
 	maven {
 		url = "https://repo.essential.gg/repository/maven-public"
 	}
@@ -30,15 +25,12 @@ repositories {
 }
 
 loom {
-//    splitEnvironmentSourceSets()
-
 	mods {
 		"vice" {
 			sourceSet sourceSets.main
 		}
 	}
     runs {
-		// This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
 		datagen {
 			inherit server
 			name "Data Generation"
@@ -51,32 +43,16 @@ loom {
 	}
 }
 
-// Add the generated resources to the main source set
-//sourceSets {
-//	main {
-//		resources {
-//			srcDirs += [
-//					'src/main/generated'
-//			]
-//		}
-//	}
-//}
-
 dependencies {
-	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-//	modImplementation(include("gg.essential:vigilance-1.18.1-fabric:286") {
-//		exclude group: "gg.essential", module: "universalcraft-1.18.1-fabric"
-//	})
-//	modImplementation(include("gg.essential:universalcraft-${project.minecraft_version}-fabric:289"))
 	modApi "com.terraformersmc:modmenu:7.2.2"
 
 	modImplementation include("gg.essential:loader-fabric:1.2.2")
-	modCompileOnly "gg.essential:essential-${project.minecraft_version}-fabric:14634+g33cd03ac3f"
+	modCompileOnly "gg.essential:essential-${project.minecraft_version}-fabric:16613+g9dc393b8c8"
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.0")
 
 
@@ -99,9 +75,6 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
 	sourceCompatibility = JavaVersion.VERSION_17
@@ -114,7 +87,6 @@ jar {
 	}
 }
 
-// configure the maven publication
 publishing {
 	publications {
 		mavenJava(MavenPublication) {

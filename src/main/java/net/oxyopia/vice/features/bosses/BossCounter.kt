@@ -19,6 +19,8 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 
     private val abyssalCompletionRegex = Regex("Abyssal Vice: No\\.\\. This- This Can't Be\\?!")
 
+	private var dioxMode = "EASY"
+
     private val bosses get() = Vice.storage.bosses
 
 	override fun shouldDraw(): Boolean = Vice.config.BOSS_COUNTER
@@ -53,11 +55,17 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 			World.Minehut.isInWorld() && content.contains(minehutTimeRegex) -> bosses.minehut.completions--
 			World.ShadowGelato.isInWorld() && content.contains(shadowTimeRegex) -> bosses.shadowGelato.completions--
 			World.AbyssalVice.isInWorld() && content.contains(abyssalCompletionRegex) -> bosses.abyssalVice.completions++
+			World.Diox.isInWorld() && content.contains("Diox: ITS NICE FOR US TO FINALLY MEET FACE TO FACE.") -> dioxMode = "EASY" // restart mode to easy
 			else -> return
 		}
 
 		Vice.storage.markDirty()
     }
+
+	@SubscribeEvent
+	fun onActionBar(event: ActionBarEvent) {
+		if(event.content.toString().contains("Jump to break free.")) dioxMode = "NORMAL"
+	}
 
 	@SubscribeEvent
 	fun onEntityDeath(event: EntityDeathEvent) {
@@ -73,6 +81,15 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 		}
 
 		Vice.storage.markDirty()
+	}
+
+	@SubscribeEvent
+	fun onSubtitle(event: SubtitleEvent) {
+		if(event.subtitle.equals("TERMINATED")) {
+			if(dioxMode == "NORMAL") bosses.diox.completions++
+			else if(dioxMode == "EASY") bosses.dioxEasy.completions++
+			Vice.storage.markDirty()
+		}
 	}
 
 	@SubscribeEvent

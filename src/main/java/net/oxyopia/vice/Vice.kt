@@ -209,6 +209,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(AbyssalVice)
 		EVENT_MANAGER.subscribe(ElGelato)
 		EVENT_MANAGER.subscribe(MinehutBoss)
+		EVENT_MANAGER.subscribe(Diox)
 		EVENT_MANAGER.subscribe(PPP)
 		EVENT_MANAGER.subscribe(ShadowGelato)
 		EVENT_MANAGER.subscribe(ViceBoss)

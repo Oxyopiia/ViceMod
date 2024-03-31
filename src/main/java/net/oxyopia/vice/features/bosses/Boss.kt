@@ -47,7 +47,7 @@ abstract class Boss (
 			lastBarUpdate = System.currentTimeMillis()
 
 			try {
-				lastKnownHealth = groupValues[1].toInt()
+				lastKnownHealth = groupValues[1].toIntOrNull() // if null its ∞ (diox phase 5 hp)
 				lastKnownPhase = groupValues[2].toInt()
 
 			} catch (e: NumberFormatException) {

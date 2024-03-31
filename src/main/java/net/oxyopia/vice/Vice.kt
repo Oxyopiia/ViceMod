@@ -36,9 +36,7 @@ import net.oxyopia.vice.features.auxiliary.exonitas.BabyMode
 import net.oxyopia.vice.features.auxiliary.exonitas.CitySpamHiders
 import net.oxyopia.vice.features.auxiliary.exonitas.PowerBoxTimer
 import net.oxyopia.vice.features.bosses.*
-import net.oxyopia.vice.features.cooking.CookingAPI
-import net.oxyopia.vice.features.cooking.OrderTracker
-import net.oxyopia.vice.features.cooking.CurrentOrderDisplay
+import net.oxyopia.vice.features.cooking.*
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.hud.PlayerStats
 import net.oxyopia.vice.features.hud.TrainTimer
@@ -183,11 +181,12 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(BabyMode)
 
 		EVENT_MANAGER.subscribe(ViceBoss)
-		EVENT_MANAGER.subscribe(MinehutBoss)
-		EVENT_MANAGER.subscribe(AbyssalVice)
-		EVENT_MANAGER.subscribe(ShadowGelato)
 		EVENT_MANAGER.subscribe(ElGelato)
 		EVENT_MANAGER.subscribe(PPP)
+		EVENT_MANAGER.subscribe(MinehutBoss)
+		EVENT_MANAGER.subscribe(Diox)
+		EVENT_MANAGER.subscribe(AbyssalVice)
+		EVENT_MANAGER.subscribe(ShadowGelato)
 
 		EVENT_MANAGER.subscribe(RenderTest)
 	}

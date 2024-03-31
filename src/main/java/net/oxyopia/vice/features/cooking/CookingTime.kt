@@ -11,8 +11,8 @@ import net.oxyopia.vice.events.SoundEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.auxiliary.exonitas.PowerBoxTimer
 import net.oxyopia.vice.utils.HudUtils.drawString
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.Utils.timeDelta
 
 object CookingTime : HudElement("Cooking Timer", Vice.storage.cooking.cookingTimePos) {
     var cookingSeconds = 0.0

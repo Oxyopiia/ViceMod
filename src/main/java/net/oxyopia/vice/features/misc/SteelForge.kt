@@ -18,8 +18,8 @@ import net.oxyopia.vice.features.cooking.CookingTime
 import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.Utils.formatTimer
-import net.oxyopia.vice.utils.Utils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.formatTimer
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 
 object SteelForge : HudElement("Steel Forge Time", Vice.storage.misc.steelForgeTimePos) {
 

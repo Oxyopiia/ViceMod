@@ -13,7 +13,7 @@ import net.oxyopia.vice.events.SoundEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.cooking.CookingTime
 import net.oxyopia.vice.utils.HudUtils.drawString
-import net.oxyopia.vice.utils.Utils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 
 object ScrapRace : HudElement("Scrap Race Time", Vice.storage.misc.raceTimePos) {
     private var RaceSeconds = 45.0

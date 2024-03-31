@@ -11,7 +11,7 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.SoundEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawString
-import net.oxyopia.vice.utils.Utils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 
 object WastelandTime : HudElement("Wasteland Time", Vice.storage.misc.wastelandTimePos) {
     private var wastelandSeconds = 60.0

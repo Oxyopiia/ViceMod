@@ -8,6 +8,7 @@ import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.SoundEvent
 import net.oxyopia.vice.events.TitleEvent
+import net.oxyopia.vice.events.WorldChangeEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils.drawString
@@ -38,6 +39,11 @@ object PowerBoxTimer : HudElement("Power Box Timer", Vice.storage.auxiliary.city
 				DevUtils.sendErrorMessage(e, "An error occurred parsing Exonitas Level as an Int!")
 			}
 		}
+	}
+
+	@SubscribeEvent
+	fun onWorldChange(event: WorldChangeEvent) {
+		if (lastKnownLevel >= 4) lastKnownLevel = -1
 	}
 
 	@SubscribeEvent

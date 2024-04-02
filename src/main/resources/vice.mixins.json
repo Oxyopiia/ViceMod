@@ -13,11 +13,13 @@
     "MixinDownloadingTerrainScreen",
     "MixinDrawContext",
     "MixinGameRenderer",
+    "MixinHandledScreen",
     "MixinInGameHud",
     "MixinItemStack",
     "MixinLivingEntity",
     "MixinMessageHandler",
     "MixinMinecraftClient",
+    "MixinScreen",
     "MixinSoundSystem"
   ]
 }

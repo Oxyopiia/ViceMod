@@ -129,6 +129,16 @@ public class Config extends Vigilant {
 	)
 	public boolean BACKPACK_RENAMING = true;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Trash Protection",
+		description = "Blocks clicking valuable items while inside the Trash menu.\nUse /viceprotectitem to protect any item.\n§eHold LCONTROL while clicking to bypass!",
+		category = "General",
+		subcategory = "Quality of Life",
+		searchTags = {"dispose", "disposal", "protect"}
+	)
+	public boolean TRASH_PROTECTION = true;
+
     @Property(
             type = PropertyType.SWITCH,
             name = "Train Timer",

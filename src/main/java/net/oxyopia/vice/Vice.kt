@@ -146,44 +146,45 @@ class Vice : ClientModInitializer {
 	private fun subscribeEventListeners() {
 		EVENT_MANAGER.subscribe(BackpackRenaming)
 		EVENT_MANAGER.subscribe(ChatFilter)
-		EVENT_MANAGER.subscribe(Fishing)
-		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
 		EVENT_MANAGER.subscribe(ConsumeItemBlocker)
 		EVENT_MANAGER.subscribe(DailyRewardsNotification)
-		EVENT_MANAGER.subscribe(TrainTimer)
-		EVENT_MANAGER.subscribe(PlayerStats)
+		EVENT_MANAGER.subscribe(Fishing)
+		EVENT_MANAGER.subscribe(ItemProtection)
+		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
 
+		EVENT_MANAGER.subscribe(BossCounter)
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(HudUtils)
-		EVENT_MANAGER.subscribe(BossCounter)
+		EVENT_MANAGER.subscribe(PlayerStats)
+		EVENT_MANAGER.subscribe(TrainTimer)
 
-		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(AbilitySoundChanger)
 		EVENT_MANAGER.subscribe(CooldownDisplayChanger)
+		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(ItemDetailDisplay)
 
+		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
 		EVENT_MANAGER.subscribe(CookingAPI)
 		EVENT_MANAGER.subscribe(OrderTracker)
-		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
 
 		EVENT_MANAGER.subscribe(EvanNotification)
 		EVENT_MANAGER.subscribe(EvanSolver)
 
 		EVENT_MANAGER.subscribe(ArenaAPI)
-		EVENT_MANAGER.subscribe(ArenaSession)
 		EVENT_MANAGER.subscribe(ArenaNotifications)
+		EVENT_MANAGER.subscribe(ArenaSession)
 		EVENT_MANAGER.subscribe(LiveArenaInformation)
 
+		EVENT_MANAGER.subscribe(BabyMode)
 		EVENT_MANAGER.subscribe(CitySpamHiders)
 		EVENT_MANAGER.subscribe(PowerBoxTimer)
-		EVENT_MANAGER.subscribe(BabyMode)
 
-		EVENT_MANAGER.subscribe(ViceBoss)
-		EVENT_MANAGER.subscribe(MinehutBoss)
 		EVENT_MANAGER.subscribe(AbyssalVice)
-		EVENT_MANAGER.subscribe(ShadowGelato)
 		EVENT_MANAGER.subscribe(ElGelato)
+		EVENT_MANAGER.subscribe(MinehutBoss)
 		EVENT_MANAGER.subscribe(PPP)
+		EVENT_MANAGER.subscribe(ShadowGelato)
+		EVENT_MANAGER.subscribe(ViceBoss)
 
 		EVENT_MANAGER.subscribe(RenderTest)
 	}

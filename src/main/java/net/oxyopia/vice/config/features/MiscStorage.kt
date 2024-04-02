@@ -15,6 +15,9 @@ class MiscStorage {
 	var backpackNames: HashMap<String, String> = HashMap()
 
 	@Expose
+	var protectedItems: MutableList<String> = mutableListOf()
+
+	@Expose
 	var playerStatsPos: Position = Position(175f, 150f)
 
 }

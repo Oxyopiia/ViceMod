@@ -138,6 +138,14 @@ public class DevConfig extends Vigilant {
 	)
 	public boolean BOSS_DETECTION_INFO = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "SlotClickEvent",
+		description = "slot click event LMFAOOOOOOOOOO",
+		category = "Debugs"
+	)
+	public boolean SLOT_CLICK_DEBUGGER = false;
+
 	public DevConfig() {
 		super(new File("./config/vice/developerSettings.toml"), "Vice Developer Menu");
 	}

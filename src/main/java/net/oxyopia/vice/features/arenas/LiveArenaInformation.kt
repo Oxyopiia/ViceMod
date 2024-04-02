@@ -16,9 +16,12 @@ import kotlin.time.Duration.Companion.seconds
 object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.arenas.liveArenaPos) {
 	private const val WAVE_TIME_SECONDS = 60
 
+	override fun shouldDraw(): Boolean = Vice.config.LIVE_ARENA_TOGGLE
+	override fun drawCondition(): Boolean = ArenaSession.active && ArenaSession.relatedWorld == Utils.getDTWorld()
+
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!shouldDraw() || !ArenaSession.active || ArenaSession.relatedWorld != Utils.getDTWorld()) return
+		if (!shouldDraw() || !drawCondition()) return
 
 		val session = ArenaSession
 		val world = session.relatedWorld
@@ -49,10 +52,6 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 		}
 
 		position.drawStrings(list, event.context)
-	}
-
-	override fun shouldDraw(): Boolean {
-		return Vice.config.LIVE_ARENA_TOGGLE
 	}
 
 	override fun storePosition(position: Position) {

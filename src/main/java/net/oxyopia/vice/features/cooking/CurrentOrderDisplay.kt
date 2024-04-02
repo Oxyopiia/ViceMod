@@ -12,10 +12,14 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 
 object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.currentOrderPos, searchTerm = "cooking") {
+	private val mc = MinecraftClient.getInstance()
+
+	override fun shouldDraw(): Boolean = config.SHOW_NEXT_COOKING_ITEM || config.SHOW_COOKING_STOCK_INFO
+	override fun drawCondition(): Boolean = World.Burger.isInWorld() && (mc.player?.y ?: 0.0) > 100.0
+
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		val mc = MinecraftClient.getInstance()
-		if (mc.player == null || !World.Burger.isInWorld() || mc.player!!.y <= 100.0) return
+		if (!drawCondition()) return
 
 		val displayList: MutableList<String> = mutableListOf()
 
@@ -76,10 +80,6 @@ object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.curre
 	override fun storePosition(position: Position) {
 		storage.cooking.currentOrderPos = position
 		storage.markDirty()
-	}
-
-	override fun shouldDraw(): Boolean {
-		return config.SHOW_NEXT_COOKING_ITEM || config.SHOW_COOKING_STOCK_INFO
 	}
 
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {

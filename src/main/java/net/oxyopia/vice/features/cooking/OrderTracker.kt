@@ -13,14 +13,14 @@ import net.oxyopia.vice.utils.HudUtils.drawStrings
 object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.orderTrackerPos, searchTerm = "order tracker") {
 	private val requests get() = Vice.storage.cooking.totalBurgerRequests
 	private val completions get() = Vice.storage.cooking.totalBurgersComplete
+	private val mc = MinecraftClient.getInstance()
+
+	override fun shouldDraw(): Boolean = Vice.config.COOKING_ORDER_TRACKER
+	override fun drawCondition(): Boolean = World.Burger.isInWorld() && (mc.player?.y ?: 0.0) > 100.0
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		val mc = MinecraftClient.getInstance()
-
-		if (!Vice.config.COOKING_ORDER_TRACKER) return
-		if (mc.player == null || !World.Burger.isInWorld() || mc.player!!.y <= 100.0) return
-
+		if (!Vice.config.COOKING_ORDER_TRACKER || !drawCondition()) return
 		draw(position, event.context)
 	}
 
@@ -74,8 +74,6 @@ object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.o
 		Vice.storage.cooking.orderTrackerPos = position
 		Vice.storage.markDirty()
 	}
-
-	override fun shouldDraw(): Boolean = Vice.config.COOKING_ORDER_TRACKER
 
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
 		return draw(this, context)

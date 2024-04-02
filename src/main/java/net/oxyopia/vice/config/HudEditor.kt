@@ -6,42 +6,58 @@ import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
+import net.oxyopia.vice.events.HudEditorRenderEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
-import net.oxyopia.vice.utils.Utils
 import org.lwjgl.glfw.GLFW
+import java.awt.Color
 import kotlin.math.round
 
 object HudEditor : Screen(Text.of("Vice HUD Editor")) {
+	private val misc = Vice.storage.misc
+
 	override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
 		super.render(context, mouseX, mouseY, delta)
+		context.fillGradient(0, 0, this.width, this.height, Color(16, 16, 16, 192).rgb, Color(16, 16, 16, 208).rgb)
+
+		Vice.EVENT_MANAGER.publish(HudEditorRenderEvent(context, mouseX, mouseY, delta))
 
 		val previewPos = Position(context.scaledWindowWidth.toFloat() / 2, 10f)
-		var previewText = listOf(
+		var previewText = mutableListOf(
 			"&&bVice HUD Editor",
-			"&&7Hover over elements for extra info.",
-			"&&7Double-click elements to edit settings."
+			"&&7Double-click elements to edit settings.",
+			"&&7Press &&aQ&&7 to edit only visible elements."
 		)
+
+		if (!misc.showAllHudEditorElements) {
+			previewText[2] = "&&7Press &&aQ&&7 to edit all enabled elements."
+		}
 
 		val element = HudElement.draggedElement ?: HudElement.hoveredElement
 		element?.apply {
-			previewText = listOf(
+			previewText = mutableListOf(
 				"&&b${getDisplayName()}",
 				"&&7x: &&a${position.x.toInt()}&&7, y: &&a${position.y.toInt()}&&7, scale: &&a${round(position.scale * 10) / 10.0}"
 			)
+
+			if (HudElement.resettingElement == this) {
+				previewText.add("&&cRight Click again to reset to &&7(&&a0&&7, &&a0&&7, scale &&a1.0&&7)")
+			}
 		}
 
 		previewPos.drawStrings(previewText, context, 1000)
 	}
 
 	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-		if (keyCode == GLFW.GLFW_KEY_T || keyCode == GLFW.GLFW_KEY_SLASH) {
-			Utils.sendViceMessage("Still in HUD Editor!")
-			Utils.playSound("block.note_block.pling", volume = 3f)
-		}
+		when {
+			keyCode == GLFW.GLFW_KEY_Q -> {
+				misc.showAllHudEditorElements = !misc.showAllHudEditorElements
+				Vice.storage.markDirty()
+			}
 
-		if (HudElement.hoveredElement != null) {
-			HudElement.hoveredElement?.keyPressed(keyCode, scanCode, modifiers)
-		} else HudElement.selectedElement?.keyPressed(keyCode, scanCode, modifiers)
+			HudElement.hoveredElement != null -> HudElement.hoveredElement?.keyPressed(keyCode, scanCode, modifiers)
+
+			else -> HudElement.selectedElement?.keyPressed(keyCode, scanCode, modifiers)
+		}
 
 		return super.keyPressed(keyCode, scanCode, modifiers)
 	}

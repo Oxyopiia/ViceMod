@@ -444,7 +444,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Display Mobs Remaining",
-        description = "Adds a Mobs remaining stat to the Live Arena Info.",
+        description = "Adds a Mobs remaining stat to the Live Arena Information.",
         category = "Arenas",
         subcategory = "Live Arena Info"
     )
@@ -453,7 +453,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Display Wave Timer",
-        description = "Displays the estimated time left for the current Wave.",
+		description = "Adds the time remaining for the wave to the Live Arena Information.",
         category = "Arenas",
         subcategory = "Live Arena Info"
     )
@@ -462,7 +462,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SELECTOR,
         name = "Display Projected Drops",
-        description = "Adds drops to Live Arena Info.\nBasic Drops: Amethyst, Polar Fur, Glowing Matter, etc\nUnique Drops: Chance for Galactic Hand Cannon, Arctic Scroll, etc",
+        description = "Adds drops to Live Arena Information.\nBasic Drops: Amethyst, Polar Fur, Glowing Matter, etc\nUnique Drops: Chance for Galactic Hand Cannon, Arctic Scroll, etc",
         category = "Arenas",
         subcategory = "Live Arena Info",
         options = {"None", "Basic Drops Only", "Unique Drops Only", "All"}

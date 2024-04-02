@@ -1,14 +1,11 @@
 package net.oxyopia.vice.mixin;
 
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.util.Window;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
 import net.oxyopia.vice.config.HudEditor;
 import net.oxyopia.vice.events.*;
 import net.oxyopia.vice.utils.Utils;
@@ -44,16 +41,7 @@ public class MixinInGameHud {
 	@Inject(at = @At(value="INVOKE", target="Lnet/minecraft/client/network/ClientPlayerEntity;getSleepTimer()I", ordinal = 0), method = "render")
 	private void hudRenderEvent(DrawContext context, float tickDelta, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			if (Utils.INSTANCE.getClient().currentScreen == HudEditor.INSTANCE) {
-				MinecraftClient client = MinecraftClient.getInstance();
-				Window window = client.getWindow();
-
-				int mouseX = MathHelper.floor(client.mouse.getX() * (double)window.getScaledWidth() / (double)window.getWidth());
-				int mouseY = MathHelper.floor(client.mouse.getY() * (double)window.getScaledHeight() / (double)window.getHeight());
-
-				EVENT_MANAGER.publish(new HudEditorRenderEvent(context, mouseX, mouseY, tickDelta));
-
-			} else {
+			if (Utils.INSTANCE.getClient().currentScreen != HudEditor.INSTANCE) {
 				EVENT_MANAGER.publish(new HudRenderEvent(context, this.scaledWidth, this.scaledHeight));
 			}
 		}

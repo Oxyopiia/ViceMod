@@ -32,6 +32,7 @@ abstract class
 
 	@SubscribeEvent
 	fun drawHudEditor(event: HudEditorRenderEvent) {
+		visible = true // Done to bypass Minecraft's behaviour. When disabled, will be falsified by setInvisible() in renderButton() shortly after.
 		render(event.context, event.mouseX, event.mouseY, event.tickDelta)
 	}
 

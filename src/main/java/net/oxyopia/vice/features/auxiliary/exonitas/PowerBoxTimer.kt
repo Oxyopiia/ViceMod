@@ -75,6 +75,6 @@ object PowerBoxTimer : HudElement("Power Box Timer", Vice.storage.auxiliary.city
 	}
 
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
-		return Pair(position.drawString("&&c1.75s", context) * position.scale, 7f)
+		return Pair(position.drawString("&&a1.5s", context) * position.scale, 7f)
 	}
 }

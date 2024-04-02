@@ -1,6 +1,5 @@
 package net.oxyopia.vice.config
 
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
@@ -9,7 +8,6 @@ import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudEditorRenderEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
-import net.oxyopia.vice.utils.Utils
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
 import kotlin.math.round
@@ -44,14 +42,7 @@ object HudEditor : Screen(Text.of("Vice HUD Editor")) {
 	}
 
 	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-		val client = MinecraftClient.getInstance()
-
 		when {
-			keyCode == client.options.chatKey.defaultKey.code || keyCode == client.options.commandKey.defaultKey.code -> {
-				Utils.sendViceMessage("Still in HUD Editor!")
-				Utils.playSound("block.note_block.pling", volume = 3f)
-			}
-
 			keyCode == GLFW.GLFW_KEY_Q -> {
 				misc.showAllHudEditorElements = !misc.showAllHudEditorElements
 				Vice.storage.markDirty()

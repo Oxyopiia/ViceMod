@@ -11,7 +11,7 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 
-object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.currentOrderPos) {
+object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.currentOrderPos, searchTerm = "cooking") {
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
 		val mc = MinecraftClient.getInstance()

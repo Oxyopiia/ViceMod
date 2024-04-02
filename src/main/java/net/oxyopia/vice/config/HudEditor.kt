@@ -11,20 +11,26 @@ import net.oxyopia.vice.utils.Utils
 import org.lwjgl.glfw.GLFW
 import kotlin.math.round
 
-object HudEditor : Screen(Text.of("Vice GUI Editor")) {
+object HudEditor : Screen(Text.of("Vice HUD Editor")) {
 	override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
 		super.render(context, mouseX, mouseY, delta)
 
+		val previewPos = Position(context.scaledWindowWidth.toFloat() / 2, 10f)
+		var previewText = listOf(
+			"&&bVice HUD Editor",
+			"&&7Hover over elements for extra info.",
+			"&&7Double-click elements to edit settings."
+		)
+
 		val element = HudElement.draggedElement ?: HudElement.hoveredElement
 		element?.apply {
-			val previewPos = Position(context.scaledWindowWidth.toFloat() / 2, 10f)
-			val previewText = listOf(
+			previewText = listOf(
 				"&&b${getDisplayName()}",
 				"&&7x: &&a${position.x.toInt()}&&7, y: &&a${position.y.toInt()}&&7, scale: &&a${round(position.scale * 10) / 10.0}"
 			)
-
-			previewPos.drawStrings(previewText, context, 1000)
 		}
+
+		previewPos.drawStrings(previewText, context, 1000)
 	}
 
 	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
@@ -58,6 +64,7 @@ object HudEditor : Screen(Text.of("Vice GUI Editor")) {
 				HudElement.resettingElement = null
 				HudElement.selectedElement = HudElement.hoveredElement
 				HudElement.draggedElement = HudElement.hoveredElement
+				HudElement.hoveredElement?.onLeftClick()
 			}
 		}
 

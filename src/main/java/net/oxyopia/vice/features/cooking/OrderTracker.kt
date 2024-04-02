@@ -10,7 +10,7 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 
-object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.orderTrackerPos) {
+object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.orderTrackerPos, searchTerm = "order tracker") {
 	private val requests get() = Vice.storage.cooking.totalBurgerRequests
 	private val completions get() = Vice.storage.cooking.totalBurgersComplete
 

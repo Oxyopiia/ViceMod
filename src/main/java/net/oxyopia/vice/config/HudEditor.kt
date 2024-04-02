@@ -28,7 +28,9 @@ object HudEditor : Screen(Text.of("Vice HUD Editor")) {
 			"&&7Press &&aQ&&7 to edit only visible elements."
 		)
 
-		if (!misc.showAllHudEditorElements) previewText[2] = "&&7Press &&aQ&&7 to edit all enabled elements."
+		if (!misc.showAllHudEditorElements) {
+			previewText[2] = "&&7Press &&aQ&&7 to edit all enabled elements."
+		}
 
 		val element = HudElement.draggedElement ?: HudElement.hoveredElement
 		element?.apply {
@@ -36,6 +38,10 @@ object HudEditor : Screen(Text.of("Vice HUD Editor")) {
 				"&&b${getDisplayName()}",
 				"&&7x: &&a${position.x.toInt()}&&7, y: &&a${position.y.toInt()}&&7, scale: &&a${round(position.scale * 10) / 10.0}"
 			)
+
+			if (HudElement.resettingElement == this) {
+				previewText.add("&&cRight Click again to reset to &&7(&&a0&&7, &&a0&&7, scale &&a1.0&&7)")
+			}
 		}
 
 		previewPos.drawStrings(previewText, context, 1000)

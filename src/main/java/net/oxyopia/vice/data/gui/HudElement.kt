@@ -168,6 +168,7 @@ abstract class
 	private fun setInvisible() {
 		if (!visible) return
 
+		hovered = false
 		if (isHovered) syncHoverState()
 		if (isSelected) selectedElement = null
 

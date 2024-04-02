@@ -26,10 +26,12 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 	private val spawnTime get() = Vice.storage.showdown.lastKnownTrainSpawn
 	private var aliveCount = 0
 
+	override fun shouldDraw(): Boolean = Vice.config.TRAIN_TIMER
+	override fun drawCondition(): Boolean = Vice.config.TRAIN_TIMER_OUTSIDE || World.Showdown.isInWorld()
+
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!Vice.config.TRAIN_TIMER) return
-		if (!Vice.config.TRAIN_TIMER_OUTSIDE && !World.Showdown.isInWorld()) return
+		if (!Vice.config.TRAIN_TIMER || !drawCondition()) return
 
 		val list: MutableList<String> = mutableListOf()
 
@@ -86,8 +88,6 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 		Vice.storage.showdown.trainTimerPos = position
 		Vice.storage.markDirty()
 	}
-
-	override fun shouldDraw(): Boolean = Vice.config.TRAIN_TIMER
 
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
 		val list = listOf(

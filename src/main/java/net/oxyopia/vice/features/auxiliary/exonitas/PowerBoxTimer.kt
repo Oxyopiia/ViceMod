@@ -23,9 +23,12 @@ object PowerBoxTimer : HudElement("Power Box Timer", Vice.storage.auxiliary.city
 	private var lastPowerBoxActivation = -1L
 	private var lastKnownLevel = -1
 
+	override fun shouldDraw(): Boolean = Vice.config.EXONITAS_POWER_BOX_TIMER
+	override fun drawCondition(): Boolean = World.Exonitas.isInWorld()
+
 	@SubscribeEvent
 	fun onTitle(event: TitleEvent) {
-		if (!World.Exonitas.isInWorld()) return
+		if (!drawCondition()) return
 
 		if (event.title.contains("GAME OVER")) {
 			lastKnownLevel = -1
@@ -64,10 +67,6 @@ object PowerBoxTimer : HudElement("Power Box Timer", Vice.storage.auxiliary.city
 		}
 
 		position.drawString(text, event.context)
-	}
-
-	override fun shouldDraw(): Boolean {
-		return Vice.config.EXONITAS_POWER_BOX_TIMER
 	}
 
 	override fun storePosition(position: Position) {

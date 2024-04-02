@@ -44,16 +44,7 @@ public class MixinInGameHud {
 	@Inject(at = @At(value="INVOKE", target="Lnet/minecraft/client/network/ClientPlayerEntity;getSleepTimer()I", ordinal = 0), method = "render")
 	private void hudRenderEvent(DrawContext context, float tickDelta, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			if (Utils.INSTANCE.getClient().currentScreen == HudEditor.INSTANCE) {
-				MinecraftClient client = MinecraftClient.getInstance();
-				Window window = client.getWindow();
-
-				int mouseX = MathHelper.floor(client.mouse.getX() * (double)window.getScaledWidth() / (double)window.getWidth());
-				int mouseY = MathHelper.floor(client.mouse.getY() * (double)window.getScaledHeight() / (double)window.getHeight());
-
-				EVENT_MANAGER.publish(new HudEditorRenderEvent(context, mouseX, mouseY, tickDelta));
-
-			} else {
+			if (Utils.INSTANCE.getClient().currentScreen != HudEditor.INSTANCE) {
 				EVENT_MANAGER.publish(new HudRenderEvent(context, this.scaledWidth, this.scaledHeight));
 			}
 		}

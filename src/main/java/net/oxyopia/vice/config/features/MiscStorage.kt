@@ -5,6 +5,9 @@ import net.oxyopia.vice.data.gui.Position
 
 class MiscStorage {
 
+	@Expose
+	var showAllHudEditorElements: Boolean = true
+
     @Expose
 	var lastDailyReward: Long = -1L
 

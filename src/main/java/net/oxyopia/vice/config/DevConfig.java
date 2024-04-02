@@ -3,6 +3,7 @@ package net.oxyopia.vice.config;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
 
+import java.awt.*;
 import java.io.File;
 
 @SuppressWarnings("unused")

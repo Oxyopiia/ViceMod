@@ -32,7 +32,7 @@ abstract class
 	open fun drawCondition(): Boolean = true
 	abstract fun shouldDraw(): Boolean
 	private fun shouldDrawInternal(): Boolean {
-		return shouldDraw() && MinecraftClient.getInstance().currentScreen == HudEditor && (HudEditor.renderAll || drawCondition())
+		return shouldDraw() && MinecraftClient.getInstance().currentScreen == HudEditor && (Vice.storage.misc.showAllHudEditorElements || drawCondition())
 	}
 
 	fun save() = storePosition(position)

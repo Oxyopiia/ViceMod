@@ -122,25 +122,25 @@ object HudUtils {
 	 * @return Width and Height as an Int Pair respectively
 	 */
 	fun Position.drawStrings(list: List<String>, context: DrawContext, z: Int = 0, gap: Float = 10f): Pair<Float, Float> {
-		var i = 0
+		var maxWidth = 0
 
 		list.forEachIndexed { index, text ->
-			i = drawString(text, context, offsetY = index * gap * scale).coerceAtLeast(i)
+			maxWidth = drawString(text, context, offsetY = index * gap * scale).coerceAtLeast(maxWidth)
 		}
 
 		// Subtract 3 for final line not having a gap to account for
-		return Pair(i * scale, list.size * gap * scale - 3)
+		return Pair(maxWidth * scale, list.size * gap * scale - 3)
 	}
 
 	fun Position.getMultilineSize(list: List<String>, gap: Int = 10): Pair<Float, Float> {
 		val textRenderer = MinecraftClient.getInstance().textRenderer
-		var i = 0
+		var maxWidth = 0
 
-		list.forEachIndexed { _, text ->
-			i = textRenderer.getSpecialTextWidth(text.convertFormatting()).coerceAtLeast(i)
+		list.forEach { text ->
+			maxWidth = textRenderer.getSpecialTextWidth(text.convertFormatting()).coerceAtLeast(maxWidth)
 		}
 
-		return Pair(i.toFloat(), list.size * gap * scale - 3)
+		return Pair(maxWidth.toFloat(), list.size * gap * scale - 3)
 	}
 
 	fun Position.getMultilineHeight(rows: Int, gap: Int = 10): Float {

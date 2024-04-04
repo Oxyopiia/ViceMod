@@ -6,8 +6,10 @@ import gg.essential.universal.UScreen;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
 import net.oxyopia.vice.Vice;
+import net.oxyopia.vice.config.components.GenericKeybindInput;
 import net.oxyopia.vice.utils.Utils;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 import java.io.File;
@@ -110,6 +112,16 @@ public class Config extends Vigilant {
 	public boolean DEV_BABY_MODE = false;
 
     // General/Quality of Life
+	
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "Custom Test",
+		description = "Keybind input test thing",
+		category = "General",
+		subcategory = "Quality of Life",
+		customPropertyInfo = GenericKeybindInput.class
+	)
+	public int keyCodeInput = GLFW.GLFW_KEY_G;
 
     @Property(
         type = PropertyType.SWITCH,

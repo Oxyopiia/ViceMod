@@ -69,7 +69,7 @@ object HudUtils {
 		var xPos = x
 
 		if (centered) {
-			val width = textRenderer.getSpecialTextWidth(text)
+			val width = textRenderer.getSpecialTextWidth(text.convertFormatting())
 			xPos = x - (width / 2)
 		}
 
@@ -94,16 +94,6 @@ object HudUtils {
 			.apply { fillUIArea(context.matrices, RenderLayer.getGuiOverlay(), minX, minY, maxX, maxY, color) }
 	}
 
-	fun drawText(stack: MatrixStack, textRenderer: TextRenderer, text: String, x: Int, y: Int, color: Int = Color.white.rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false) {
-		val vertexConsumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
-
-		val xPos = if (centered) {
-			x - (textRenderer.getSpecialTextWidth(text) / 2f)
-		} else x.toFloat()
-
-		textRenderer.draw(text.convertFormatting(), xPos, y.toFloat(), color, shadow, stack.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
-	}
-
 	fun Position.drawString(text: String, context: DrawContext, offsetX: Float = 0f, offsetY: Float = 0f, defaultColor: Color = Color.white, z: Int = 0): Int {
 		val matrices = context.matrices
 		val consumers = context.vertexConsumers
@@ -115,7 +105,7 @@ object HudUtils {
 
 		matrices.translate(x, y, 0f)
 		if (centered) {
-			matrices.translate(-textRenderer.getSpecialTextWidth(text) / 2f * scale, 0f, 0f)
+			matrices.translate(-textRenderer.getSpecialTextWidth(display) / 2f * scale, 0f, 0f)
 		}
 
 		matrices.translate(offsetX, offsetY, z.toFloat())
@@ -147,7 +137,7 @@ object HudUtils {
 		var i = 0
 
 		list.forEachIndexed { _, text ->
-			i = textRenderer.getSpecialTextWidth(text).coerceAtLeast(i)
+			i = textRenderer.getSpecialTextWidth(text.convertFormatting()).coerceAtLeast(i)
 		}
 
 		return Pair(i.toFloat(), list.size * gap * scale - 3)
@@ -158,7 +148,7 @@ object HudUtils {
 	}
 
 	private fun TextRenderer.getSpecialTextWidth(text: String, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW): Int {
-		return this.getWidth(text.replace(Regex("&&[a-zA-Z0-9]"), "").replace("§", "")) + if (shadow) 1 else 0
+		return this.getWidth(text) + if (shadow) 1 else 0
 	}
 
 	fun sendVanillaTitle(title: String, subtitle: String, stayTime: Float = 1f, fadeinout: Float = 0.25f) {

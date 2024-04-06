@@ -35,30 +35,28 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 
 		val list: MutableList<String> = mutableListOf()
 
-		val secondaryText = when {
-			aliveCount > 1 && World.Showdown.isInWorld() -> "&&6${aliveCount - 1} Porters"
-
-			aliveCount == 1 && World.Showdown.isInWorld() -> "&&aConductor Alive"
-
-			spawnTime > 0 -> {
-				val seconds = TimeUnit.MILLISECONDS.toSeconds(spawnTime.timeDelta()) % SPAWN_COOLDOWN_TIME_SECONDS
-				val formatted = TimeUtils.formatDuration(SPAWN_COOLDOWN_TIME_SECONDS - seconds)
-
-				if (spawnTime.timeDelta() >= 6.hours.ms()) {
-					"&&6Train arrives in: &&cUnknown"
-				} else {
-					"&&6Train arrives in: &&a${formatted}"
-				}
+		if (World.Showdown.isInWorld()) {
+			val text = "&&6&&lTrain Arrived!" + when {
+				aliveCount > 1 -> " &&e${aliveCount - 1} Porters"
+				aliveCount == 1 -> " &&aVulnerable"
+				else -> ""
 			}
 
-			else -> "&&6Train arrives in: &&cUnknown"
+			list.add(text)
 		}
 
-		if (aliveCount > 0) {
-			list.add("&&6&&lTrain Arrived!")
-		}
+		val diff = spawnTime.timeDelta()
+		val seconds = TimeUnit.MILLISECONDS.toSeconds(diff) % SPAWN_COOLDOWN_TIME_SECONDS
+		val formatted = TimeUtils.formatDuration(SPAWN_COOLDOWN_TIME_SECONDS - seconds)
 
-		list.add(secondaryText)
+		list.add(
+			when {
+				diff <= 12.hours.ms() -> "&&6Next train in &&a${formatted}"
+				diff > 12.hours.ms() -> "&&6Next train in &&cUnknown &&eInaccurate!"
+				else -> "&&6Next train in &&cUnknown"
+			}
+		)
+
 		position.drawStrings(list, event.context)
 	}
 
@@ -77,9 +75,7 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 	fun onEntityDeath(event: EntityDeathEvent) {
 		if (!World.Showdown.isInWorld()) return
 
-		if (event.entity.customName.toString().contains(CONDUCTOR_NAME) || event.entity.customName.toString().contains(
-				PORTER_NAME
-			)) {
+		if (event.entity.customName.toString().contains(CONDUCTOR_NAME) || event.entity.customName.toString().contains(PORTER_NAME)) {
 			aliveCount--
 		}
 	}

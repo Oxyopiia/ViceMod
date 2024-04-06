@@ -8,9 +8,9 @@ import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.Utils
 
 object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPos) {
-
     private val viceTimeRegex = Regex("You ran out of time to defeat Vice\\. \\(\\d+m\\)")
     private val gelatoTimeRegex = Regex("You ran out of time to defeat \"Corrupted Vice\" Phase 3\\. \\(\\d+m\\)")
     private val pppTimeRegex = Regex("You ran out of time to defeat Percentage Player Percentage. \\(\\d+m\\)")
@@ -20,6 +20,27 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
     private val abyssalCompletionRegex = Regex("Abyssal Vice: No\\.\\. This- This Can't Be\\?!")
 
     private val bosses get() = Vice.storage.bosses
+
+	override fun shouldDraw(): Boolean = Vice.config.BOSS_COUNTER
+	override fun drawCondition(): Boolean = Vice.config.BOSS_COUNTER_OUTSIDE || Utils.getDTWorld()?.type == World.WorldType.BOSS
+
+	private fun draw(context: DrawContext): Pair<Float, Float> {
+		val list: MutableList<String> = mutableListOf("&&b&&lBosses")
+
+		list.addBossStat("&&5Vice", bosses.vice.completions)
+		list.addBossStat("&&4Wasteyard", bosses.wasteyard.completions)
+		list.addBossStat("&&aEl Gelato", bosses.gelato.completions)
+		list.addBossStat("&&cPPP", bosses.ppp.completions)
+		list.addBossStat("&&bMinehut", bosses.minehut.completions)
+		list.addBossStat("&&dShadow Gelato", bosses.shadowGelato.completions)
+		list.addBossStat("&&8Abyssal Vice", bosses.abyssalVice.completions)
+
+		if (list.size == 1) {
+			list.add("&&cNo bosses slain yet!")
+		}
+
+		return position.drawStrings(list, context)
+	}
 
     @SubscribeEvent
     fun onChatMessage(event: ChatEvent) {
@@ -63,31 +84,13 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 		Vice.storage.markDirty()
     }
 
-	private fun draw(context: DrawContext): Pair<Float, Float> {
-		val list: MutableList<String> = mutableListOf("&&b&&lBosses")
-
-		list.addBossStat("&&5Vice", bosses.vice.completions)
-		list.addBossStat("&&4Wasteyard", bosses.wasteyard.completions)
-		list.addBossStat("&&aEl Gelato", bosses.gelato.completions)
-		list.addBossStat("&&cPPP", bosses.ppp.completions)
-		list.addBossStat("&&bMinehut", bosses.minehut.completions)
-		list.addBossStat("&&dShadow Gelato", bosses.shadowGelato.completions)
-		list.addBossStat("&&8Abyssal Vice", bosses.abyssalVice.completions)
-
-		if (list.size == 1) {
-			list.add("&&cNo bosses slain yet!")
-		}
-
-		return position.drawStrings(list, context)
-	}
-
 	private fun MutableList<String>.addBossStat(string: String, value: Int) {
 		if (value > 0) add("$string &&f$value")
 	}
 
     @SubscribeEvent
     fun onHudRender(event: HudRenderEvent) {
-        if (!shouldDraw()) return
+        if (!shouldDraw() || !drawCondition()) return
 		draw(event.context)
     }
 
@@ -95,8 +98,6 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
         Vice.storage.bosses.bossCounterPos = position
         Vice.storage.markDirty()
     }
-
-    override fun shouldDraw(): Boolean = Vice.config.BOSS_COUNTER
 
     override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
         return draw(context)

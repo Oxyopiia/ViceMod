@@ -536,6 +536,15 @@ public class Config extends Vigilant {
 	)
 	public boolean BOSS_COUNTER = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Show Boss Counter outside Boss Arenas",
+		description = "Show the boss counter even when outside Boss Arenas.",
+		category = "Bosses",
+		subcategory = "Quality of Life"
+	)
+	public boolean BOSS_COUNTER_OUTSIDE = false;
+
 	// Bosses/Abyssal Vice
 
     @Property(

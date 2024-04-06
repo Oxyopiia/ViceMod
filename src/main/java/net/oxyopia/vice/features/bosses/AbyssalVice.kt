@@ -31,5 +31,5 @@ object AbyssalVice: Boss(
 		HudUtils.sendVanillaTitle("&&cLaser!", "", stayTime =  2.8f, fadeinout = 0.1f)
 	}
 
-	override fun isInWorld(): Boolean = World.DarkVice.isInWorld()
+	override fun isInWorld(): Boolean = World.AbyssalVice.isInWorld()
 }

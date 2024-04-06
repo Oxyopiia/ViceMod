@@ -369,16 +369,7 @@ public class Config extends Vigilant {
     )
     public boolean FISHING_DING = true;
 
-	// Abilities/Item Detail Display
-	
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Bonus Item Details",
-		description = "Adds more details to an ability item's lore, such as Cooldown and bonus Set info.",
-		category = "Abilities",
-		subcategory = "Quality of Life"
-	)
-	public boolean ITEM_DETAIL_DISPLAY = true;
+	// Abilities/Quality of Life
 
 	@Property(
 		type = PropertyType.SELECTOR,

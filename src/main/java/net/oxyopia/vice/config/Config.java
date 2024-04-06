@@ -631,7 +631,8 @@ public class Config extends Vigilant {
         markDirty();
 
         addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
-        addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
+		addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
+		addDependency("BOSS_COUNTER_OUTSIDE", "BOSS_COUNTER");
 
         addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
         addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");

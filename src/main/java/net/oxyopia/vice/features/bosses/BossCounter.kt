@@ -52,7 +52,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 			World.PPP.isInWorld() && content.contains(pppTimeRegex) -> bosses.ppp.completions--
 			World.Minehut.isInWorld() && content.contains(minehutTimeRegex) -> bosses.minehut.completions--
 			World.ShadowGelato.isInWorld() && content.contains(shadowTimeRegex) -> bosses.shadowGelato.completions--
-			World.DarkVice.isInWorld() && content.contains(abyssalCompletionRegex) -> bosses.abyssalVice.completions++
+			World.AbyssalVice.isInWorld() && content.contains(abyssalCompletionRegex) -> bosses.abyssalVice.completions++
 			else -> return
 		}
 

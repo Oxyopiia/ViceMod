@@ -133,7 +133,7 @@ abstract class
 		return true
 	}
 
-	fun onRightClick() {
+	fun tryResetting() {
 		if (isResetting()) {
 			position = Position(0f, 0f, scale = 1f, centered = false)
 			resettingElement = null

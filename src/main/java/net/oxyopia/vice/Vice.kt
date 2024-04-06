@@ -52,7 +52,7 @@ import org.slf4j.Logger
 
 class Vice : ClientModInitializer {
 	companion object {
-		const val MOD_ID = "vice"
+		private const val MOD_ID = "vice"
 
 		private val metadata: ModMetadata by lazy {
 			FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().metadata

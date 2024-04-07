@@ -30,6 +30,9 @@ object TimeUtils {
 		return formatDuration(seconds * 1000, false)
 	}
 
+	/**
+	 * Takes a time delta in milliseconds and formats to a duration in seconds.
+	 */
 	fun Long.formatTimer(timeLimit: Int): String {
 		return " \uD83D\uDD51 " + formatDuration(ceil(timeLimit - (this / 1000f)))
 	}

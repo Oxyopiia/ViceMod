@@ -175,6 +175,15 @@ public class Config extends Vigilant {
 	)
 	public boolean DAILY_REWARDS_NOTIFICATION = true;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Forge Timers",
+		description = "Displays the time remaining for items in the Forge to smelt.",
+		category = "General",
+		subcategory = "Quality of Life"
+	)
+	public boolean FORGE_TIMERS = true;
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Better Tower Beacon UI",

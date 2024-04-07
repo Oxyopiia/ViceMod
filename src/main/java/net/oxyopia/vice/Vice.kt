@@ -39,6 +39,7 @@ import net.oxyopia.vice.features.bosses.*
 import net.oxyopia.vice.features.cooking.CookingAPI
 import net.oxyopia.vice.features.cooking.OrderTracker
 import net.oxyopia.vice.features.cooking.CurrentOrderDisplay
+import net.oxyopia.vice.features.hud.ForgeTimers
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.hud.PlayerStats
 import net.oxyopia.vice.features.hud.TrainTimer
@@ -152,6 +153,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
 
 		EVENT_MANAGER.subscribe(BossCounter)
+		EVENT_MANAGER.subscribe(ForgeTimers)
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(HudUtils)
 		EVENT_MANAGER.subscribe(PlayerStats)

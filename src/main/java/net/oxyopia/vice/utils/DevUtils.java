@@ -58,23 +58,18 @@ public class DevUtils {
 
 	public static void sendWarningMessage(String msg) {
 		msg = msg.replaceAll("&&", "§");
+		MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(Text.of(WARNING_PREFIX + msg));
+	}
+
+	public static void sendWarningMessage(String msg, String copyableData) {
+		msg = msg.replaceAll("&&", "§");
 
 		Text warningChat = Text.literal(WARNING_PREFIX + msg)
 			.setStyle(Style.EMPTY
-				.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, msg))
-				.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("§eClick to copy the warning to your clipboard!\n§7§o"+msg.replaceAll("§", "")))));
+				.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, copyableData))
+				.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("§eClick to copy some useful data to your clipboard!")))
+			);
 
 		MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(warningChat);
-	}
-
-	public static void sendWarningMessage(String msg, boolean copyable) {
-		msg = msg.replaceAll("&&", "§");
-
-		if (copyable) {
-			sendWarningMessage(msg);
-			return;
-		}
-
-		MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(Text.of(WARNING_PREFIX + msg));
 	}
 }

@@ -7,12 +7,15 @@ import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.ChatEvent
+import net.oxyopia.vice.events.ChestRenderEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
+import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.ms
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
+import kotlin.math.abs
 import kotlin.time.Duration.Companion.minutes
 
 object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos) {
@@ -67,6 +70,49 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 		}
 
 		position.drawStrings(list, event.context)
+	}
+
+	@SubscribeEvent
+	fun onChestRender(event: ChestRenderEvent.Slots) {
+		if (!World.MagmaHeights.isInWorld()) return
+		if (!event.chestName.contains("Ember")) return
+
+		val chestContents = event.slots.filter { it.inventory.size() != 41 }
+		if (chestContents.last().stack.isEmpty) return // Inventory is still loading
+
+		val filteredSlots = event.slots.filter { it.stack.name.string.contains("(Forging)") }
+		val inventoryCount = filteredSlots.size + if (event.cursorStack.name.string.contains("(Forging)")) 1 else 0
+		val storedCount = misc.forgeList.size
+
+		if (storedCount > inventoryCount) {
+			val error = storedCount - inventoryCount
+			DevUtils.sendWarningMessage("Stored $error more Forge items then expected! &&7(this is likely due to a server rollback!) &&eRemoving the first $error items.", event.getErrorIntervalDump())
+			misc.forgeList = misc.forgeList.drop(error).toMutableList()
+			Vice.storage.markDirty()
+
+		} else if (storedCount != inventoryCount) {
+			val error = abs(inventoryCount - storedCount)
+			DevUtils.sendWarningMessage("Found $error more Forge items then expected! Please report this! Resetting stored items.", event.getErrorIntervalDump())
+			misc.forgeList = mutableListOf()
+			Vice.storage.markDirty()
+		}
+	}
+
+	private fun ChestRenderEvent.Slots.getErrorIntervalDump(): String {
+		val filteredSlots = slots.filter { it.stack.name.string.contains("(Forging)") }
+		val inventoryCount = filteredSlots.size + if (cursorStack.name.string.contains("(Forging)")) 1 else 0
+		val storedCount = misc.forgeList.size
+
+		return """
+			Stored Forge Data (storedCount $storedCount):
+				${misc.forgeList}
+				
+			Filtered Slots (inventoryCount $inventoryCount):
+				$filteredSlots
+			
+			Slot Dumps:
+				$slots
+		""".trimIndent()
 	}
 
 	override fun storePosition(position: Position) {

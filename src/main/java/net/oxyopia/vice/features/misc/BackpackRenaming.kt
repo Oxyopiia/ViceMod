@@ -76,7 +76,7 @@ object BackpackRenaming {
 		Utils.playSound("random.orb", volume = 3f)
 	}
 
-	private fun warnEmpty() = DevUtils.sendWarningMessage("You are not holding a backpack!", false)
+	private fun warnEmpty() = DevUtils.sendWarningMessage("You are not holding a backpack!")
 
 	@SubscribeEvent
 	fun registerCommand(event: CommandRegisterEvent) {
@@ -90,7 +90,7 @@ object BackpackRenaming {
 				)
 
 				.executes { _ ->
-					DevUtils.sendWarningMessage("&&f/$COMMAND_NAME (name|reset)", false)
+					DevUtils.sendWarningMessage("&&f/$COMMAND_NAME (name|reset)")
 					Command.SINGLE_SUCCESS
 				}
 		)

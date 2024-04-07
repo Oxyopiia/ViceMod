@@ -90,7 +90,7 @@ object ItemProtection {
 
 	private fun handleCommand() {
 		val favoriteItems = Vice.storage.misc.protectedItems
-		val item = Utils.getPlayer()?.mainHandStack ?: return DevUtils.sendWarningMessage("You are not holding an item to protect!", false)
+		val item = Utils.getPlayer()?.mainHandStack ?: return DevUtils.sendWarningMessage("You are not holding an item to protect!")
 		val itemName = item.nameWithoutEnchants()
 
 		if (defaultProtectedItems.contains(item.item) || defaultProtectedItems.contains(itemName)) {

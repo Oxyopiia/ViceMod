@@ -29,7 +29,7 @@ Please submit bug reports or suggestions in the [Discord Server](https://discord
 		<li>A toggle to display if a Cooldown is locked behind an unequipped set.</li>
 	</ul>
 	</details></li>
-	<li>Trash Proteection</li>
+	<li>Trash Protection</li>
 	<li>Ability Volume Changers</li>
 	<li>Daily Rewards Notification </li>
  	<li>Daily Rewards and Evan Notifications</li>

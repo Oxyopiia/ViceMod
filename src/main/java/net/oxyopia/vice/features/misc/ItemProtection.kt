@@ -72,7 +72,7 @@ object ItemProtection {
 				else -> "FavoriteItem"
 			}
 
-			Utils.sendViceMessage("&&cStopped you disposing that item! &&87($cause)")
+			Utils.sendViceMessage("&&cStopped you disposing that item! &&7($cause)")
 			event.cancel()
 		}
 	}

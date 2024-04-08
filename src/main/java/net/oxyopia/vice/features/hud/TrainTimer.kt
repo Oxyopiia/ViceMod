@@ -50,10 +50,10 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 		val formatted = TimeUtils.formatDuration(SPAWN_COOLDOWN_TIME_SECONDS - seconds)
 
 		list.add(
-			when {
-				diff <= 12.hours.ms() -> "&&6Next train in &&a${formatted}"
-				diff > 12.hours.ms() -> "&&6Next train in &&cUnknown &&eInaccurate!"
-				else -> "&&6Next train in &&cUnknown"
+			"&&6Next train in " + when {
+				diff <= 12.hours.ms() -> "&&a${formatted}"
+				diff > 12.hours.ms() -> "&&cUnknown &&eInaccurate!"
+				else -> "&&cUnknown"
 			}
 		)
 
@@ -87,8 +87,8 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
 		val list = listOf(
-			"&&6&&lTrain Arrived!",
-			"&&6Next Train arrives in: &&a13:56"
+			"&&6&&lTrain Arrived! &&e2 Porters",
+			"&&6Next train in: &&a13:56"
 		)
 
 		return position.drawStrings(list, context)

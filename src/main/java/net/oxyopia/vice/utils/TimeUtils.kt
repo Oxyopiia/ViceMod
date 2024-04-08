@@ -41,6 +41,8 @@ object TimeUtils {
 		return System.currentTimeMillis() - this
 	}
 
+	fun Long.timeDeltaWithin(duration: Duration): Boolean = (timeDelta() <= duration.inWholeMilliseconds)
+
 	fun Duration.ms() = this.inWholeMilliseconds
 	fun Int.ms() = this * 1000
 }

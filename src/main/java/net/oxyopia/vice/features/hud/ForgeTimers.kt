@@ -15,8 +15,10 @@ import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.ms
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.timeDeltaWithin
 import kotlin.math.abs
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos) {
 	private val misc = Vice.storage.misc
@@ -72,6 +74,8 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 		position.drawStrings(list, event.context)
 	}
 
+	private var lastHighCountError: Long = -1
+
 	@SubscribeEvent
 	fun onChestRender(event: ChestRenderEvent.Slots) {
 		if (!World.MagmaHeights.isInWorld()) return
@@ -86,15 +90,15 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 
 		if (storedCount > inventoryCount) {
 			val error = storedCount - inventoryCount
-			DevUtils.sendWarningMessage("Stored $error more Forge items then expected! &&7(this is likely due to a server rollback!) &&eRemoving the first $error items.", event.getErrorIntervalDump())
+			DevUtils.sendWarningMessage("Stored $error more Forge items than expected! &&7(this is likely due to a server rollback!) &&eRemoving the first $error items.", event.getErrorIntervalDump())
 			misc.forgeList = misc.forgeList.drop(error).toMutableList()
 			Vice.storage.markDirty()
 
-		} else if (storedCount != inventoryCount) {
+		} else if (storedCount != inventoryCount && !lastHighCountError.timeDeltaWithin(30.seconds)) {
 			val error = abs(inventoryCount - storedCount)
-			DevUtils.sendWarningMessage("Found $error more Forge items then expected! Please report this! Resetting stored items.", event.getErrorIntervalDump())
-			misc.forgeList = mutableListOf()
-			Vice.storage.markDirty()
+
+			DevUtils.sendWarningMessage("Found $error more Forge items than expected! &&7(likely due to another session)", event.getErrorIntervalDump())
+			lastHighCountError = System.currentTimeMillis()
 		}
 	}
 

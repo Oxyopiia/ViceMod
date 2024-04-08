@@ -304,7 +304,8 @@ public class Config extends Vigilant {
 		name = "Evan Solver",
 		description = "Solves Evan minigame in the Glitch HQ. Changes the title to 'TRUE' or 'FALSE' depending on the answer.",
 		category = "General",
-		subcategory = "Journey to the Glitch HQ"
+		subcategory = "Journey to the Glitch HQ",
+		hidden = true
 	)
 	public boolean GLITCH_HQ_EVAN_SOLVER = false;
 

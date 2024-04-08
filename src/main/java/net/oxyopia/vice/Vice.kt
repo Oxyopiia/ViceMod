@@ -168,7 +168,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(OrderTracker)
 
 		EVENT_MANAGER.subscribe(EvanNotification)
-		EVENT_MANAGER.subscribe(EvanSolver)
+//		EVENT_MANAGER.subscribe(EvanSolver)
 
 		EVENT_MANAGER.subscribe(ArenaAPI)
 		EVENT_MANAGER.subscribe(ArenaNotifications)

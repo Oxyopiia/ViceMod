@@ -1,12 +1,10 @@
-package net.oxyopia.vice.config;
+package net.oxyopia.vice.config
 
-import com.terraformersmc.modmenu.api.ModMenuApi;
-import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import static net.oxyopia.vice.Vice.config;
+import com.terraformersmc.modmenu.api.ConfigScreenFactory
+import com.terraformersmc.modmenu.api.ModMenuApi
+import net.minecraft.client.gui.screen.Screen
+import net.oxyopia.vice.Vice
 
-public class ModMenuIntegration implements ModMenuApi {
-	@Override
-	public ConfigScreenFactory<?> getModConfigScreenFactory() {
-		return parent -> config.gui();
-	}
+class ModMenuIntegration : ModMenuApi {
+	override fun getModConfigScreenFactory(): ConfigScreenFactory<*> = ConfigScreenFactory<Screen?> { Vice.config.gui() }
 }

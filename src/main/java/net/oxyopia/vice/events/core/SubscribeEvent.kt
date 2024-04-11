@@ -1,16 +1,8 @@
-package net.oxyopia.vice.events.core;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package net.oxyopia.vice.events.core
 
 /**
- Annotation to mark a method as an event hook. The annotated method should take in one parameter of type AbstractEvent or any of its subclasses.
- The priority of the event hook can be specified with the priority parameter, with a lower value indicating a higher priority.
-
- @author pvpb0t
+ * Hooks a method to any [ViceEvent][net.oxyopia.vice.events.ViceEvent] specified in the method's first parameter.
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface SubscribeEvent { }
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.FUNCTION)
+annotation class SubscribeEvent

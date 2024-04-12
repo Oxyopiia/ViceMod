@@ -160,6 +160,22 @@ object ItemAbilityCooldown {
 			event.soundName == "entity.illusioner.cast_spell" && event.volume == 9999f -> {
 				ItemAbility.SHADOW_GELATO_DRUM_GUN.onSound()
 			}
+
+			event.soundName == "item.trident.riptide_1" && event.volume == 3f -> {
+				ItemAbility.ASSASSIN_BLADE.onSound()
+			}
+
+			event.soundName == "block.note_block.pling" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.C4.onSound()
+			}
+
+			event.soundName == "entity.shulker.shoot" && event.volume == 9999f -> {
+				ItemAbility.CURSED_SKULL.onSound()
+			}
+
+			event.soundName == "entity.generic.eat" && event.volume == 3f -> {
+				ItemAbility.GLOW_BERRIES.onSound()
+			}
 		}
 	}
 

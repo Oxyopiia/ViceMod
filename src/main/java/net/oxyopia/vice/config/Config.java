@@ -561,6 +561,15 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Run Overview",
+		description = "Sends a bunch of stats at the end of an Expedition, including timings, personal bests, and credits.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean EXPEDITION_RUN_OVERVIEW = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Hide Style Points",
 		description = "Hides and mutes style point sound effects.",
 		category = "Expeditions",

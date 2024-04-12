@@ -39,6 +39,8 @@ import net.oxyopia.vice.features.bosses.*
 import net.oxyopia.vice.features.cooking.CookingAPI
 import net.oxyopia.vice.features.cooking.OrderTracker
 import net.oxyopia.vice.features.cooking.CurrentOrderDisplay
+import net.oxyopia.vice.features.expeditions.ExpeditionAPI
+import net.oxyopia.vice.features.expeditions.RunOverview
 import net.oxyopia.vice.features.expeditions.StylePointsHider
 import net.oxyopia.vice.features.hud.ForgeTimers
 import net.oxyopia.vice.features.hud.GamingMode
@@ -176,6 +178,8 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ArenaSession)
 		EVENT_MANAGER.subscribe(LiveArenaInformation)
 
+		EVENT_MANAGER.subscribe(ExpeditionAPI)
+		EVENT_MANAGER.subscribe(RunOverview)
 		EVENT_MANAGER.subscribe(StylePointsHider)
 
 		EVENT_MANAGER.subscribe(BabyMode)

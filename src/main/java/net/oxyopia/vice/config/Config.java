@@ -557,6 +557,17 @@ public class Config extends Vigilant {
     )
     public boolean ABYSSAL_VICE_LASER_WARNING = true;
 
+	// Expeditions
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Hide Style Points",
+		description = "Hides and mutes style point sound effects.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean HIDE_EXPEDITION_STYLE_POINTS = false;
+
     // Sounds
 
     @Property(

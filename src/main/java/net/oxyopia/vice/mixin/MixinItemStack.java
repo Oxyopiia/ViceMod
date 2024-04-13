@@ -16,11 +16,11 @@ abstract class MixinItemStack {
 	@Shadow public abstract ItemStack copy();
 
 	@Redirect(
-		at = @At(value="INVOKE", target = "Lnet/minecraft/text/Text$Serialization;fromJson(Ljava/lang/String;)Lnet/minecraft/text/MutableText;"),
+		at = @At(value="INVOKE", target = "Lnet/minecraft/text/Text$Serializer;fromJson(Ljava/lang/String;)Lnet/minecraft/text/MutableText;"),
 		method = "getName"
 	)
 	private MutableText getName(String json) {
-		MutableText name = Text.Serialization.fromJson(json);
+		MutableText name = Text.Serializer.fromJson(json);
 
 		if (name != null) {
 			ItemStack newStack = this.copy();

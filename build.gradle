@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'fabric-loom' version '1.3-SNAPSHOT'
 	id 'maven-publish'
 	id 'org.jetbrains.kotlin.jvm' version '1.9.23'
 }
@@ -49,10 +49,10 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modApi "com.terraformersmc:modmenu:9.1.0-beta.1"
+	modApi "com.terraformersmc:modmenu:7.2.2"
 
 	modImplementation include("gg.essential:loader-fabric:1.2.2")
-	modCompileOnly "gg.essential:essential-${project.minecraft_version}-fabric:16719+g53e79466ed"
+	modCompileOnly "gg.essential:essential-${project.minecraft_version}-fabric:16613+g9dc393b8c8"
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.0")
 
 

@@ -5,7 +5,7 @@ import net.minecraft.util.ActionResult
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.BlockInteractEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
+import net.oxyopia.vice.utils.ItemUtils.cleanName
 
 object ConsumeItemBlocker {
 	@SubscribeEvent
@@ -15,7 +15,7 @@ object ConsumeItemBlocker {
 
 		val new = when {
 			stack.item == Items.PLAYER_HEAD -> ActionResult.PASS
-			stack.item == Items.TRIPWIRE_HOOK && stack.nameWithoutEnchants().contains("Train Key") -> ActionResult.PASS
+			stack.item == Items.TRIPWIRE_HOOK && stack.cleanName().contains("Train Key") -> ActionResult.PASS
 			else -> return
 		}
 

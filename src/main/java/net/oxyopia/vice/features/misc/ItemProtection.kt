@@ -14,7 +14,7 @@ import net.oxyopia.vice.events.CommandRegisterEvent
 import net.oxyopia.vice.events.SlotClickEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
+import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.Utils
 import org.lwjgl.glfw.GLFW
 
@@ -61,9 +61,9 @@ object ItemProtection {
 
 		val item = getItem(event) ?: return
 
-		val isProtectedItem = defaultProtectedItems.contains(item.nameWithoutEnchants()) || defaultProtectedItems.contains(item.item)
+		val isProtectedItem = defaultProtectedItems.contains(item.cleanName()) || defaultProtectedItems.contains(item.item)
 		val isPlayerHeadWithArmor = item.item == Items.PLAYER_HEAD && item.getAttributeModifiers(EquipmentSlot.HEAD)[EntityAttributes.GENERIC_ARMOR].isNotEmpty()
-		val isFavoriteItem = Vice.storage.misc.protectedItems.contains(item.nameWithoutEnchants())
+		val isFavoriteItem = Vice.storage.misc.protectedItems.contains(item.cleanName())
 
 		if (isProtectedItem || isPlayerHeadWithArmor || isFavoriteItem) {
 			val cause = when {
@@ -91,7 +91,7 @@ object ItemProtection {
 	private fun handleCommand() {
 		val favoriteItems = Vice.storage.misc.protectedItems
 		val item = Utils.getPlayer()?.mainHandStack ?: return DevUtils.sendWarningMessage("You are not holding an item to protect!")
-		val itemName = item.nameWithoutEnchants()
+		val itemName = item.cleanName()
 
 		if (defaultProtectedItems.contains(item.item) || defaultProtectedItems.contains(itemName)) {
 			Utils.sendViceMessage("&&eThis item is protected by default!")

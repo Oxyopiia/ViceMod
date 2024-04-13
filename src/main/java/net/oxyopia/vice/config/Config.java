@@ -570,6 +570,15 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Double-tap to Drop Valuable Items",
+		description = "Items that are EPIC or above in Expeditions require you to press the drop key twice to drop.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean EPIC_EXPEDITION_ITEM_PROTECTION = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Hide Style Points",
 		description = "Hides and mutes style point sound effects.",
 		category = "Expeditions",

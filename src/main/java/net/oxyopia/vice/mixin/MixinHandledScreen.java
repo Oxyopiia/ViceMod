@@ -1,5 +1,6 @@
 package net.oxyopia.vice.mixin;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -10,7 +11,9 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 import net.oxyopia.vice.events.ChestRenderEvent;
+import net.oxyopia.vice.events.ItemDropEvent;
 import net.oxyopia.vice.events.SlotClickEvent;
+import net.oxyopia.vice.events.ViceEvent;
 import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
 import org.spongepowered.asm.mixin.Final;
@@ -63,7 +66,21 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 	private void onAttemptMoveItem(ClientPlayerInteractionManager instance, int syncId, int slotId, int button, SlotActionType actionType, PlayerEntity player) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			DevUtils.sendDebugChat("&&fFiring SlotClickEvent on syncId &&d" + syncId + "&&f to slotId &&b" + slotId + "&&f with button &&c " + button + " &&fwith type &&e" + actionType + "&&f with title &&a" + title.getString(), "SLOT_CLICK_DEBUGGER");
-			SlotClickEvent result = EVENT_MANAGER.publish(new SlotClickEvent(title.getString(), syncId, slotId, button, actionType));
+
+			ViceEvent.Cancelable<Boolean> result = null;
+
+			if (actionType == SlotActionType.THROW) {
+				MinecraftClient client = MinecraftClient.getInstance();
+				ItemStack item = client.player != null ? client.player.currentScreenHandler.getSlot(slotId).getStack() : null;
+
+				if (item != null) {
+					result = EVENT_MANAGER.publish(new ItemDropEvent(item));
+				}
+			}
+
+			if (result == null) {
+				result = EVENT_MANAGER.publish(new SlotClickEvent(title.getString(), syncId, slotId, button, actionType));
+			}
 
 			if (result.isCanceled()) {
 				DevUtils.sendDebugChat("SlotClickEvent &&cCANCEL", "SLOT_CLICK_DEBUGGER");

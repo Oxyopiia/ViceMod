@@ -12,7 +12,7 @@
     "MixinClientPlayNetworkHandler",
     "MixinDownloadingTerrainScreen",
     "MixinDrawContext",
-    "MixinGameRenderer",
+    "MixinWorldRenderer",
     "MixinHandledScreen",
     "MixinInGameHud",
     "MixinItemStack",

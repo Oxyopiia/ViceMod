@@ -29,7 +29,7 @@ object StylePointsHider {
 		if (stylePoints.contains(text)) {
 			event.setReturnValue(false)
 		} else {
-			DevUtils.sendDebugChat("&&cDetected some weird text display: &&f$text", "EXPEDITION_DEBUGGER")
+			DevUtils.sendDebugChat("&&aEXPEDITIONS &&cDetected some weird text display: &&f$text", "EXPEDITION_DEBUGGER")
 		}
 	}
 

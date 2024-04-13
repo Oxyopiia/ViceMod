@@ -21,18 +21,20 @@ object ExpeditionAPI {
 		if (event.entity !is PlayerEntity) return
 
 		trackedPlayers.add(event.entity.name.string)
-		DevUtils.sendDebugChat("&&6EXPEDITIONS &&fDetected player &&7${event.entity.name.string} &&fand added to list.", "EXPEDITION_DEBUGGER")
+		DevUtils.sendDebugChat("&&aEXPEDITIONS &&fDetected player &&7${event.entity.name.string} &&fand added to list.", "EXPEDITION_DEBUGGER")
 	}
 
 	@SubscribeEvent
 	fun onChat(event: ChatEvent) {
 		if (event.string.contains("Right click on the door to begin the Expedition.")) {
+			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fStarted.", "EXPEDITION_DEBUGGER")
 			currentSession = ExpeditionRun(System.currentTimeMillis() - 1000L, trackedPlayers)
 		}
 
 		// Detection Logic for completing an Expedition.
 		else if (event.string == "Detected Completion") {
 			currentSession?.let { session ->
+				DevUtils.sendDebugChat("&&aEXPEDITIONS &&fDetected valid expedition finish.", "EXPEDITION_DEBUGGER")
 				val completionTime = session.startTime.timeDelta()
 				session.endTime = System.currentTimeMillis()
 
@@ -45,9 +47,9 @@ object ExpeditionAPI {
 					Vice.storage.expeditions.easter.personalBestTime = completionTime
 					Vice.storage.markDirty()
 				}
-
-				currentSession = null
 			}
+
+			currentSession = null
 		}
 	}
 }

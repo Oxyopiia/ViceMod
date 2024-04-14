@@ -13,7 +13,7 @@ enum class ExpeditionRarity(val text: String, val cleanText: String) {
 
 	companion object {
 		fun ItemStack.getExpeditionRarity(): ExpeditionRarity? {
-			return entries.firstOrNull { getLore().last() == it.text }
+			return entries.firstOrNull { getLore().last().startsWith(it.text) }
 		}
  	}
 }

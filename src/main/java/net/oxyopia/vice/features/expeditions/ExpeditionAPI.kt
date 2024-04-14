@@ -31,7 +31,7 @@ object ExpeditionAPI {
 			currentSession = ExpeditionRun(System.currentTimeMillis() - 1000L, trackedPlayers)
 		}
 
-		// Detection Logic for completing an Expedition.
+		// TODO - Update detection logic for completing an Expedition.
 		else if (event.string == "Detected Completion") {
 			currentSession?.let { session ->
 				DevUtils.sendDebugChat("&&aEXPEDITIONS &&fDetected valid expedition finish.", "EXPEDITION_DEBUGGER")

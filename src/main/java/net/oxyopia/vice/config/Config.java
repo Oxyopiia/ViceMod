@@ -571,11 +571,21 @@ public class Config extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Double-tap to Drop Valuable Items",
-		description = "Items that are EPIC or above in Expeditions require you to press the drop key twice to drop.",
+		description = "Makes items that are valuable in Expeditions require you to press the drop key twice to actually drop.",
 		category = "Expeditions",
 		subcategory = "Quality of Life"
 	)
-	public boolean EPIC_EXPEDITION_ITEM_PROTECTION = true;
+	public boolean EXPEDITION_ITEM_PROTECTION = true;
+
+	@Property(
+		type = PropertyType.SELECTOR,
+		name = "Item Protection Threshold",
+		description = "The minimum rarity that requires being dropped twice.",
+		category = "Expeditions",
+		subcategory = "Quality of Life",
+		options = {"Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythical"}
+	)
+	public int EXPEDITION_ITEM_PROTECTION_THRESHOLD = 3;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -681,6 +691,8 @@ public class Config extends Vigilant {
         addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
 		addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
 		addDependency("BOSS_COUNTER_OUTSIDE", "BOSS_COUNTER");
+
+		addDependency("EXPEDITION_ITEM_PROTECTION_THRESHOLD", "EXPEDITION_ITEM_PROTECTION");
 
         addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
         addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");

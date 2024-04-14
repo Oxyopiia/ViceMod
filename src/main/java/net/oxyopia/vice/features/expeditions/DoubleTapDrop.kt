@@ -16,16 +16,18 @@ object DoubleTapDrop {
 
 	@SubscribeEvent
 	fun onDrop(event: ItemDropEvent) {
-		if (!Vice.config.EPIC_EXPEDITION_ITEM_PROTECTION) return
+		if (!Vice.config.EXPEDITION_ITEM_PROTECTION) return
 
 		val rarity = event.item.getExpeditionRarity() ?: return
-		if (rarity < ExpeditionRarity.EPIC) return
+		val protectionThreshold = ExpeditionRarity.fromOrdinal(Vice.config.EXPEDITION_ITEM_PROTECTION_THRESHOLD)
+		if (rarity < protectionThreshold) return
 
 		val name = event.item.cleanName()
 		if (name != lastItemDropped || lastDropAttempt.timeDelta() > 3.seconds.ms()) {
 			lastItemDropped = name
 			lastDropAttempt = System.currentTimeMillis()
-			Utils.sendViceMessage("&&cStopped you from dropping that item! Drop it again to actually drop it.")
+			Utils.sendViceMessage("&&cStopped you from dropping that item as it is ${protectionThreshold.cleanText} or higher! Drop it again to actually drop it.")
+			Utils.playFail()
 			event.cancel()
 		}
 	}

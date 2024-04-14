@@ -15,5 +15,9 @@ enum class ExpeditionRarity(val text: String, val cleanText: String) {
 		fun ItemStack.getExpeditionRarity(): ExpeditionRarity? {
 			return entries.firstOrNull { getLore().last().startsWith(it.text) }
 		}
+
+		fun fromOrdinal(ordinal: Int): ExpeditionRarity {
+			return entries[ordinal]
+		}
  	}
 }

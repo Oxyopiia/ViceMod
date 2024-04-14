@@ -8,6 +8,4 @@ data class ExpeditionRun(
 	@Expose var totalCredits: Int = 0,
 	@Expose var barrelsCollected: Int = 0,
 	@Expose var endTime: Long? = null
-) {
-	fun isActive(): Boolean = startTime >= 0L && endTime == null
-}
+)

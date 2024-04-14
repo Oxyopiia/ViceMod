@@ -13,7 +13,12 @@ enum class ExpeditionRarity(val text: String, val cleanText: String) {
 
 	companion object {
 		fun ItemStack.getExpeditionRarity(): ExpeditionRarity? {
-			return entries.firstOrNull { getLore().last().startsWith(it.text) }
+			return entries.firstOrNull {
+				getLore().let { lore ->
+					if (lore.isEmpty()) return@firstOrNull false
+					return@firstOrNull lore.last().startsWith(it.text)
+				}
+			}
 		}
 
 		fun fromOrdinal(ordinal: Int): ExpeditionRarity {

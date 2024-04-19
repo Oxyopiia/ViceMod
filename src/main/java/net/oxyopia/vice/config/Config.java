@@ -561,15 +561,6 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Run Overview",
-		description = "Sends a bunch of stats at the end of an Expedition, including timings, personal bests, and credits.",
-		category = "Expeditions",
-		subcategory = "Quality of Life"
-	)
-	public boolean EXPEDITION_RUN_OVERVIEW = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
 		name = "Double-tap to Drop Valuable Items",
 		description = "Makes items that are valuable in Expeditions require you to press the drop key twice to actually drop.",
 		category = "Expeditions",
@@ -586,6 +577,24 @@ public class Config extends Vigilant {
 		options = {"Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythical"}
 	)
 	public int EXPEDITION_ITEM_PROTECTION_THRESHOLD = 3;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Merchants Overlay",
+		description = "Shows a list of all found Merchants and their live prices during Expeditions.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean EXPEDITION_MERCHANT_OVERLAY = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Defibrillator Use Counter",
+		description = "Displays the number of uses a defibrillator has directly in the hotbar.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean DEFIB_COUNTER = true;
 
 	@Property(
 		type = PropertyType.SWITCH,

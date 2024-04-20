@@ -605,15 +605,6 @@ public class Config extends Vigilant {
 	)
 	public boolean HIDE_EXPEDITION_STYLE_POINTS = false;
 
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Mute Annoying Enderman Screams",
-		description = "Mutes the annoying enderman screams in the boss phase.",
-		category = "Expeditions",
-		subcategory = "Quality of Life"
-	)
-	public boolean MUTE_ANNOYING_EXPEDITION_ENDERMEN = true;
-
     // Sounds
 
     @Property(

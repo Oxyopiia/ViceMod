@@ -13,7 +13,7 @@ object DefibCounter {
 
 	@SubscribeEvent
 	fun onRenderItemSlot(event: RenderItemSlotEvent) {
-		if (!Vice.config.DEFIB_COUNTER ) return
+		if (!Vice.config.DEFIB_COUNTER) return
 		if (!event.itemStack.cleanName().contains("Defibrillator")) return
 
 		val matrices = event.context.matrices
@@ -21,7 +21,7 @@ object DefibCounter {
 		matrices.push()
 		matrices.translate(0.0f, 0.0f, 200.0f)
 
-		val firstLine = event.itemStack.getLore().first()
+		val firstLine = event.itemStack.getLore().firstOrNull() ?: return
 
 		usesRegex.find(firstLine)?.apply {
 			val timesUsed = groupValues[1].toIntOrNull() ?: return

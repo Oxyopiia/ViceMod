@@ -42,6 +42,8 @@ object ExpeditionAPI {
 
 	@SubscribeEvent
 	fun onChat(event: ChatEvent) {
+		if (!World.Expeditions.isInWorld()) return
+
 		when {
 			event.string.contains("Right click on the door to begin the Expedition.") -> {
 				val players = Utils.getWorld()?.players?.filterNot { it.name.string.startsWith("CIT-") || it.customName?.string?.startsWith("CIT-") == true } ?: listOf()
@@ -85,7 +87,7 @@ object ExpeditionAPI {
 
 		merchantSlots.forEach { slotId ->
 			val item = event.slots[slotId].stack
-			if (item.item == Items.BARRIER || item.item == Items.GRAY_STAINED_GLASS_PANE) return@forEach
+			if (item.item == Items.GRAY_STAINED_GLASS_PANE) return@forEach
 
 			list.add(item)
 		}

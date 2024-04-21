@@ -31,7 +31,7 @@ object AutoCommunications {
 		// Purchased Soul Scythe in Room 3! (ViceExpMerchantBuy-3:2)
 		merchantBuyRegex.find(string)?.apply {
 			filter()
-			if (!shouldParse()) return
+			if (!shouldParse() || !playerIsInside(sender)) return
 
 			val room = groupValues[1].toIntOrNull() ?: return
 			val itemIndex = groupValues[2].toIntOrNull() ?: return
@@ -48,7 +48,7 @@ object AutoCommunications {
 		// Villager in Room 3! (ViceExpMerchant-3-Bandages:UI;Raygun:LW;C4:EW)
 		merchantFindRegex.find(string)?.apply {
 			filter()
-			if (!shouldParse()) return
+			if (!shouldParse() || !playerIsInside(sender)) return
 
 			val room = groupValues[1].toIntOrNull() ?: return
 			val data = groupValues[2]
@@ -108,6 +108,10 @@ object AutoCommunications {
 
 	private fun ChatEvent.filter() {
 		if (Vice.config.FILTER_EXPEDITION_COMMUNICATIONS) cancel()
+	}
+
+	private fun playerIsInside(username: String): Boolean {
+		return ExpeditionAPI.currentSession.players.map { it.name.string }.contains(username)
 	}
 
 	private fun getPlayerCount(): Int = ExpeditionAPI.currentSession.players.size

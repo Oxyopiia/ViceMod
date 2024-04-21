@@ -19,6 +19,7 @@ import net.oxyopia.vice.utils.Utils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -31,6 +32,9 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 	@Shadow @Final protected T handler;
 
 	@Shadow private ItemStack touchDragStack;
+
+	@Unique
+	private boolean hasOpened = false;
 
 	//	@ModifyArg(
 //		at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTooltip(Lnet/minecraft/client/font/TextRenderer;Ljava/util/List;Ljava/util/Optional;II)V"),
@@ -55,7 +59,16 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 	private void onRenderScreen(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			ItemStack cursorStack = touchDragStack.isEmpty() ? handler.getCursorStack() : touchDragStack;
-			ChestRenderEvent.Slots result = EVENT_MANAGER.publish(new ChestRenderEvent.Slots(title.getString(), handler.slots, cursorStack));
+
+			EVENT_MANAGER.publish(new ChestRenderEvent.Slots(title.getString(), handler.slots, cursorStack, !hasOpened));
+			hasOpened = true;
+		}
+	}
+
+	@Inject(at = @At("HEAD"), method = "close")
+	private void onClose(CallbackInfo ci) {
+		if (Utils.INSTANCE.getInDoomTowers()) {
+			hasOpened = false;
 		}
 	}
 

@@ -9,7 +9,8 @@ enum class ExpeditionRarity(val text: String, val cleanText: String, val rarityV
 	RARE("Rᴀʀᴇ", "Rare", 25, "&&b"),
 	EPIC("Eᴘɪᴄ", "Epic", 40, "&&d"),
 	LEGENDARY("Lᴇɢᴇɴᴅᴀʀʏ", "Legendary", 50, "&&6"),
-	MYTHICAL("Mʏᴛʜɪᴄᴀʟ", "Mythical", 100, "&&e");
+	MYTHICAL("Mʏᴛʜɪᴄᴀʟ", "Mythical", 100, "&&e"),
+	DEFAULT("", "", 0, "&&f");
 
 	companion object {
 		fun ItemStack.getExpeditionRarity(): ExpeditionRarity? {
@@ -24,6 +25,12 @@ enum class ExpeditionRarity(val text: String, val cleanText: String, val rarityV
 
 					return@firstOrNull lore.last().startsWith(it.text)
 				}
+			}
+		}
+
+		fun fromText(string: String): ExpeditionRarity? {
+			return entries.firstOrNull {
+				string.startsWith(it.text) || string.startsWith(it.cleanText)
 			}
 		}
 

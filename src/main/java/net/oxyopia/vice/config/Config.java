@@ -605,6 +605,24 @@ public class Config extends Vigilant {
 	)
 	public boolean HIDE_EXPEDITION_STYLE_POINTS = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Auto Relay Information",
+		description = "Automatically sends and reads information about your Expedition between your teammates.",
+		category = "Expeditions",
+		subcategory = "Information Sharing"
+	)
+	public boolean AUTO_COMMUNICATE_EXPEDITION_INFO = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Filter Communications",
+		description = "Hides Expedition communications from chat.\nWorks with Information Relaying disabled.",
+		category = "Expeditions",
+		subcategory = "Information Sharing"
+	)
+	public boolean FILTER_EXPEDITION_COMMUNICATIONS = true;
+
     // Sounds
 
     @Property(

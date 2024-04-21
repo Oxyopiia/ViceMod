@@ -9,8 +9,11 @@ import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
+import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.ItemUtils.getLore
+import net.oxyopia.vice.utils.TimeUtils.formatDuration
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.math.roundToInt
 
 object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions.merchantOverlayPos) {
@@ -20,11 +23,21 @@ object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
 		if (!shouldDraw() || !drawCondition()) return
-//		if (ExpeditionAPI.merchants.isEmpty()) return
+		if (ExpeditionAPI.merchants.isEmpty() && !DevUtils.hasDevMode(Vice.devConfig.EXPEDITION_DEBUGGER)) return
 
 		val state = ExpeditionAPI.currentSession.gameState
-		val list = mutableListOf("&&a&&lMerchants &&8($state)")
+		val list = mutableListOf("&&a&&lMerchants")
 		val merchants = ExpeditionAPI.merchants
+
+		if (DevUtils.hasDevMode(Vice.devConfig.EXPEDITION_DEBUGGER)) {
+			list.add("&&7gamestate: &&a$state")
+			list.add("&&7elapsed: &&a${formatDuration(ExpeditionAPI.currentSession.startTime.timeDelta(), false)}")
+			list.add("&&7room: &&a${ExpeditionAPI.getRoomByZ()}")
+
+			list.add("")
+			list.add("&&7stored players: &&a${ExpeditionAPI.currentSession.players.size}")
+			ExpeditionAPI.currentSession.players.forEach { list.add("&&7- ${it.name.string}") }
+		}
 
 		merchants.forEach { merchant ->
 			val roomId = merchant.key
@@ -33,10 +46,11 @@ object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions
 			if (list.size > 1) list.add("")
 			list.add("&&aRoom $roomId")
 
-			items.forEach { item ->
+			items.forEachIndexed { _, item ->
 				val cost = item.calcCost(state).roundToInt()
+				val rarity = item.getExpeditionRarity() ?: return@forEachIndexed
 				
-				val itemColor = item.getExpeditionRarity()?.color ?: "&&f"
+				val itemColor = rarity.color
 				var text = "&&6$cost"
 
 				if (ExpeditionAPI.currentSession.roomIsCompleteAndWaiting()) {

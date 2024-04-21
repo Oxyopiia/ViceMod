@@ -72,4 +72,8 @@ public class DevUtils {
 
 		MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(warningChat);
 	}
+
+	public static boolean hasDevMode(boolean option) {
+		return config.DEVMODE && option;
+	}
 }

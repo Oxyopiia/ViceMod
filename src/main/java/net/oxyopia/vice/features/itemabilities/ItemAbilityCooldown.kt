@@ -176,6 +176,10 @@ object ItemAbilityCooldown {
 			event.soundName == "entity.generic.eat" && event.volume == 3f -> {
 				ItemAbility.GLOW_BERRIES.onSound()
 			}
+
+			event.soundName == "block.beacon.activate" && event.volume == 3f -> {
+				ItemAbility.ALL_SEEING_EYE.onSound()
+			}
 		}
 	}
 

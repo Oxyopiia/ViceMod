@@ -31,27 +31,29 @@ object AutoCommunications {
 		// Purchased Soul Scythe in Room 3! (ViceExpMerchantBuy-3:2)
 		merchantBuyRegex.find(string)?.apply {
 			filter()
-			if (!shouldParse()) return
+			if (!shouldParse() || !playerIsInside(sender)) return
 
 			val room = groupValues[1].toIntOrNull() ?: return
 			val itemIndex = groupValues[2].toIntOrNull() ?: return
 
-			val removed = merchants[room]?.set(itemIndex, ItemStack.EMPTY)
-			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fSet index &&a$itemIndex&&f of merchant &&a$room &&fto &&cEMPTY.", "EXPEDITION_DEBUGGER")
-			Utils.sendViceMessage("&&a${sender} &&fpurchased &&a${removed?.cleanName()} &&ffrom the Villager in &&aRoom $room")
+			val original = merchants[room]?.get(itemIndex)
+			Utils.sendViceMessage("&&a${sender} &&fpurchased &&a${original?.cleanName()} &&ffrom the Villager in &&aRoom $room")
 			Utils.playDing()
+
+			merchants[room]?.set(itemIndex, ItemStack.EMPTY)
+			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fSet index &&a$itemIndex&&f of merchant &&a$room &&fto &&cEMPTY.", "EXPEDITION_DEBUGGER")
 		}
 
 		// TEST LINE:
 		// Villager in Room 3! (ViceExpMerchant-3-Bandages:UI;Raygun:LW;C4:EW)
 		merchantFindRegex.find(string)?.apply {
 			filter()
-			if (!shouldParse()) return
+			if (!shouldParse() || !playerIsInside(sender)) return
 
 			val room = groupValues[1].toIntOrNull() ?: return
 			val data = groupValues[2]
 
-			Utils.sendViceMessage("&&a${sender} &&ffound a Villager in &&aRoom $room!")
+			Utils.sendViceMessage("&&a${sender} &&ffound a Villager in &&aRoom $room&&f!")
 			Utils.playDing()
 
 			if (room < 0 || room > 15 || merchants[room]?.isNotEmpty() == true) return
@@ -106,6 +108,10 @@ object AutoCommunications {
 
 	private fun ChatEvent.filter() {
 		if (Vice.config.FILTER_EXPEDITION_COMMUNICATIONS) cancel()
+	}
+
+	private fun playerIsInside(username: String): Boolean {
+		return ExpeditionAPI.currentSession.players.map { it.name.string }.contains(username)
 	}
 
 	private fun getPlayerCount(): Int = ExpeditionAPI.currentSession.players.size

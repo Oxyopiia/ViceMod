@@ -8,10 +8,10 @@ import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
+import net.oxyopia.vice.features.expeditions.ExpeditionItemType.Companion.getExpeditionItemType
 import net.oxyopia.vice.features.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils.drawStrings
-import net.oxyopia.vice.utils.ItemUtils.getLore
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.math.roundToInt
@@ -72,10 +72,9 @@ object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions
 		 * where rarity value is 5, 10, 25, 40, or 50 based on the ascending rarity
 		 * where room number is the index of the current opened room
 		 */
-		val lore = getLore()
 
-		val rarityValue = getExpeditionRarity()?.rarityValue?.toDouble() ?: return -1.0
-		val typeValue = if (lore.size >= 4 && lore[lore.size - 4].endsWith("Wᴇᴀᴘᴏɴ")) 1.0 else 0.5
+		val rarityValue = getExpeditionRarity()?.rarityValue ?: return -1.0
+		val typeValue = getExpeditionItemType()?.typeValue ?: return -2.0
 
 		return (rarityValue * typeValue * (1.0 + gameState.toDouble() / 16.0))
 	}

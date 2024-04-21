@@ -9,9 +9,10 @@ import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.features.expeditions.ExpeditionAPI.merchants
+import net.oxyopia.vice.features.expeditions.ExpeditionItemType.Companion.getExpeditionItemType
+import net.oxyopia.vice.features.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
-import net.oxyopia.vice.utils.ItemUtils.getLore
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.Utils.convertFormatting
 
@@ -29,26 +30,27 @@ object AutoCommunications {
 		// TEST LINE:
 		// Purchased Soul Scythe in Room 3! (ViceExpMerchantBuy-3:2)
 		merchantBuyRegex.find(string)?.apply {
+			filter()
+			if (!shouldParse()) return
+
 			val room = groupValues[1].toIntOrNull() ?: return
 			val itemIndex = groupValues[2].toIntOrNull() ?: return
 
 			val removed = merchants[room]?.set(itemIndex, ItemStack.EMPTY)
-			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fSet index &&a$itemIndex&&f of merchant &&a$room &&to &&cEMPTY.", "EXPEDITION_DEBUGGER")
-
-			filter()
-			if (!shouldParse()) return
+			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fSet index &&a$itemIndex&&f of merchant &&a$room &&fto &&cEMPTY.", "EXPEDITION_DEBUGGER")
 			Utils.sendViceMessage("&&a${sender} &&fpurchased &&a${removed?.cleanName()} &&ffrom the Villager in &&aRoom $room")
 			Utils.playDing()
 		}
 
 		// TEST LINE:
-		// Villager in Room 3! (ViceExpMerchant-3-Bandages:Uɴᴄᴏᴍᴍᴏɴ Iᴛᴇᴍ;Raygun:Lᴇɢᴇɴᴅᴀʀʏ Wᴇᴀᴘᴏɴ;C4:Eᴘɪᴄ Wᴇᴀᴘᴏɴ)
+		// Villager in Room 3! (ViceExpMerchant-3-Bandages:UI;Raygun:LW;C4:EW)
 		merchantFindRegex.find(string)?.apply {
+			filter()
+			if (!shouldParse()) return
+
 			val room = groupValues[1].toIntOrNull() ?: return
 			val data = groupValues[2]
 
-			filter()
-			if (!shouldParse()) return
 			Utils.sendViceMessage("&&a${sender} &&ffound a Villager in &&aRoom $room!")
 			Utils.playDing()
 
@@ -63,11 +65,12 @@ object AutoCommunications {
 				val name = split[0]
 				val importantLore = split[1]
 
-				val rarity = ExpeditionRarity.fromText(importantLore) ?: ExpeditionRarity.DEFAULT
+				val rarity = ExpeditionRarity.fromShorthand(importantLore) ?: ExpeditionRarity.DEFAULT
+				val type = ExpeditionItemType.fromShorthand(importantLore) ?: ExpeditionItemType.ITEM
 
 				val stack = ItemStack(Items.IRON_SWORD).setCustomName(Text.of("${rarity.color}$name".convertFormatting()))
 				val loreList = stack.getOrCreateSubNbt(ItemStack.DISPLAY_KEY).getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE.toInt())
-				loreList.add(NbtString.of(Text.Serializer.toJson(Text.of(importantLore))))
+				loreList.add(NbtString.of(Text.Serializer.toJson(Text.of("${rarity.text} ${type.text}"))))
 				stack.getOrCreateSubNbt(ItemStack.DISPLAY_KEY).put(ItemStack.LORE_KEY, loreList)
 
 				merchants[room]?.add(stack)
@@ -80,10 +83,11 @@ object AutoCommunications {
 
 		var text = "Villager in Room $room! (ViceExpMerchant-$room-"
 		items.forEach { item ->
-			val lore = item.getLore()
-			val importantLore = if (lore.size >= 4) lore[lore.size - 4] else lore.last()
+			val typeText = item.getExpeditionItemType() ?: return
+			val rarity = item.getExpeditionRarity() ?: return
+			val condensed = rarity.shorthand + typeText.shorthand
 
-			text += "${item.cleanName()}:$importantLore;"
+			text += "${item.cleanName()}:$condensed;"
 		}
 
 		text = text.removeSuffix(";").plus(")")

@@ -11,11 +11,11 @@ import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 object ItemUtils {
-	fun ItemStack.nameWithoutEnchants(): String {
-		return name.string.nameWithoutEnchants()
+	fun ItemStack.cleanName(): String {
+		return name.string.cleanName()
 	}
 
-	fun String.nameWithoutEnchants(): String {
+	fun String.cleanName(): String {
 		return replace("\\s\\(.*\\)".toRegex(), "").replace(" §".toRegex(), "")
 	}
 
@@ -48,7 +48,7 @@ object ItemUtils {
 
 	fun ItemStack.isRod(): Boolean {
 
-		val itemName = this.nameWithoutEnchants()
+		val itemName = this.cleanName()
 
 		return itemName.contains("Basic Fishing Rod") ||
 				itemName.contains("Reinforced Fishing Rod") ||
@@ -60,7 +60,7 @@ object ItemUtils {
 
 	fun ItemStack.isHook(): Boolean {
 
-		val itemName = this.nameWithoutEnchants()
+		val itemName = this.cleanName()
 
 		return itemName.contains("Adventurer's Hook") ||
 				itemName.contains("Slime Hook") ||

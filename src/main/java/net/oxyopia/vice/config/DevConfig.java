@@ -146,6 +146,14 @@ public class DevConfig extends Vigilant {
 	)
 	public boolean SLOT_CLICK_DEBUGGER = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Expeditions",
+		description = "e",
+		category = "Debugs"
+	)
+	public boolean EXPEDITION_DEBUGGER = false;
+
 	public DevConfig() {
 		super(new File("./config/vice/developerSettings.toml"), "Vice Developer Menu");
 	}

@@ -8,10 +8,13 @@
   "client": [
     "MixinBossBarHud",
     "MixinCapeRenderer",
+    "MixinClientPlayerEntity",
     "MixinClientPlayerInteractionManager",
     "MixinClientPlayNetworkHandler",
+    "MixinWorldChunk",
     "MixinDownloadingTerrainScreen",
     "MixinDrawContext",
+    "MixinEntityRenderer",
     "MixinGameRenderer",
     "MixinHandledScreen",
     "MixinInGameHud",

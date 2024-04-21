@@ -36,10 +36,12 @@ object AutoCommunications {
 			val room = groupValues[1].toIntOrNull() ?: return
 			val itemIndex = groupValues[2].toIntOrNull() ?: return
 
-			val removed = merchants[room]?.set(itemIndex, ItemStack.EMPTY)
-			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fSet index &&a$itemIndex&&f of merchant &&a$room &&fto &&cEMPTY.", "EXPEDITION_DEBUGGER")
-			Utils.sendViceMessage("&&a${sender} &&fpurchased &&a${removed?.cleanName()} &&ffrom the Villager in &&aRoom $room")
+			val original = merchants[room]?.get(itemIndex)
+			Utils.sendViceMessage("&&a${sender} &&fpurchased &&a${original?.cleanName()} &&ffrom the Villager in &&aRoom $room")
 			Utils.playDing()
+
+			merchants[room]?.set(itemIndex, ItemStack.EMPTY)
+			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fSet index &&a$itemIndex&&f of merchant &&a$room &&fto &&cEMPTY.", "EXPEDITION_DEBUGGER")
 		}
 
 		// TEST LINE:

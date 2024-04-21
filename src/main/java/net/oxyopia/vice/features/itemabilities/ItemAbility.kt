@@ -63,7 +63,8 @@ enum class ItemAbility(
     C4("C4", 10f),
     CURSED_SKULL("Cursed Skull", 3f),
     GRENADE_BUNDLE("Grenade Bundle", 5f, soundOnUse = false),
-    GLOW_BERRIES("Glow Berries", 5f);
+    GLOW_BERRIES("Glow Berries", 5f),
+    ALL_SEEING_EYE("All Seeing Eye", 30f);
 
     // Detecting whether the ability has ACTUALLY happened is performed in /features/itemabilities/ItemAbilityCooldown.kt
     // This will reset the cooldown regardless of whether it is still on cooldown or not.

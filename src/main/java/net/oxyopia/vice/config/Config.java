@@ -93,10 +93,10 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SELECTOR,
         name = "Gaming Mode",
-        description = "Choose your epic gaming mode for optimal gaming performance",
+        description = "Choose your epic gaming mode for optimal gaming performance\n§a2 NEW GAMING MODES! ",
         category = "General",
         subcategory = "Developer",
-        options = {"None", "Vice", "DoomTowers smashing", "msmdude", "digmonireland", "Trump", "clive", "law Abiding Citizen"}
+        options = {"None", "Vice", "DoomTowers smashing", "msmdude", "digmonireland", "Trump", "clive", "law Abiding Citizen", "meme", "african digi"}
     )
     public int DEV_GAMING_MODE = 0;
 

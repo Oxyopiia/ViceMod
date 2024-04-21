@@ -93,10 +93,10 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SELECTOR,
         name = "Gaming Mode",
-        description = "Choose your epic gaming mode for optimal gaming performance",
+        description = "Choose your epic gaming mode for optimal gaming performance\n§a2 NEW GAMING MODES! ",
         category = "General",
         subcategory = "Developer",
-        options = {"None", "Vice", "DoomTowers smashing", "msmdude", "digmonireland", "Trump", "clive", "law Abiding Citizen"}
+        options = {"None", "Vice", "DoomTowers smashing", "msmdude", "digmonireland", "Trump", "clive", "law Abiding Citizen", "meme", "african digi"}
     )
     public int DEV_GAMING_MODE = 0;
 
@@ -557,6 +557,72 @@ public class Config extends Vigilant {
     )
     public boolean ABYSSAL_VICE_LASER_WARNING = true;
 
+	// Expeditions
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Double-tap to Drop Valuable Items",
+		description = "Makes items that are valuable in Expeditions require you to press the drop key twice to actually drop.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean EXPEDITION_ITEM_PROTECTION = true;
+
+	@Property(
+		type = PropertyType.SELECTOR,
+		name = "Item Protection Threshold",
+		description = "The minimum rarity that requires being dropped twice.",
+		category = "Expeditions",
+		subcategory = "Quality of Life",
+		options = {"Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythical"}
+	)
+	public int EXPEDITION_ITEM_PROTECTION_THRESHOLD = 3;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Merchants Overlay",
+		description = "Shows a list of all found Merchants and their live prices during Expeditions.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean EXPEDITION_MERCHANT_OVERLAY = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Defibrillator Use Counter",
+		description = "Displays the number of uses a defibrillator has directly in the hotbar.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean DEFIB_COUNTER = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Hide Style Points",
+		description = "Hides and mutes style point sound effects.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean HIDE_EXPEDITION_STYLE_POINTS = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Auto Relay Information",
+		description = "Automatically sends and reads information about your Expedition between your teammates.",
+		category = "Expeditions",
+		subcategory = "Information Sharing"
+	)
+	public boolean AUTO_COMMUNICATE_EXPEDITION_INFO = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Filter Communications",
+		description = "Hides Expedition communications from chat.\nWorks with Information Relaying disabled.",
+		category = "Expeditions",
+		subcategory = "Information Sharing"
+	)
+	public boolean FILTER_EXPEDITION_COMMUNICATIONS = true;
+
     // Sounds
 
     @Property(
@@ -643,6 +709,8 @@ public class Config extends Vigilant {
         addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
 		addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
 		addDependency("BOSS_COUNTER_OUTSIDE", "BOSS_COUNTER");
+
+		addDependency("EXPEDITION_ITEM_PROTECTION_THRESHOLD", "EXPEDITION_ITEM_PROTECTION");
 
         addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
         addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");

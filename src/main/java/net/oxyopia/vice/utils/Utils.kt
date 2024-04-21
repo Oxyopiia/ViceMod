@@ -53,6 +53,14 @@ object Utils {
 		playSound(Identifier("minecraft", string), pitch, volume)
 	}
 
+	fun playDing() {
+		playSound("entity.arrow.hit_player")
+	}
+
+	fun playFail() {
+		playSound("entity.arrow.hit_player", 0.2f)
+	}
+
 	fun parseNbt(nbt: String): NbtCompound? {
 		try {
 			return StringNbtReader.parse(nbt)

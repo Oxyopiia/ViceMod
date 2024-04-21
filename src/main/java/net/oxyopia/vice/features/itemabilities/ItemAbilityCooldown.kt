@@ -15,7 +15,7 @@ import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.ItemUtils
-import net.oxyopia.vice.utils.ItemUtils.nameWithoutEnchants
+import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.ItemUtils.getEquippedSets
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.NumberUtils.clamp
@@ -160,6 +160,22 @@ object ItemAbilityCooldown {
 			event.soundName == "entity.illusioner.cast_spell" && event.volume == 9999f -> {
 				ItemAbility.SHADOW_GELATO_DRUM_GUN.onSound()
 			}
+
+			event.soundName == "item.trident.riptide_1" && event.volume == 3f -> {
+				ItemAbility.ASSASSIN_BLADE.onSound()
+			}
+
+			event.soundName == "block.note_block.pling" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.C4.onSound()
+			}
+
+			event.soundName == "entity.shulker.shoot" && event.volume == 9999f -> {
+				ItemAbility.CURSED_SKULL.onSound()
+			}
+
+			event.soundName == "entity.generic.eat" && event.volume == 3f -> {
+				ItemAbility.GLOW_BERRIES.onSound()
+			}
 		}
 	}
 
@@ -167,7 +183,7 @@ object ItemAbilityCooldown {
 	fun onRenderInGameHud(event: HudRenderEvent) {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY || !Vice.config.SHOW_ITEMCD_TEXT_CROSSHAIR) return
 
-		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getHeldItem().nameWithoutEnchants())
+		val ability: ItemAbility? = ItemAbility.getByName(ItemUtils.getHeldItem().cleanName())
 
 		ability?.apply {
 			if (!isOnCooldown() || !displayCooldown) return
@@ -187,7 +203,7 @@ object ItemAbilityCooldown {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
 		val stack: ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
-		val name = stack.nameWithoutEnchants()
+		val name = stack.cleanName()
 		val ability: ItemAbility = ItemAbility.getByName(name, ClickType.LEFT) ?: return
 
 		handleClickEventAbility(ability)
@@ -199,7 +215,7 @@ object ItemAbilityCooldown {
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY) return
 
 		val stack: ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
-		val name = stack.nameWithoutEnchants()
+		val name = stack.cleanName()
 		val ability: ItemAbility = ItemAbility.getByName(name, ClickType.RIGHT) ?: return
 
 		handleClickEventAbility(ability)
@@ -219,7 +235,7 @@ object ItemAbilityCooldown {
 
 	@SubscribeEvent
 	fun onRenderItemSlot(event: RenderItemSlotEvent) {
-		val ability: ItemAbility? = ItemAbility.getByName(event.itemStack.nameWithoutEnchants())
+		val ability: ItemAbility? = ItemAbility.getByName(event.itemStack.cleanName())
 
 		val bgOpacity = Vice.config.ITEMCD_BACKGROUND_OPACITY
 		val matrices = event.context.matrices

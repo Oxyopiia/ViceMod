@@ -25,6 +25,8 @@ object GamingMode {
 			5 -> ImageData("trumpet.png", 828, 817, 0.07f)
 			6 -> ImageData("clive.png", 311, 528, 0.15f)
 			7 -> ImageData("blackman.png", 581, 690, 0.09f)
+			8 -> ImageData("crash_the_server.png", 508, 499, 0.1f)
+			9 -> ImageData("digi.png", 500, 500, 0.1f)
 			else -> return
 		}
 

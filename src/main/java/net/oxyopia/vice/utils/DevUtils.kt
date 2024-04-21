@@ -79,4 +79,8 @@ object DevUtils {
 
 		MinecraftClient.getInstance().inGameHud.chatHud.addMessage(warningChat)
 	}
+
+	fun hasDevMode(option: Boolean): Boolean {
+		return Vice.config.DEVMODE && option
+	}
 }

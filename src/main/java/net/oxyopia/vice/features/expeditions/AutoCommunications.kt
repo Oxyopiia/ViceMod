@@ -53,7 +53,7 @@ object AutoCommunications {
 			val room = groupValues[1].toIntOrNull() ?: return
 			val data = groupValues[2]
 
-			Utils.sendViceMessage("&&a${sender} &&ffound a Villager in &&aRoom $room!")
+			Utils.sendViceMessage("&&a${sender} &&ffound a Villager in &&aRoom $room&&f!")
 			Utils.playDing()
 
 			if (room < 0 || room > 15 || merchants[room]?.isNotEmpty() == true) return

@@ -62,9 +62,9 @@ object HudEditor : Screen(Text.of("Vice HUD Editor")) {
 		return super.keyPressed(keyCode, scanCode, modifiers)
 	}
 
-	override fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
-		HudElement.hoveredElement?.mouseScrolled(mouseX, mouseY, amount)
-		return super.mouseScrolled(mouseX, mouseY, amount)
+	override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
+		HudElement.hoveredElement?.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
+		return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
 	}
 
 	override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, deltaX: Double, deltaY: Double): Boolean {

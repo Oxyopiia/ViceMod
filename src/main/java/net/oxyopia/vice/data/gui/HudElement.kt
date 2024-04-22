@@ -39,11 +39,11 @@ abstract class
 
 	@SubscribeEvent
 	fun drawHudEditor(event: HudEditorRenderEvent) {
-		visible = true // Done to bypass Minecraft's behaviour. When disabled, will be falsified by setInvisible() in renderButton() shortly after.
+		visible = true // Done to bypass Minecraft's behaviour. When disabled, will be falsified by setInvisible() in renderWidget() shortly after.
 		render(event.context, event.mouseX, event.mouseY, event.tickDelta)
 	}
 
-	override fun renderButton(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+	override fun renderWidget(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
 		if (!shouldDrawInternal()) return setInvisible()
 		syncHoverState()
 
@@ -72,10 +72,10 @@ abstract class
 		return true
 	}
 
-	override fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
+	override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
 		if (!isHovered) return false
 
-		position.scale += amount.toFloat() / 10
+		position.scale += verticalAmount.toFloat() / 10
 		limitScale()
 		save()
 

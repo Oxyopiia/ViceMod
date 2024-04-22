@@ -15,7 +15,7 @@
     "MixinDownloadingTerrainScreen",
     "MixinDrawContext",
     "MixinEntityRenderer",
-    "MixinGameRenderer",
+    "MixinWorldRenderer",
     "MixinHandledScreen",
     "MixinInGameHud",
     "MixinItemStack",

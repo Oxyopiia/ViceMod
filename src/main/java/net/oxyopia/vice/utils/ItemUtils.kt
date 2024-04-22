@@ -35,7 +35,7 @@ object ItemUtils {
 					val nbtList = nbtCompound.getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE.toInt())
 
 					for (i in nbtList.indices) {
-						val lineLore: Text? = Text.Serializer.fromJson(nbtList.getString(i))
+						val lineLore: Text? = Text.Serialization.fromJson(nbtList.getString(i))
 
 						if (lineLore != null) lore.add(lineLore.string)
 					}

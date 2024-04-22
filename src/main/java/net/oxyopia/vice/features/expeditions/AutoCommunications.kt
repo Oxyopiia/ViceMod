@@ -72,7 +72,7 @@ object AutoCommunications {
 
 				val stack = ItemStack(Items.IRON_SWORD).setCustomName(Text.of("${rarity.color}$name".convertFormatting()))
 				val loreList = stack.getOrCreateSubNbt(ItemStack.DISPLAY_KEY).getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE.toInt())
-				loreList.add(NbtString.of(Text.Serializer.toJson(Text.of("${rarity.text} ${type.text}"))))
+				loreList.add(NbtString.of(Text.Serialization.toJsonString(Text.of("${rarity.text} ${type.text}"))))
 				stack.getOrCreateSubNbt(ItemStack.DISPLAY_KEY).put(ItemStack.LORE_KEY, loreList)
 
 				merchants[room]?.add(stack)

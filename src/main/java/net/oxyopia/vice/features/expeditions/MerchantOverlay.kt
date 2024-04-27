@@ -3,7 +3,6 @@ package net.oxyopia.vice.features.expeditions
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.item.ItemStack
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
@@ -18,7 +17,7 @@ import kotlin.math.roundToInt
 
 object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions.merchantOverlayPos) {
 	override fun shouldDraw(): Boolean = Vice.config.EXPEDITION_MERCHANT_OVERLAY
-	override fun drawCondition(): Boolean = World.Expeditions.isInWorld()
+	override fun drawCondition(): Boolean = ExpeditionAPI.isInExpedition()
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {

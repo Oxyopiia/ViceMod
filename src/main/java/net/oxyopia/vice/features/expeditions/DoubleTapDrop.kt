@@ -16,7 +16,7 @@ object DoubleTapDrop {
 
 	@SubscribeEvent
 	fun onDrop(event: ItemDropEvent) {
-		if (!Vice.config.EXPEDITION_ITEM_PROTECTION) return
+		if (!Vice.config.EXPEDITION_ITEM_PROTECTION || !ExpeditionAPI.isInExpedition()) return
 
 		val rarity = event.item.getExpeditionRarity() ?: return
 		val protectionThreshold = ExpeditionRarity.fromOrdinal(Vice.config.EXPEDITION_ITEM_PROTECTION_THRESHOLD)

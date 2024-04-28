@@ -34,4 +34,7 @@ class BossStorage {
 	@Expose
 	var bossCounterPos: Position = Position(175f, 150f)
 
+	@Expose
+	var wasteyardTimerPos: Position = Position(120f, 90f)
+
 }

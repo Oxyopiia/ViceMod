@@ -156,6 +156,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(Fishing)
 		EVENT_MANAGER.subscribe(ItemProtection)
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
+		EVENT_MANAGER.subscribe(WasteyardTimer)
 
 		EVENT_MANAGER.subscribe(BossCounter)
 		EVENT_MANAGER.subscribe(ForgeTimers)

@@ -546,6 +546,17 @@ public class Config extends Vigilant {
 	)
 	public boolean BOSS_COUNTER_OUTSIDE = false;
 
+	// Bosses/Wasteyard
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Wasteyard Timer",
+		description = "Timer for the Wasteyard cooldown, useful for grinding runs.\nOnly shows when a run has been completed within the last 5 minutes.",
+		category = "Bosses",
+		subcategory = "Wasteyard"
+	)
+	public boolean WASTEYARD_TIMER = true;
+	
 	// Bosses/Abyssal Vice
 
     @Property(

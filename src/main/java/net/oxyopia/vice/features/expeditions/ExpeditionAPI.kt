@@ -72,8 +72,8 @@ object ExpeditionAPI {
 				val matchedItem = merchants[room]?.get(lastClickedShopItemIndex) ?: return
 
 				if (matchedItem.cleanName() == itemName) {
-					merchants[room]?.set(lastClickedShopItemIndex, ItemStack.EMPTY)
 					AutoCommunications.shareShopkeeperBuy(room, lastClickedShopItemIndex, matchedItem)
+					merchants[room]?.set(lastClickedShopItemIndex, ItemStack.EMPTY)
 				}
 			}
 		}

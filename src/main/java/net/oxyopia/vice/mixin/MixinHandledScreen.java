@@ -1,5 +1,6 @@
 package net.oxyopia.vice.mixin;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -84,10 +85,15 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 
 			if (actionType == SlotActionType.THROW) {
 				MinecraftClient client = MinecraftClient.getInstance();
-				ItemStack item = client.player != null ? client.player.currentScreenHandler.getSlot(slotId).getStack() : null;
+				try {
+					ItemStack item = client.player != null ? client.player.currentScreenHandler.getSlot(slotId).getStack() : null;
 
-				if (item != null) {
-					result = EVENT_MANAGER.publish(new ItemDropEvent(item));
+					if (item != null) {
+						result = EVENT_MANAGER.publish(new ItemDropEvent(item));
+					}
+
+				} catch (Exception error) {
+					LogUtils.getLogger().warn("An error occurred getting an ItemStack in a slot thrown event! slotId {} button {} syncId {} actionType {} title {}", slotId, button, syncId, actionType, title.getString(), error);
 				}
 			}
 

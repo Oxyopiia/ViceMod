@@ -572,6 +572,15 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Run Overview",
+		description = "Displays stats about your run, like Tokens, Current Room, and more.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean EXPEDITION_OVERVIEW = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Double-tap to Drop Valuable Items",
 		description = "Makes items that are valuable in Expeditions require you to press the drop key twice to actually drop.",
 		category = "Expeditions",

@@ -28,16 +28,6 @@ object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions
 		val list = mutableListOf("&&a&&lMerchants")
 		val merchants = ExpeditionAPI.merchants
 
-		if (DevUtils.hasDevMode(Vice.devConfig.EXPEDITION_DEBUGGER)) {
-			list.add("&&7gamestate: &&a$state")
-			list.add("&&7elapsed: &&a${formatDuration(ExpeditionAPI.currentSession.startTime.timeDelta(), false)}")
-			list.add("&&7room: &&a${ExpeditionAPI.getRoomByZ()}")
-
-			list.add("")
-			list.add("&&7stored players: &&a${ExpeditionAPI.currentSession.players.size}")
-			ExpeditionAPI.currentSession.players.forEach { list.add("&&7- ${it.name.string}") }
-		}
-
 		merchants.forEach { merchant ->
 			val roomId = merchant.key
 			val items = merchant.value

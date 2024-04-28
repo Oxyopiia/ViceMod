@@ -48,7 +48,7 @@ enum class ItemAbility(
     GLITCH_MALLET("Glitch Mallet", 15f, set = Set.HEAVY, setAmount = 3),
     WARPED_GRENADE("Warped Grenade", 3f),
     POSEIDONS_FURY("Poseidon's Fury", 15f),
-    ZIP_BOMB("Zip Bomb", 5f, set = Set.DEMOLITIONIST, setAmount = 2),
+    ZIP_BOMB("Zip Bomb", 9f, set = Set.DEMOLITIONIST, setAmount = 2),
     THE_SYNTHFLESH("The Synthflesh", 3f, set = Set.FLESHCRAWLER, setAmount = 2), // 2 for 1st ability, 3 for 2nd ability
 
     // No Display

@@ -14,6 +14,7 @@ import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.milliseconds
 
 object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions.merchantOverlayPos) {
 	override fun shouldDraw(): Boolean = Vice.config.EXPEDITION_MERCHANT_OVERLAY
@@ -30,7 +31,7 @@ object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions
 
 		if (DevUtils.hasDevMode(Vice.devConfig.EXPEDITION_DEBUGGER)) {
 			list.add("&&7gamestate: &&a$state")
-			list.add("&&7elapsed: &&a${formatDuration(ExpeditionAPI.currentSession.startTime.timeDelta(), false)}")
+			list.add("&&7elapsed: &&a${ExpeditionAPI.currentSession.startTime.timeDelta().milliseconds.formatDuration(false)}")
 			list.add("&&7room: &&a${ExpeditionAPI.getRoomByZ()}")
 
 			list.add("")

@@ -17,6 +17,7 @@ import net.oxyopia.vice.utils.TimeUtils.ms
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaWithin
 import kotlin.math.abs
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
@@ -64,7 +65,7 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 				item.timestamp <= System.currentTimeMillis() -> "&&aREADY"
 				else -> {
 					val remainingMs = item.timestamp.timeDelta() * -1
-					"&&e\uD83D\uDD51 ${formatDuration(remainingMs, false)}"
+					"&&e\uD83D\uDD51 ${remainingMs.milliseconds.formatDuration(false)}"
 				}
 			}
 

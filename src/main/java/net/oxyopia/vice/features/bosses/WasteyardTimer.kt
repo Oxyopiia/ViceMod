@@ -49,7 +49,7 @@ object WasteyardTimer : HudElement("Wasteyard Timer", Vice.storage.bosses.wastey
 	@SubscribeEvent
 	fun onTimedTick(event: ClientTickEvent) {
 		if (!event.repeatSeconds(1) || !Vice.config.WASTEYARD_TIMER) return
-		if (lastNotification >= startTime || startTime.timeDeltaWithin(2.minutes)) return
+		if (lastNotification >= startTime || startTime.timeDeltaWithin(COOLDOWN_TIME_SECS.seconds)) return
 
 		Utils.sendViceMessage("&&aYour Wasteyard cooldown has worn off.")
 		Utils.playDing()

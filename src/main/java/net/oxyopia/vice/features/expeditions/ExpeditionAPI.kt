@@ -3,6 +3,7 @@ package net.oxyopia.vice.features.expeditions
 import net.minecraft.block.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.oxyopia.vice.data.ChatColor
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.BlockUpdateEvent
 import net.oxyopia.vice.events.ChatEvent
@@ -16,6 +17,7 @@ import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.TimeUtils.ms
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils
+import java.awt.Color
 import kotlin.time.Duration.Companion.seconds
 
 
@@ -25,15 +27,15 @@ object ExpeditionAPI {
 	private val newItemRegex = Regex("\\+\\d+ (.*)")
 	private val merchantSlots = listOf(20, 22, 24)
 	private val roomZBounds = listOf(
-		-107.0,
-		-76.0,
-		-45.0,
-		-26.0,
-		4.5,
-		21.0,
-		52.0,
-		83.0,
-		118.0
+		Room(-107.0, "Large"),
+		Room(-76.0, "Hallway"),
+		Room(-45.0, "Cooldown", ChatColor.GREEN.color),
+		Room(-26.0, "Large"),
+		Room(4.5, "Horizontal"),
+		Room(21.0, "Large"),
+		Room(52.0, "Large"),
+		Room(83.0, "XL"),
+		Room(118.0, "Boss", ChatColor.RED.color),
 	)
 
 	private var lastClickedShopItemIndex = -1
@@ -140,8 +142,8 @@ object ExpeditionAPI {
 
 		val z = player.z
 
-		for ((index, minZ) in roomZBounds.withIndex()) {
-			if (z < minZ) {
+		for ((index, room) in roomZBounds.withIndex()) {
+			if (z < room.minZ) {
 				return index
 			}
 		}
@@ -158,4 +160,10 @@ object ExpeditionAPI {
 			currentSession.players = players.toMutableList()
 		}
 	}
+
+	internal data class Room(
+		val minZ: Double,
+		val name: String,
+		val color: Color = Color.white
+	)
 }

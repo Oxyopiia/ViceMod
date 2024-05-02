@@ -605,7 +605,16 @@ public class Config extends Vigilant {
 		category = "Expeditions",
 		subcategory = "Quality of Life"
 	)
-	public boolean EXPEDITION_MERCHANT_OVERLAY = false;
+	public boolean EXPEDITION_MERCHANT_OVERLAY = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Room Waypoints",
+		description = "Displays the room number, type, and merchant status on the doors during Expeditions. Useful for backtracking to rooms with Merchants.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean EXPEDITION_ROOM_WAYPOINTS = false;
 
 	@Property(
 		type = PropertyType.SWITCH,

@@ -26,17 +26,34 @@ object ExpeditionAPI {
 
 	private val newItemRegex = Regex("\\+\\d+ (.*)")
 	private val merchantSlots = listOf(20, 22, 24)
-	private val roomZBounds = listOf(
-		Room(-107.0, "Large"),
-		Room(-76.0, "Hallway"),
-		Room(-45.0, "Cooldown", ChatColor.GREEN.color),
-		Room(-26.0, "Large"),
-		Room(4.5, "Horizontal"),
-		Room(21.0, "Large"),
-		Room(52.0, "Large"),
-		Room(83.0, "XL"),
-		Room(118.0, "Boss", ChatColor.RED.color),
+	internal val rooms = listOf(
+		Room(0, -130.0, "Starter", RoomType.STARTER),
+		Room(1, -107.0, "Large"),
+		Room(2, -76.0, "Hallway"),
+		Room(3, -45.0, "Lootbox", RoomType.LOOTBOX),
+		Room(4, -26.0, "Large"),
+		Room(5, 4.5, "Horizontal"),
+		Room(6, 21.0, "Large"),
+		Room(7, 52.0, "Large"),
+		Room(8, 83.0, "XL"),
+		Room(9, 118.0, "Boss", RoomType.BOSS),
 	)
+
+	internal data class Room(
+		val id: Int,
+		val minZ: Double,
+		val name: String,
+		val type: RoomType = RoomType.MOB
+	) {
+		fun hasMerchant() = merchants.containsKey(id)
+	}
+
+	internal enum class RoomType(val color: Color) {
+		STARTER(ChatColor.YELLOW.color),
+		MOB(Color.white),
+		LOOTBOX(ChatColor.GREEN.color),
+		BOSS(ChatColor.DARK_RED.color)
+	}
 
 	private var lastClickedShopItemIndex = -1
 	private var lastClickedShopItemTime: Long = -1L
@@ -68,14 +85,14 @@ object ExpeditionAPI {
 				val match = newItemRegex.find(event.string) ?: return
 
 				val itemName = match.groupValues[1]
-				val room = getRoomByZ()
+				val room = getRoomByZ() ?: return
 
 				if (lastClickedShopItemIndex < 0 || lastClickedShopItemTime.timeDelta() > 0.5.seconds.ms()) return
-				val matchedItem = merchants[room]?.get(lastClickedShopItemIndex) ?: return
+				val matchedItem = merchants[room.id]?.get(lastClickedShopItemIndex) ?: return
 
 				if (matchedItem.cleanName() == itemName) {
-					AutoCommunications.shareShopkeeperBuy(room, lastClickedShopItemIndex, matchedItem)
-					merchants[room]?.set(lastClickedShopItemIndex, ItemStack.EMPTY)
+					AutoCommunications.shareShopkeeperBuy(room.id, lastClickedShopItemIndex, matchedItem)
+					merchants[room.id]?.set(lastClickedShopItemIndex, ItemStack.EMPTY)
 				}
 			}
 		}
@@ -86,7 +103,7 @@ object ExpeditionAPI {
 		if (!World.Expeditions.isInWorld() || !event.isActuallyFullyRendered()) return
 		if (!event.chestName.contains("Expedition Merchant")) return
 
-		val roomIndex = getRoomByZ()
+		val roomIndex = getRoomByZ() ?: return
 		val list = mutableListOf<ItemStack>()
 
 		merchantSlots.forEach { slotId ->
@@ -96,11 +113,11 @@ object ExpeditionAPI {
 			list.add(item)
 		}
 
-		if (!merchants.containsKey(roomIndex) && list.size > 0) {
-			AutoCommunications.shareShopkeeperFound(roomIndex, list)
+		if (!merchants.containsKey(roomIndex.id) && list.size > 0) {
+			AutoCommunications.shareShopkeeperFound(roomIndex.id, list)
 		}
 
-		merchants[roomIndex] = list
+		merchants[roomIndex.id] = list
 	}
 
 	@SubscribeEvent
@@ -136,19 +153,18 @@ object ExpeditionAPI {
 		currentSession.players.remove(event.entity)
 	}
 
-	fun getRoomByZ(): Int {
-		val player = Utils.getPlayer() ?: return -1
-		if (!World.Expeditions.isInWorld()) return -2
-
+	internal fun getRoomByZ(): Room? {
+		val player = Utils.getPlayer() ?: return null
+		if (!World.Expeditions.isInWorld()) return null
 		val z = player.z
 
-		for ((index, room) in roomZBounds.withIndex()) {
-			if (z < room.minZ) {
-				return index
+		rooms.forEachIndexed { index, room ->
+			if (index == rooms.lastIndex || z < rooms[index + 1].minZ) {
+				return room
 			}
 		}
 
-		return roomZBounds.size
+		return null
 	}
 
 	private fun checkPlayerCount(sendWarning: Boolean = true) {
@@ -160,10 +176,4 @@ object ExpeditionAPI {
 			currentSession.players = players.toMutableList()
 		}
 	}
-
-	internal data class Room(
-		val minZ: Double,
-		val name: String,
-		val color: Color = Color.white
-	)
 }

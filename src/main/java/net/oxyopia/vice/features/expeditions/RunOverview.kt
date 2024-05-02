@@ -25,7 +25,7 @@ object RunOverview : HudElement("Expedition Run Overview", Vice.storage.expediti
 		val list = mutableListOf(
 			"&&a&&lExpedition",
 			"&&7Time Elapsed: &&a${formatDuration(ExpeditionAPI.currentSession.startTime.timeDelta(), false)}",
-			"&&7Current Room: &&a${ExpeditionAPI.getRoomByZ()}",
+			"&&7Current Room: &&a${ExpeditionAPI.getRoomByZ()?.id}",
 			"&&7Max Room: &&a${floor(ExpeditionAPI.currentSession.gameState / 2.0).roundToInt()}",
 			"&&7Players: &&a${ExpeditionAPI.currentSession.players.size}",
 		)

@@ -43,6 +43,7 @@ import net.oxyopia.vice.features.expeditions.DefibCounter
 import net.oxyopia.vice.features.expeditions.DoubleTapDrop
 import net.oxyopia.vice.features.expeditions.ExpeditionAPI
 import net.oxyopia.vice.features.expeditions.MerchantOverlay
+import net.oxyopia.vice.features.expeditions.RoomWaypoints
 import net.oxyopia.vice.features.expeditions.RunOverview
 import net.oxyopia.vice.features.expeditions.StylePointsHider
 import net.oxyopia.vice.features.hud.ForgeTimers
@@ -186,6 +187,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(DoubleTapDrop)
 		EVENT_MANAGER.subscribe(ExpeditionAPI)
 		EVENT_MANAGER.subscribe(MerchantOverlay)
+		EVENT_MANAGER.subscribe(RoomWaypoints)
 		EVENT_MANAGER.subscribe(RunOverview)
 		EVENT_MANAGER.subscribe(StylePointsHider)
 

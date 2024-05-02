@@ -21,7 +21,7 @@ object AutoCommunications {
 		Regex("Villager in Room \\d+! \\(ViceExpMerchant-(\\d+)-(.+)\\)")
 	}
 	private val merchantBuyRegex: Regex by lazy {
-		Regex("Purchased .+ in Room \\d+! \\(ViceExpMerchantBuy-(\\d+):(\\d+)\\)")
+		Regex("Purchased (.+) in Room \\d+! \\(ViceExpMerchantBuy-(\\d+):(\\d+)\\)")
 	}
 
 	fun ChatEvent.processCommunications() {
@@ -33,10 +33,14 @@ object AutoCommunications {
 			filter()
 			if (!shouldParse() || !playerIsInside(sender)) return
 
-			val room = groupValues[1].toIntOrNull() ?: return
-			val itemIndex = groupValues[2].toIntOrNull() ?: return
+			val room = groupValues[2].toIntOrNull() ?: return
+			val itemIndex = groupValues[3].toIntOrNull() ?: return
 
-			val original = merchants[room]?.get(itemIndex)
+			var original = merchants[room]?.get(itemIndex)
+			if (original == ItemStack.EMPTY) {
+				original = ItemStack(Items.IRON_SWORD).setCustomName(Text.of(groupValues[1]))
+			}
+
 			Utils.sendViceMessage("&&a${sender} &&fpurchased &&a${original?.cleanName()} &&ffrom the Villager in &&aRoom $room")
 			Utils.playDing()
 

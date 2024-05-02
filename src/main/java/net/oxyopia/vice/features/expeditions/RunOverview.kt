@@ -13,7 +13,7 @@ import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
-object RunOverview : HudElement("Expedition Run Overview", Vice.storage.expeditions.runOverviewPos) {
+object RunOverview : HudElement("Expedition Run Overview", Vice.storage.expeditions.runOverviewPos, searchTerm = "Run Overview") {
 	override fun shouldDraw(): Boolean = Vice.config.EXPEDITION_OVERVIEW
 	override fun drawCondition(): Boolean = ExpeditionAPI.isInExpedition()
 

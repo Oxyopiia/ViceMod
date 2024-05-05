@@ -51,7 +51,7 @@ object ExpeditionAPI {
 	internal enum class RoomType(val color: Color) {
 		STARTER(ChatColor.YELLOW.color),
 		MOB(Color.white),
-		LOOTBOX(ChatColor.GREEN.color),
+		LOOTBOX(ChatColor.GOLD.color),
 		BOSS(ChatColor.DARK_RED.color)
 	}
 

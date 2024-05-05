@@ -52,7 +52,7 @@ object WasteyardTimer : HudElement("Wasteyard Timer", Vice.storage.bosses.wastey
 		if (lastNotification >= startTime || startTime.timeDeltaWithin(COOLDOWN_TIME_SECS.seconds)) return
 
 		Utils.sendViceMessage("&&aYour Wasteyard cooldown has worn off.")
-		Utils.playDing()
+		Utils.playSound(Vice.config.WASTEYARD_TIMER_SOUND, pitch = Vice.config.WASTEYARD_TIMER_PITCH)
 		lastNotification = System.currentTimeMillis()
 	}
 

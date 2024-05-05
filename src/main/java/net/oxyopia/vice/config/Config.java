@@ -556,6 +556,26 @@ public class Config extends Vigilant {
 		subcategory = "Wasteyard"
 	)
 	public boolean WASTEYARD_TIMER = true;
+
+	@Property(
+		type = PropertyType.TEXT,
+		name = "Wasteyard Timer Sound",
+		description = "Sound that is played when the Wasteyard is available.\nSearch up 'minecraft sound ids' for a list of sounds.",
+		category = "Bosses",
+		subcategory = "Wasteyard"
+	)
+	public String WASTEYARD_TIMER_SOUND = "entity.arrow.hit_player";
+
+	@Property(
+		type = PropertyType.DECIMAL_SLIDER,
+		name = "Wasteyard Timer Sound Pitch",
+		description = "Pitch of the reminder.",
+		category = "Bosses",
+		subcategory = "Wasteyard",
+		minF = 0.1f,
+		maxF = 2.0f
+	)
+	public float WASTEYARD_TIMER_PITCH = 1.0f;
 	
 	// Bosses/Abyssal Vice
 

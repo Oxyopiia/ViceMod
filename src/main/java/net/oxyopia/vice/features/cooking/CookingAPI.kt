@@ -82,6 +82,7 @@ object CookingAPI {
 					event.cancel()
 					if (heldItem == CookingItem.COOKED_MEAT) {
 						Utils.playSound("block.note_block.pling", pitch = 1.5f, volume = 3f)
+						BurgerTimer.cooking = null
 					}
 				}
 			}

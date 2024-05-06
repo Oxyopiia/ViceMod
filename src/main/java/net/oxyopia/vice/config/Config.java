@@ -263,6 +263,15 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Cooking Timer",
+		description = "Displays the time remaining to cook a burger above the stove.",
+		category = "General",
+		subcategory = "World 4"
+	)
+	public boolean COOKING_TIMER = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Order Tracker",
 		description = "Displays a HUD graphic showing the total number of requests, completions and completion rate of each order in World 4.",
 		category = "General",

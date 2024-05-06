@@ -37,10 +37,7 @@ object TimeUtils {
 		return " \uD83D\uDD51 " + formatDuration(ceil(timeLimit - (this / 1000f)))
 	}
 
-	fun Long.timeDelta(): Long {
-		return System.currentTimeMillis() - this
-	}
-
+	fun Long.timeDelta(): Long = System.currentTimeMillis() - this
 	fun Long.timeDeltaWithin(duration: Duration): Boolean = (timeDelta() <= duration.inWholeMilliseconds)
 
 	fun Duration.ms() = this.inWholeMilliseconds

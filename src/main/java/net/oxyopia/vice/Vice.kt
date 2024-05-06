@@ -36,6 +36,7 @@ import net.oxyopia.vice.features.auxiliary.exonitas.BabyMode
 import net.oxyopia.vice.features.auxiliary.exonitas.CitySpamHiders
 import net.oxyopia.vice.features.auxiliary.exonitas.PowerBoxTimer
 import net.oxyopia.vice.features.bosses.*
+import net.oxyopia.vice.features.cooking.BurgerTimer
 import net.oxyopia.vice.features.cooking.CookingAPI
 import net.oxyopia.vice.features.cooking.OrderTracker
 import net.oxyopia.vice.features.cooking.CurrentOrderDisplay
@@ -171,6 +172,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(CooldownDisplayChanger)
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 
+		EVENT_MANAGER.subscribe(BurgerTimer)
 		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
 		EVENT_MANAGER.subscribe(CookingAPI)
 		EVENT_MANAGER.subscribe(OrderTracker)

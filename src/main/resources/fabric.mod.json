@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "vice",
-	"version": "1.0 Beta 13 Hotfix",
+	"version": "1.0 Beta 14",
 	"name": "Vice",
 	"description": "Vice is a DoomTowers utility mod, featuring various improvements like UIs, Helpers, Chat/Sound filters, and more!",
 	"authors": [

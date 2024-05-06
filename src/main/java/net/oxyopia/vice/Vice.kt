@@ -155,7 +155,6 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(BackpackRenaming)
 		EVENT_MANAGER.subscribe(ChatFilter)
 		EVENT_MANAGER.subscribe(ConsumeItemBlocker)
-		EVENT_MANAGER.subscribe(DailyRewardsNotification)
 		EVENT_MANAGER.subscribe(Fishing)
 		EVENT_MANAGER.subscribe(ItemProtection)
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)

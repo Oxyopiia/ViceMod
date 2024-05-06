@@ -66,14 +66,14 @@ object ExpeditionAPI {
 		if (!World.Expeditions.isInWorld()) return
 
 		when {
-			event.string.contains("Right click on the door to begin the Expedition.") -> {
+			event.string.startsWith("Right click on the door to begin the Expedition.") -> {
 				val players = Utils.getWorld()?.players?.filterNot { it.name.string.startsWith("CIT-") || it.customName?.string?.startsWith("CIT-") == true } ?: listOf()
 				currentSession = ExpeditionRun(System.currentTimeMillis() - 1000L, gameState = 1, players = players.toMutableList())
 				merchants.clear()
 				DevUtils.sendDebugChat("&&aEXPEDITIONS &&fStarted &&7(gameState = 1, ${players.size} size).", "EXPEDITION_DEBUGGER")
 			}
 
-			event.string.contains("Room complete") && !currentSession.roomIsCompleteAndWaiting() -> {
+			event.string.startsWith("Room complete") && !currentSession.roomIsCompleteAndWaiting() -> {
 				currentSession.gameState++
 				DevUtils.sendDebugChat("&&aEXPEDITIONS &&fNew game state &&7(ChatMessage): &&a${currentSession.gameState}.", "EXPEDITION_DEBUGGER")
 				checkPlayerCount()

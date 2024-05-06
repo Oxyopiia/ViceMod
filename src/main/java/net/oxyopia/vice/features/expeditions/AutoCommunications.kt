@@ -37,7 +37,7 @@ object AutoCommunications {
 			val itemIndex = groupValues[3].toIntOrNull() ?: return
 
 			var original = merchants[room]?.get(itemIndex)
-			if (original == ItemStack.EMPTY) {
+			if (original == ItemStack.EMPTY || original == null) {
 				original = ItemStack(Items.IRON_SWORD).setCustomName(Text.of(groupValues[1]))
 			}
 

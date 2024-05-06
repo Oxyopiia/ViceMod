@@ -9,7 +9,6 @@ import net.oxyopia.vice.Vice;
 import net.oxyopia.vice.utils.Utils;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.io.File;
 import java.net.URI;
 import java.util.*;
@@ -165,15 +164,6 @@ public class Config extends Vigilant {
         subcategory = "Quality of Life"
     )
     public boolean HIDE_REVOLVER_BLINDNESS = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Daily Rewards Notification",
-		description = "Reminds you when your Daily Rewards are ready, every 30 minutes.",
-		category = "General",
-		subcategory = "Quality of Life"
-	)
-	public boolean DAILY_REWARDS_NOTIFICATION = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -410,26 +400,6 @@ public class Config extends Vigilant {
 	public boolean WRONG_SET_INDICATOR = false;
 
     // Arenas/Quality of Life
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Draw Danger Zones",
-        description = "Draws a Bounding Box around the zone where Mobs spawn in Arenas",
-        category = "Arenas",
-        subcategory = "Quality of Life",
-        hidden = true
-    )
-    public boolean DRAW_ARENA_DANGER_ZONES = false;
-
-    @Property(
-        type = PropertyType.COLOR,
-        name = "Danger Zone Colour",
-        description = "Color the thing",
-        category = "Arenas",
-        subcategory = "Quality of Life",
-        allowAlpha = false
-    )
-    public Color ARENA_DANGER_ZONE_COLOR = new Color(255, 0, 0);
 
     @Property(
         type = PropertyType.SWITCH,

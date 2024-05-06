@@ -87,7 +87,7 @@ object RenderUtils {
 		size: Float = 1f,
 		yOffset: Float = 0f,
 		center: Boolean = true,
-		shadow: Boolean = true,
+		shadow: Boolean = false,
 		visibleThroughObjects: Boolean = true
 	) {
 		val textRenderer = MinecraftClient.getInstance().textRenderer

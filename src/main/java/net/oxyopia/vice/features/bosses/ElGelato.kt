@@ -3,6 +3,7 @@ package net.oxyopia.vice.features.bosses
 import net.oxyopia.vice.data.World
 
 object ElGelato : Boss(
+	World.Gelato,
 	Regex("(?:EL|TRUE) GELATO - (.\\d*)/\\d* ♥ \\[PHASE (\\d)]")
 ) {
 	private const val PHASE_1_MAX_TIME = 1 * 60
@@ -17,6 +18,4 @@ object ElGelato : Boss(
 			else -> null
 		}
 	}
-
-	override fun isInWorld(): Boolean = World.Gelato.isInWorld()
 }

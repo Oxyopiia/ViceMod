@@ -7,12 +7,14 @@ import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
 
-object ViceBoss : Boss() {
+object ViceBoss : Boss(
+	World.Vice
+) {
 	private const val PHASE_1_MAX_TIME = 5 * 60
 
 	@SubscribeEvent
 	override fun onBossBarModifyEvent(event: BossBarEvent.Override) {
-		if (!Vice.config.BOSS_DESPAWN_TIMERS || !isInWorld()) return
+		if (!Vice.config.BOSS_DESPAWN_TIMERS || !world.isInWorld()) return
 
 		if (event.original.string.contains("VICE")) {
 			if (lastKnownUUID != event.instance.uuid) {
@@ -37,6 +39,4 @@ object ViceBoss : Boss() {
 	private fun getPhaseTimeSec(): Int {
 		return getPhaseTimeSec("")
 	}
-
-	override fun isInWorld(): Boolean = World.Vice.isInWorld()
 }

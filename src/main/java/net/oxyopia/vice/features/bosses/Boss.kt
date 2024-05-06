@@ -1,6 +1,7 @@
 package net.oxyopia.vice.features.bosses
 
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.BossBarEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
@@ -14,6 +15,7 @@ import java.util.*
 import kotlin.time.Duration.Companion.seconds
 
 abstract class Boss (
+	val world: World,
 	private val bossbarRegex: Regex = Regex("")
 ){
 	var lastSpawned = 0L
@@ -28,7 +30,7 @@ abstract class Boss (
 
 	@SubscribeEvent
 	open fun onBossBarModifyEvent(event: BossBarEvent.Override) {
-		if (!Vice.config.BOSS_DESPAWN_TIMERS || !isInWorld()) return
+		if (!Vice.config.BOSS_DESPAWN_TIMERS || !world.isInWorld()) return
 
 		bossbarRegex.find(event.original.string)?.apply {
 			if (lastKnownUUID != event.instance.uuid) {
@@ -58,7 +60,7 @@ abstract class Boss (
 
 	@SubscribeEvent
 	fun onTick(event: ClientTickEvent) {
-		if (!event.repeatSeconds(1) || !Vice.config.BOSS_DESPAWN_WARNING || !isInWorld()) return
+		if (!event.repeatSeconds(1) || !Vice.config.BOSS_DESPAWN_WARNING || !world.isInWorld()) return
 
 		val phaseTime = getPhaseTimeSec(lastKnownPhase.toString())?.ms() ?: return
 
@@ -78,6 +80,4 @@ abstract class Boss (
 	private fun isLikelyAlive() = lastBarUpdate.timeDelta() <= 0.5.seconds.ms()
 
 	abstract fun getPhaseTimeSec(phase: String): Int?
-
-	abstract fun isInWorld(): Boolean
 }

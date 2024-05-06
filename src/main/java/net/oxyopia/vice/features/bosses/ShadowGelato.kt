@@ -3,6 +3,7 @@ package net.oxyopia.vice.features.bosses
 import net.oxyopia.vice.data.World
 
 object ShadowGelato : Boss(
+	World.ShadowGelato,
 	Regex("(?:TRUE )?SHADOW GELATO - (.\\d*)/\\d* ♥ \\[PHASE (\\d)]")
 ){
 	private const val PHASE_1_MAX_TIME = 2 * 60
@@ -16,6 +17,4 @@ object ShadowGelato : Boss(
 			else -> null
 		}
 	}
-
-	override fun isInWorld(): Boolean = World.ShadowGelato.isInWorld()
 }

@@ -3,6 +3,7 @@ package net.oxyopia.vice.features.bosses
 import net.oxyopia.vice.data.World
 
 object PPP : Boss(
+	World.PPP,
 	Regex("FAKER - (.\\d*)/\\d* ♥ \\[PHASE (\\d)]")
 ) {
 	private const val PHASE_1_MAX_TIME = 2 * 60
@@ -15,6 +16,4 @@ object PPP : Boss(
 			else -> null
 		}
 	}
-
-	override fun isInWorld(): Boolean = World.PPP.isInWorld()
 }

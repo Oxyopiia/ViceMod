@@ -16,5 +16,8 @@ class ExpeditionsStorage {
 	}
 
 	@Expose
+	var runOverviewPos: Position = Position(120f, 50f)
+
+	@Expose
 	var merchantOverlayPos: Position = Position(40f, 170f, scale = 0.7f)
 }

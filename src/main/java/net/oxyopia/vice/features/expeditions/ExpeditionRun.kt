@@ -11,6 +11,6 @@ data class ExpeditionRun(
 	@Expose var barrelsCollected: Int = 0,
 	@Expose var endTime: Long? = null
 ) {
-	fun isActive(): Boolean = endTime != null && startTime >= 0
+	fun isActive(): Boolean = endTime == null && startTime > 0 && ExpeditionAPI.isInExpedition()
 	fun roomIsCompleteAndWaiting(): Boolean = gameState % 2 == 1
 }

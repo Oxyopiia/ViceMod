@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<title>Document</title>
+</head>
+<style>
+
+	:root {
+		--color-text: #e9ebf3;
+		--color-background: #0c0f16;
+		--color-primary: #9089da;
+		--color-secondary: #4f2f6e;
+		--color-accent: #9252b6;
+		
+		--tooltip-width: 150px;
+	}
+	
+	body {
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		background-color: var(--color-background);
+		color: var(--color-text);
+		margin: 0;
+		padding: 20px;
+		line-height: 1.6;
+	}
+	
+	h1, h2, h3 {
+		color: var(--color-primary);
+	}
+	
+	/* Summary/Details Blocks */
+	
+	summary {
+		cursor:pointer
+	}
+	
+	details > summary:not(.notitle) {
+		font-size: 1.5em;
+		font-weight: bold;
+		margin-bottom: 0.5em;
+		color: var(--color-primary);
+	}
+	
+	summary::-webkit-details-marker {
+		display: none;
+	}
+	
+	details[open] summary {
+		margin-bottom: 1em;
+	}
+	
+	p {
+		margin: 0 0 20px 0;
+	}
+	
+	/* TOC (Table of Contents) */
+	
+	#toc {
+		background-color: var(--color-background);
+		padding: 10px;
+		margin-bottom: 20px;
+		width: 200px;
+		position: fixed;
+		top: 20px;
+		right: 20px;
+		text-align: right;
+	}
+	
+	#toc h3 {
+		margin-top: 0;
+	}
+	
+	#toc ul {
+		list-style-type: none;
+		padding: 0;
+	}
+	
+	#toc li {
+		margin-bottom: 10px;
+	}
+	
+	#toc a {
+		text-decoration: none;
+		color: var(--color-primary);
+	}
+	
+	#toc a:hover {
+		text-decoration: underline;
+	}
+	
+	.content {
+		max-width: 800px;
+		margin-right: 240px;
+	}
+	
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-top: 20px;
+	}
+	
+	th, td {
+		border: 1px solid #999;
+		padding: 8px;
+		text-align: left;
+	}
+	
+	th {
+		background-color: #ccc;
+	}
+	
+	/* Links */
+	a {
+		color: var(--color-secondary);
+	}
+	
+	a:hover {
+		text-decoration: underline;
+	}
+	
+	@media (max-width: 960px) {
+		#toc {
+			display: none
+		}
+		
+		.content {
+			margin-right: 20px;
+		}
+	}
+	
+	html {
+		scroll-behavior: smooth;
+	}
+
+	/* Tooltips */
+
+	.tooltip {
+		position: relative;
+		display: inline-block;
+		border-bottom: 1px dotted var(--color-primary);
+	}
+	
+	.tooltip .tooltiptext {
+		opacity: 0%;
+		width: calc(var(--tooltip-width) * 2);
+		background-color: black;
+		color: #fff;
+		text-align: center;
+		padding: 5px 0;
+		border-radius: 6px;
+		transition: opacity 60ms ease-in-out;
+		
+		position: absolute;
+		z-index: 1;
+
+		top: 50%;
+		left: 105%;
+		margin-left: 3px;
+		transform: translate(0, -50%)
+	}
+	
+	.tooltip:hover .tooltiptext {
+		opacity: 100%;
+	}
+	
+	.tooltip .tooltiptext::after {
+		content: " ";
+		position: absolute;
+		top: 50%;
+		right: 100%; 
+		margin-top: -5px;
+		border-width: 5px;
+		border-style: solid;
+		border-color: transparent black transparent transparent;
+	}
+	
+	/* Icons */
+	
+	#icon-container {
+		position: fixed;
+		bottom: 20px;
+		right: 15px;
+		z-index: 1000;
+		padding: 0 10px;
+		text-align: right;
+	}
+	
+	#icon-container a {
+		display: inline-block;
+		color: var(--color-primary);
+		font-size: 2rem;
+		margin: 0 5px;
+		transition: color 0.3s;
+	}
+	
+	#icon-container a:hover {
+		color: var(--color-accent); 
+	}
+	
+</style>
+<body id="vice">
+	<div id="toc">
+		<h3><a href="#vice">Table of Contents</a></h3>
+		<ul>
+			<li><a href="#introduction">Summary</a></li>
+			<br />
+			<li><a href="#general">General</a></li>
+			<li><a href="#worlds">World-Specific</a></li>
+			<li><a href="#ability">Item Abilities</a></li>
+			<li><a href="#bosses">Bosses</a></li>
+			<li><a href="#expeditions">Expeditions</a></li>
+			<li><a href="#arenas">Arenas</a></li>
+		</ul>
+	</div>
+	
+	<div class="content">
+		<h1>Vice Features List</h1>
+		<strong>List last Updated: 11/05/24</strong><br><br>
+		<div>
+			<a href="https://github.com/Oxyopiia/ViceMod/releases" target="_blank">
+				<img alt="downloads" src="https://img.shields.io/github/v/release/Oxyopiia/ViceMod?color=4166f5&style=for-the-badge"/>
+			</a>
+		</div>
+		<section id="introduction">
+			<h1>Summary</h1>
+			<p>Vice is an open-source Fabric utility mod specially designed for the DoomTowers server, featuring various helpers, muters, and features.</p>
+		</section>
+		
+		<section id="general">
+			<details open="true">
+				<summary>General</summary>
+				<ul>
+					<li><strong>Backpack Renaming</strong></li>
+					<li><strong>Trash Protection</strong></li>
+					<li>Hide Revolver Blindness</li>
+					<li>Improved Fishing Ding</li>
+					<li>Forge Timers UI</li>
+					<li>Player Stats UI</li>
+					<li>Worldguard Message Hiders</li>
+					<li>Modify/Mute the Volume of many Abilities</li>
+				</ul>
+			</details>
+		</section>
+		
+		<section id="worlds">
+			<details>
+				<summary>World-Specific</summary>
+				<ul>
+					<h3>World 4</h3>
+					<li>Show Next Cooking Item</li>
+					<li>Cooking Stock UI</li>
+					<li>Cooking Order Tracker</li>
+					<li>Beef Cooking Timer</li>
+					
+					<h3>World 11</h3>
+					<li>Train Timer UI</li>
+					
+					<h3>World 12</h3>
+					<li>Evan Notification</li>
+					
+					<h3>Exonitas</h3>
+					<li>Power Box Timer</li>
+					<li><div class="tooltip">Baby Mode
+						<span class="tooltiptext">Makes players have baby models to allow better visibility.</span>
+					</div></li>
+					<li>Hide Bloat Messages</li>
+				</ul>
+			</details>
+		</section>
+		
+		<section id="ability">
+			<details>
+				<summary>Item Abilities</summary>
+				<ul>
+					<li>
+						<div class="tooltip"><Strong>Item Cooldown Overlay</Strong>
+							<span class="tooltiptext">
+								<strong>Displays Item Cooldowns for hotbar items in real time with:</strong><br>
+								- 5 Unique styles<br>
+								- Customisable opacity<br>
+								- Toggleable cooldown next to cursor<br>
+								- Toggleable ready text<br>
+							</span>
+						</div>
+						
+					</li>
+					<li>Wrong Set Indicator</li>
+					<li>Hide Set Requirement Warnings</li>
+					<li>Customisable Cooldown Title</li>
+				</ul>
+			</details>
+		</section>
+		
+		<section id="bosses">
+			<details>
+				<summary>Bosses</summary>
+				<ul>
+					<li>Boss Counter</li>
+					<li>Despawn Timers</li>
+					<li>Despawn Warning</li>
+					
+					<h3>Specific</h3>
+					<li><div class="tooltip">Wasteyard Cooldown Timer
+						<span class="tooltiptext">
+							Renders a timer for the Wasteyard cooldown. Also sends a chat message and a <strong>customisable</strong> sound when the Wasteyard is ready.
+						</span>
+					</div></li>
+					<li>Abyssal Vice Laser Warning</li>
+				</ul>
+			</details>
+		</section>
+		
+		<section id="expeditions">
+			<details>
+				<summary>Expeditions</summary>
+				<ul>
+					<li>Run Overview</li>
+					<li>Double tap to Drop Valuable Items</li>
+					<li>Merchants Overlay</li>
+					<li>Room Waypoints</li>
+					<li>Defibrillator Counter</li>
+					<li>Hide Style Points</li>
+					<li><div class="tooltip">Auto Relay Information
+						<span class="tooltiptext">
+							Sends information about newly discovered villagers to your teammates. This can also be filtered out even after opting out of sharing.<br>
+							<strong>Use at your Own Risk</strong> (probably fine tho)
+						</span>
+					</div></li>
+				</ul>
+			</details>
+		</section>
+		
+		<section id="arenas">
+			<details>
+				<summary>Arenas</summary>
+				<ul>
+					<li><div class="tooltip">Live Arena Information
+						<span class="tooltiptext">Displays drop rates, wave timers, and more information in Arenas.</span>
+					</div></li>
+					<li>New Mob Effects Notification</li>
+					<li>Cooldown Reminder</li>
+				</ul>
+			</details>
+		</section>
+	</div>
+	
+	<div id="icon-container">
+		<a href="https://github.com/Oxyopiia/ViceMod" target="_blank">
+			<i class="fab fa-github"></i>
+		</a>
+		<a href="https://discord.gg/7nb9KcZHug" target="_blank">
+			<i class="fab fa-discord"></i>
+		</a>
+	</div>
+</body>
+</html>

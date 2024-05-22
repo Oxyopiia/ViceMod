@@ -9,7 +9,6 @@ import net.oxyopia.vice.Vice;
 import net.oxyopia.vice.utils.Utils;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.io.File;
 import java.net.URI;
 import java.util.*;
@@ -168,15 +167,6 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Daily Rewards Notification",
-		description = "Reminds you when your Daily Rewards are ready, every 30 minutes.",
-		category = "General",
-		subcategory = "Quality of Life"
-	)
-	public boolean DAILY_REWARDS_NOTIFICATION = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
 		name = "Forge Timers",
 		description = "Displays the time remaining for items in the Forge to smelt.",
 		category = "General",
@@ -260,6 +250,15 @@ public class Config extends Vigilant {
     	subcategory = "World 4"
     )
     public boolean SIMPLIFY_COOKING_DISPLAYS = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Cooking Timer",
+		description = "Displays the time remaining to cook a burger above the stove.",
+		category = "General",
+		subcategory = "World 4"
+	)
+	public boolean COOKING_TIMER = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -404,26 +403,6 @@ public class Config extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Draw Danger Zones",
-        description = "Draws a Bounding Box around the zone where Mobs spawn in Arenas",
-        category = "Arenas",
-        subcategory = "Quality of Life",
-        hidden = true
-    )
-    public boolean DRAW_ARENA_DANGER_ZONES = false;
-
-    @Property(
-        type = PropertyType.COLOR,
-        name = "Danger Zone Colour",
-        description = "Color the thing",
-        category = "Arenas",
-        subcategory = "Quality of Life",
-        allowAlpha = false
-    )
-    public Color ARENA_DANGER_ZONE_COLOR = new Color(255, 0, 0);
-
-    @Property(
-        type = PropertyType.SWITCH,
         name = "Arenas Cooldown Notification",
         description = "Sends a chat notification when an Arena cooldown has expired.",
         category = "Arenas",
@@ -556,6 +535,26 @@ public class Config extends Vigilant {
 		subcategory = "Wasteyard"
 	)
 	public boolean WASTEYARD_TIMER = true;
+
+	@Property(
+		type = PropertyType.TEXT,
+		name = "Wasteyard Timer Sound",
+		description = "Sound that is played when the Wasteyard is available.\nSearch up 'minecraft sound ids' for a list of sounds.",
+		category = "Bosses",
+		subcategory = "Wasteyard"
+	)
+	public String WASTEYARD_TIMER_SOUND = "entity.arrow.hit_player";
+
+	@Property(
+		type = PropertyType.DECIMAL_SLIDER,
+		name = "Wasteyard Timer Sound Pitch",
+		description = "Pitch of the reminder.",
+		category = "Bosses",
+		subcategory = "Wasteyard",
+		minF = 0.1f,
+		maxF = 2.0f
+	)
+	public float WASTEYARD_TIMER_PITCH = 1.0f;
 	
 	// Bosses/Abyssal Vice
 
@@ -569,6 +568,15 @@ public class Config extends Vigilant {
     public boolean ABYSSAL_VICE_LASER_WARNING = true;
 
 	// Expeditions
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Run Overview",
+		description = "Displays stats about your run, like Tokens, Current Room, and more.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean EXPEDITION_OVERVIEW = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -596,7 +604,16 @@ public class Config extends Vigilant {
 		category = "Expeditions",
 		subcategory = "Quality of Life"
 	)
-	public boolean EXPEDITION_MERCHANT_OVERLAY = false;
+	public boolean EXPEDITION_MERCHANT_OVERLAY = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Room Waypoints",
+		description = "Displays the room number, type, and merchant status on the doors during Expeditions. Useful for backtracking to rooms with Merchants.",
+		category = "Expeditions",
+		subcategory = "Quality of Life"
+	)
+	public boolean EXPEDITION_ROOM_WAYPOINTS = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -717,7 +734,6 @@ public class Config extends Vigilant {
         initialize();
         markDirty();
 
-        addDependency("ARENA_DANGER_ZONE_COLOR", "DRAW_ARENA_DANGER_ZONES");
 		addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
 		addDependency("BOSS_COUNTER_OUTSIDE", "BOSS_COUNTER");
 

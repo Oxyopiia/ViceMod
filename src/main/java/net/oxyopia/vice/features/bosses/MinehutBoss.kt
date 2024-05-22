@@ -3,6 +3,7 @@ package net.oxyopia.vice.features.bosses
 import net.oxyopia.vice.data.World
 
 object MinehutBoss : Boss(
+	World.Minehut,
 	Regex("Lifesteal Box SMP Unique - (.\\d*)/\\d* ♥ \\[PHASE (\\d)]")
 ) {
 	private const val PHASE_1_MAX_TIME = 2 * 60
@@ -17,6 +18,4 @@ object MinehutBoss : Boss(
 			else -> null
 		}
 	}
-
-	override fun isInWorld(): Boolean = World.Minehut.isInWorld()
 }

@@ -147,7 +147,7 @@ object HudUtils {
 		return rows * gap * scale - 3
 	}
 
-	private fun TextRenderer.getSpecialTextWidth(text: String, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW): Int {
+	fun TextRenderer.getSpecialTextWidth(text: String, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW): Int {
 		return this.getWidth(text) + if (shadow) 1 else 0
 	}
 

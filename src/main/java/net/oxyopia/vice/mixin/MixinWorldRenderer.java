@@ -28,7 +28,7 @@ public class MixinWorldRenderer {
 	@Inject(at = @At("TAIL"), method = "render")
 	private void afterEntities(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f projectionMatrix, CallbackInfo ci) {
 		if (MinecraftClient.getInstance().isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new WorldRenderEvent.AfterEntities(matrices, tickDelta, camera, gameRenderer, projectionMatrix));
+			EVENT_MANAGER.publish(new WorldRenderEvent.Last(matrices, tickDelta, camera, gameRenderer, projectionMatrix));
 		}
 	}
 }

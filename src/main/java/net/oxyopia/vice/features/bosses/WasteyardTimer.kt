@@ -18,7 +18,7 @@ import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 object WasteyardTimer : HudElement("Wasteyard Timer", Vice.storage.bosses.wasteyardTimerPos) {
-	private const val COOLDOWN_TIME = 2 * 60
+	private const val COOLDOWN_TIME_SECS = 90
 	private var startTime = -1L
 	private var lastNotification = -1L
 
@@ -37,8 +37,8 @@ object WasteyardTimer : HudElement("Wasteyard Timer", Vice.storage.bosses.wastey
 	fun onHudRender(event: HudRenderEvent) {
 		if (!shouldDraw() || !drawCondition()) return
 
-		if (startTime.timeDeltaWithin(COOLDOWN_TIME.seconds)) {
-			val text = startTime.timeDeltaDuration().formatTimer(COOLDOWN_TIME.seconds)
+		if (startTime.timeDeltaWithin(COOLDOWN_TIME_SECS.seconds)) {
+			val text = startTime.timeDeltaDuration().formatTimer(COOLDOWN_TIME_SECS.seconds)
 			position.drawString("&&4Wasteyard&&c$text", event.context)
 
 		} else {
@@ -49,10 +49,10 @@ object WasteyardTimer : HudElement("Wasteyard Timer", Vice.storage.bosses.wastey
 	@SubscribeEvent
 	fun onTimedTick(event: ClientTickEvent) {
 		if (!event.repeatSeconds(1) || !Vice.config.WASTEYARD_TIMER) return
-		if (lastNotification >= startTime || startTime.timeDeltaWithin(2.minutes)) return
+		if (lastNotification >= startTime || startTime.timeDeltaWithin(COOLDOWN_TIME_SECS.seconds)) return
 
 		Utils.sendViceMessage("&&aYour Wasteyard cooldown has worn off.")
-		Utils.playDing()
+		Utils.playSound(Vice.config.WASTEYARD_TIMER_SOUND, pitch = Vice.config.WASTEYARD_TIMER_PITCH)
 		lastNotification = System.currentTimeMillis()
 	}
 

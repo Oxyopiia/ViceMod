@@ -81,6 +81,6 @@ object Utils {
 	 * Removes any two consecutive ampersands, or sections signs, which are followed by a character in a string
 	 */
 	fun String.removeFormatting(): String {
-		return this.replace("(&&|§)[a-r0-9]", "", ignoreCase = true)
+		return this.replace("(&&|§)[0-9a-fk-or]", "", ignoreCase = true)
 	}
 }

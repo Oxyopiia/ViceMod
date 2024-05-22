@@ -14,7 +14,6 @@ import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.math.roundToInt
-import kotlin.time.Duration.Companion.milliseconds
 
 object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions.merchantOverlayPos) {
 	override fun shouldDraw(): Boolean = Vice.config.EXPEDITION_MERCHANT_OVERLAY
@@ -28,16 +27,6 @@ object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions
 		val state = ExpeditionAPI.currentSession.gameState
 		val list = mutableListOf("&&a&&lMerchants")
 		val merchants = ExpeditionAPI.merchants
-
-		if (DevUtils.hasDevMode(Vice.devConfig.EXPEDITION_DEBUGGER)) {
-			list.add("&&7gamestate: &&a$state")
-			list.add("&&7elapsed: &&a${ExpeditionAPI.currentSession.startTime.timeDelta().milliseconds.formatDuration(false)}")
-			list.add("&&7room: &&a${ExpeditionAPI.getRoomByZ()}")
-
-			list.add("")
-			list.add("&&7stored players: &&a${ExpeditionAPI.currentSession.players.size}")
-			ExpeditionAPI.currentSession.players.forEach { list.add("&&7- ${it.name.string}") }
-		}
 
 		merchants.forEach { merchant ->
 			val roomId = merchant.key

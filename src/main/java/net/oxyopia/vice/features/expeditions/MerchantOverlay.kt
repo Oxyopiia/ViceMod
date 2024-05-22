@@ -11,8 +11,6 @@ import net.oxyopia.vice.features.expeditions.ExpeditionItemType.Companion.getExp
 import net.oxyopia.vice.features.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils.drawStrings
-import net.oxyopia.vice.utils.TimeUtils.formatDuration
-import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.math.roundToInt
 
 object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions.merchantOverlayPos) {

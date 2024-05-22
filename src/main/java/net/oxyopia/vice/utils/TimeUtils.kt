@@ -23,10 +23,9 @@ object TimeUtils {
 		return " \uD83D\uDD51 " + ceil((timeLimit.inWholeMilliseconds - this.inWholeMilliseconds) / 1000.0).seconds.formatDuration()
 	}
 
-	fun Long.timeDeltaDuration(): Duration = System.currentTimeMillis().milliseconds - this.milliseconds
 	fun Long.timeDelta(): Long = System.currentTimeMillis() - this
+	fun Long.timeDeltaDuration(): Duration = System.currentTimeMillis().milliseconds - this.milliseconds
 	fun Long.timeDeltaWithin(duration: Duration): Boolean = (timeDelta() <= duration.inWholeMilliseconds)
 
 	fun Duration.ms() = this.inWholeMilliseconds
-	fun Int.ms() = this * 1000
 }

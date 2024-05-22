@@ -61,7 +61,7 @@ abstract class Boss (
 	fun onTick(event: ClientTickEvent) {
 		if (!event.repeatSeconds(1) || !Vice.config.BOSS_DESPAWN_WARNING || !isInWorld()) return
 
-		val phaseTime = getPhaseTimeSec(lastKnownPhase.toString())?.ms() ?: return
+		val phaseTime = getPhaseTimeSec(lastKnownPhase.toString())?.times(1000) ?: return
 
 		if (
 			!isLikelyAlive() ||

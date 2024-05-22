@@ -23,7 +23,7 @@ object TimeUtils {
 		return " \uD83D\uDD51 " + ceil((timeLimit.inWholeMilliseconds - this.inWholeMilliseconds) / 1000.0).seconds.formatDuration()
 	}
 
-	fun Long.formatShortDuration() = String.format("%.2f", this / 1000f)
+	fun Duration.formatShortDuration() = String.format("%.2f", this.inWholeMilliseconds / 1000f)
 
 	fun Long.timeDelta(): Long = System.currentTimeMillis() - this
 	fun Long.timeDeltaDuration(): Duration = System.currentTimeMillis().milliseconds - this.milliseconds

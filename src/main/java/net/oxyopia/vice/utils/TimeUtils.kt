@@ -2,6 +2,7 @@ package net.oxyopia.vice.utils
 
 import kotlin.math.ceil
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 object TimeUtils {
@@ -18,17 +19,12 @@ object TimeUtils {
 		}
 	}
 
-	/**
-	 * Takes a time delta in milliseconds and formats to a duration in seconds.
-	 */
-	fun Long.formatTimer(timeLimit: Int): String {
-		return " \uD83D\uDD51 " + ceil(timeLimit - (this / 1000f)).toInt().seconds.formatDuration()
+	fun Duration.formatTimer(timeLimit: Duration): String {
+		return " \uD83D\uDD51 " + ceil((timeLimit.inWholeMilliseconds - this.inWholeMilliseconds) / 1000.0).seconds.formatDuration()
 	}
 
-	fun Long.timeDelta(): Long {
-		return System.currentTimeMillis() - this
-	}
-
+	fun Long.timeDeltaDuration(): Duration = System.currentTimeMillis().milliseconds - this.milliseconds
+	fun Long.timeDelta(): Long = System.currentTimeMillis() - this
 	fun Long.timeDeltaWithin(duration: Duration): Boolean = (timeDelta() <= duration.inWholeMilliseconds)
 
 	fun Duration.ms() = this.inWholeMilliseconds

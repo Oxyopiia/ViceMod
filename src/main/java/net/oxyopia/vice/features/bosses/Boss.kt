@@ -10,7 +10,9 @@ import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.TimeUtils.ms
+import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
 import java.util.*
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 abstract class Boss (
@@ -37,11 +39,11 @@ abstract class Boss (
 				DevUtils.sendDebugChat("&&9BOSS CHANGE &&rDetected a Boss change", "BOSS_DETECTION_INFO")
 			}
 
-			val diff = lastSpawned.timeDelta()
+			val diff = lastSpawned.timeDeltaDuration()
 			val style = event.original.siblings.first().style.withObfuscated(false)
 
 			val phaseTime = getPhaseTimeSec(groupValues[2]) ?: return
-			val timer = diff.formatTimer(phaseTime)
+			val timer = diff.formatTimer(phaseTime.seconds)
 
 			event.setReturnValue(event.original.copy().append(timer).setStyle(style))
 			lastBarUpdate = System.currentTimeMillis()

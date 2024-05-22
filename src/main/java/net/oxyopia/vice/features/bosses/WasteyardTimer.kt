@@ -1,6 +1,5 @@
 package net.oxyopia.vice.features.bosses
 
-import com.google.common.eventbus.Subscribe
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
@@ -13,8 +12,10 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaWithin
 import net.oxyopia.vice.utils.Utils
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
@@ -39,7 +40,7 @@ object WasteyardTimer : HudElement("Wasteyard Timer", Vice.storage.bosses.wastey
 		if (!shouldDraw() || !drawCondition()) return
 
 		if (startTime.timeDeltaWithin(COOLDOWN_TIME.seconds)) {
-			val text = startTime.timeDelta().formatTimer(COOLDOWN_TIME)
+			val text = startTime.timeDeltaDuration().formatTimer(COOLDOWN_TIME.seconds)
 			position.drawString("&&4Wasteyard&&c$text", event.context)
 
 		} else {

@@ -8,9 +8,10 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.TimeUtils.ms
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
+import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.arenas.liveArenaPos) {
@@ -35,7 +36,7 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 
 		if (Vice.config.LIVE_ARENA_ROUND_TIMER){
 			list.add("")
-			list.add(session.waveStartTime.timeDelta().formatTimer(WAVE_TIME_SECONDS))
+			list.add(session.waveStartTime.timeDeltaDuration().formatTimer(WAVE_TIME_SECONDS.seconds))
 		}
 
 		val showDropsState = Vice.config.LIVE_ARENA_DROPS
@@ -67,7 +68,7 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 
 		if (Vice.config.LIVE_ARENA_ROUND_TIMER){
 			list.add("")
-			list.add(26.seconds.ms().formatTimer(WAVE_TIME_SECONDS))
+			list.add(26.seconds.formatTimer(WAVE_TIME_SECONDS.seconds))
 		}
 
 		val showDropsState = Vice.config.LIVE_ARENA_DROPS

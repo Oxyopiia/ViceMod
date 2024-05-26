@@ -9,6 +9,7 @@ import net.oxyopia.vice.utils.HudUtils
 object AbyssalVice: Boss(
 	World.AbyssalVice,
 	Regex("Abyssal Vice - (.\\d*)/\\d* ♥ \\[PHASE (\\d)]")
+	Regex("Abyssal Vice - (.\\d+)/\\d+ ❤ \\[PHASE (\\d)]"),
 ) {
 	private const val PHASE_1_MAX_TIME = 5 * 60
 	private const val PHASE_2_MAX_TIME = 5 * 60

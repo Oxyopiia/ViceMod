@@ -18,3 +18,4 @@ object ShadowGelato : Boss(
 		}
 	}
 }
+	Regex("(?:TRUE )?SHADOW GELATO - (.\\d+)/\\d+ ❤ \\[PHASE (\\d)]"),

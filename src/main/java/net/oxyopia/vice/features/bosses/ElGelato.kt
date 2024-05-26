@@ -19,3 +19,4 @@ object ElGelato : Boss(
 		}
 	}
 }
+	Regex("(?:EL|TRUE) GELATO - (.\\d+)/\\d+ ❤ \\[PHASE (\\d)]"),

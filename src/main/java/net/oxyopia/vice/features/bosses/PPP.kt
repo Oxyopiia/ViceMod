@@ -17,3 +17,4 @@ object PPP : Boss(
 		}
 	}
 }
+	Regex("FAKER - (.\\d+)/\\d+ ❤ \\[PHASE (\\d)]"),

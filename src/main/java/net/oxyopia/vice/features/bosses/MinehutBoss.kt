@@ -19,3 +19,4 @@ object MinehutBoss : Boss(
 		}
 	}
 }
+	Regex("Lifesteal Box SMP Unique - (.\\d+)/\\d+ ❤ \\[PHASE (\\d)]"),

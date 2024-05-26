@@ -29,6 +29,7 @@ object ItemProtection {
 		"Dark Scythe",
 		"Drill of the Jungle",
 		"Dynamite Barrel",
+		"Gateway Fragment",
 		"Lobotomy",
 		"Mystic Clam",
 		"Overclocked Graphics Card",

@@ -8,20 +8,9 @@ import net.oxyopia.vice.utils.HudUtils
 
 object AbyssalVice: Boss(
 	World.AbyssalVice,
-	Regex("Abyssal Vice - (.\\d*)/\\d* ♥ \\[PHASE (\\d)]")
 	Regex("Abyssal Vice - (.\\d+)/\\d+ ❤ \\[PHASE (\\d)]"),
+	phaseTimesSec = listOf(5 * 60, 5 * 60)
 ) {
-	private const val PHASE_1_MAX_TIME = 5 * 60
-	private const val PHASE_2_MAX_TIME = 5 * 60
-
-	override fun getPhaseTimeSec(phase: String): Int? {
-		return when (phase) {
-			"1" -> PHASE_1_MAX_TIME
-			"2" -> PHASE_2_MAX_TIME
-			else -> null
-		}
-	}
-
 	override val warningPercentage: Double
 		get() = 0.1
 

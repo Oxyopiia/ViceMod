@@ -1,5 +1,6 @@
 package net.oxyopia.vice.features.bosses
 
+import net.minecraft.text.Style
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.ClientTickEvent
@@ -17,7 +18,8 @@ import kotlin.time.Duration.Companion.seconds
 
 abstract class Boss (
 	val world: World,
-	private val bossbarRegex: Regex = Regex("")
+	private val bossbarRegex: Regex = Regex(""),
+	val phaseTimesSec: List<Int> = listOf()
 ){
 	var lastSpawned = 0L
 	var lastBarUpdate = 0L
@@ -40,22 +42,18 @@ abstract class Boss (
 				DevUtils.sendDebugChat("&&9BOSS CHANGE &&rDetected a Boss change", "BOSS_DETECTION_INFO")
 			}
 
+			val phase = groupValues[2].toIntOrNull() ?: return
+			val phaseTime = getPhaseTimeSec(phase) ?: return
 			val diff = lastSpawned.timeDeltaDuration()
-			val style = event.original.siblings.first().style.withObfuscated(false)
 
-			val phaseTime = getPhaseTimeSec(groupValues[2]) ?: return
 			val timer = diff.formatTimer(phaseTime.seconds)
 
+			val style = event.original.siblings.lastOrNull()?.style?.withObfuscated(false) ?: Style.EMPTY
 			event.setReturnValue(event.original.copy().append(timer).setStyle(style))
+
 			lastBarUpdate = System.currentTimeMillis()
-
-			try {
-				lastKnownHealth = groupValues[1].toInt()
-				lastKnownPhase = groupValues[2].toInt()
-
-			} catch (e: NumberFormatException) {
-				DevUtils.sendErrorMessage(e, "An error occurred converting Bossbar Health of a Boss to an Int!")
-			}
+			lastKnownHealth = groupValues[1].toIntOrNull()
+			lastKnownPhase = groupValues[2].toIntOrNull()
 		}
 	}
 
@@ -63,7 +61,7 @@ abstract class Boss (
 	fun onTick(event: ClientTickEvent) {
 		if (!event.repeatSeconds(1) || !Vice.config.BOSS_DESPAWN_WARNING || !world.isInWorld()) return
 
-		val phaseTime = getPhaseTimeSec(lastKnownPhase.toString())?.times(1000) ?: return
+		val phaseTime = 1000 * (getPhaseTimeSec(lastKnownPhase) ?: return)
 
 		if (
 			!isLikelyAlive() ||
@@ -80,5 +78,12 @@ abstract class Boss (
 
 	private fun isLikelyAlive() = lastBarUpdate.timeDelta() <= 0.5.seconds.ms()
 
-	abstract fun getPhaseTimeSec(phase: String): Int?
+	private fun getPhaseTimeSec(phaseId: Int?): Int? {
+		if (phaseId == null || phaseId < 1) return null
+		return phaseTimesSec[phaseId - 1]
+	}
+
+	open fun getPhaseTimeSec(): Int? {
+		return getPhaseTimeSec(lastKnownPhase)
+	}
 }

@@ -10,10 +10,9 @@ import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
 import kotlin.time.Duration.Companion.seconds
 
 object ViceBoss : Boss(
-	World.Vice
+	World.Vice,
+	phaseTimesSec = listOf(5 * 60)
 ) {
-	private const val PHASE_1_MAX_TIME = 5 * 60
-
 	@SubscribeEvent
 	override fun onBossBarModifyEvent(event: BossBarEvent.Override) {
 		if (!Vice.config.BOSS_DESPAWN_TIMERS || !world.isInWorld()) return
@@ -27,6 +26,7 @@ object ViceBoss : Boss(
 
 			val diff = lastSpawned.timeDeltaDuration()
 			val style = event.original.siblings.first().style.withObfuscated(false)
+
 			val timer = diff.formatTimer(getPhaseTimeSec().seconds)
 
 			event.setReturnValue(event.original.copy().append(timer).setStyle(style))
@@ -34,11 +34,5 @@ object ViceBoss : Boss(
 		}
 	}
 
-	override fun getPhaseTimeSec(phase: String): Int {
-		return PHASE_1_MAX_TIME
-	}
-
-	private fun getPhaseTimeSec(): Int {
-		return getPhaseTimeSec("")
-	}
+	override fun getPhaseTimeSec() = phaseTimesSec[0]
 }

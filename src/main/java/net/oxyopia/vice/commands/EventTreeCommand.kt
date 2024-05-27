@@ -2,7 +2,6 @@ package net.oxyopia.vice.commands
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
-import com.mojang.brigadier.context.CommandContext
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.oxyopia.vice.Vice.Companion.EVENT_MANAGER
@@ -11,7 +10,7 @@ import net.oxyopia.vice.utils.Utils
 object EventTreeCommand {
 	fun register(dispatcher: CommandDispatcher<FabricClientCommandSource?>) {
 		dispatcher.register(ClientCommandManager.literal("vicedevtree")
-			.executes { _: CommandContext<FabricClientCommandSource?>? ->
+			.executes {
 
 				val subscribers = EVENT_MANAGER.subscribers
 				Utils.sendViceMessage("&&e&&lVICE EVENT TREE")

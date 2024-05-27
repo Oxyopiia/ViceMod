@@ -4,18 +4,6 @@ import net.oxyopia.vice.data.World
 
 object ElGelato : Boss(
 	World.Gelato,
-	Regex("(?:EL|TRUE) GELATO - (.\\d*)/\\d* ♥ \\[PHASE (\\d)]")
-) {
-	private const val PHASE_1_MAX_TIME = 1 * 60
-	private const val PHASE_2_MAX_TIME = 2 * 60
-	private const val PHASE_3_MAX_TIME = 2 * 60
-
-	override fun getPhaseTimeSec(phase: String): Int? {
-		return when (phase) {
-			"1" -> PHASE_1_MAX_TIME
-			"2" -> PHASE_2_MAX_TIME
-			"3" -> PHASE_3_MAX_TIME
-			else -> null
-		}
-	}
-}
+	Regex("(?:EL|TRUE) GELATO - (.\\d+)/\\d+ ❤ \\[PHASE (\\d)]"),
+	phaseTimesSec = listOf(60, 120, 120)
+)

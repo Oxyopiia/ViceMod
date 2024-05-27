@@ -26,17 +26,27 @@ object ItemProtection {
 		"Bartender's Glove",
 		"Bit",
 		"Cheese",
+		"Cooked Worm Patty",
 		"Dark Scythe",
 		"Drill of the Jungle",
 		"Dynamite Barrel",
+		"Gateway Fragment",
 		"Lobotomy",
+		"Mineral Cake",
 		"Mystic Clam",
 		"Overclocked Graphics Card",
+		"Sheeper Fluid",
+		"Sheeper Sticks",
+		"Soul Shard",
+		"Sourdough",
 		"Spirit of the Tower",
 		"Steel",
 		"The Synthflesh",
 		"Tower Beacon",
+		"Voidaxe",
+		"Worm Burger",
 		"Zip Bomb",
+		"Zephyr's Tablet Shard",
 		Items.LEATHER_HORSE_ARMOR,
 		Items.IRON_HORSE_ARMOR,
 		Items.GOLDEN_HORSE_ARMOR,
@@ -93,6 +103,7 @@ object ItemProtection {
 		val item = Utils.getPlayer()?.mainHandStack ?: return DevUtils.sendWarningMessage("You are not holding an item to protect!")
 		val itemName = item.cleanName()
 
+		if (item.isEmpty) return DevUtils.sendWarningMessage("You are not holding an item to protect!")
 		if (defaultProtectedItems.contains(item.item) || defaultProtectedItems.contains(itemName)) {
 			Utils.sendViceMessage("&&eThis item is protected by default!")
 			Utils.sendViceMessage("&&7Hold LCONTROL while clicking to bypass this!")

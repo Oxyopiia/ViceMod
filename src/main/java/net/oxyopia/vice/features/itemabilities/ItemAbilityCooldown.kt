@@ -67,7 +67,7 @@ object ItemAbilityCooldown {
 			}
 
 			// VIRTUASWORD
-			event.soundName == "block.note_block.pling" && event.pitch == 0.5f && event.volume == 9999f -> {
+			event.soundName == "entity.zombie_villager.cure" && event.pitch == 2f && event.volume == 3f -> {
 				ItemAbility.VIRTUASWORD.onSound()
 			}
 

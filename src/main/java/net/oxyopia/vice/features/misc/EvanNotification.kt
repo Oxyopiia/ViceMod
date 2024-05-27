@@ -6,8 +6,7 @@ import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.TimeUtils.ms
-import net.oxyopia.vice.utils.TimeUtils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
 import kotlin.time.Duration.Companion.minutes
 
 object EvanNotification {
@@ -27,7 +26,7 @@ object EvanNotification {
         if (!event.repeatSeconds(1)) return
         if (!Vice.config.EVAN_NOTIFICATION || misc.lastEvanQuiz == -1L) return
 
-        if (misc.lastEvanQuiz.timeDelta() >= 30.minutes.ms()) {
+        if (misc.lastEvanQuiz.timeDeltaDuration() >= 30.minutes) {
             misc.lastEvanQuiz = -1L
             storage.markDirty()
 

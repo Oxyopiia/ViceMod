@@ -12,8 +12,7 @@ import net.oxyopia.vice.events.WorldChangeEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils.drawString
-import net.oxyopia.vice.utils.TimeUtils.ms
-import net.oxyopia.vice.utils.TimeUtils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
 import kotlin.time.Duration.Companion.seconds
 
 object PowerBoxTimer : HudElement("Power Box Timer", Vice.storage.auxiliary.city.powerBoxTimerPos) {
@@ -62,7 +61,7 @@ object PowerBoxTimer : HudElement("Power Box Timer", Vice.storage.auxiliary.city
 		if (!shouldDraw() || !World.Exonitas.isInWorld() || lastKnownLevel < 4) return
 
 		val text = when {
-			lastPowerBoxActivation.timeDelta() <= POWER_BOX_SECONDS.seconds.ms() -> String.format("&&a%.2fs", POWER_BOX_SECONDS - lastPowerBoxActivation.timeDelta() / 1000.0)
+			lastPowerBoxActivation.timeDeltaDuration() <= POWER_BOX_SECONDS.seconds -> String.format("&&a%.2fs", POWER_BOX_SECONDS - lastPowerBoxActivation.timeDeltaDuration().inWholeMilliseconds / 1000.0)
 			else -> "&&cPower Active!"
 		}
 

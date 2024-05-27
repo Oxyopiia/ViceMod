@@ -10,10 +10,9 @@ import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
-import net.oxyopia.vice.utils.TimeUtils.timeDelta
-import net.oxyopia.vice.utils.TimeUtils.ms
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
 import java.util.*
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 abstract class Boss (
@@ -66,8 +65,8 @@ abstract class Boss (
 		if (
 			!isLikelyAlive() ||
 			phaseTime <= 0 ||
-			lastSpawned.timeDelta() <= (1 - warningPercentage) * phaseTime ||
-			(lastDespawnNotify > 0 && lastDespawnNotify.timeDelta() <= phaseTime * warningPercentage)
+			lastSpawned.timeDeltaDuration() <= phaseTime.milliseconds * (1 - warningPercentage) ||
+			(lastDespawnNotify > 0 && lastDespawnNotify.timeDeltaDuration() <= phaseTime.milliseconds * warningPercentage)
 		) return
 
 		Utils.playSound("block.note_block.pling", pitch = 0.8f, volume = 3f)
@@ -76,7 +75,7 @@ abstract class Boss (
 		lastDespawnNotify = System.currentTimeMillis()
 	}
 
-	private fun isLikelyAlive() = lastBarUpdate.timeDelta() <= 0.5.seconds.ms()
+	private fun isLikelyAlive() = lastBarUpdate.timeDeltaDuration() <= 0.5.seconds
 
 	private fun getPhaseTimeSec(phaseId: Int?): Int? {
 		if (phaseId == null || phaseId < 1) return null

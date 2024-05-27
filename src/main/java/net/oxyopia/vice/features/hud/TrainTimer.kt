@@ -8,13 +8,11 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
-import net.oxyopia.vice.utils.TimeUtils.ms
-import java.util.concurrent.TimeUnit
+import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.seconds
 
@@ -46,14 +44,14 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 			list.add(text)
 		}
 
-		val diff = spawnTime.timeDelta()
-		val seconds = TimeUnit.MILLISECONDS.toSeconds(diff) % SPAWN_COOLDOWN_TIME_SECONDS
+		val diff = spawnTime.timeDeltaDuration()
+		val seconds = diff.inWholeSeconds % SPAWN_COOLDOWN_TIME_SECONDS
 		val formatted = (SPAWN_COOLDOWN_TIME_SECONDS - seconds).seconds.formatDuration(false)
 
 		list.add(
 			"&&6Next train in " + when {
-				diff <= 12.hours.ms() -> "&&a${formatted}"
-				diff > 12.hours.ms() -> "&&cUnknown &&eInaccurate!"
+				diff <= 12.hours -> "&&a${formatted}"
+				diff > 12.hours -> "&&cUnknown &&eInaccurate!"
 				else -> "&&cUnknown"
 			}
 		)

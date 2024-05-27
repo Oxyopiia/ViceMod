@@ -25,10 +25,16 @@ object TimeUtils {
 
 	fun Duration.formatShortDuration() = String.format("%.2f", this.inWholeMilliseconds / 1000f)
 
+	@Deprecated(
+		message = "Use Long.timeDeltaDuration() instead.",
+		replaceWith = ReplaceWith("this.timeDeltaDuration()", "net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration"),
+		level = DeprecationLevel.ERROR
+	)
 	fun Long.timeDelta(): Long = System.currentTimeMillis() - this
+
 	fun Long.timeDeltaDuration(): Duration = System.currentTimeMillis().milliseconds - this.milliseconds
 	fun Long.timeDeltaUntil(): Long = this - System.currentTimeMillis()
-	fun Long.timeDeltaWithin(duration: Duration): Boolean = (timeDelta() <= duration.inWholeMilliseconds)
+	fun Long.timeDeltaWithin(duration: Duration): Boolean = timeDeltaDuration() <= duration
 
 	fun Duration.ms() = this.inWholeMilliseconds
 }

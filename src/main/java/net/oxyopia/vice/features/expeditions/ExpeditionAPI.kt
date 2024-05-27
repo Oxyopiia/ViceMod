@@ -14,8 +14,7 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.expeditions.AutoCommunications.processCommunications
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
-import net.oxyopia.vice.utils.TimeUtils.ms
-import net.oxyopia.vice.utils.TimeUtils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
 import net.oxyopia.vice.utils.Utils
 import java.awt.Color
 import kotlin.time.Duration.Companion.seconds
@@ -87,7 +86,7 @@ object ExpeditionAPI {
 				val itemName = match.groupValues[1]
 				val room = getRoomByZ() ?: return
 
-				if (lastClickedShopItemIndex < 0 || lastClickedShopItemTime.timeDelta() > 0.5.seconds.ms()) return
+				if (lastClickedShopItemIndex < 0 || lastClickedShopItemTime.timeDeltaDuration() > 0.5.seconds) return
 				val matchedItem = merchants[room.id]?.get(lastClickedShopItemIndex) ?: return
 
 				if (matchedItem.cleanName() == itemName) {

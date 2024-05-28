@@ -11,7 +11,7 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
-import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaWithin
 import net.oxyopia.vice.utils.Utils
 import kotlin.time.Duration.Companion.minutes
@@ -38,7 +38,7 @@ object WasteyardTimer : HudElement("Wasteyard Timer", Vice.storage.bosses.wastey
 		if (!shouldDraw() || !drawCondition()) return
 
 		if (startTime.timeDeltaWithin(COOLDOWN_TIME_SECS.seconds)) {
-			val text = startTime.timeDeltaDuration().formatTimer(COOLDOWN_TIME_SECS.seconds)
+			val text = startTime.timeDelta().formatTimer(COOLDOWN_TIME_SECS.seconds)
 			position.drawString("&&4Wasteyard&&c$text", event.context)
 
 		} else {

@@ -9,7 +9,7 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
-import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
@@ -24,7 +24,7 @@ object RunOverview : HudElement("Expedition Run Overview", Vice.storage.expediti
 
 		val list = mutableListOf(
 			"&&a&&lExpedition",
-			"&&7Time Elapsed: &&a${ExpeditionAPI.currentSession.startTime.timeDeltaDuration().formatDuration()}",
+			"&&7Time Elapsed: &&a${ExpeditionAPI.currentSession.startTime.timeDelta().formatDuration()}",
 			"&&7Current Room: &&a${ExpeditionAPI.getRoomByZ()?.id}",
 			"&&7Max Room: &&a${floor(ExpeditionAPI.currentSession.gameState / 2.0).roundToInt()}",
 			"&&7Players: &&a${ExpeditionAPI.currentSession.players.size}",

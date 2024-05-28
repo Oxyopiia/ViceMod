@@ -14,7 +14,7 @@ import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.ms
-import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaWithin
 import kotlin.math.abs
 import kotlin.time.Duration.Companion.minutes
@@ -63,7 +63,7 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 			val timeText = when {
 				item.timestamp <= System.currentTimeMillis() -> "&&aREADY"
 				else -> {
-					val remainingMs = item.timestamp.timeDeltaDuration() * -1
+					val remainingMs = item.timestamp.timeDelta() * -1
 					"&&e\uD83D\uDD51 ${remainingMs.formatDuration(false)}"
 				}
 			}

@@ -8,7 +8,7 @@ import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.seconds
 
 object CookingAPI {
@@ -57,7 +57,7 @@ object CookingAPI {
 				lastSeenNewOrder = System.currentTimeMillis()
 			}
 
-			lastSeenNewOrder.timeDeltaDuration() <= 1.seconds -> {
+			lastSeenNewOrder.timeDelta() <= 1.seconds -> {
 				val order = CookingOrder.getByName(content) ?: return
 				updateOrder(order)
 			}

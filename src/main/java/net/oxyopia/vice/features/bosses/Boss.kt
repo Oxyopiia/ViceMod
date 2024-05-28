@@ -10,7 +10,7 @@ import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
-import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import java.util.*
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -43,7 +43,7 @@ abstract class Boss (
 
 			val phase = groupValues[2].toIntOrNull() ?: return
 			val phaseTime = getPhaseTimeSec(phase) ?: return
-			val diff = lastSpawned.timeDeltaDuration()
+			val diff = lastSpawned.timeDelta()
 
 			val timer = diff.formatTimer(phaseTime.seconds)
 
@@ -65,8 +65,8 @@ abstract class Boss (
 		if (
 			!isLikelyAlive() ||
 			phaseTime <= 0 ||
-			lastSpawned.timeDeltaDuration() <= phaseTime.milliseconds * (1 - warningPercentage) ||
-			(lastDespawnNotify > 0 && lastDespawnNotify.timeDeltaDuration() <= phaseTime.milliseconds * warningPercentage)
+			lastSpawned.timeDelta() <= phaseTime.milliseconds * (1 - warningPercentage) ||
+			(lastDespawnNotify > 0 && lastDespawnNotify.timeDelta() <= phaseTime.milliseconds * warningPercentage)
 		) return
 
 		Utils.playSound("block.note_block.pling", pitch = 0.8f, volume = 3f)
@@ -75,7 +75,7 @@ abstract class Boss (
 		lastDespawnNotify = System.currentTimeMillis()
 	}
 
-	private fun isLikelyAlive() = lastBarUpdate.timeDeltaDuration() <= 0.5.seconds
+	private fun isLikelyAlive() = lastBarUpdate.timeDelta() <= 0.5.seconds
 
 	private fun getPhaseTimeSec(phaseId: Int?): Int? {
 		if (phaseId == null || phaseId < 1) return null

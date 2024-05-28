@@ -12,7 +12,7 @@ import net.oxyopia.vice.events.HudEditorRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawBackground
 import net.oxyopia.vice.utils.NumberUtils.clamp
-import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils.getClient
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
@@ -121,7 +121,7 @@ abstract class
 	fun onLeftClick(): Boolean {
 		if (!isHovered) return false
 
-		if (lastClicked.timeDeltaDuration() <= 0.5.seconds) {
+		if (lastClicked.timeDelta() <= 0.5.seconds) {
 			val configUI = Vice.config.gui() ?: return false
 			val category = Vice.config.getCategoryFromSearch(searchTerm)
 

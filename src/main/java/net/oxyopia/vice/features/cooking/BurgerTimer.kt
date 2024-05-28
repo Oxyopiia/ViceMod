@@ -10,7 +10,7 @@ import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.WorldRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.RenderUtils.drawString
-import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils
 import kotlin.math.abs
 import kotlin.time.Duration.Companion.seconds
@@ -46,7 +46,7 @@ object BurgerTimer {
 		if (!Vice.config.COOKING_TIMER || !World.Burger.isInWorld() || (Utils.getPlayer()?.y ?: 0.0) <= 100.0) return
 
 		val c = cooking ?: return
-		val delta = c.completionTime.timeDeltaDuration()
+		val delta = c.completionTime.timeDelta()
 
 		if (delta >= BURN_TIME) return
 		if (delta > 0.seconds) {

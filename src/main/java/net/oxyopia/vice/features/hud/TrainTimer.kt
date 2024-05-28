@@ -12,7 +12,7 @@ import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
-import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.seconds
 
@@ -44,7 +44,7 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 			list.add(text)
 		}
 
-		val diff = spawnTime.timeDeltaDuration()
+		val diff = spawnTime.timeDelta()
 		val seconds = diff.inWholeSeconds % SPAWN_COOLDOWN_TIME_SECONDS
 		val formatted = (SPAWN_COOLDOWN_TIME_SECONDS - seconds).seconds.formatDuration(false)
 

@@ -6,7 +6,7 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
-import net.oxyopia.vice.utils.TimeUtils.timeDeltaDuration
+import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.seconds
 
 object ViceBoss : Boss(
@@ -24,7 +24,7 @@ object ViceBoss : Boss(
 				DevUtils.sendDebugChat("&&9BOSS CHANGE &&rDetected Vice change", "BOSS_DETECTION_INFO")
 			}
 
-			val diff = lastSpawned.timeDeltaDuration()
+			val diff = lastSpawned.timeDelta()
 			val style = event.original.siblings.first().style.withObfuscated(false)
 
 			val timer = diff.formatTimer(getPhaseTimeSec().seconds)

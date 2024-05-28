@@ -9,9 +9,10 @@ import net.oxyopia.vice.events.BossBarEvents
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
-import net.oxyopia.vice.utils.TimeUtils
+import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils
+import kotlin.time.Duration.Companion.milliseconds
 
 object CaveInPrediction : HudElement("Cave-In Prediction", Vice.storage.lostInTime.caveInEstimatePos) {
 	private val bossbarRegex = Regex("(\\d+)/(\\d+) BLOCKS MINED UNTIL A CAVE-IN")
@@ -50,12 +51,12 @@ object CaveInPrediction : HudElement("Cave-In Prediction", Vice.storage.lostInTi
 		val blocksMined = currentCount - tracking.count
 
 		if (blocksMined == 0) return
-		val millisPerBlock = (elapsed / blocksMined).stripLast2Sigfigs()
+		val millisPerBlock = (elapsed.inWholeMilliseconds / blocksMined).stripLast2Sigfigs()
 
 		val blocksUntilThreshold = currentThreshold - currentCount
-		val msUntilThreshold = blocksUntilThreshold * millisPerBlock
+		val msUntilThreshold = millisPerBlock.milliseconds * blocksUntilThreshold
 
-		val timer = TimeUtils.formatDuration(msUntilThreshold, false)
+		val timer = msUntilThreshold.formatDuration()
 
 		val list = listOf(
 			"Average blocks/second: &&a${String.format("%.2f", 1000.0 / millisPerBlock)}",

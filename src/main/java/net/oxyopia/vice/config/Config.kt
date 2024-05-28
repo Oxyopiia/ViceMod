@@ -5,7 +5,6 @@ import gg.essential.universal.UDesktop.browse
 import gg.essential.universal.UScreen
 import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.Category
-import gg.essential.vigilance.data.JVMAnnotationPropertyCollector
 import gg.essential.vigilance.data.Migration
 import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyData
@@ -22,8 +21,7 @@ import kotlin.Comparator
 class Config : Vigilant(
 	File("./config/vice/config.toml"),
 	"Vice §b$version",
-	JVMAnnotationPropertyCollector(),
-	ConfigSorting()
+	sortingBehavior = ConfigSorting()
 ) {
 	@Suppress("unused")
 	@Property(

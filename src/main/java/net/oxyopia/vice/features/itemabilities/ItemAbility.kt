@@ -20,7 +20,6 @@ enum class ItemAbility(
     val set: Set? = null,
     val setAmount: Int = 0,
     val sharedCooldownId : String? = null,
-    val displayCooldown: Boolean = true,
     val soundOnUse: Boolean = true,
     private var lastActivated: Long = 0,
     var lastClicked: Long = 0
@@ -52,11 +51,11 @@ enum class ItemAbility(
     THE_SYNTHFLESH("The Synthflesh", 3f, set = Set.FLESHCRAWLER, setAmount = 2), // 2 for 1st ability, 3 for 2nd ability
 
     // No Display
-    LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, displayCooldown = false, set = Set.HEAVY, setAmount = 2),
-    CARNAGE_RIFLE("Carnage Rifle", 0.5f, displayCooldown = false, set = Set.FLESHCRAWLER, setAmount = 2),
-    SNOWBALL_CANNON("Snowball Cannon", 0.5f, displayCooldown = false),
-    SHADOW_GELATO_DRUM_GUN("Shadow Gelato's Drum Gun", 0.1f, displayCooldown = false),
-    JYNX_CHAIN_GUN("Jynx's Chain Gun", 0.5f, displayCooldown = false, set = Set.DIGITAL, setAmount = 2),
+    LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, set = Set.HEAVY, setAmount = 2),
+    CARNAGE_RIFLE("Carnage Rifle", 0.5f, set = Set.FLESHCRAWLER, setAmount = 2),
+    SNOWBALL_CANNON("Snowball Cannon", 0.5f),
+    SHADOW_GELATO_DRUM_GUN("Shadow Gelato's Drum Gun", 0.1f),
+    JYNX_CHAIN_GUN("Jynx's Chain Gun", 0.5f, set = Set.DIGITAL, setAmount = 2),
 
     // Expeditions
     ASSASSIN_BLADE("Assassin's Blade", 10f),
@@ -65,6 +64,8 @@ enum class ItemAbility(
     GRENADE_BUNDLE("Grenade Bundle", 5f, soundOnUse = false),
     GLOW_BERRIES("Glow Berries", 5f),
     ALL_SEEING_EYE("All Seeing Eye", 30f);
+
+    val displayCooldown = cooldown >= 1f
 
     // Detecting whether the ability has ACTUALLY happened is performed in /features/itemabilities/ItemAbilityCooldown.kt
     // This will reset the cooldown regardless of whether it is still on cooldown or not.

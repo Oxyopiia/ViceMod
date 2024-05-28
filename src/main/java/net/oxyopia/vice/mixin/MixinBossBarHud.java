@@ -7,7 +7,7 @@ import net.minecraft.client.gui.hud.BossBarHud;
 import net.minecraft.client.gui.hud.ClientBossBar;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.text.Text;
-import net.oxyopia.vice.events.BossBarEvent;
+import net.oxyopia.vice.events.BossBarEvents;
 import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
 import org.spongepowered.asm.mixin.*;
@@ -42,7 +42,8 @@ public abstract class MixinBossBarHud {
 			lastReportedTitle = instance.getName().getString();
 		}
 
-		BossBarEvent.Override result = EVENT_MANAGER.publish(new BossBarEvent.Override(instance, instance.getName()));
+		EVENT_MANAGER.publish(new BossBarEvents.Read(instance, instance.getName()));
+		BossBarEvents.Override result = EVENT_MANAGER.publish(new BossBarEvents.Override(instance, instance.getName()));
 
 		if (result.hasReturnValue()) {
 			return result.getReturnValue();
@@ -67,7 +68,7 @@ public abstract class MixinBossBarHud {
 	private void addBossbarEntries(DrawContext context, CallbackInfo ci, @Local(ordinal = 0) int i, @Local(ordinal = 1) int j) {
 		if (!Utils.INSTANCE.getInDoomTowers()) return;
 
-		BossBarEvent.Insert result = EVENT_MANAGER.publish(new BossBarEvent.Insert());
+		BossBarEvents.Insert result = EVENT_MANAGER.publish(new BossBarEvents.Insert());
 
 		if (result.getReturnValue() == null || result.getReturnValue().isEmpty()) return;
 

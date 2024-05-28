@@ -154,6 +154,14 @@ public class DevConfig extends Vigilant {
 	)
 	public boolean EXPEDITION_DEBUGGER = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Lost In Time stuff",
+		description = "e",
+		category = "Debugs"
+	)
+	public boolean LOST_IN_TIME_DEBUGGER = false;
+
 	public DevConfig() {
 		super(new File("./config/vice/developerSettings.toml"), "Vice Developer Menu");
 	}

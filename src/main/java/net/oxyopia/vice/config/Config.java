@@ -308,6 +308,17 @@ public class Config extends Vigilant {
 	)
 	public boolean GLITCH_HQ_EVAN_SOLVER = false;
 
+	// General/Lost In Time
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Cave-In Prediction",
+		description = "Shows a prediction of the time until the next Cave-In when mining in the Soulswift Sands.",
+		category = "General",
+		subcategory = "Lost in Time"
+	)
+	public boolean LOST_IN_TIME_CAVE_PREDICTION = true;
+
     // General/Item Cooldowns
 
     @Property(

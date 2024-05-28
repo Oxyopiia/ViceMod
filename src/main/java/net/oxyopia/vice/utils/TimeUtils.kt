@@ -6,6 +6,8 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 object TimeUtils {
+	private const val PADDED_CLOCK_ICON = " \uD83D\uDD51 "
+
 	fun Duration.formatDuration(showMs: Boolean = false): String {
 		val hours = inWholeHours
 		val mins = inWholeMinutes % 60
@@ -20,7 +22,7 @@ object TimeUtils {
 	}
 
 	fun Duration.formatTimer(timeLimit: Duration): String {
-		return " \uD83D\uDD51 " + ceil((timeLimit.inWholeMilliseconds - this.inWholeMilliseconds) / 1000.0).seconds.formatDuration()
+		return PADDED_CLOCK_ICON + ceil((timeLimit.inWholeMilliseconds - this.inWholeMilliseconds) / 1000.0).seconds.formatDuration()
 	}
 
 	fun Duration.formatShortDuration() = String.format("%.2f", this.inWholeMilliseconds / 1000f)

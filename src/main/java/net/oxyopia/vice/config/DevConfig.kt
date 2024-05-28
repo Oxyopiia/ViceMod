@@ -1,14 +1,13 @@
-package net.oxyopia.vice.config;
+package net.oxyopia.vice.config
 
-import gg.essential.vigilance.Vigilant;
-import gg.essential.vigilance.data.*;
+import gg.essential.vigilance.Vigilant
+import gg.essential.vigilance.data.Property
+import gg.essential.vigilance.data.PropertyType
+import java.io.File
 
-import java.io.File;
-
-@SuppressWarnings("unused")
-public class DevConfig extends Vigilant {
-	/** EXPERIMENTS */
-	
+@Suppress("unused")
+class DevConfig : Vigilant(File("./config/vice/developerSettings.toml"), "Vice Developer Menu") {
+	/** EXPERIMENTS  */
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
 		name = "Red Fadeout Multiplier",
@@ -18,7 +17,7 @@ public class DevConfig extends Vigilant {
 		maxF = 7.5f,
 		subcategory = "Item Cooldown Display"
 	)
-	public float ITEMCD_RED_FADE_OVERRIDE = 2.7f;
+	var ITEMCD_RED_FADE_OVERRIDE: Float = 2.7f
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
@@ -29,7 +28,7 @@ public class DevConfig extends Vigilant {
 		maxF = 7.5f,
 		subcategory = "Item Cooldown Display"
 	)
-	public float ITEMCD_GREEN_FADE_OVERRIDE = 1.3f;
+	var ITEMCD_GREEN_FADE_OVERRIDE: Float = 1.3f
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -38,25 +37,25 @@ public class DevConfig extends Vigilant {
 		category = "Experiments",
 		subcategory = "HudManager"
 	)
-	public boolean LIVE_ARENA_OVERLAY_THING = false;
+	var LIVE_ARENA_OVERLAY_THING: Boolean = false
 
-	/** BYPASSES */
+	/** BYPASSES  */
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Bypass Scoreboard Checker",
 		description = "bypasses inDoomTowers check for scoreboard\nthis will make doomtowers features render anywhere and everywhere",
 		category = "Bypasses"
 	)
-	public boolean BYPASS_INSTANCE_CHECK = false;
+	var BYPASS_INSTANCE_CHECK: Boolean = false
 
-	/** DEBUGS */
+	/** DEBUGS  */
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Sounds",
 		description = "sends sound information when there is a LITERAL SOUND (sent from server only)",
 		category = "Debugs"
 	)
-	public boolean SEND_SOUND_INFO = false;
+	var SEND_SOUND_INFO: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -64,7 +63,7 @@ public class DevConfig extends Vigilant {
 		description = "yep",
 		category = "Debugs"
 	)
-	public boolean BOSSBAR_DEBUGGER = false;
+	var BOSSBAR_DEBUGGER: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -72,7 +71,7 @@ public class DevConfig extends Vigilant {
 		description = "mobbobobobo",
 		category = "Debugs"
 	)
-	public boolean MOB_SPAWN_DEBUGGER = false;
+	var MOB_SPAWN_DEBUGGER: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -80,7 +79,7 @@ public class DevConfig extends Vigilant {
 		description = "origin and end coordinates, calling patterns",
 		category = "Debugs"
 	)
-	public boolean PREDICT_PROJECTILE_DEBUGGER = false;
+	var PREDICT_PROJECTILE_DEBUGGER: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -88,7 +87,7 @@ public class DevConfig extends Vigilant {
 		description = "sound deviations, velocity packets, last hook info",
 		category = "Debugs"
 	)
-	public boolean FISHING_DEBUGGER = false;
+	var FISHING_DEBUGGER: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -96,7 +95,7 @@ public class DevConfig extends Vigilant {
 		description = "line rendering, box rendering utils",
 		category = "Debugs"
 	)
-	public boolean GAME_RENDERER_DEBUGGER = false;
+	var GAME_RENDERER_DEBUGGER: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -104,7 +103,7 @@ public class DevConfig extends Vigilant {
 		description = "Debugger for title data, subtitle data, and more",
 		category = "Debugs"
 	)
-	public boolean INGAMEHUD_MIXIN_DEBUGGER = false;
+	var INGAMEHUD_MIXIN_DEBUGGER: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -112,7 +111,7 @@ public class DevConfig extends Vigilant {
 		description = "item ability sutff",
 		category = "Debugs"
 	)
-	public boolean ITEM_ABILITY_DEBUGGER = false;
+	var ITEM_ABILITY_DEBUGGER: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -120,7 +119,7 @@ public class DevConfig extends Vigilant {
 		description = "arenas",
 		category = "Debugs"
 	)
-	public boolean ARENAS_DEBUGGER = false;
+	var ARENAS_DEBUGGER: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -128,7 +127,7 @@ public class DevConfig extends Vigilant {
 		description = "w4 stuff",
 		category = "Debugs"
 	)
-	public boolean COOKING_DEBUGGER = false;
+	var COOKING_DEBUGGER: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -136,7 +135,7 @@ public class DevConfig extends Vigilant {
 		description = "robotop is hot",
 		category = "Debugs"
 	)
-	public boolean BOSS_DETECTION_INFO = false;
+	var BOSS_DETECTION_INFO: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -144,7 +143,7 @@ public class DevConfig extends Vigilant {
 		description = "slot click event LMFAOOOOOOOOOO",
 		category = "Debugs"
 	)
-	public boolean SLOT_CLICK_DEBUGGER = false;
+	var SLOT_CLICK_DEBUGGER: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -152,7 +151,7 @@ public class DevConfig extends Vigilant {
 		description = "e",
 		category = "Debugs"
 	)
-	public boolean EXPEDITION_DEBUGGER = false;
+	var EXPEDITION_DEBUGGER: Boolean = false
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -160,16 +159,10 @@ public class DevConfig extends Vigilant {
 		description = "e",
 		category = "Debugs"
 	)
-	public boolean LOST_IN_TIME_DEBUGGER = false;
+	var LOST_IN_TIME_DEBUGGER: Boolean = false
 
-	public DevConfig() {
-		super(new File("./config/vice/developerSettings.toml"), "Vice Developer Menu");
-	}
-
-	public void init() {
-		initialize();
-		markDirty();
-
-		setSubcategoryDescription("Experiments", "Item Cooldown Display", "this is here as i haven't made the HUD manager yet, will be removed when that is added");
+	fun init() {
+		initialize()
+		markDirty()
 	}
 }

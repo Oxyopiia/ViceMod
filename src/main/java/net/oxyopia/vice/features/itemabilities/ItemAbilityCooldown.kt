@@ -71,14 +71,18 @@ object ItemAbilityCooldown {
 				ItemAbility.VIRTUASWORD.onSound()
 			}
 
-			// Barbed/Wasted Shotgun
+			// Wasted Shotgun
 			event.soundName == "entity.blaze.shoot" && event.pitch == 0.5f && event.volume == 9999f -> {
-				ItemAbility.BARBED_SHOTGUN.onSound()
 				ItemAbility.WASTED_SHOTGUN.onSound()
 			}
 
+			// Barbed Shotgun
+			event.soundName == "entity.blaze.shoot" && event.pitch == 1.25f && event.volume == 3f -> {
+				ItemAbility.BARBED_SHOTGUN.onSound()
+			}
+
 			// Wasted Boomstick
-			event.soundName == "entity.blaze.shoot" && event.pitch == 1.0f && event.volume == 9999f -> {
+			event.soundName == "entity.blaze.shoot" && event.pitch == 1.5f && event.volume == 3f -> {
 				ItemAbility.WASTED_BOOMSTICK.onSound()
 			}
 

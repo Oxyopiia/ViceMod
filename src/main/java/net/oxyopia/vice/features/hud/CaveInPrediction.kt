@@ -10,8 +10,10 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.TimeUtils
+import net.oxyopia.vice.utils.TimeUtils.ms
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils
+import kotlin.time.Duration.Companion.seconds
 
 object CaveInPrediction : HudElement("Cave-In Prediction", Vice.storage.lostInTime.caveInEstimatePos) {
 	private val bossbarRegex = Regex("(\\d+)/(\\d+) BLOCKS MINED UNTIL A CAVE-IN")
@@ -19,6 +21,7 @@ object CaveInPrediction : HudElement("Cave-In Prediction", Vice.storage.lostInTi
 	private var currentCount = -1
 	private var currentThreshold = -1
 	private var tracking: TrackingPoint? = null
+	private var lastUpdated = -1L
 
 	private data class TrackingPoint(val timestamp: Long, val count: Int)
 
@@ -30,6 +33,9 @@ object CaveInPrediction : HudElement("Cave-In Prediction", Vice.storage.lostInTi
 		bossbarRegex.find(event.name.string)?.apply {
 			val count = groupValues[1].toIntOrNull() ?: -1
 			val threshold = groupValues[2].toIntOrNull() ?: -1
+
+			if (lastUpdated.timeDelta() >= 15.seconds.ms()) tracking = null
+			if (count != currentCount) lastUpdated = System.currentTimeMillis()
 
 			if (count < currentCount || currentCount == -1 || tracking == null) {
 				tracking = TrackingPoint(System.currentTimeMillis(), count)

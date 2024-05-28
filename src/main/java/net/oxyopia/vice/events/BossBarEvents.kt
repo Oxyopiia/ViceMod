@@ -5,7 +5,9 @@ import net.minecraft.entity.boss.BossBar
 import net.minecraft.text.Text
 import java.util.UUID
 
-class BossBarEvent : ViceEvent() {
+class BossBarEvents : ViceEvent() {
+	class Read(val instance: ClientBossBar, val name: Text) : ViceEvent()
+
 	class Override(val instance: ClientBossBar, val original: Text) : Cancelable<Text>()
 
 	class Insert : Cancelable<HashMap<UUID, ClientBossBar>>() {

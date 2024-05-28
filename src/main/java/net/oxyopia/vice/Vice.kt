@@ -47,6 +47,7 @@ import net.oxyopia.vice.features.expeditions.MerchantOverlay
 import net.oxyopia.vice.features.expeditions.RoomWaypoints
 import net.oxyopia.vice.features.expeditions.RunOverview
 import net.oxyopia.vice.features.expeditions.StylePointsHider
+import net.oxyopia.vice.features.hud.CaveInPrediction
 import net.oxyopia.vice.features.hud.ForgeTimers
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.hud.PlayerStats
@@ -153,6 +154,7 @@ class Vice : ClientModInitializer {
 
 	private fun subscribeEventListeners() {
 		EVENT_MANAGER.subscribe(BackpackRenaming)
+		EVENT_MANAGER.subscribe(CaveInPrediction)
 		EVENT_MANAGER.subscribe(ChatFilter)
 		EVENT_MANAGER.subscribe(ConsumeItemBlocker)
 		EVENT_MANAGER.subscribe(Fishing)

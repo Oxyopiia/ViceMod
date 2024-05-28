@@ -4,7 +4,7 @@ import net.minecraft.text.Style
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.ClientTickEvent
-import net.oxyopia.vice.events.BossBarEvent
+import net.oxyopia.vice.events.BossBarEvents
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
@@ -31,7 +31,7 @@ abstract class Boss (
 	private var lastDespawnNotify: Long = -1
 
 	@SubscribeEvent
-	open fun onBossBarModifyEvent(event: BossBarEvent.Override) {
+	open fun onBossBarModifyEvent(event: BossBarEvents.Override) {
 		if (!Vice.config.BOSS_DESPAWN_TIMERS || !world.isInWorld()) return
 
 		bossbarRegex.find(event.original.string)?.apply {

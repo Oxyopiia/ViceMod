@@ -9,6 +9,7 @@ import net.oxyopia.vice.config.features.worlds.AuxiliaryStorage
 import net.oxyopia.vice.config.features.BossStorage
 import net.oxyopia.vice.config.features.ExpeditionsStorage
 import net.oxyopia.vice.config.features.worlds.CookingStorage
+import net.oxyopia.vice.config.features.worlds.LostInTimeStorage
 import net.oxyopia.vice.config.features.worlds.ShowdownStorage
 import java.io.File
 import java.io.Reader
@@ -17,31 +18,34 @@ import java.io.Writer
 class Storage : PersistentSave(File("./config/vice/storage.json")) {
 
 	@Expose
-	var isFirstUse: Boolean = true
+	var isFirstUse = true
 
 	@Expose
 	var lastVersion: String = version.friendlyString
 
 	@Expose
-	var arenas: ArenaStorage = ArenaStorage()
+	var arenas = ArenaStorage()
 
 	@Expose
-	var auxiliary: AuxiliaryStorage = AuxiliaryStorage()
+	var auxiliary = AuxiliaryStorage()
 
 	@Expose
-	var bosses: BossStorage = BossStorage()
+	var bosses = BossStorage()
 
 	@Expose
-	var cooking: CookingStorage = CookingStorage()
+	var cooking = CookingStorage()
 
 	@Expose
-	var expeditions: ExpeditionsStorage = ExpeditionsStorage()
+	var expeditions = ExpeditionsStorage()
 
 	@Expose
-	var showdown: ShowdownStorage = ShowdownStorage()
+	var showdown = ShowdownStorage()
 
 	@Expose
-	var misc: MiscStorage = MiscStorage()
+	var lostInTime = LostInTimeStorage()
+
+	@Expose
+	var misc = MiscStorage()
 
 	override fun write(writer: Writer) {
 		Vice.gson.toJson(this, writer)

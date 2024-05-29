@@ -12,6 +12,7 @@ import net.minecraft.util.math.ColorHelper
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.data.gui.Quad
+import net.oxyopia.vice.events.ChestRenderSlotEvent
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
@@ -61,6 +62,13 @@ object HudUtils {
 		RenderSystem.disableDepthTest()
 		vertexConsumers.draw(layer)
 		RenderSystem.enableDepthTest()
+	}
+
+	fun ChestRenderSlotEvent.highlight(color: Color) {
+		val x = slot.x
+		val y = slot.y
+
+		fillUIArea(context.matrices, RenderLayer.getGuiOverlay(), x, y, x + 16, y + 16, -500, color)
 	}
 
 	fun drawText(text: String, x: Int, y: Int, context: DrawContext, color: Int = Color(255, 255, 255, 255).rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {

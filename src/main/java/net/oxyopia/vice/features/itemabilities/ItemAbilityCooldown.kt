@@ -242,7 +242,7 @@ object ItemAbilityCooldown {
 	}
 
 	@SubscribeEvent
-	fun onRenderItemSlot(event: RenderItemSlotEvent) {
+	fun onRenderItemSlot(event: RenderHotbarSlotEvent) {
 		val ability: ItemAbility? = ItemAbility.getByName(event.itemStack.cleanName())
 
 		val bgOpacity = Vice.config.ITEMCD_BACKGROUND_OPACITY

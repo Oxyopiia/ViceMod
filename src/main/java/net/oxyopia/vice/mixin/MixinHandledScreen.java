@@ -9,9 +9,11 @@ import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 import net.oxyopia.vice.events.ChestRenderEvent;
+import net.oxyopia.vice.events.ChestRenderSlotEvent;
 import net.oxyopia.vice.events.ItemDropEvent;
 import net.oxyopia.vice.events.SlotClickEvent;
 import net.oxyopia.vice.events.ViceEvent;
@@ -63,6 +65,13 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 
 			EVENT_MANAGER.publish(new ChestRenderEvent.Slots(title.getString(), handler.slots, cursorStack, !hasOpened));
 			hasOpened = true;
+		}
+	}
+
+	@Inject(at = @At("HEAD"), method = "drawSlot")
+	private void onSlotRender(DrawContext context, Slot slot, CallbackInfo ci) {
+		if (Utils.INSTANCE.getInDoomTowers()) {
+			EVENT_MANAGER.publish(new ChestRenderSlotEvent(slot, context));
 		}
 	}
 

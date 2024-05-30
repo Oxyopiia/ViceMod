@@ -61,6 +61,18 @@ object ItemUtils {
 				itemName.contains("RGB Rod")
 	}
 
+	fun ItemStack.isPick(): Boolean {
+
+		val itemName = this.cleanName()
+
+		return itemName.contains("Steel Pickaxe") ||
+				itemName.contains("Nanite Powered Pickaxe") ||
+				itemName.contains("Granite Pickaxe") ||
+				itemName.contains("Drill of The Jungle") ||
+				itemName.contains("Hydro Powered Pick") ||
+				itemName.contains("Voidaxe")
+	}
+
 	fun ItemStack.isHook(): Boolean {
 
 		val itemName = this.cleanName()

@@ -1,49 +1,44 @@
-package net.oxyopia.vice.config
+package net.oxyopia.vice.config;
 
-import gg.essential.api.EssentialAPI
-import gg.essential.universal.UDesktop.browse
-import gg.essential.universal.UScreen
-import gg.essential.vigilance.Vigilant
-import gg.essential.vigilance.data.Category
-import gg.essential.vigilance.data.Migration
-import gg.essential.vigilance.data.Property
-import gg.essential.vigilance.data.PropertyData
-import gg.essential.vigilance.data.PropertyType
-import gg.essential.vigilance.data.SortingBehavior
-import net.oxyopia.vice.Vice
-import net.oxyopia.vice.Vice.Companion.version
-import net.oxyopia.vice.utils.Utils.inDoomTowers
-import java.io.File
-import java.net.URI
-import kotlin.Comparator
+import gg.essential.api.EssentialAPI;
+import gg.essential.universal.UDesktop;
+import gg.essential.universal.UScreen;
+import gg.essential.vigilance.Vigilant;
+import gg.essential.vigilance.data.*;
+import net.oxyopia.vice.Vice;
+import net.oxyopia.vice.utils.Utils;
+import org.jetbrains.annotations.NotNull;
 
-@Suppress("PropertyName")
-class Config : Vigilant(
-	File("./config/vice/config.toml"),
-	"Vice §b$version",
-	sortingBehavior = ConfigSorting()
-) {
-	@Suppress("unused")
+import java.io.File;
+import java.net.URI;
+import java.util.*;
+import java.util.List;
+
+import static net.oxyopia.vice.Vice.devConfig;
+
+public class Config extends Vigilant {
+
+	@SuppressWarnings("unused")
 	@Property(
 		type = PropertyType.BUTTON,
 		name = "Edit HUD Locations",
-		description =
-			"Edit the positions of HUD Elements:\n" +
-			"- Drag to reposition. §8(WASD/Arrow Keys)§7\n" +
-			"- Scroll to scale. §8(+/-)§7\n" +
-			"- Middle Click to toggle centering. §8(TAB)§7\n" +
-			"- Press H or V to center horizontally/vertically.",
+		description = """
+			Edit the positions of HUD Elements:
+			 - Drag to reposition. §8(WASD/Arrow Keys)§7
+			 - Scroll to scale. §8(+/-)§7
+			 - Middle Click to toggle centering. §8(TAB)§7
+			 - Press H or V to center horizontally/vertically.""",
 		category = "General",
 		subcategory = "Vice",
 		placeholder = "Edit HUD Locations"
 	)
-	fun openHudEditor() {
-		if (!inDoomTowers) {
-			EssentialAPI.getNotifications().push("HUD Manager", "Please open while in DoomTowers!", 3f)
-			return
+	public void EDIT_HUD_LOCATIONS() {
+		if (!Utils.INSTANCE.getInDoomTowers()) {
+			EssentialAPI.getNotifications().push("HUD Manager", "Please open while in DoomTowers!", 3f);
+			return;
 		}
 
-		UScreen.displayScreen(HudEditor)
+		UScreen.displayScreen(HudEditor.INSTANCE);
 	}
 
 	@Property(
@@ -53,10 +48,10 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Vice"
 	)
-	var HUD_TEXT_SHADOW: Boolean = true
+	public boolean HUD_TEXT_SHADOW = true;
 
 
-	@Suppress("unused")
+	@SuppressWarnings("unused")
 	@Property(
 		type = PropertyType.BUTTON,
 		name = "Vice Discord",
@@ -65,9 +60,9 @@ class Config : Vigilant(
 		subcategory = "Vice",
 		placeholder = "Join"
 	)
-	fun joinViceDiscord() {
-		browse(URI.create("https://discord.gg/7nb9KcZHug"))
-		EssentialAPI.getNotifications().push("Vice", "Hopefully opened Discord/Web Browser!", 3f)
+	public void JOIN_VICE_DISCORD() {
+		UDesktop.browse(URI.create("https://discord.gg/7nb9KcZHug"));
+		EssentialAPI.getNotifications().push("Vice", "Hopefully opened Discord/Web Browser!", 3f);
 	}
 
 	// General/Developer
@@ -79,9 +74,9 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Developer"
 	)
-	var DEVMODE: Boolean = false
+	public boolean DEVMODE = false;
 
-	@Suppress("unused")
+	@SuppressWarnings("unused")
 	@Property(
 		type = PropertyType.BUTTON,
 		name = "Dev Menu",
@@ -90,8 +85,8 @@ class Config : Vigilant(
 		subcategory = "Developer",
 		placeholder = "Open"
 	)
-	fun openDevConfig() {
-		UScreen.displayScreen(Vice.devConfig.gui())
+	public void OPEN_DEV_CONFIG() {
+		UScreen.displayScreen(devConfig.gui());
 	}
 
 	@Property(
@@ -100,11 +95,10 @@ class Config : Vigilant(
 		description = "Choose your epic gaming mode for optimal gaming performance\n§a2 NEW GAMING MODES! ",
 		category = "General",
 		subcategory = "Developer",
-		options = ["None", "Vice", "DoomTowers smashing", "msmdude", "digmonireland", "Trump", "clive", "law Abiding Citizen", "meme", "african digi"]
+		options = {"None", "Vice", "DoomTowers smashing", "msmdude", "digmonireland", "Trump", "clive", "law Abiding Citizen", "meme", "african digi"}
 	)
-	var DEV_GAMING_MODE: Int = 0
+	public int DEV_GAMING_MODE = 0;
 
-	@JvmField
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Baby Mode",
@@ -112,7 +106,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Developer"
 	)
-	var DEV_BABY_MODE: Boolean = false
+	public boolean DEV_BABY_MODE = false;
 
 	// General/Quality of Life
 
@@ -123,7 +117,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Quality of Life"
 	)
-	var PREVENT_PLACING_PLAYER_HEADS: Boolean = true
+	public boolean PREVENT_PLACING_PLAYER_HEADS = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -132,7 +126,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Quality of Life"
 	)
-	var BACKPACK_RENAMING: Boolean = true
+	public boolean BACKPACK_RENAMING = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -140,9 +134,9 @@ class Config : Vigilant(
 		description = "Blocks clicking valuable items while inside the Trash menu.\nUse /viceprotectitem to protect any item.\n§eHold LCONTROL while clicking to bypass!",
 		category = "General",
 		subcategory = "Quality of Life",
-		searchTags = ["dispose", "disposal", "protect"]
+		searchTags = {"dispose", "disposal", "protect"}
 	)
-	var TRASH_PROTECTION: Boolean = true
+	public boolean TRASH_PROTECTION = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -151,7 +145,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Quality of Life"
 	)
-	var TRAIN_TIMER: Boolean = false
+	public boolean TRAIN_TIMER = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -160,7 +154,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Quality of Life"
 	)
-	var TRAIN_TIMER_OUTSIDE: Boolean = false
+	public boolean TRAIN_TIMER_OUTSIDE = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -169,7 +163,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Quality of Life"
 	)
-	var HIDE_REVOLVER_BLINDNESS: Boolean = true
+	public boolean HIDE_REVOLVER_BLINDNESS = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -178,9 +172,8 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Quality of Life"
 	)
-	var FORGE_TIMERS: Boolean = true
+	public boolean FORGE_TIMERS = true;
 
-	@JvmField
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Better Tower Beacon UI",
@@ -188,7 +181,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Quality of Life"
 	)
-	var BETTER_TOWER_BEACON_UI: Boolean = true
+	public boolean BETTER_TOWER_BEACON_UI = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -197,7 +190,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Quality of Life"
 	)
-	var PLAYER_STATS: Boolean = false
+	public boolean PLAYER_STATS = false;
 
 	// General/Spam Hider
 
@@ -209,7 +202,7 @@ class Config : Vigilant(
 		subcategory = "Spam Hider",
 		hidden = true
 	)
-	var HIDE_SERVER_TIPS: Boolean = false
+	public boolean HIDE_SERVER_TIPS = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -218,7 +211,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Spam Hider"
 	)
-	var HIDE_WORLDGUARD_MESSAGES: Boolean = false
+	public boolean HIDE_WORLDGUARD_MESSAGES = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -227,7 +220,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Spam Hider"
 	)
-	var HIDE_SET_REQUIREMENT_MESSAGES: Boolean = false
+	public boolean HIDE_SET_REQUIREMENT_MESSAGES = false;
 
 	// General/World 4
 
@@ -238,7 +231,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "World 4"
 	)
-	var SHOW_NEXT_COOKING_ITEM: Boolean = true
+	public boolean SHOW_NEXT_COOKING_ITEM = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -247,7 +240,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "World 4"
 	)
-	var SHOW_COOKING_STOCK_INFO: Boolean = true
+	public boolean SHOW_COOKING_STOCK_INFO = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -256,7 +249,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "World 4"
 	)
-	var SIMPLIFY_COOKING_DISPLAYS: Boolean = true
+	public boolean SIMPLIFY_COOKING_DISPLAYS = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -265,7 +258,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "World 4"
 	)
-	var COOKING_TIMER: Boolean = true
+	public boolean COOKING_TIMER = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -274,7 +267,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "World 4"
 	)
-	var COOKING_ORDER_TRACKER: Boolean = false
+	public boolean COOKING_ORDER_TRACKER = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -283,7 +276,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "World 4"
 	)
-	var HIDE_HANDLED_COOKING_MESSAGES: Boolean = true
+	public boolean HIDE_HANDLED_COOKING_MESSAGES = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -292,7 +285,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "World 4"
 	)
-	var AUTO_APPLY_BREAD: Boolean = false
+	public boolean AUTO_APPLY_BREAD = false;
 
 	// General/Journey to the Glitch HQ
 
@@ -303,7 +296,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Journey to the Glitch HQ"
 	)
-	var EVAN_NOTIFICATION: Boolean = false
+	public boolean EVAN_NOTIFICATION = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -313,7 +306,7 @@ class Config : Vigilant(
 		subcategory = "Journey to the Glitch HQ",
 		hidden = true
 	)
-	var GLITCH_HQ_EVAN_SOLVER: Boolean = false
+	public boolean GLITCH_HQ_EVAN_SOLVER = false;
 
 	// General/Lost In Time
 
@@ -324,7 +317,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Lost in Time"
 	)
-	var LOST_IN_TIME_CAVE_PREDICTION: Boolean = true
+	public boolean LOST_IN_TIME_CAVE_PREDICTION = true;
 
 	// General/Fishing
 
@@ -335,8 +328,7 @@ class Config : Vigilant(
 		category = "General",
 		subcategory = "Fishing"
 	)
-	var FISHING_DING: Boolean = true
-
+	public boolean FISHING_DING = true;
 
 	// Abilities/Quality of Life
 
@@ -346,9 +338,9 @@ class Config : Vigilant(
 		description = "Change the title displayed when using an item on Cooldown.",
 		category = "Abilities",
 		subcategory = "Quality of Life",
-		options = ["Normal", "Action Bar", "Hidden"]
+		options = {"Normal", "Action Bar", "Hidden"}
 	)
-	var ITEM_COOLDOWN_TITLE_TYPE: Int = 0
+	public int ITEM_COOLDOWN_TITLE_TYPE = 0;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -357,7 +349,7 @@ class Config : Vigilant(
 		category = "Abilities",
 		subcategory = "Quality of Life"
 	)
-	var WRONG_SET_INDICATOR: Boolean = false
+	public boolean WRONG_SET_INDICATOR = false;
 
 	// Abilities/Cooldown Overlay
 
@@ -368,7 +360,7 @@ class Config : Vigilant(
 		category = "Abilities",
 		subcategory = "Cooldown Overlay"
 	)
-	var ITEM_COOLDOWN_DISPLAY: Boolean = false
+	public boolean ITEM_COOLDOWN_DISPLAY = false;
 
 	@Property(
 		type = PropertyType.SELECTOR,
@@ -376,9 +368,9 @@ class Config : Vigilant(
 		description = "Changes how the Item Cooldown Display is shown.",
 		category = "Abilities",
 		subcategory = "Cooldown Overlay",
-		options = ["Vanilla", "Static Background", "Color Fade", "Percentage Based", "Text Only"]
+		options = {"Vanilla", "Static Background", "Color Fade", "Percentage Based", "Text Only"}
 	)
-	var ITEMCD_DISPLAY_TYPE: Int = 1
+	public int ITEMCD_DISPLAY_TYPE = 1;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -387,7 +379,7 @@ class Config : Vigilant(
 		category = "Abilities",
 		subcategory = "Cooldown Overlay"
 	)
-	var SHOW_ITEMCD_TEXT: Boolean = true
+	public boolean SHOW_ITEMCD_TEXT = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -396,7 +388,7 @@ class Config : Vigilant(
 		category = "Abilities",
 		subcategory = "Cooldown Overlay"
 	)
-	var SHOW_ITEMCD_TEXT_CROSSHAIR: Boolean = true
+	public boolean SHOW_ITEMCD_TEXT_CROSSHAIR = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -405,7 +397,7 @@ class Config : Vigilant(
 		category = "Abilities",
 		subcategory = "Cooldown Overlay"
 	)
-	var HIDE_ITEMCD_WHEN_READY: Boolean = false
+	public boolean HIDE_ITEMCD_WHEN_READY = false;
 
 	@Property(
 		type = PropertyType.PERCENT_SLIDER,
@@ -416,7 +408,7 @@ class Config : Vigilant(
 		minF = 0.01f,
 		maxF = 1f
 	)
-	var ITEMCD_BACKGROUND_OPACITY: Float = 0.2f
+	public float ITEMCD_BACKGROUND_OPACITY = 0.2f;
 
 	// Arenas/Quality of Life
 
@@ -427,11 +419,10 @@ class Config : Vigilant(
 		category = "Arenas",
 		subcategory = "Quality of Life"
 	)
-	var ARENAS_COOLDOWN_NOTIFIER: Boolean = true
+	public boolean ARENAS_COOLDOWN_NOTIFIER = true;
 
 
 	// Arenas/Live Arena Info
-
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Live Arena Information",
@@ -439,7 +430,7 @@ class Config : Vigilant(
 		category = "Arenas",
 		subcategory = "Live Arena Info"
 	)
-	var LIVE_ARENA_TOGGLE: Boolean = false
+	public boolean LIVE_ARENA_TOGGLE = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -448,7 +439,7 @@ class Config : Vigilant(
 		category = "Arenas",
 		subcategory = "Live Arena Info"
 	)
-	var LIVE_ARENA_MOBS: Boolean = false
+	public boolean LIVE_ARENA_MOBS = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -457,7 +448,7 @@ class Config : Vigilant(
 		category = "Arenas",
 		subcategory = "Live Arena Info"
 	)
-	var LIVE_ARENA_ROUND_TIMER: Boolean = true
+	public boolean LIVE_ARENA_ROUND_TIMER = true;
 
 	@Property(
 		type = PropertyType.SELECTOR,
@@ -465,9 +456,9 @@ class Config : Vigilant(
 		description = "Adds drops to Live Arena Information.\nBasic Drops: Amethyst, Polar Fur, Glowing Matter, etc\nUnique Drops: Chance for Galactic Hand Cannon, Arctic Scroll, etc",
 		category = "Arenas",
 		subcategory = "Live Arena Info",
-		options = ["None", "Basic Drops Only", "Unique Drops Only", "All"]
+		options = {"None", "Basic Drops Only", "Unique Drops Only", "All"}
 	)
-	var LIVE_ARENA_DROPS: Int = 2
+	public int LIVE_ARENA_DROPS = 2;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -476,7 +467,7 @@ class Config : Vigilant(
 		category = "Arenas",
 		subcategory = "Live Arena Info"
 	)
-	var ARENAS_MOB_EFFECT_NOTIFICATION: Boolean = true
+	public boolean ARENAS_MOB_EFFECT_NOTIFICATION = true;
 
 	// Auxiliary/Exonitas
 
@@ -487,7 +478,7 @@ class Config : Vigilant(
 		category = "Auxiliary",
 		subcategory = "Exonitas"
 	)
-	var EXONITAS_POWER_BOX_TIMER: Boolean = true
+	public boolean EXONITAS_POWER_BOX_TIMER = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -496,7 +487,7 @@ class Config : Vigilant(
 		category = "Auxiliary",
 		subcategory = "Exonitas"
 	)
-	var HIDE_BLOAT_EXONITAS_MESSAGES: Boolean = false
+	public boolean HIDE_BLOAT_EXONITAS_MESSAGES = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -505,7 +496,7 @@ class Config : Vigilant(
 		category = "Auxiliary",
 		subcategory = "Exonitas"
 	)
-	var EXONITAS_BABY_MODE: Boolean = true
+	public boolean EXONITAS_BABY_MODE = true;
 
 	// Bosses/Quality of Life
 
@@ -516,7 +507,7 @@ class Config : Vigilant(
 		category = "Bosses",
 		subcategory = "Quality of Life"
 	)
-	var BOSS_DESPAWN_TIMERS: Boolean = true
+	public boolean BOSS_DESPAWN_TIMERS = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -525,7 +516,7 @@ class Config : Vigilant(
 		category = "Bosses",
 		subcategory = "Quality of Life"
 	)
-	var BOSS_DESPAWN_WARNING: Boolean = true
+	public boolean BOSS_DESPAWN_WARNING = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -534,7 +525,7 @@ class Config : Vigilant(
 		category = "Bosses",
 		subcategory = "Quality of Life"
 	)
-	var BOSS_COUNTER: Boolean = false
+	public boolean BOSS_COUNTER = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -543,7 +534,7 @@ class Config : Vigilant(
 		category = "Bosses",
 		subcategory = "Quality of Life"
 	)
-	var BOSS_COUNTER_OUTSIDE: Boolean = false
+	public boolean BOSS_COUNTER_OUTSIDE = false;
 
 	// Bosses/Wasteyard
 
@@ -554,7 +545,7 @@ class Config : Vigilant(
 		category = "Bosses",
 		subcategory = "Wasteyard"
 	)
-	var WASTEYARD_TIMER: Boolean = true
+	public boolean WASTEYARD_TIMER = true;
 
 	@Property(
 		type = PropertyType.TEXT,
@@ -563,7 +554,7 @@ class Config : Vigilant(
 		category = "Bosses",
 		subcategory = "Wasteyard"
 	)
-	var WASTEYARD_TIMER_SOUND: String = "entity.arrow.hit_player"
+	public String WASTEYARD_TIMER_SOUND = "entity.arrow.hit_player";
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
@@ -574,7 +565,7 @@ class Config : Vigilant(
 		minF = 0.1f,
 		maxF = 2.0f
 	)
-	var WASTEYARD_TIMER_PITCH: Float = 1.0f
+	public float WASTEYARD_TIMER_PITCH = 1.0f;
 
 	// Bosses/Abyssal Vice
 
@@ -585,9 +576,10 @@ class Config : Vigilant(
 		category = "Bosses",
 		subcategory = "Abyssal Vice"
 	)
-	var ABYSSAL_VICE_LASER_WARNING: Boolean = true
+	public boolean ABYSSAL_VICE_LASER_WARNING = true;
 
 	// Expeditions
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Run Overview",
@@ -595,7 +587,7 @@ class Config : Vigilant(
 		category = "Expeditions",
 		subcategory = "Quality of Life"
 	)
-	var EXPEDITION_OVERVIEW: Boolean = true
+	public boolean EXPEDITION_OVERVIEW = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -604,7 +596,7 @@ class Config : Vigilant(
 		category = "Expeditions",
 		subcategory = "Quality of Life"
 	)
-	var EXPEDITION_ITEM_PROTECTION: Boolean = true
+	public boolean EXPEDITION_ITEM_PROTECTION = true;
 
 	@Property(
 		type = PropertyType.SELECTOR,
@@ -612,9 +604,9 @@ class Config : Vigilant(
 		description = "The minimum rarity that requires being dropped twice.",
 		category = "Expeditions",
 		subcategory = "Quality of Life",
-		options = ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythical"]
+		options = {"Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythical"}
 	)
-	var EXPEDITION_ITEM_PROTECTION_THRESHOLD: Int = 3
+	public int EXPEDITION_ITEM_PROTECTION_THRESHOLD = 3;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -623,7 +615,7 @@ class Config : Vigilant(
 		category = "Expeditions",
 		subcategory = "Quality of Life"
 	)
-	var EXPEDITION_MERCHANT_OVERLAY: Boolean = true
+	public boolean EXPEDITION_MERCHANT_OVERLAY = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -632,7 +624,7 @@ class Config : Vigilant(
 		category = "Expeditions",
 		subcategory = "Quality of Life"
 	)
-	var EXPEDITION_ROOM_WAYPOINTS: Boolean = false
+	public boolean EXPEDITION_ROOM_WAYPOINTS = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -641,7 +633,7 @@ class Config : Vigilant(
 		category = "Expeditions",
 		subcategory = "Quality of Life"
 	)
-	var DEFIB_COUNTER: Boolean = true
+	public boolean DEFIB_COUNTER = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -650,7 +642,7 @@ class Config : Vigilant(
 		category = "Expeditions",
 		subcategory = "Quality of Life"
 	)
-	var HIDE_EXPEDITION_STYLE_POINTS: Boolean = false
+	public boolean HIDE_EXPEDITION_STYLE_POINTS = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -659,7 +651,7 @@ class Config : Vigilant(
 		category = "Expeditions",
 		subcategory = "Information Sharing"
 	)
-	var AUTO_COMMUNICATE_EXPEDITION_INFO: Boolean = true
+	public boolean AUTO_COMMUNICATE_EXPEDITION_INFO = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -668,7 +660,7 @@ class Config : Vigilant(
 		category = "Expeditions",
 		subcategory = "Information Sharing"
 	)
-	var FILTER_EXPEDITION_COMMUNICATIONS: Boolean = true
+	public boolean FILTER_EXPEDITION_COMMUNICATIONS = true;
 
 	// Sounds
 
@@ -678,7 +670,7 @@ class Config : Vigilant(
 		category = "Sounds",
 		maxF = 2f
 	)
-	var EIGHT_BIT_KATANA_VOLUME: Float = 1f
+	public float EIGHT_BIT_KATANA_VOLUME = 1f;
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
@@ -686,7 +678,7 @@ class Config : Vigilant(
 		category = "Sounds",
 		maxF = 2f
 	)
-	var GLITCH_MALLET_VOLUME: Float = 1f
+	public float GLITCH_MALLET_VOLUME = 1f;
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
@@ -694,7 +686,7 @@ class Config : Vigilant(
 		category = "Sounds",
 		maxF = 2f
 	)
-	var ARCTIC_CORE_VOLUME: Float = 1f
+	public float ARCTIC_CORE_VOLUME = 1f;
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
@@ -702,7 +694,7 @@ class Config : Vigilant(
 		category = "Sounds",
 		maxF = 2f
 	)
-	var BARBED_SHOTGUN_VOLUME: Float = 1f
+	public float BARBED_SHOTGUN_VOLUME = 1f;
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
@@ -711,7 +703,7 @@ class Config : Vigilant(
 		category = "Sounds",
 		maxF = 2f
 	)
-	var BEDROCK_BREAKER_VOLUME: Float = 1f
+	public float BEDROCK_BREAKER_VOLUME = 1f;
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
@@ -719,7 +711,7 @@ class Config : Vigilant(
 		category = "Sounds",
 		maxF = 2f
 	)
-	var LASER_POINT_MINIGUN_VOLUME: Float = 1f
+	public float LASER_POINT_MINIGUN_VOLUME = 1f;
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
@@ -727,7 +719,7 @@ class Config : Vigilant(
 		category = "Sounds",
 		maxF = 2f
 	)
-	var SNOWBALL_CANNON_VOLUME: Float = 1f
+	public float SNOWBALL_CANNON_VOLUME = 1f;
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
@@ -735,7 +727,7 @@ class Config : Vigilant(
 		category = "Sounds",
 		maxF = 2f
 	)
-	var SHADOW_DRUM_GUN_VOLUME: Float = 1f
+	public float SHADOW_DRUM_GUN_VOLUME = 1f;
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
@@ -743,80 +735,90 @@ class Config : Vigilant(
 		category = "Sounds",
 		maxF = 2f
 	)
-	var JYNX_CHAIN_GUN_VOLUME: Float = 1f
+	public float JYNX_CHAIN_GUN_VOLUME = 1f;
 
-	fun init() {
-		initialize()
-		markDirty()
-
-		addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER")
-		addDependency("BOSS_COUNTER_OUTSIDE", "BOSS_COUNTER")
-
-		addDependency("EXPEDITION_ITEM_PROTECTION_THRESHOLD", "EXPEDITION_ITEM_PROTECTION")
-
-		addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY")
-		addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY")
-		addDependency("SHOW_ITEMCD_TEXT_CROSSHAIR", "ITEM_COOLDOWN_DISPLAY")
-		addDependency("HIDE_ITEMCD_WHEN_READY", "ITEMCD_DISPLAY_TYPE") { value: Int -> ITEM_COOLDOWN_DISPLAY && value != 0 && value != 4 }
-		addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY")
-
-		addDependency("LIVE_ARENA_MOBS", "LIVE_ARENA_TOGGLE")
-		addDependency("LIVE_ARENA_ROUND_TIMER", "LIVE_ARENA_TOGGLE")
-		addDependency("LIVE_ARENA_DROPS", "LIVE_ARENA_TOGGLE")
-
+	public Config() {
+		super(new File("./config/vice/config.toml"), "Vice §b" + Vice.Companion.getVersion(), new JVMAnnotationPropertyCollector(), new ConfigSorting());
 	}
 
-	override val migrations: List<Migration>
-		get() = listOf(
-			Migration { config -> // Migration 1: Item Cooldowns to new category
-				config.move("general.item_cooldowns.item_cooldown_display", "abilities.cooldown_overlay.item_cooldown_display")
-				config.move("general.item_cooldowns.cooldown_display_type", "abilities.cooldown_overlay.cooldown_display_type")
-				config.move("general.item_cooldowns.show_timer/ready_text_near_crosshair", "abilities.cooldown_overlay.show_timer/ready_text_near_crosshair")
-				config.move("general.item_cooldowns.show_timer/ready_text_in_hotbar", "abilities.cooldown_overlay.show_timer/ready_text_in_hotbar")
-				config.move("general.item_cooldowns.background_opacity", "abilities.cooldown_overlay.background_opacity")
-				config.move("general.item_cooldowns.hide_when_ready", "abilities.cooldown_overlay.hide_when_ready")
-			}
-		)
+	public void init() {
+		initialize();
+		markDirty();
 
-	private fun MutableMap<String, Any?>.move(original: String, new: String) {
-		this[original]?.let {
-			this[new] = it
-			remove(original)
+		addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
+		addDependency("BOSS_COUNTER_OUTSIDE", "BOSS_COUNTER");
+
+		addDependency("EXPEDITION_ITEM_PROTECTION_THRESHOLD", "EXPEDITION_ITEM_PROTECTION");
+
+		addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
+		addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");
+		addDependency("SHOW_ITEMCD_TEXT_CROSSHAIR", "ITEM_COOLDOWN_DISPLAY");
+		addDependency("HIDE_ITEMCD_WHEN_READY", "ITEMCD_DISPLAY_TYPE", (value) -> ITEM_COOLDOWN_DISPLAY && (int) value != 0 && (int) value != 4);
+		addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY");
+
+		addDependency("LIVE_ARENA_MOBS", "LIVE_ARENA_TOGGLE");
+		addDependency("LIVE_ARENA_ROUND_TIMER", "LIVE_ARENA_TOGGLE");
+		addDependency("LIVE_ARENA_DROPS", "LIVE_ARENA_TOGGLE");
+	}
+
+	public @NotNull List<Migration> getMigrations() {
+		List<Migration> migrations = new ArrayList<>();
+		migrations.add(config -> { // Migration 1: Item Cooldowns to new category
+			move(config, "general.item_cooldowns.item_cooldown_display", "abilities.cooldown_overlay.item_cooldown_display");
+			move(config, "general.item_cooldowns.cooldown_display_type", "abilities.cooldown_overlay.cooldown_display_type");
+			move(config, "general.item_cooldowns.show_timer/ready_text_near_crosshair", "abilities.cooldown_overlay.show_timer/ready_text_near_crosshair");
+			move(config, "general.item_cooldowns.show_timer/ready_text_in_hotbar", "abilities.cooldown_overlay.show_timer/ready_text_in_hotbar");
+			move(config, "general.item_cooldowns.background_opacity", "abilities.cooldown_overlay.background_opacity");
+			move(config, "general.item_cooldowns.hide_when_ready", "abilities.cooldown_overlay.hide_when_ready");
+		});
+		return migrations;
+	}
+
+	private void move(Map<String, Object> map, String original, String newKey) {
+		if (map.containsKey(original)) {
+			map.put(newKey, map.get(original));
+			map.remove(original);
 		}
 	}
 
-	class ConfigSorting : SortingBehavior() {
-		override fun getCategoryComparator(): Comparator<in Category> {
-			return Comparator { o1: Category, o2: Category ->
-				return@Comparator when {
-					o1.name == "General" -> -1
-					o2.name == "General" -> 1
-					else -> o1.name.compareTo(o2.name)
+	public static class ConfigSorting extends SortingBehavior {
+		@NotNull
+		@Override
+		public Comparator<? super Category> getCategoryComparator() {
+			return (o1, o2) -> {
+				if ("General".equals(o1.getName())) {
+					return -1;
 				}
-			}
+				if ("General".equals(o2.getName())) {
+					return 1;
+				} else {
+					return Comparator.comparing(Category::getName).compare(o1, o2);
+				}
+			};
 		}
 
-		override fun getSubcategoryComparator(): Comparator<in Map.Entry<String, List<PropertyData>>> {
-			return Comparator { entry1, entry2 ->
-				val key1 = entry1.key
-				val key2 = entry2.key
+		@NotNull
+		@Override
+		public Comparator<? super Map.Entry<String, ? extends List<PropertyData>>> getSubcategoryComparator() {
+			return (entry1, entry2) -> {
+				String key1 = entry1.getKey();
+				String key2 = entry2.getKey();
 
 				// This places Vice & Quality of Life at the top, and Developer at the bottom.
-				val keyOrderMap = hashMapOf(
-					"Vice" to -2,
-					"Quality of Life" to -1,
-					"Developer" to 1
-				)
+				Map<String, Integer> keyOrderMap = new HashMap<>();
+				keyOrderMap.put("Vice", -2);
+				keyOrderMap.put("Quality of Life", -1);
+				keyOrderMap.put("Developer", 1);
 
-				val order1 = keyOrderMap.getOrDefault(key1, 0)
-				val order2 = keyOrderMap.getOrDefault(key2, 0)
+				int order1 = keyOrderMap.getOrDefault(key1, 0);
+				int order2 = keyOrderMap.getOrDefault(key2, 0);
 
 				if (order1 != order2) {
-					return@Comparator order1.compareTo(order2)
+					return Integer.compare(order1, order2);
 				} else {
-					return@Comparator key1.compareTo(key2)
+					return key1.compareTo(key2);
 				}
-			}
+			};
 		}
 	}
 }

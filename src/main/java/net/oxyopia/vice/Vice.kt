@@ -75,16 +75,16 @@ class Vice : ClientModInitializer {
 		var isFirstUse = false
 
 		@JvmField
-		val EVENT_MANAGER: EventManager = EventManager()
+		val EVENT_MANAGER = EventManager()
 
 		@JvmField
-		val config: Config = Config()
+		val config = Config()
 
 		@JvmField
-		val devConfig: DevConfig = DevConfig()
+		val devConfig = DevConfig()
 
 		@JvmField
-		var storage: Storage = Storage()
+		var storage = Storage()
 
 		@JvmField
 		val gson: Gson = GsonBuilder()
@@ -104,10 +104,10 @@ class Vice : ClientModInitializer {
 			}.nullSafe())
 			.create()
 
-		const val CHAT_PREFIX: String = "§bVice §7|§r "
-		const val ERROR_PREFIX: String = "§cVice §cERROR §7|§c "
-		const val WARNING_PREFIX: String = "§eVice §eWARN §7|§e "
-		const val DEV_PREFIX: String = "§9Vice §7(Dev) |§r "
+		const val CHAT_PREFIX = "§bVice §7|§r "
+		const val ERROR_PREFIX = "§cVice §cERROR §7|§c "
+		const val WARNING_PREFIX = "§eVice §eWARN §7|§e "
+		const val DEV_PREFIX = "§9Vice §7(Dev) |§r "
 	}
 
 	override fun onInitializeClient() {

@@ -7,7 +7,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
 import net.oxyopia.vice.config.HudEditor;
-import net.oxyopia.vice.events.*;
+import net.oxyopia.vice.events.RenderHotbarSlotEvent;
+import net.oxyopia.vice.events.HudRenderEvent;
+import net.oxyopia.vice.events.SubtitleEvent;
+import net.oxyopia.vice.events.TitleEvent;
 import net.oxyopia.vice.utils.Utils;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,7 +37,7 @@ public class MixinInGameHud {
 	@Inject(at = @At(value="INVOKE", target="Lnet/minecraft/client/gui/DrawContext;drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;II)V"), method = "renderHotbarItem")
 	private void onRenderHotbarItem(DrawContext context, int x, int y, float f, PlayerEntity player, ItemStack stack, int seed, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new RenderItemSlotEvent(context, stack, x, y));
+			EVENT_MANAGER.publish(new RenderHotbarSlotEvent(context, stack, x, y));
 		}
 	}
 	

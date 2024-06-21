@@ -1,6 +1,7 @@
 package net.oxyopia.vice.features.hud
 
 import net.minecraft.client.gui.DrawContext
+import net.minecraft.nbt.NbtElement
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -51,6 +52,12 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 			list.add("&&fFish Time: &&b\uD83D\uDD51 ${fishingTime.min}-${fishingTime.max}s")
 		}
 
+		val breakingPower = getBreakingPower()
+		if (breakingPower > 0) {
+			list.add("&&fBreaking Power: &&b⛏ $breakingPower")
+			list.add("&&fBreaking Speed: &&a\uD83D\uDD51 ${getMiningSpeed()}x")
+		}
+
         position.drawStrings(list, event.context)
     }
 
@@ -89,6 +96,37 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 		}
 	}
 
+	private fun getMiningSpeed(): Float {
+		Utils.getPlayer()?.mainHandStack?.apply {
+			val nbt = nbt ?: return 0f
+
+			if (nbt.contains("custom", NbtElement.COMPOUND_TYPE.toInt())) {
+				val nbtCompound = nbt.getCompound("custom")
+
+				if (nbtCompound.contains("miningspeed", NbtElement.FLOAT_TYPE.toInt())) {
+					return nbtCompound.getFloat("miningspeed")
+				}
+			}
+		}
+
+		return 0f
+	}
+
+	private fun getBreakingPower(): Int {
+		Utils.getPlayer()?.mainHandStack?.apply {
+			val nbt = nbt ?: return 0
+
+			if (nbt.contains("custom", NbtElement.COMPOUND_TYPE.toInt())) {
+				val nbtCompound = nbt.getCompound("custom")
+
+				if (nbtCompound.contains("breakingpower", NbtElement.INT_TYPE.toInt())) {
+					return nbtCompound.getInt("breakingpower")
+				}
+			}
+		}
+
+		return 0
+	}
 
     override fun storePosition(position: Position) {
         Vice.storage.misc.playerStatsPos = position
@@ -102,7 +140,9 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
             "&&b&&lPlayer Stats",
             "&&fDefence: &&a\uD83D\uDEE1 16",
             "&&fSpeed: &&e⚡ 30.0% &&7(19.5)",
-            "&&fFish Time: &&b\uD83D\uDD51 5-20s"
+            "&&fFish Time: &&b\uD83D\uDD51 5-20s",
+			"&&fBreaking Power: &&b⛏ 2",
+			"&&fBreaking Speed: &&a1.2x"
         )
 
         return position.drawStrings(list, context)

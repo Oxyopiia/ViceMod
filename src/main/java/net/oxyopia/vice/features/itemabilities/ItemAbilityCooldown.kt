@@ -67,18 +67,22 @@ object ItemAbilityCooldown {
 			}
 
 			// VIRTUASWORD
-			event.soundName == "entity.zombie_villager.cure" && event.pitch == 2f && event.volume == 3f -> {
+			(event.soundName == "entity.zombie_villager.cure" || event.soundName == "entity.enderman.teleport") && event.pitch == 2f && event.volume == 3f -> {
 				ItemAbility.VIRTUASWORD.onSound()
 			}
 
-			// Barbed/Wasted Shotgun
+			// Wasted Shotgun
 			event.soundName == "entity.blaze.shoot" && event.pitch == 0.5f && event.volume == 9999f -> {
-				ItemAbility.BARBED_SHOTGUN.onSound()
 				ItemAbility.WASTED_SHOTGUN.onSound()
 			}
 
+			// Barbed Shotgun
+			event.soundName == "entity.blaze.shoot" && event.pitch == 1.25f && event.volume == 3f -> {
+				ItemAbility.BARBED_SHOTGUN.onSound()
+			}
+
 			// Wasted Boomstick
-			event.soundName == "entity.blaze.shoot" && event.pitch == 1.0f && event.volume == 9999f -> {
+			event.soundName == "entity.blaze.shoot" && event.pitch == 1.5f && event.volume == 3f -> {
 				ItemAbility.WASTED_BOOMSTICK.onSound()
 			}
 
@@ -238,7 +242,7 @@ object ItemAbilityCooldown {
 	}
 
 	@SubscribeEvent
-	fun onRenderItemSlot(event: RenderItemSlotEvent) {
+	fun onRenderItemSlot(event: RenderHotbarSlotEvent) {
 		val ability: ItemAbility? = ItemAbility.getByName(event.itemStack.cleanName())
 
 		val bgOpacity = Vice.config.ITEMCD_BACKGROUND_OPACITY

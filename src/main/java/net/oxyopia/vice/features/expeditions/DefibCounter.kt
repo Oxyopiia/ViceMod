@@ -1,7 +1,7 @@
 package net.oxyopia.vice.features.expeditions
 
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.events.RenderItemSlotEvent
+import net.oxyopia.vice.events.RenderHotbarSlotEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
@@ -12,7 +12,7 @@ object DefibCounter {
 	private val usesRegex = Regex("Uses: (\\d+)/(\\d+)")
 
 	@SubscribeEvent
-	fun onRenderItemSlot(event: RenderItemSlotEvent) {
+	fun onRenderItemSlot(event: RenderHotbarSlotEvent) {
 		if (!Vice.config.DEFIB_COUNTER) return
 		if (!event.itemStack.cleanName().contains("Defibrillator")) return
 

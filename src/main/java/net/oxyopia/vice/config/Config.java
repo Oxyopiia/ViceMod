@@ -14,8 +14,6 @@ import java.net.URI;
 import java.util.*;
 import java.util.List;
 
-import static net.oxyopia.vice.Vice.devConfig;
-
 public class Config extends Vigilant {
 
 	@SuppressWarnings("unused")
@@ -86,7 +84,7 @@ public class Config extends Vigilant {
 		placeholder = "Open"
 	)
 	public void OPEN_DEV_CONFIG() {
-		UScreen.displayScreen(devConfig.gui());
+		UScreen.displayScreen(Vice.devConfig.gui());
 	}
 
 	@Property(

@@ -11,8 +11,8 @@ import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
-import net.oxyopia.vice.utils.TimeUtils.ms
 import java.util.*
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 abstract class Boss (
@@ -45,7 +45,7 @@ abstract class Boss (
 			val phaseTime = getPhaseTimeSec(phase) ?: return
 			val diff = lastSpawned.timeDelta()
 
-			val timer = diff.formatTimer(phaseTime)
+			val timer = diff.formatTimer(phaseTime.seconds)
 
 			val style = event.original.siblings.lastOrNull()?.style?.withObfuscated(false) ?: Style.EMPTY
 			event.setReturnValue(event.original.copy().append(timer).setStyle(style))
@@ -61,14 +61,12 @@ abstract class Boss (
 		if (!event.repeatSeconds(1) || !Vice.config.BOSS_DESPAWN_WARNING || !world.isInWorld()) return
 
 		val phaseTime = 1000 * (getPhaseTimeSec(lastKnownPhase) ?: return)
-		DevUtils.sendDebugChat("ps: $phaseTime")
-		DevUtils.sendDebugChat("delta: ${lastSpawned.timeDelta()}")
 
 		if (
 			!isLikelyAlive() ||
 			phaseTime <= 0 ||
-			lastSpawned.timeDelta() <= (1 - warningPercentage) * phaseTime ||
-			(lastDespawnNotify > 0 && lastDespawnNotify.timeDelta() <= phaseTime * warningPercentage)
+			lastSpawned.timeDelta() <= phaseTime.milliseconds * (1 - warningPercentage) ||
+			(lastDespawnNotify > 0 && lastDespawnNotify.timeDelta() <= phaseTime.milliseconds * warningPercentage)
 		) return
 
 		Utils.playSound("block.note_block.pling", pitch = 0.8f, volume = 3f)
@@ -77,7 +75,7 @@ abstract class Boss (
 		lastDespawnNotify = System.currentTimeMillis()
 	}
 
-	private fun isLikelyAlive() = lastBarUpdate.timeDelta() <= 0.5.seconds.ms()
+	private fun isLikelyAlive() = lastBarUpdate.timeDelta() <= 0.5.seconds
 
 	private fun getPhaseTimeSec(phaseId: Int?): Int? {
 		if (phaseId == null || phaseId < 1) return null

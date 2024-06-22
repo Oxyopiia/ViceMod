@@ -38,7 +38,7 @@ object WasteyardTimer : HudElement("Wasteyard Timer", Vice.storage.bosses.wastey
 		if (!shouldDraw() || !drawCondition()) return
 
 		if (startTime.timeDeltaWithin(COOLDOWN_TIME_SECS.seconds)) {
-			val text = startTime.timeDelta().formatTimer(COOLDOWN_TIME_SECS)
+			val text = startTime.timeDelta().formatTimer(COOLDOWN_TIME_SECS.seconds)
 			position.drawString("&&4Wasteyard&&c$text", event.context)
 
 		} else {

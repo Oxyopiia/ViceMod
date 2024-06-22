@@ -1,19 +1,18 @@
 package net.oxyopia.vice.utils
 
 import kotlin.math.ceil
-import kotlin.math.floor
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 object TimeUtils {
-	/**
-	 * Formats a duration as dd:hh:MM:SS
-	 * @param ms Time in Milliseconds
-	 */
-	fun formatDuration(ms: Long, showMs: Boolean = false): String {
-		val hours = floor(ms.toDouble() / (1000 * 60 * 60)).toLong()
-		val mins = floor((ms / (1000 * 60)).toDouble() % 60).toLong()
-		val secs = floor((ms / 1000).toDouble() % 60).toLong()
-		val millis = ms % 1000
+	private const val PADDED_CLOCK_ICON = " \uD83D\uDD51 "
+
+	fun Duration.formatDuration(showMs: Boolean = false): String {
+		val hours = inWholeHours
+		val mins = inWholeMinutes % 60
+		val secs = inWholeSeconds % 60
+		val millis = inWholeMilliseconds % 1000
 
 		return buildString {
 			if (hours > 0) append(String.format("%02d:", hours))
@@ -22,24 +21,15 @@ object TimeUtils {
 		}
 	}
 
-	fun formatDuration(seconds: Float): String {
-		return formatDuration((seconds).toLong())
+	fun Duration.formatTimer(timeLimit: Duration): String {
+		return PADDED_CLOCK_ICON + ceil((timeLimit.inWholeMilliseconds - this.inWholeMilliseconds) / 1000.0).seconds.formatDuration()
 	}
 
-	fun formatDuration(seconds: Long): String {
-		return formatDuration(seconds * 1000, false)
-	}
+	fun Duration.formatShortDuration() = String.format("%.2f", this.inWholeMilliseconds / 1000f)
 
-	/**
-	 * Takes a time delta in milliseconds and formats to a duration in seconds.
-	 */
-	fun Long.formatTimer(timeLimit: Int): String {
-		return " \uD83D\uDD51 " + formatDuration(ceil(timeLimit - (this / 1000f)))
-	}
-
-	fun Long.timeDelta(): Long = System.currentTimeMillis() - this
-	fun Long.timeDeltaWithin(duration: Duration): Boolean = (timeDelta() <= duration.inWholeMilliseconds)
+	fun Long.timeDelta(): Duration = System.currentTimeMillis().milliseconds - this.milliseconds
+	fun Long.timeDeltaUntil(): Duration = this.milliseconds - System.currentTimeMillis().milliseconds
+	fun Long.timeDeltaWithin(duration: Duration): Boolean = timeDelta() <= duration
 
 	fun Duration.ms() = this.inWholeMilliseconds
-	fun Int.ms() = this * 1000
 }

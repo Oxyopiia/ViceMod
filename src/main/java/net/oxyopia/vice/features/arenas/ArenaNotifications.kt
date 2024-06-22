@@ -6,7 +6,6 @@ import net.oxyopia.vice.events.ArenaWaveChangeEvent
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.TimeUtils.ms
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.minutes
 
@@ -41,7 +40,7 @@ object ArenaNotifications {
 			.filterNot { (world, ts) -> arenas.notifiedInstances.getOrDefault(world, 0) == ts }
 			.mapKeys { World.getById(it.key) ?: return }
 			.forEach { (world, ts) ->
-				if (ts.timeDelta() >= 30.minutes.ms()) {
+				if (ts.timeDelta() >= 30.minutes) {
 					Utils.sendViceMessage("Your Cooldown for the &&b${world.displayName}&&r Arena has passed.")
 					Utils.playSound("block.note_block.pling", 1.4f)
 					arenas.notifiedInstances[world.id] = ts

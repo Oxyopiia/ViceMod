@@ -10,12 +10,14 @@ import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.WorldRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.RenderUtils.drawString
+import net.oxyopia.vice.utils.TimeUtils.formatShortDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
+import net.oxyopia.vice.utils.TimeUtils.timeDeltaUntil
 import net.oxyopia.vice.utils.Utils
-import kotlin.math.abs
+import kotlin.time.Duration.Companion.seconds
 
 object BurgerTimer {
-	private const val BURN_TIME = 3000
+	private val BURN_TIME = 3.seconds
 	private val timeRegex by lazy {
 		Regex("You are now cooking a burger! Come back within (\\d+) seconds\\.")
 	}
@@ -48,12 +50,12 @@ object BurgerTimer {
 		val delta = c.completionTime.timeDelta()
 
 		if (delta >= BURN_TIME) return
-		if (delta > 0) {
-			val formatted = String.format("%.2fs", (BURN_TIME - delta) / 1000.0)
+		if (delta > 0.seconds) {
+			val formatted = (BURN_TIME - delta).formatShortDuration()
 			event.drawString(c.pos.toCenterPos().add(0.0, 0.3, 0.0), "DONE", ChatColor.GREEN.color)
 			event.drawString(c.pos.toCenterPos(), formatted, ChatColor.RED.color)
 		} else {
-			val formatted = String.format("%.2fs", abs(delta) / 1000.0)
+			val formatted = c.completionTime.timeDeltaUntil().formatShortDuration()
 			event.drawString(c.pos.toCenterPos().add(0.0, 0.3, 0.0), "COOKING", ChatColor.YELLOW.color)
 			event.drawString(c.pos.toCenterPos(), formatted, ChatColor.YELLOW.color)
 		}

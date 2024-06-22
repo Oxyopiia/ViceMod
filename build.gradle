@@ -39,7 +39,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:1.11.0+kotlin.2.0.0"
 
-	modApi "com.terraformersmc:modmenu:9.1.0-beta.1"
+	modApi "com.terraformersmc:modmenu:11.0.1"
 
 	modImplementation include("gg.essential:loader-fabric:1.2.3")
 	modCompileOnly "gg.essential:essential-${project.minecraft_version}-fabric:16719+g53e79466ed"

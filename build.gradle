@@ -43,7 +43,7 @@ dependencies {
 
 	modImplementation include("gg.essential:loader-fabric:1.2.3")
 	modCompileOnly "gg.essential:essential-${project.minecraft_version}-fabric:16719+g53e79466ed"
-	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.0")
+	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.1")
 
 
 	// Uncomment the following line to enable the deprecated Fabric API modules.

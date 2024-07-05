@@ -50,6 +50,9 @@ enum class ItemAbility(
     POSEIDONS_FURY("Poseidon's Fury", 15f),
     ZIP_BOMB("Zip Bomb", 9f, set = Set.DEMOLITIONIST, setAmount = 2),
     THE_SYNTHFLESH("The Synthflesh", 3f, set = Set.FLESHCRAWLER, setAmount = 2), // 2 for 1st ability, 3 for 2nd ability
+    WAVE_PULSER("Wave Pulser", 10f, set = Set.DIGITAL, setAmount = 2),
+    THE_PHANTASM("The Phantasm", 10f, set = Set.DIGITAL, setAmount = 2),
+    BEWITCHED_BLOWPIPE("Bewitched Blowpipe", 5f),
 
     // No Display
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, set = Set.HEAVY, setAmount = 2),

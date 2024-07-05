@@ -102,6 +102,10 @@ object ItemAbilityCooldown {
 				ItemAbility.FLESH_HATCHET.onSound()
 			}
 
+			event.soundName == "item.trident.return" && event.pitch == 0.5f && event.volume == 3f -> {
+				ItemAbility.THE_PHANTASM.onSound()
+			}
+
 			// Arctic Scroll
 			(event.soundName == "block.lava.pop" || event.soundName == "entity.player.hurt_freeze") && event.pitch == 1f && event.volume == 9999f -> {
 				ItemAbility.ARCTIC_SCROLL.onSound()
@@ -167,6 +171,7 @@ object ItemAbilityCooldown {
 
 			event.soundName == "item.trident.riptide_1" && event.volume == 3f -> {
 				ItemAbility.ASSASSIN_BLADE.onSound()
+				ItemAbility.WAVE_PULSER.onSound()
 			}
 
 			event.soundName == "block.note_block.pling" && event.pitch == 1f && event.volume == 3f -> {
@@ -183,6 +188,10 @@ object ItemAbilityCooldown {
 
 			event.soundName == "block.beacon.activate" && event.volume == 3f -> {
 				ItemAbility.ALL_SEEING_EYE.onSound()
+			}
+
+			event.soundName == "entity.arrow.shoot" && event.pitch == 0.3f -> {
+				ItemAbility.BEWITCHED_BLOWPIPE.onSound()
 			}
 		}
 	}

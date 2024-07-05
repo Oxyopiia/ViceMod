@@ -5,6 +5,6 @@ import net.oxyopia.vice.utils.Utils
 
 class PlayerDeathEvent(packet: DeathMessageS2CPacket) : ViceEvent() {
 	val entity by lazy {
-		Utils.getWorld()?.getEntityById(packet.entityId)
+		Utils.getWorld()?.getEntityById(packet.playerId)
 	}
 }

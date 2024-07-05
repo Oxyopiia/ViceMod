@@ -4,8 +4,6 @@ import com.mojang.brigadier.Command
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.util.InputUtil
-import net.minecraft.entity.EquipmentSlot
-import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.screen.slot.SlotActionType
@@ -72,7 +70,8 @@ object ItemProtection {
 		val item = getItem(event) ?: return
 
 		val isProtectedItem = defaultProtectedItems.contains(item.cleanName()) || defaultProtectedItems.contains(item.item)
-		val isPlayerHeadWithArmor = item.item == Items.PLAYER_HEAD && item.getAttributeModifiers(EquipmentSlot.HEAD)[EntityAttributes.GENERIC_ARMOR].isNotEmpty()
+//		val isPlayerHeadWithArmor = item.item == Items.PLAYER_HEAD &&  item.components.get(DataComponentTypes.ATTRIBUTE_MODIFIERS)?.modifiers.(EquipmentSlot.HEAD)[EntityAttributes.GENERIC_ARMOR]
+		val isPlayerHeadWithArmor = false
 		val isFavoriteItem = Vice.storage.misc.protectedItems.contains(item.cleanName())
 
 		if (isProtectedItem || isPlayerHeadWithArmor || isFavoriteItem) {

@@ -23,7 +23,6 @@ object RenderUtils {
 	 */
 	fun WorldRenderEvent.draw3DLine(pos1: Vec3d, pos2: Vec3d, color: Color, lineWidth: Float = 3f, visibleThroughObjects: Boolean = true) {
 		val tessellator = Tessellator.getInstance()
-		val builder = tessellator.buffer
 
 		matrices.push()
 		matrices.translate(-camera.pos.x, -camera.pos.y, -camera.pos.z)
@@ -49,21 +48,19 @@ object RenderUtils {
 			.mul(matrix3f)
 
 		val matrix4f = matrices.peek().positionMatrix
-		builder.begin(VertexFormat.DrawMode.LINE_STRIP, VertexFormats.POSITION_COLOR)
 
+		val builder = tessellator.begin(VertexFormat.DrawMode.LINE_STRIP, VertexFormats.POSITION_COLOR)
 		builder
 			.vertex(matrix4f, pos1.x.toFloat(), pos1.y.toFloat(), pos1.z.toFloat())
 			.color(color.rgb)
 			.normal(normalVec.x, normalVec.y, normalVec.z)
-			.next()
 
 		builder
 			.vertex(matrix4f, pos2.x.toFloat(), pos2.y.toFloat(), pos2.z.toFloat())
 			.color(color.rgb)
 			.normal(normalVec.x, normalVec.y, normalVec.z)
-			.next()
 
-		tessellator.draw()
+		BufferRenderer.drawWithGlobalProgram(builder.end())
 
 		matrices.pop()
 		GL11.glDisable(GL11.GL_LINE_SMOOTH)
@@ -102,10 +99,6 @@ object RenderUtils {
 		val positionMatrix = matrices.peek().positionMatrix
 		val xOffset: Float = if (center) -textRenderer.getSpecialTextWidth(string) / 2f else 0f
 
-		val tessellator = RenderSystem.renderThreadTesselator()
-		val buffer = tessellator.buffer
-		val consumers = VertexConsumerProvider.immediate(buffer)
-
 		RenderSystem.depthFunc(if (visibleThroughObjects) GL11.GL_ALWAYS else GL11.GL_LEQUAL)
 
 		textRenderer.draw(
@@ -115,12 +108,12 @@ object RenderUtils {
 			color.rgb,
 			shadow,
 			positionMatrix,
-			consumers,
+			vertexConsumers,
 			TextLayerType.SEE_THROUGH,
 			0,
 			LightmapTextureManager.MAX_LIGHT_COORDINATE
 		)
-		consumers.draw()
+		vertexConsumers.draw()
 
 		RenderSystem.depthFunc(GL11.GL_LEQUAL)
 		matrices.pop()

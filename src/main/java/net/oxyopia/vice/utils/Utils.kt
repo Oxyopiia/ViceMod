@@ -50,7 +50,7 @@ object Utils {
 	}
 
 	fun playSound(string: String, pitch: Float = 1f, volume: Float = 1f) {
-		playSound(Identifier("minecraft", string), pitch, volume)
+		playSound(Identifier.of("minecraft", string), pitch, volume)
 	}
 
 	fun playDing() {

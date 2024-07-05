@@ -1,6 +1,6 @@
 package net.oxyopia.vice.mixin;
 
-import gg.essential.lib.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.BossBarHud;
@@ -61,28 +61,28 @@ public abstract class MixinBossBarHud {
 		return false;
 	}
 
-	@Inject(
-		at = @At("TAIL"),
-		method = "render"
-	)
-	private void addBossbarEntries(DrawContext context, CallbackInfo ci, @Local(ordinal = 0) int i, @Local(ordinal = 1) int j) {
-		if (!Utils.INSTANCE.getInDoomTowers()) return;
-
-		BossBarEvents.Insert result = EVENT_MANAGER.publish(new BossBarEvents.Insert());
-
-		if (result.getReturnValue() == null || result.getReturnValue().isEmpty()) return;
-
-		for (ClientBossBar clientBossBar : result.getReturnValue().values()) {
-			int k = i / 2 - 91;
-			int l = j;
-			renderBossBar(context, k, l, clientBossBar);
-			Text text = clientBossBar.getName();
-			int m = client.textRenderer.getWidth(text);
-			int n = i / 2 - m / 2;
-			int o = l - 9;
-			context.drawTextWithShadow(client.textRenderer, text, n, o, 0xFFFFFF);
-			if ((j += 10 + client.textRenderer.fontHeight) < context.getScaledWindowHeight() / 3) continue;
-			break;
-		}
-	}
+//	@Inject(
+//		at = @At("TAIL"),
+//		method = "render"
+//	)
+//	private void addBossbarEntries(DrawContext context, CallbackInfo ci, @Local(index = 0) int i, @Local int j) {
+//		if (!Utils.INSTANCE.getInDoomTowers()) return;
+//
+//		BossBarEvents.Insert result = EVENT_MANAGER.publish(new BossBarEvents.Insert());
+//
+//		if (result.getReturnValue() == null || result.getReturnValue().isEmpty()) return;
+//
+//		for (ClientBossBar clientBossBar : result.getReturnValue().values()) {
+//			int k = i / 2 - 91;
+//			int l = j;
+//			renderBossBar(context, k, l, clientBossBar);
+//			Text text = clientBossBar.getName();
+//			int m = client.textRenderer.getWidth(text);
+//			int n = i / 2 - m / 2;
+//			int o = l - 9;
+//			context.drawTextWithShadow(client.textRenderer, text, n, o, 0xFFFFFF);
+//			if ((j += 10 + client.textRenderer.fontHeight) < context.getScaledWindowHeight() / 3) continue;
+//			break;
+//		}
+//	}
 }

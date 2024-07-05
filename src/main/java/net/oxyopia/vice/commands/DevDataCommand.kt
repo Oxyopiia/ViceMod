@@ -2,7 +2,6 @@ package net.oxyopia.vice.commands
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
-import gg.essential.api.EssentialAPI
 import gg.essential.universal.wrappers.message.UTextComponent
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
@@ -18,17 +17,14 @@ object DevDataCommand {
 		dispatcher.register(ClientCommandManager.literal("vicedevdata")
 			.executes {
 
-				EssentialAPI.getNotifications().pushWithDurationAndAction("Vice", "This is a notification test", 4f) {
-					sendViceMessage("Notification clicked")
-				}
 				sendViceMessage("inDoomTowers: &&a$inDoomTowers")
 
 				val heldItem = getHeldItem()
 
-				if (heldItem.nbt != null) {
+				if (heldItem.components != null) {
 					sendViceMessage(
 						UTextComponent("§eClick to copy your held item's NBT.§r")
-							.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, heldItem.nbt!!.asString())
+							.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, heldItem.components.toString())
 							.setHover(HoverEvent.Action.SHOW_ITEM, ItemStackContent(heldItem))
 					)
 				}

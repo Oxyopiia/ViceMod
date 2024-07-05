@@ -2,9 +2,8 @@ package net.oxyopia.vice.utils
 
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayerEntity
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtElement
-import net.minecraft.text.Text
 import net.oxyopia.vice.data.Set
 import java.util.*
 import java.util.regex.Pattern
@@ -25,25 +24,9 @@ object ItemUtils {
 	 * @author Mojang
 	 */
 	fun ItemStack.getLore(): List<String> {
-		val lore: MutableList<String> = ArrayList()
+		val lines = components.get(DataComponentTypes.LORE)?.lines ?: return ArrayList()
 
-		if (this.hasNbt()) {
-			if (this.nbt!!.contains(ItemStack.DISPLAY_KEY, NbtElement.COMPOUND_TYPE.toInt())) {
-				val nbtCompound = this.nbt!!.getCompound(ItemStack.DISPLAY_KEY)
-
-				if (nbtCompound.getType(ItemStack.LORE_KEY) == NbtElement.LIST_TYPE) {
-					val nbtList = nbtCompound.getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE.toInt())
-
-					for (i in nbtList.indices) {
-						val lineLore: Text? = Text.Serialization.fromJson(nbtList.getString(i))
-
-						if (lineLore != null) lore.add(lineLore.string)
-					}
-				}
-			}
-		}
-
-		return lore
+		return lines.map { it.string }
 	}
 
 	fun ItemStack.isRod(): Boolean {

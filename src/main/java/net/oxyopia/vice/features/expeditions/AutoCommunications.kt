@@ -1,10 +1,10 @@
 package net.oxyopia.vice.features.expeditions
 
 import net.minecraft.client.MinecraftClient
+import net.minecraft.component.DataComponentTypes
+import net.minecraft.component.type.LoreComponent
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
-import net.minecraft.nbt.NbtElement
-import net.minecraft.nbt.NbtString
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ChatEvent
@@ -38,10 +38,11 @@ object AutoCommunications {
 
 			var original = merchants[room]?.get(itemIndex)
 			if (original == ItemStack.EMPTY || original == null) {
-				original = ItemStack(Items.IRON_SWORD).setCustomName(Text.of(groupValues[1]))
+				original = ItemStack(Items.IRON_SWORD)
+				original.set(DataComponentTypes.CUSTOM_NAME, Text.of(groupValues[1]))
 			}
 
-			Utils.sendViceMessage("&&a${sender} &&fpurchased &&a${original?.cleanName()} &&ffrom the Villager in &&aRoom $room")
+			Utils.sendViceMessage("&&a${sender} &&fpurchased &&a${original.cleanName()} &&ffrom the Villager in &&aRoom $room")
 			Utils.playDing()
 
 			merchants[room]?.set(itemIndex, ItemStack.EMPTY)
@@ -74,10 +75,9 @@ object AutoCommunications {
 				val rarity = ExpeditionRarity.fromShorthand(importantLore) ?: ExpeditionRarity.DEFAULT
 				val type = ExpeditionItemType.fromShorthand(importantLore) ?: ExpeditionItemType.ITEM
 
-				val stack = ItemStack(Items.IRON_SWORD).setCustomName(Text.of("${rarity.color}$name".convertFormatting()))
-				val loreList = stack.getOrCreateSubNbt(ItemStack.DISPLAY_KEY).getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE.toInt())
-				loreList.add(NbtString.of(Text.Serialization.toJsonString(Text.of("${rarity.text} ${type.text}"))))
-				stack.getOrCreateSubNbt(ItemStack.DISPLAY_KEY).put(ItemStack.LORE_KEY, loreList)
+				val stack = ItemStack(Items.IRON_SWORD)
+				stack.set(DataComponentTypes.CUSTOM_NAME, Text.of("${rarity.color}$name".convertFormatting()))
+				stack.set(DataComponentTypes.LORE, LoreComponent(listOf(Text.of("${rarity.text} ${type.text}"))))
 
 				merchants[room]?.add(stack)
 			}

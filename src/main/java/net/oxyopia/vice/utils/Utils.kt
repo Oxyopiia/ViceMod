@@ -10,6 +10,7 @@ import net.minecraft.client.world.ClientWorld
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.sound.SoundEvent
+import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
@@ -34,6 +35,10 @@ object Utils {
 
 	fun sendViceMessage(msg: String) {
 		UChat.chat("${Vice.CHAT_PREFIX}${msg.convertFormatting()}")
+	}
+
+	fun sendViceMessage(msg: Text) {
+		UChat.chat(Text.of(Vice.CHAT_PREFIX).copy().append(msg))
 	}
 
 	fun sendViceMessage(msg: UTextComponent) {

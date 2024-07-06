@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack
 import net.oxyopia.vice.data.Set
 import java.util.*
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
+import java.util.stream.Collectors
 
 object ItemUtils {
 	fun ItemStack.cleanName(): String {
@@ -28,6 +28,12 @@ object ItemUtils {
 
 		return lines.map { it.string }
 	}
+
+	fun ItemStack.getNbtString(): String {
+		val stream = components.stream().map { it.toString() }
+		return "{" + stream.collect(Collectors.joining(", ")) + "}"
+	}
+
 
 	fun ItemStack.isRod(): Boolean {
 

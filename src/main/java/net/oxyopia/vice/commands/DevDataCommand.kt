@@ -8,7 +8,10 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.minecraft.text.ClickEvent
 import net.minecraft.text.HoverEvent
 import net.minecraft.text.HoverEvent.ItemStackContent
+import net.minecraft.text.Text
+import net.oxyopia.vice.Vice
 import net.oxyopia.vice.utils.ItemUtils.getHeldItem
+import net.oxyopia.vice.utils.ItemUtils.getNbtString
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import net.oxyopia.vice.utils.Utils.sendViceMessage
 
@@ -21,13 +24,27 @@ object DevDataCommand {
 
 				val heldItem = getHeldItem()
 
-				if (heldItem.components != null) {
+				if (Vice.devConfig.COMMAND_SHOW_ITEM_DATA && heldItem.components != null) {
+					sendViceMessage("")
+					sendViceMessage(heldItem.name)
+
+					val nbtData = heldItem.getNbtString()
+
 					sendViceMessage(
-						UTextComponent("§eClick to copy your held item's NBT.§r")
-							.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, heldItem.components.toString())
+						UTextComponent("§a&l ● Click to copy the entire set of components.§r")
+							.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, nbtData)
 							.setHover(HoverEvent.Action.SHOW_ITEM, ItemStackContent(heldItem))
 					)
+
+					heldItem.components.forEach { component ->
+						sendViceMessage(
+							UTextComponent("§e ○ Click to copy the &a${component.type} &ecomponent.§r")
+								.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, component.toString())
+								.setHover(HoverEvent.Action.SHOW_TEXT, Text.of(component.toString()))
+						)
+					}
 				}
+
 				Command.SINGLE_SUCCESS
 			}
 		)

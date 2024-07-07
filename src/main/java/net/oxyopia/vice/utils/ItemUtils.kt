@@ -3,11 +3,16 @@ package net.oxyopia.vice.utils
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.component.DataComponentTypes
+import net.minecraft.component.type.AttributeModifierSlot
+import net.minecraft.component.type.AttributeModifiersComponent
+import net.minecraft.entity.attribute.EntityAttribute
 import net.minecraft.item.ItemStack
+import net.minecraft.registry.entry.RegistryEntry
 import net.oxyopia.vice.data.Set
 import java.util.*
 import java.util.regex.Pattern
 import java.util.stream.Collectors
+
 
 object ItemUtils {
 	fun ItemStack.cleanName(): String {
@@ -32,6 +37,18 @@ object ItemUtils {
 	fun ItemStack.getNbtString(): String {
 		val stream = components.stream().map { it.toString() }
 		return "{" + stream.collect(Collectors.joining(", ")) + "}"
+	}
+
+	fun ItemStack.getAttributeModifier(modifier: RegistryEntry<EntityAttribute>, slot: AttributeModifierSlot = AttributeModifierSlot.MAINHAND): Double {
+		val attributeModifiers = getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.DEFAULT).modifiers()
+
+		for (entry in attributeModifiers) {
+			if (entry.attribute() == modifier && entry.slot() == slot) {
+				return entry.modifier().value()
+			}
+		}
+
+		return -1.0
 	}
 
 

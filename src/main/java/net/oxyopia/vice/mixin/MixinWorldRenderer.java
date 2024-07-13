@@ -21,8 +21,11 @@ import static net.oxyopia.vice.Vice.*;
 
 @Mixin(WorldRenderer.class)
 public class MixinWorldRenderer {
-	@Inject(at = @At("TAIL"), method = "render")
-	private void afterEntities(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci, @Local MatrixStack matrices, @Local VertexConsumerProvider.Immediate vertexConsumers) {
+	@Inject(
+		method = "render",
+		at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;renderEntity(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;)V")
+	)
+	private void beforeEntities(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci, @Local MatrixStack matrices, @Local VertexConsumerProvider.Immediate vertexConsumers) {
 		if (MinecraftClient.getInstance().isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new WorldRenderEvent(matrices, tickCounter, camera, gameRenderer, vertexConsumers));
 		}

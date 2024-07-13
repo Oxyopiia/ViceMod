@@ -1,6 +1,7 @@
 package net.oxyopia.vice.features.hud
 
 import com.mojang.blaze3d.systems.RenderSystem
+import net.minecraft.client.render.BufferRenderer
 import net.minecraft.client.render.GameRenderer
 import net.minecraft.client.render.Tessellator
 import net.minecraft.client.render.VertexFormat
@@ -42,9 +43,9 @@ object GamingMode {
 		RenderSystem.setShader { GameRenderer.getPositionTexColorProgram() }
 
 		RenderSystem.setShaderTexture(0, Identifier.of("vice", data.path))
-
 		RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
 
+		BufferRenderer.drawWithGlobalProgram(buffer.end())
 	}
 }
 

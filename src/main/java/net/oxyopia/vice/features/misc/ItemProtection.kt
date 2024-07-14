@@ -29,7 +29,7 @@ object ItemProtection {
 		"Cheese",
 		"Cooked Worm Patty",
 		"Dark Scythe",
-		"Drill of the Jungle",
+		"Drill of The Jungle",
 		"Dynamite Barrel",
 		"Gateway Fragment",
 		"Lobotomy",

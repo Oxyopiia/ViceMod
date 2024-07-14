@@ -46,7 +46,7 @@ public class Config extends Vigilant {
 	@Property(
 		type = PropertyType.BUTTON,
 		name = "Vice Discord",
-		description = "Join the vice Discord to receive updates, post suggestions, and more!",
+		description = "Join the Vice Discord to receive updates, post suggestions, and more!",
 		category = "General",
 		subcategory = "Vice",
 		placeholder = "Join"
@@ -82,7 +82,7 @@ public class Config extends Vigilant {
 	@Property(
 		type = PropertyType.SELECTOR,
 		name = "Gaming Mode",
-		description = "Choose your epic gaming mode for optimal gaming performance\n§a2 NEW GAMING MODES! ",
+		description = "Choose your epic gaming mode for optimal gaming performance.",
 		category = "General",
 		subcategory = "Developer",
 		options = {"None", "Vice", "DoomTowers smashing", "msmdude", "digmonireland", "Trump", "clive", "law Abiding Citizen", "meme", "african digi"}
@@ -167,7 +167,7 @@ public class Config extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Better Tower Beacon UI",
-		description = "Display the floor number as a stack size, and add the featured worlds in the lore.",
+		description = "Display the floor number as a stack size.",
 		category = "General",
 		subcategory = "Quality of Life"
 	)
@@ -176,7 +176,7 @@ public class Config extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Player Stats",
-		description = "Displays a HUD graphic showing stats such as Speed and Defence in DoomTowers.",
+		description = "Displays a HUD graphic showing stats such as Speed and Defence.",
 		category = "General",
 		subcategory = "Quality of Life"
 	)
@@ -594,7 +594,7 @@ public class Config extends Vigilant {
 		description = "The minimum rarity that requires being dropped twice.",
 		category = "Expeditions",
 		subcategory = "Quality of Life",
-		options = {"Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythical"}
+		options = {"Common", "Uncommon", "Rare", "Epic", "Legendary", "Contraband", "Mythical"}
 	)
 	public int EXPEDITION_ITEM_PROTECTION_THRESHOLD = 3;
 
@@ -646,7 +646,7 @@ public class Config extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Filter Communications",
-		description = "Hides Expedition communications from chat.\nWorks with Information Relaying disabled.",
+		description = "Hides Expedition communications from other Vice users in chat.\nWorks with Information Relaying disabled.",
 		category = "Expeditions",
 		subcategory = "Information Sharing"
 	)

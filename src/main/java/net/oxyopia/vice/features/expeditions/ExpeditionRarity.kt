@@ -9,6 +9,7 @@ enum class ExpeditionRarity(val text: String, val cleanText: String, val rarityV
 	RARE("Rᴀʀᴇ", "Rare", 25.0, "&&b", "R"),
 	EPIC("Eᴘɪᴄ", "Epic", 40.0, "&&d", "E"),
 	LEGENDARY("Lᴇɢᴇɴᴅᴀʀʏ", "Legendary", 50.0, "&&6", "L"),
+	CONTRABAND("Cᴏɴᴛʀᴀʙᴀɴᴅ", "Contraband", 75.0, "&&3", "X"),
 	MYTHICAL("Mʏᴛʜɪᴄᴀʟ", "Mythical", 100.0, "&&e", "M"),
 	DEFAULT("", "", 0.0, "&&f", "N");
 

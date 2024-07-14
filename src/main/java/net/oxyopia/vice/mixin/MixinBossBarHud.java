@@ -1,6 +1,7 @@
 package net.oxyopia.vice.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.BossBarHud;
@@ -61,28 +62,32 @@ public abstract class MixinBossBarHud {
 		return false;
 	}
 
-//	@Inject(
-//		at = @At("TAIL"),
-//		method = "render"
-//	)
-//	private void addBossbarEntries(DrawContext context, CallbackInfo ci, @Local(index = 0) int i, @Local int j) {
-//		if (!Utils.INSTANCE.getInDoomTowers()) return;
-//
-//		BossBarEvents.Insert result = EVENT_MANAGER.publish(new BossBarEvents.Insert());
-//
-//		if (result.getReturnValue() == null || result.getReturnValue().isEmpty()) return;
-//
-//		for (ClientBossBar clientBossBar : result.getReturnValue().values()) {
-//			int k = i / 2 - 91;
-//			int l = j;
-//			renderBossBar(context, k, l, clientBossBar);
-//			Text text = clientBossBar.getName();
-//			int m = client.textRenderer.getWidth(text);
-//			int n = i / 2 - m / 2;
-//			int o = l - 9;
-//			context.drawTextWithShadow(client.textRenderer, text, n, o, 0xFFFFFF);
-//			if ((j += 10 + client.textRenderer.fontHeight) < context.getScaledWindowHeight() / 3) continue;
-//			break;
-//		}
-//	}
+	@Inject(
+		at = @At(value="INVOKE", target="Ljava/util/Collection;iterator()Ljava/util/Iterator;"),
+		method = "render"
+	)
+	private void addBossbarEntries(DrawContext context, CallbackInfo ci, @Local(ordinal = 1) LocalIntRef jRef) {
+		if (!Utils.INSTANCE.getInDoomTowers()) return;
+
+		int i = context.getScaledWindowWidth();
+		int j = jRef.get();
+
+		BossBarEvents.Insert result = EVENT_MANAGER.publish(new BossBarEvents.Insert());
+		if (result.getReturnValue() == null || result.getReturnValue().isEmpty()) return;
+
+		for (ClientBossBar clientBossBar : result.getReturnValue().values()) {
+			int k = i / 2 - 91;
+			int l = j;
+			renderBossBar(context, k, l, clientBossBar);
+			Text text = clientBossBar.getName();
+			int m = client.textRenderer.getWidth(text);
+			int n = i / 2 - m / 2;
+			int o = l - 9;
+			context.drawTextWithShadow(client.textRenderer, text, n, o, 0xFFFFFF);
+			if ((j += 10 + client.textRenderer.fontHeight) < context.getScaledWindowHeight() / 3) continue;
+			break;
+		}
+
+		jRef.set(j);
+	}
 }

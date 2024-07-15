@@ -56,7 +56,31 @@ abstract class PersistentSave(private val file: File) {
 
 	fun forceSave() = writeFile()
 
-	private fun File.ensureFile() = (parentFile.exists() || parentFile.mkdirs()) && createNewFile()
+//	private fun File.ensureFile() = (parentFile.exists() || parentFile.mkdirs()) && new()
+//
+//	private fun File.new(): Boolean {
+//		val x = createNewFile()
+//
+//		if (x) {
+//			bufferedWriter().use {
+//				writeDefault(it)
+//			}
+//		}
+//
+//		return x
+//	}
+
+	private fun File.ensureFile() {
+		if (exists()) return
+
+		if (parentFile.exists() || parentFile.mkdirs()) {
+			if (createNewFile()) {
+				bufferedWriter().use {
+					writeDefault(it)
+				}
+			}
+		}
+	}
 
 	init {
 		fixedRateTimer("Vice-WritePersistentSave", period = 1.minutes.ms()) {

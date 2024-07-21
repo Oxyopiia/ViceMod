@@ -342,8 +342,26 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Set Colors in Inventory",
+		description = "Highlights ability items in the inventory with their respective set color.",
+		category = "Abilities",
+		subcategory = "Quality of Life"
+	)
+	public boolean INVENTORY_SET_COLORS = false;
+
+	@Property(
+		type = PropertyType.PERCENT_SLIDER,
+		name = "Set Colors Opacity",
+		description = "The opacity of Set Colors in Inventory.",
+		category = "Abilities",
+		subcategory = "Quality of Life"
+	)
+	public float INVENTORY_SET_COLORS_OPACITY = 0.5f;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Wrong Set Indicator",
-		description = "Display a red overlay on an item if you do not have the required Set equipped.",
+		description = "Display an orange overlay on a hotbar item if you do not have the required Set equipped.",
 		category = "Abilities",
 		subcategory = "Quality of Life"
 	)
@@ -753,6 +771,7 @@ public class Config extends Vigilant {
 		addDependency("SHOW_ITEMCD_TEXT_CROSSHAIR", "ITEM_COOLDOWN_DISPLAY");
 		addDependency("HIDE_ITEMCD_WHEN_READY", "ITEMCD_DISPLAY_TYPE", (value) -> ITEM_COOLDOWN_DISPLAY && (int) value != 0 && (int) value != 4);
 		addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY");
+		addDependency("INVENTORY_SET_COLORS_OPACITY", "INVENTORY_SET_COLORS");
 
 		addDependency("LIVE_ARENA_MOBS", "LIVE_ARENA_TOGGLE");
 		addDependency("LIVE_ARENA_ROUND_TIMER", "LIVE_ARENA_TOGGLE");

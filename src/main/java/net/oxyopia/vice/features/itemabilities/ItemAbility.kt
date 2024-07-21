@@ -39,7 +39,7 @@ enum class ItemAbility(
     LUMINESCENT_HOOK("Luminescent Hook", 3f, sharedCooldownId = "GRAPPLING_HOOK"),
     GENHOOK("GenHook", 2f, sharedCooldownId = "GRAPPLING_HOOK"),
     BEDROCK_BREAKER("Bedrock Breaker", 10f, set = Set.HEAVY, setAmount = 2),
-    DOGE_HAMMER("Doge Hammer", 3f),
+    DOGE_HAMMER("Doge Hammer", 3f, set = Set.DEMOLITIONIST, setAmount = 2),
     REVOLVER("Revolver", 10f, set = Set.HEAVY, setAmount = 2),
     BARTENDER_GLOVE("Bartender's Glove", 15f, set = Set.CHEF, setAmount = 1),
     DYNAMITE_BARREL("Dynamite Barrel", 10f, set = Set.DEMOLITIONIST, setAmount = 1),

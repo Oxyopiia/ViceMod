@@ -21,9 +21,9 @@ object CookingAPI {
 
 	private var lastSeenNewOrder = 0L
 
-	private val heldItemRegex = Regex("You are currently holding (?:a |an )?(.*)")
-	private val ingredientsRegex = Regex("(\\d*) Ingredients Left")
-	private val stockRegex = Regex("Your current stock is (\\d*)/\\d*")
+	private val heldItemRegex by lazy { Regex("You are currently holding (?:a |an )?(.*)") }
+	private val ingredientsRegex by lazy { Regex("(\\d+) Ingredients Left") }
+	private val stockRegex by lazy { Regex("Your current stock is (\\d+)/\\d+") }
 
 	private fun updateOrder(order: CookingOrder) {
 		cooking.currentOrder = order.displayName
@@ -103,7 +103,7 @@ object CookingAPI {
 
 				cooking.stock = stockValue
 				Vice.storage.markDirty()
-				DevUtils.sendDebugChat("&&6COOKING &&Updated Stock to $stock", "COOKING_DEBUGGER")
+				DevUtils.sendDebugChat("&&6COOKING &&rUpdated Stock to $stock", "COOKING_DEBUGGER")
 
 				if (hideHandledMessages) event.cancel()
 			}

@@ -642,21 +642,12 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Show Stock Information",
-		description = "Adds your stock to the Cooking HUD.",
+		name = "Show Succeeding Ingredients",
+		description = "Show the next two ingredients rather than one to make it easier to prepare to click the next one. (its crazy ik)",
 		category = "Worlds",
 		subcategory = "Fastest Food"
 	)
-	public boolean SHOW_COOKING_STOCK_INFO = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Simplify Cooking Displays",
-		description = "Shows Cooking displays in a more simplified form.",
-		category = "Worlds",
-		subcategory = "Fastest Food"
-	)
-	public boolean SIMPLIFY_COOKING_DISPLAYS = true;
+	public boolean SHOW_SUCCEEDING_INGREDIENTS = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -799,13 +790,11 @@ public class Config extends Vigilant {
 			move(config, "general.lost_in_time.cave-in_prediction", "worlds.lost_in_time.cave-in_prediction");
 			move(config, "general.journey_to_the_glitch_hq.evan_solver", "worlds.journey_to_the_glitch_hq.evan_solver");
 			move(config, "general.journey_to_the_glitch_hq.evan_notification", "worlds.journey_to_the_glitch_hq.evan_notification");
-			move(config, "general.world_4.show_next_cooking_item", "worlds.fastest_food.show_next_cooking_item");
+			move(config, "general.world_4.show_next_cooking_item", "worlds.fastest_food.cooking_helper");
 			move(config, "general.world_4.cooking_timer", "worlds.fastest_food.cooking_timer");
 			move(config, "general.world_4.order_tracker", "worlds.fastest_food.order_tracker");
-			move(config, "general.world_4.simplify_cooking_displays", "worlds.fastest_food.simplify_cooking_displays");
 			move(config, "general.world_4.hide_handled_chat_messages", "worlds.fastest_food.hide_handled_chat_messages");
 			move(config, "general.world_4.auto_apply_bread", "worlds.fastest_food.auto_apply_bread");
-			move(config, "general.world_4.show_stock_information", "worlds.fastest_food.show_stock_information");
 			move(config, "general.quality_of_life.train_timer", "worlds.showdown.train_timer");
 			move(config, "general.quality_of_life.show_train_timer_outside_world_11", "worlds.showdown.show_train_timer_outside_world_11");
 		});

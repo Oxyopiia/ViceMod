@@ -14,67 +14,62 @@ import net.oxyopia.vice.utils.HudUtils.drawStrings
 object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.currentOrderPos, searchTerm = "cooking") {
 	private val mc = MinecraftClient.getInstance()
 
-	override fun shouldDraw(): Boolean = config.COOKING_HELPER || config.SHOW_COOKING_STOCK_INFO
+	override fun shouldDraw(): Boolean = config.COOKING_HELPER
 	override fun drawCondition(): Boolean = World.Burger.isInWorld() && (mc.player?.y ?: 0.0) > 100.0
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!drawCondition()) return
+		if (!drawCondition() || !shouldDraw()) return
 
 		val displayList: MutableList<String> = mutableListOf()
 
-		val stock = CookingAPI.stock
-		val currentOrder = CookingAPI.currentOrder
-		val currentItemIndex = CookingAPI.orderCurrentItemIndex
 		val heldItem = CookingAPI.heldItem
+		val currentOrder = CookingAPI.currentOrder
 
-		if (config.COOKING_HELPER && currentOrder == CookingOrder.NONE) {
-			var text = "&&cNo Order"
-
-			if (config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) {
-				text += "&&7 (&&${getStockColor()}${stock}&&7)"
-			}
-
-			displayList.add(text)
-
-		} else if (config.COOKING_HELPER) {
-			val recipe = currentOrder.recipe
-
-			val orderDisplayColor = if (currentOrder.isBossOrder) "&&5" else "&&a"
-			displayList.add(orderDisplayColor + "&&l${currentOrder.displayName}")
-
-			var text = "&&7Next Ingredient: &&6${recipe[currentItemIndex].displayName}"
-			if (recipe[currentItemIndex] == heldItem) text = text.replace("&&6", "&&a")
-			if ((recipe.size - 1) > currentItemIndex) text += "&&8 -> ${recipe[currentItemIndex + 1].displayName}"
-
-			if (config.SIMPLIFY_COOKING_DISPLAYS) {
-				text = text.removePrefix("&&7Next Ingredient: ")
-
-				if (config.SHOW_COOKING_STOCK_INFO && stock >= 0) {
-					text += "&&7 (&&${getStockColor()}${stock}&&7)"
-				}
-			}
-
-			displayList.add(text)
+		if (currentOrder == CookingOrder.NONE) {
+			displayList.add("&&cNo Order${getStockText()}")
+			position.drawStrings(displayList, event.context)
+			return
 		}
 
-		if (config.SHOW_COOKING_STOCK_INFO && !config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) {
-			displayList.add("&&7Stock: &&${getStockColor()}${stock}")
+		val recipe = currentOrder.recipe
+		val currentItemIndex = CookingAPI.orderCurrentItemIndex
+		val currentItem = recipe[currentItemIndex]
+
+		val orderDisplayColor = if (currentOrder.isBossOrder) "&&5" else "&&a"
+		displayList.add(orderDisplayColor + "&&l${currentOrder.displayName}")
+
+		val currentItemColor = when {
+			currentItem == heldItem -> "&&a"
+			currentItem == CookingItem.COOKED_MEAT && heldItem == CookingItem.RAW_MEAT -> "&&e"
+			else -> "&&6"
 		}
+		var text = "$currentItemColor${currentItem.displayName}"
+
+		if (config.SHOW_SUCCEEDING_INGREDIENTS && recipe.size - 1 > currentItemIndex) {
+			text += "&&8 -> ${recipe[currentItemIndex + 1].displayName}"
+		}
+
+		text += getStockText()
+		displayList.add(text)
 
 		position.drawStrings(displayList, event.context)
 	}
 
-	private fun getStockColor(): String {
+	private fun getStockText(): String {
 		val stock = CookingAPI.stock
 
+		if (stock < 0) return ""
+
 		@Suppress("KotlinConstantConditions")
-		return when {
+		val color = when {
 			stock >= 25 -> "a"
 			stock in 11..24 -> "e"
 			stock <= 10 -> "c"
 			else -> "7"
 		}
+
+		return " &&7(&&$color$stock&&7)"
 	}
 
 	override fun storePosition(position: Position) {
@@ -84,25 +79,13 @@ object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.curre
 
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
 		val list = mutableListOf<String>()
-		val simplified = config.SIMPLIFY_COOKING_DISPLAYS
 
 		if (config.COOKING_HELPER) {
 			list.add("&&6&&lHamburger")
 
-			var text = "&&7Next Ingredient: &&aBread&&8 -> Cooked Burger"
-			if (simplified) {
-				text = text.removePrefix("&&7Next Ingredient: ")
-
-				if (config.SHOW_COOKING_STOCK_INFO) {
-					text += "&&7 (&&a25&&7)"
-				}
-			}
-
-			list.add(text)
-		}
-
-		if (config.SHOW_COOKING_STOCK_INFO && !simplified) {
-			list.add("&&7Stock: &&a25")
+			var text = "&&aBread"
+			if (config.SHOW_SUCCEEDING_INGREDIENTS) text += "&&8 -> Cooked Burger"
+			text += " &&7(&&e22&&7)"
 		}
 
 		return position.drawStrings(list, context)

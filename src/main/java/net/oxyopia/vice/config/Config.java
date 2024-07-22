@@ -685,6 +685,17 @@ public class Config extends Vigilant {
 	)
 	public boolean AUTO_APPLY_BREAD = false;
 
+	// World/Bitter Battleground
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "No Yeti Head Warning",
+		description = "Displays a warning when trying to fish in the Bitter Battleground without wearing a Yeti Head.",
+		category = "Worlds",
+		subcategory = "Bitter Battleground"
+	)
+	public boolean NO_YETI_HEAD_WARNING = false;
+
 	// Worlds/Magma Heights
 
 	@Property(

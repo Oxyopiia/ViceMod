@@ -62,7 +62,7 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
     }
 
 
-    private fun getFishingTime(): FishingTime {
+    fun getFishingTime(): FishingTime {
 		var min = 0.0
 		var max = 0.0
 

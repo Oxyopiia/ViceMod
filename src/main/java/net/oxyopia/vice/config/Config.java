@@ -167,16 +167,6 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Hide Server Tips",
-		description = "Hides messages such as the periodic Discord tip in chat.",
-		category = "General",
-		subcategory = "Spam Hider",
-		hidden = true
-	)
-	public boolean HIDE_SERVER_TIPS = false;
-
-	@Property(
-		type = PropertyType.SWITCH,
 		name = "Hide Worldguard Messages",
 		description = "Hides the 'Hey! Sorry' Worldguard Messages",
 		category = "General",

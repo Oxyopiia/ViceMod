@@ -138,39 +138,12 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Train Timer",
-		description = "Displays a HUD graphic showing information about the Train in World 11.",
-		category = "General",
-		subcategory = "Quality of Life"
-	)
-	public boolean TRAIN_TIMER = false;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Show Train Timer outside World 11",
-		description = "Show the train timer while outside World 11, yeah",
-		category = "General",
-		subcategory = "Quality of Life"
-	)
-	public boolean TRAIN_TIMER_OUTSIDE = false;
-
-	@Property(
-		type = PropertyType.SWITCH,
 		name = "Hide Revolver Blindness",
 		description = "Hides the blindness effect when aiming the revolver.",
 		category = "General",
 		subcategory = "Quality of Life"
 	)
 	public boolean HIDE_REVOLVER_BLINDNESS = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Forge Timers",
-		description = "Displays the time remaining for items in the Forge to smelt.",
-		category = "General",
-		subcategory = "Quality of Life"
-	)
-	public boolean FORGE_TIMERS = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -219,103 +192,6 @@ public class Config extends Vigilant {
 		subcategory = "Spam Hider"
 	)
 	public boolean HIDE_SET_REQUIREMENT_MESSAGES = false;
-
-	// General/World 4
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Show Next Cooking Item",
-		description = "Displays the next required items for your order.",
-		category = "General",
-		subcategory = "World 4"
-	)
-	public boolean SHOW_NEXT_COOKING_ITEM = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Show Stock Information",
-		description = "Adds your stock to the Cooking HUD.",
-		category = "General",
-		subcategory = "World 4"
-	)
-	public boolean SHOW_COOKING_STOCK_INFO = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Simplify Cooking Displays",
-		description = "Shows Cooking displays in a more simplified form.",
-		category = "General",
-		subcategory = "World 4"
-	)
-	public boolean SIMPLIFY_COOKING_DISPLAYS = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Cooking Timer",
-		description = "Displays the time remaining to cook a burger above the stove.",
-		category = "General",
-		subcategory = "World 4"
-	)
-	public boolean COOKING_TIMER = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Order Tracker",
-		description = "Displays a HUD graphic showing the total number of requests, completions and completion rate of each order in World 4.",
-		category = "General",
-		subcategory = "World 4"
-	)
-	public boolean COOKING_ORDER_TRACKER = false;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Hide Handled Chat Messages",
-		description = "Hides chat messages displayed by Cooking features",
-		category = "General",
-		subcategory = "World 4"
-	)
-	public boolean HIDE_HANDLED_COOKING_MESSAGES = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Auto Apply Bread",
-		description = "Normally, Bread is not removed when completing an order, but can sometimes bug out and lock the order. As a result, Vice automatically deselects Bread for each new order, but this functionality can be bypassed with this feature.\n§eCan bug out from time to time!§8 (no clue why)",
-		category = "General",
-		subcategory = "World 4"
-	)
-	public boolean AUTO_APPLY_BREAD = false;
-
-	// General/Journey to the Glitch HQ
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Evan Notification",
-		description = "Reminds you when your cooldown for Evan's Quiz has passed.",
-		category = "General",
-		subcategory = "Journey to the Glitch HQ"
-	)
-	public boolean EVAN_NOTIFICATION = false;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Evan Solver",
-		description = "Solves Evan minigame in the Glitch HQ. Changes the title to 'TRUE' or 'FALSE' depending on the answer.",
-		category = "General",
-		subcategory = "Journey to the Glitch HQ",
-		hidden = true
-	)
-	public boolean GLITCH_HQ_EVAN_SOLVER = false;
-
-	// General/Lost In Time
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Cave-In Prediction",
-		description = "Shows a prediction of the time until the next Cave-In when mining in the Soulswift Sands.",
-		category = "General",
-		subcategory = "Lost in Time"
-	)
-	public boolean LOST_IN_TIME_CAVE_PREDICTION = true;
 
 	// General/Fishing
 
@@ -753,6 +629,136 @@ public class Config extends Vigilant {
 	)
 	public float JYNX_CHAIN_GUN_VOLUME = 1f;
 
+	// Worlds/Fastest Food
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Cooking Helper",
+		description = "Displays the next two required ingredients for your order.",
+		category = "Worlds",
+		subcategory = "Fastest Food"
+	)
+	public boolean COOKING_HELPER = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Show Stock Information",
+		description = "Adds your stock to the Cooking HUD.",
+		category = "Worlds",
+		subcategory = "Fastest Food"
+	)
+	public boolean SHOW_COOKING_STOCK_INFO = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Simplify Cooking Displays",
+		description = "Shows Cooking displays in a more simplified form.",
+		category = "Worlds",
+		subcategory = "Fastest Food"
+	)
+	public boolean SIMPLIFY_COOKING_DISPLAYS = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Cooking Timer",
+		description = "Displays the time remaining to cook a burger above the stove.",
+		category = "Worlds",
+		subcategory = "Fastest Food"
+	)
+	public boolean COOKING_TIMER = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Order Tracker",
+		description = "Displays a HUD graphic showing the total number of requests, completions and completion rate of each order in World 4.",
+		category = "Worlds",
+		subcategory = "Fastest Food"
+	)
+	public boolean COOKING_ORDER_TRACKER = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Hide Handled Chat Messages",
+		description = "Hides chat messages displayed by Cooking features",
+		category = "Worlds",
+		subcategory = "Fastest Food"
+	)
+	public boolean HIDE_HANDLED_COOKING_MESSAGES = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Auto Apply Bread",
+		description = "Normally, Bread is not removed when completing an order, but can sometimes bug out and lock the order. As a result, Vice automatically deselects Bread for each new order, but this functionality can be bypassed with this feature.\n§eCan bug out from time to time!§8 (no clue why)",
+		category = "Worlds",
+		subcategory = "Fastest Food"
+	)
+	public boolean AUTO_APPLY_BREAD = false;
+
+	// Worlds/Magma Heights
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Forge Timers",
+		description = "Displays the time remaining for items in the Forge to smelt.",
+		category = "Worlds",
+		subcategory = "Magma Heights"
+	)
+	public boolean FORGE_TIMERS = true;
+
+	// Worlds/Showdown
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Train Timer",
+		description = "Displays a HUD graphic showing information about the Train in World 11.",
+		category = "Worlds",
+		subcategory = "Showdown"
+	)
+	public boolean TRAIN_TIMER = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Show Train Timer outside World 11",
+		description = "Show the train timer while outside World 11, yeah",
+		category = "Worlds",
+		subcategory = "Showdown"
+	)
+	public boolean TRAIN_TIMER_OUTSIDE = false;
+
+
+	// Worlds/Journey to the Glitch HQ
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Evan Notification",
+		description = "Reminds you when your cooldown for Evan's Quiz has passed.",
+		category = "Worlds",
+		subcategory = "Journey to the Glitch HQ"
+	)
+	public boolean EVAN_NOTIFICATION = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Evan Solver",
+		description = "Solves Evan minigame in the Glitch HQ. Changes the title to 'TRUE' or 'FALSE' depending on the answer.",
+		category = "Worlds",
+		subcategory = "Journey to the Glitch HQ",
+		hidden = true
+	)
+	public boolean GLITCH_HQ_EVAN_SOLVER = false;
+
+	// Worlds/Lost in Time
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Cave-In Prediction",
+		description = "Shows a prediction of the time until the next Cave-In when mining in the Soulswift Sands.",
+		category = "Worlds",
+		subcategory = "Lost in Time"
+	)
+	public boolean LOST_IN_TIME_CAVE_PREDICTION = true;
+
+
 	public Config() {
 		super(new File("./config/vice/config.toml"), "Vice §b" + Vice.Companion.getVersion(), new JVMAnnotationPropertyCollector(), new ConfigSorting());
 	}
@@ -787,6 +793,21 @@ public class Config extends Vigilant {
 			move(config, "general.item_cooldowns.show_timer/ready_text_in_hotbar", "abilities.cooldown_overlay.show_timer/ready_text_in_hotbar");
 			move(config, "general.item_cooldowns.background_opacity", "abilities.cooldown_overlay.background_opacity");
 			move(config, "general.item_cooldowns.hide_when_ready", "abilities.cooldown_overlay.hide_when_ready");
+		});
+		migrations.add(config -> { // Migration 2: World specific stuff to new category
+			move(config, "general.quality_of_life.forge_timers", "worlds.magma_heights.forge_timers");
+			move(config, "general.lost_in_time.cave-in_prediction", "worlds.lost_in_time.cave-in_prediction");
+			move(config, "general.journey_to_the_glitch_hq.evan_solver", "worlds.journey_to_the_glitch_hq.evan_solver");
+			move(config, "general.journey_to_the_glitch_hq.evan_notification", "worlds.journey_to_the_glitch_hq.evan_notification");
+			move(config, "general.world_4.show_next_cooking_item", "worlds.fastest_food.show_next_cooking_item");
+			move(config, "general.world_4.cooking_timer", "worlds.fastest_food.cooking_timer");
+			move(config, "general.world_4.order_tracker", "worlds.fastest_food.order_tracker");
+			move(config, "general.world_4.simplify_cooking_displays", "worlds.fastest_food.simplify_cooking_displays");
+			move(config, "general.world_4.hide_handled_chat_messages", "worlds.fastest_food.hide_handled_chat_messages");
+			move(config, "general.world_4.auto_apply_bread", "worlds.fastest_food.auto_apply_bread");
+			move(config, "general.world_4.show_stock_information", "worlds.fastest_food.show_stock_information");
+			move(config, "general.quality_of_life.train_timer", "worlds.showdown.train_timer");
+			move(config, "general.quality_of_life.show_train_timer_outside_world_11", "worlds.showdown.show_train_timer_outside_world_11");
 		});
 		return migrations;
 	}

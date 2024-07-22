@@ -14,7 +14,7 @@ import net.oxyopia.vice.utils.HudUtils.drawStrings
 object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.currentOrderPos, searchTerm = "cooking") {
 	private val mc = MinecraftClient.getInstance()
 
-	override fun shouldDraw(): Boolean = config.SHOW_NEXT_COOKING_ITEM || config.SHOW_COOKING_STOCK_INFO
+	override fun shouldDraw(): Boolean = config.COOKING_HELPER || config.SHOW_COOKING_STOCK_INFO
 	override fun drawCondition(): Boolean = World.Burger.isInWorld() && (mc.player?.y ?: 0.0) > 100.0
 
 	@SubscribeEvent
@@ -28,7 +28,7 @@ object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.curre
 		val currentItemIndex = CookingAPI.orderCurrentItemIndex
 		val heldItem = CookingAPI.heldItem
 
-		if (config.SHOW_NEXT_COOKING_ITEM && currentOrder == CookingOrder.NONE) {
+		if (config.COOKING_HELPER && currentOrder == CookingOrder.NONE) {
 			var text = "&&cNo Order"
 
 			if (config.SIMPLIFY_COOKING_DISPLAYS && stock >= 0) {
@@ -37,7 +37,7 @@ object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.curre
 
 			displayList.add(text)
 
-		} else if (config.SHOW_NEXT_COOKING_ITEM) {
+		} else if (config.COOKING_HELPER) {
 			val recipe = currentOrder.recipe
 
 			val orderDisplayColor = if (currentOrder.isBossOrder) "&&5" else "&&a"
@@ -86,7 +86,7 @@ object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.curre
 		val list = mutableListOf<String>()
 		val simplified = config.SIMPLIFY_COOKING_DISPLAYS
 
-		if (config.SHOW_NEXT_COOKING_ITEM) {
+		if (config.COOKING_HELPER) {
 			list.add("&&6&&lHamburger")
 
 			var text = "&&7Next Ingredient: &&aBread&&8 -> Cooked Burger"

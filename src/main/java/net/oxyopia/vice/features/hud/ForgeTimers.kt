@@ -77,7 +77,7 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 	private var lastHighCountError: Long = -1
 
 	@SubscribeEvent
-	fun onChestRender(event: ChestRenderEvent.Slots) {
+	fun onChestRender(event: ChestRenderEvent) {
 		if (!World.MagmaHeights.isInWorld()) return
 		if (!event.chestName.contains("Ember")) return
 
@@ -102,7 +102,7 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 		}
 	}
 
-	private fun ChestRenderEvent.Slots.getErrorIntervalDump(): String {
+	private fun ChestRenderEvent.getErrorIntervalDump(): String {
 		val filteredSlots = slots.filter { it.stack.name.string.contains("(Forging)") }
 		val inventoryCount = filteredSlots.size + if (cursorStack.name.string.contains("(Forging)")) 1 else 0
 		val storedCount = misc.forgeList.size

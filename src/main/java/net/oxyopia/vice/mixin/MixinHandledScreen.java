@@ -63,7 +63,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			ItemStack cursorStack = touchDragStack.isEmpty() ? handler.getCursorStack() : touchDragStack;
 
-			EVENT_MANAGER.publish(new ChestRenderEvent.Slots(title.getString(), handler.slots, cursorStack, !hasOpened));
+			EVENT_MANAGER.publish(new ChestRenderEvent(title.getString(), handler.slots, cursorStack, !hasOpened));
 			hasOpened = true;
 		}
 	}

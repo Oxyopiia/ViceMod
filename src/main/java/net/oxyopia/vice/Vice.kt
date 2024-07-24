@@ -180,6 +180,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(SetHighlighting)
 
+		EVENT_MANAGER.subscribe(DailyQuests)
 		EVENT_MANAGER.subscribe(BurgerTimer)
 		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
 		EVENT_MANAGER.subscribe(CookingAPI)

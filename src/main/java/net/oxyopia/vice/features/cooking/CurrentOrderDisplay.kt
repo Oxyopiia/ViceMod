@@ -78,15 +78,12 @@ object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.curre
 	}
 
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
-		val list = mutableListOf<String>()
+		val list = mutableListOf("&&6&&lHamburger")
 
-		if (config.COOKING_HELPER) {
-			list.add("&&6&&lHamburger")
-
-			var text = "&&aBread"
-			if (config.SHOW_SUCCEEDING_INGREDIENTS) text += "&&8 -> Cooked Burger"
-			text += " &&7(&&e22&&7)"
-		}
+		var text = "&&aBread"
+		if (config.SHOW_SUCCEEDING_INGREDIENTS) text += "&&8 -> Cooked Burger"
+		text += " &&7(&&e22&&7)"
+		list.add(text)
 
 		return position.drawStrings(list, context)
 	}

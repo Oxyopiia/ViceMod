@@ -17,6 +17,7 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	ArcadeVirtualWorld("tutorial", "The Arcade: Virtual World"),
 	Showdown("showdown", "Showdown"),
 	GlitchHQ("glitchhq", "Journey to the Glitch HQ"),
+	Warehouse("testingzone", "Warehouse"),
 	SoulswiftSands("soulswiftsands", "Soulswift Sands"),
 	TimelessTastes("timelesstastes", "Timeless Tastes"),
 

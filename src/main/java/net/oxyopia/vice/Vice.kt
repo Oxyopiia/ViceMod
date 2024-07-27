@@ -48,6 +48,7 @@ import net.oxyopia.vice.features.expeditions.RoomWaypoints
 import net.oxyopia.vice.features.expeditions.RunOverview
 import net.oxyopia.vice.features.expeditions.StylePointsHider
 import net.oxyopia.vice.features.hud.CaveInPrediction
+import net.oxyopia.vice.features.hud.DeliveryTimer
 import net.oxyopia.vice.features.hud.ForgeTimers
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.hud.PlayerStats
@@ -183,6 +184,7 @@ class Vice : ClientModInitializer {
 
 		EVENT_MANAGER.subscribe(EvanNotification)
 //		EVENT_MANAGER.subscribe(EvanSolver)
+		EVENT_MANAGER.subscribe(DeliveryTimer)
 
 		EVENT_MANAGER.subscribe(ArenaAPI)
 		EVENT_MANAGER.subscribe(ArenaNotifications)

@@ -739,6 +739,15 @@ public class Config extends Vigilant {
 	)
 	public boolean GLITCH_HQ_EVAN_SOLVER = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Delivery Timer",
+		description = "Shows bossbar timers related to the Delivery, including the Van Spawn and Remaining Delivery Time.",
+		category = "Worlds",
+		subcategory = "Journey to the Glitch HQ"
+	)
+	public boolean GLITCH_HQ_DELIVERY_TIMER = true;
+
 	// Worlds/Lost in Time
 
 	@Property(

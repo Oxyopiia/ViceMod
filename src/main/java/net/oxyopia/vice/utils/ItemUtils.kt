@@ -2,7 +2,10 @@ package net.oxyopia.vice.utils
 
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayerEntity
+import net.minecraft.entity.EquipmentSlot
+import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.nbt.NbtElement
 import net.minecraft.text.Text
 import net.oxyopia.vice.data.Set
@@ -85,5 +88,9 @@ object ItemUtils {
 			}
 		}
 		return setsMap
+	}
+
+	fun ItemStack.isPlayerHeadWithArmor(): Boolean {
+		return item == Items.PLAYER_HEAD && getAttributeModifiers(EquipmentSlot.HEAD)[EntityAttributes.GENERIC_ARMOR].isNotEmpty()
 	}
 }

@@ -567,6 +567,22 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.DECIMAL_SLIDER,
+		name = "Wave Pulser Volume",
+		category = "Sounds",
+		maxF = 2f
+	)
+	public float WAVE_PULSER_VOLUME = 1f;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Apply to Wave Pulser Volume to Evoker Fangs",
+		description = "Wether the Evoker Fangs sound is affected by Wave Pulser Volume. Disable if you still want to know how many mobs were hit without getting earraped.",
+		category = "Sounds"
+	)
+	public boolean APPLY_WAVE_PULSER_VOLUME_TO_FANGS = true;
+
+	@Property(
+		type = PropertyType.DECIMAL_SLIDER,
 		name = "Glitch Mallet Volume",
 		category = "Sounds",
 		maxF = 2f
@@ -795,6 +811,8 @@ public class Config extends Vigilant {
 		addDependency("LIVE_ARENA_MOBS", "LIVE_ARENA_TOGGLE");
 		addDependency("LIVE_ARENA_ROUND_TIMER", "LIVE_ARENA_TOGGLE");
 		addDependency("LIVE_ARENA_DROPS", "LIVE_ARENA_TOGGLE");
+
+		addDependency("APPLY_WAVE_PULSER_VOLUME_TO_FANGS", "WAVE_PULSER_VOLUME", (value) -> (float) value != 1f);
 	}
 
 	public @NotNull List<Migration> getMigrations() {

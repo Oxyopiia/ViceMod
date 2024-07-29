@@ -4,8 +4,6 @@ import com.mojang.brigadier.Command
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.util.InputUtil
-import net.minecraft.component.type.AttributeModifierSlot
-import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.screen.slot.SlotActionType
@@ -15,7 +13,7 @@ import net.oxyopia.vice.events.SlotClickEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
-import net.oxyopia.vice.utils.ItemUtils.getAttributeModifier
+import net.oxyopia.vice.utils.ItemUtils.isPlayerHeadWithArmor
 import net.oxyopia.vice.utils.Utils
 import org.lwjgl.glfw.GLFW
 
@@ -77,13 +75,12 @@ object ItemProtection {
 		val item = getItem(event) ?: return
 
 		val isProtectedItem = defaultProtectedItems.contains(item.cleanName()) || defaultProtectedItems.contains(item.item)
-		val isPlayerHeadWithArmor = item.item == Items.PLAYER_HEAD && item.getAttributeModifier(EntityAttributes.GENERIC_ARMOR, AttributeModifierSlot.HEAD) >= 4.0
 		val isFavoriteItem = Vice.storage.misc.protectedItems.contains(item.cleanName())
 
-		if (isProtectedItem || isPlayerHeadWithArmor || isFavoriteItem) {
+		if (isProtectedItem || item.isPlayerHeadWithArmor() || isFavoriteItem) {
 			val cause = when {
 				isProtectedItem -> "DefaultProtectedItem"
-				isPlayerHeadWithArmor -> "ArmorValue"
+				item.isPlayerHeadWithArmor() -> "ArmorValue"
 				else -> "FavoriteItem"
 			}
 

@@ -13,7 +13,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 import net.oxyopia.vice.events.ChestRenderEvent;
-import net.oxyopia.vice.events.ChestRenderSlotEvent;
+import net.oxyopia.vice.events.ContainerRenderSlotEvent;
 import net.oxyopia.vice.events.ItemDropEvent;
 import net.oxyopia.vice.events.SlotClickEvent;
 import net.oxyopia.vice.events.ViceEvent;
@@ -63,7 +63,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			ItemStack cursorStack = touchDragStack.isEmpty() ? handler.getCursorStack() : touchDragStack;
 
-			EVENT_MANAGER.publish(new ChestRenderEvent.Slots(title.getString(), handler.slots, cursorStack, !hasOpened));
+			EVENT_MANAGER.publish(new ChestRenderEvent(title.getString(), handler.slots, cursorStack, !hasOpened));
 			hasOpened = true;
 		}
 	}
@@ -71,7 +71,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 	@Inject(at = @At("HEAD"), method = "drawSlot")
 	private void onSlotRender(DrawContext context, Slot slot, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new ChestRenderSlotEvent(slot, context));
+			EVENT_MANAGER.publish(new ContainerRenderSlotEvent(slot, title.getString(), context));
 		}
 	}
 

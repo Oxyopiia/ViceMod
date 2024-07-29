@@ -98,7 +98,7 @@ object ExpeditionAPI {
 	}
 
 	@SubscribeEvent
-	fun onInventoryOpen(event: ChestRenderEvent.Slots) {
+	fun onInventoryOpen(event: ChestRenderEvent) {
 		if (!World.Expeditions.isInWorld() || !event.isActuallyFullyRendered()) return
 		if (!event.chestName.contains("Expedition Merchant")) return
 

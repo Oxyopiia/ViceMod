@@ -12,7 +12,7 @@ import net.minecraft.util.math.ColorHelper
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.data.gui.Quad
-import net.oxyopia.vice.events.ChestRenderSlotEvent
+import net.oxyopia.vice.events.ContainerRenderSlotEvent
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
@@ -64,7 +64,7 @@ object HudUtils {
 		RenderSystem.enableDepthTest()
 	}
 
-	fun ChestRenderSlotEvent.highlight(color: Color) {
+	fun ContainerRenderSlotEvent.highlight(color: Color) {
 		val x = slot.x
 		val y = slot.y
 

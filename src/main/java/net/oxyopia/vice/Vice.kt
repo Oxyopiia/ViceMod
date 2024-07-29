@@ -48,6 +48,7 @@ import net.oxyopia.vice.features.expeditions.RoomWaypoints
 import net.oxyopia.vice.features.expeditions.RunOverview
 import net.oxyopia.vice.features.expeditions.StylePointsHider
 import net.oxyopia.vice.features.hud.CaveInPrediction
+import net.oxyopia.vice.features.hud.DeliveryTimer
 import net.oxyopia.vice.features.hud.ForgeTimers
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.hud.PlayerStats
@@ -55,6 +56,7 @@ import net.oxyopia.vice.features.hud.TrainTimer
 import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.itemabilities.CooldownDisplayChanger
+import net.oxyopia.vice.features.itemabilities.SetHighlighting
 import net.oxyopia.vice.features.misc.*
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
@@ -161,6 +163,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ItemProtection)
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
 		EVENT_MANAGER.subscribe(WasteyardTimer)
+		EVENT_MANAGER.subscribe(YetiHeadWarning)
 
 		EVENT_MANAGER.subscribe(BossCounter)
 		EVENT_MANAGER.subscribe(ForgeTimers)
@@ -172,6 +175,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(AbilitySoundChanger)
 		EVENT_MANAGER.subscribe(CooldownDisplayChanger)
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
+		EVENT_MANAGER.subscribe(SetHighlighting)
 
 		EVENT_MANAGER.subscribe(BurgerTimer)
 		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
@@ -180,6 +184,7 @@ class Vice : ClientModInitializer {
 
 		EVENT_MANAGER.subscribe(EvanNotification)
 //		EVENT_MANAGER.subscribe(EvanSolver)
+		EVENT_MANAGER.subscribe(DeliveryTimer)
 
 		EVENT_MANAGER.subscribe(ArenaAPI)
 		EVENT_MANAGER.subscribe(ArenaNotifications)

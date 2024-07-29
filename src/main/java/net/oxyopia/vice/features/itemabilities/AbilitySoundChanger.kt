@@ -23,7 +23,7 @@ object AbilitySoundChanger {
 				event.setReturnValue(config.SNOWBALL_CANNON_VOLUME)
 			}
 
-			(sound == "entity.snowball.throw" || sound == "entity.generic.explode") && volume == 9999f && ItemAbility.ARCTIC_CORE.remainingCooldown() > 0f -> {
+			(sound == "entity.snowball.throw" || sound == "entity.generic.explode") && volume == 9999f && ItemAbility.ARCTIC_CORE.isOnCooldown() -> {
 				event.setReturnValue(config.ARCTIC_CORE_VOLUME)
 			}
 
@@ -45,6 +45,17 @@ object AbilitySoundChanger {
 
 			(sound == "entity.illusioner.cast_spell" && ItemAbility.SHADOW_GELATO_DRUM_GUN.isOnCooldown()) -> {
 				event.setReturnValue(config.SHADOW_DRUM_GUN_VOLUME)
+			}
+
+			volume == 3f && (
+					sound == "block.beacon.activate" ||
+					sound == "item.shield.block" ||
+					sound == "entity.player.hurt_freeze" ||
+					sound == "entity.elder_guardian.curse" ||
+					sound == "item.trident.riptide_1" ||
+					(sound == "entity.evoker_fangs.attack" && config.APPLY_WAVE_PULSER_VOLUME_TO_FANGS)
+			) && ItemAbility.WAVE_PULSER.remainingCooldown() >= 7f -> {
+				event.setReturnValue(config.WAVE_PULSER_VOLUME)
 			}
 		}
 	}

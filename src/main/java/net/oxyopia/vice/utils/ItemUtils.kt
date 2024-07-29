@@ -6,7 +6,9 @@ import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.entity.attribute.EntityAttribute
+import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.registry.entry.RegistryEntry
 import net.oxyopia.vice.data.Set
 import java.util.*
@@ -91,5 +93,9 @@ object ItemUtils {
 			}
 		}
 		return setsMap
+	}
+
+	fun ItemStack.isPlayerHeadWithArmor(): Boolean {
+		return item == Items.PLAYER_HEAD && getAttributeModifier(EntityAttributes.GENERIC_ARMOR, AttributeModifierSlot.HEAD) >= 4.0
 	}
 }

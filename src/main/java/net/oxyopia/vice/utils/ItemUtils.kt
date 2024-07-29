@@ -53,6 +53,12 @@ object ItemUtils {
 		return -1.0
 	}
 
+	fun ItemStack.getAttributeModifierInAnySlot(modifier: RegistryEntry<EntityAttribute>): Double {
+		return AttributeModifierSlot.entries.stream()
+			.mapToDouble { modifierSlot -> getAttributeModifier(modifier, modifierSlot) }
+			.sum()
+	}
+
 
 	fun ItemStack.isRod(): Boolean {
 

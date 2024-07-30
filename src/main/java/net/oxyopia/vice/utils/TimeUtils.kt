@@ -22,7 +22,7 @@ object TimeUtils {
 	}
 
 	fun Duration.formatTimer(timeLimit: Duration, showClock: Boolean = true): String {
-		return if (showClock) PADDED_CLOCK_ICON else "" + ceil((timeLimit.inWholeMilliseconds - this.inWholeMilliseconds) / 1000.0).seconds.formatDuration()
+		return (if (showClock) PADDED_CLOCK_ICON else "") + ceil((timeLimit.inWholeMilliseconds - this.inWholeMilliseconds) / 1000.0).seconds.formatDuration()
 	}
 
 	fun Duration.formatShortDuration() = String.format("%.2f", this.inWholeMilliseconds / 1000f)

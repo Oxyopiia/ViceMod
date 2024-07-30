@@ -15,6 +15,7 @@ import net.oxyopia.vice.data.gui.Quad
 import net.oxyopia.vice.events.ContainerRenderSlotEvent
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.HudRenderEvent
+import net.oxyopia.vice.events.RenderHotbarSlotEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils.convertFormatting
 import java.awt.Color
@@ -62,6 +63,19 @@ object HudUtils {
 		RenderSystem.disableDepthTest()
 		vertexConsumers.draw(layer)
 		RenderSystem.enableDepthTest()
+	}
+
+	fun RenderHotbarSlotEvent.highlight(color: Color, layer: RenderLayer = RenderLayer.getGui()) {
+		fillUIArea(
+			context.matrices,
+			layer,
+			x,
+			y,
+			x + 16,
+			y + 16,
+			-50,
+			color
+		)
 	}
 
 	fun ContainerRenderSlotEvent.highlight(color: Color) {

@@ -186,7 +186,6 @@ object HudUtils {
 		client.inGameHud.setSubtitle(Text.of(subtitle.convertFormatting()))
 	}
 
-	fun sendVanillaActionBar(message: String) = MinecraftClient.getInstance().inGameHud.setOverlayMessage(Text.of(message.convertFormatting()), false)
 	fun sendVanillaActionBar(message: Text) = MinecraftClient.getInstance().inGameHud.setOverlayMessage(message, false)
 
 	private var title = MutableText.EMPTY

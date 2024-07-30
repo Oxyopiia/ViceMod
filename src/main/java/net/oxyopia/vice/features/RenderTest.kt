@@ -4,7 +4,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.entity.boss.BossBar
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.data.ChatColor
+import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.BossBarEvents
@@ -61,8 +61,8 @@ object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 		// Anchor center to (300, 100) with scale 2
 		val scalar2 = Position(300f, 100f, scale = 2f, centered = false)
 		scalar2.drawTexts(listOf(
-			Text.literal("Scalar 2 Test 1").withColor(ChatColor.GREEN.color.rgb),
-			Text.literal("Scalar 2 Test 2").withColor(ChatColor.GREEN.color.rgb),
+			Text.literal("Scalar 2 Test 1").withColor(Colors.ChatColor.Green.rgb),
+			Text.literal("Scalar 2 Test 2").withColor(Colors.ChatColor.Green.rgb),
 		), event.context)
 	}
 

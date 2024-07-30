@@ -71,21 +71,26 @@ object HudUtils {
 		fillUIArea(context.matrices, RenderLayer.getGuiOverlay(), x, y, x + 16, y + 16, -500, color)
 	}
 
-	fun drawText(text: String, x: Int, y: Int, context: DrawContext, color: Int = Color(255, 255, 255, 255).rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
+	fun drawText(text: Text, x: Int, y: Int, context: DrawContext, color: Color, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
 		val textRenderer = MinecraftClient.getInstance().textRenderer
 		val vertexConsumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
 		var xPos = x
 
 		if (centered) {
-			val width = textRenderer.getSpecialTextWidth(text.convertFormatting())
+			val width = textRenderer.getWidth(text)
 			xPos = x - (width / 2)
 		}
 
-		val i = textRenderer.draw(text.convertFormatting(), xPos.toFloat(), y.toFloat(), color, shadow, context.matrices.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0, textRenderer.isRightToLeft)
+		val width = textRenderer.draw(text, xPos.toFloat(), y.toFloat(), color.rgb, shadow, context.matrices.peek().positionMatrix, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
 		RenderSystem.disableDepthTest()
 		vertexConsumers.draw()
 		RenderSystem.enableDepthTest()
-		return i
+
+		return width
+	}
+
+	fun drawText(text: String, x: Int, y: Int, context: DrawContext, color: Int = Color(255, 255, 255, 255).rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Int {
+		return drawText(Text.of(text.convertFormatting()), x, y, context, Color(color), shadow, centered)
 	}
 
 	fun Position.drawBackground(size: Pair<Float, Float>, context: DrawContext, color: Color = Color.gray, padding: Float = 0f): Quad {
@@ -102,42 +107,49 @@ object HudUtils {
 			.apply { fillUIArea(context.matrices, RenderLayer.getGuiOverlay(), minX, minY, maxX, maxY, color) }
 	}
 
-	fun Position.drawString(text: String, context: DrawContext, offsetX: Float = 0f, offsetY: Float = 0f, defaultColor: Color = Color.white, z: Int = 0): Int {
+	fun Position.drawText(text: Text, context: DrawContext, offsetX: Float = 0f, offsetY: Float =0f, defaultColor: Color = Color.white, z: Int = 0): Int {
 		val matrices = context.matrices
 		val consumers = context.vertexConsumers
 		val textRenderer = MinecraftClient.getInstance().textRenderer
 
-		val display = text.convertFormatting()
-
 		matrices.push()
-
 		matrices.translate(x, y, 0f)
+
 		if (centered) {
-			matrices.translate(-textRenderer.getSpecialTextWidth(display) / 2f * scale, 0f, 0f)
+			matrices.translate(-textRenderer.getWidth(text) / 2f * scale, 0f, 0f)
 		}
 
 		matrices.translate(offsetX, offsetY, z.toFloat())
 		matrices.scale(scale, scale, 1f)
 
-		val i = textRenderer.draw(display, 0f, 0f, defaultColor.rgb, Vice.config.HUD_TEXT_SHADOW, matrices.peek().positionMatrix, consumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
+		val width = textRenderer.draw(text, 0f, 0f, defaultColor.rgb, Vice.config.HUD_TEXT_SHADOW, matrices.peek().positionMatrix, consumers, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0)
 
 		matrices.pop()
 
-		return i
+		return width
+	}
+
+	fun Position.drawString(text: String, context: DrawContext, offsetX: Float = 0f, offsetY: Float = 0f, defaultColor: Color = Color.white, z: Int = 0): Int {
+		return drawText(Text.of(text.convertFormatting()), context, offsetX, offsetY, defaultColor, z)
+	}
+
+	fun Position.drawTexts(list: List<Text>, context: DrawContext, z: Int = 0, gap: Float = 10f): Pair<Float, Float> {
+		var maxWidth = 0
+
+		list.forEachIndexed { index, text ->
+			maxWidth = drawText(text, context, offsetY = index * gap * scale).coerceAtLeast(maxWidth)
+		}
+
+		// Subtract 3 for final line not having a gap to account for
+		return Pair(maxWidth * scale, list.size * gap * scale - 3)
 	}
 
 	/**
 	 * @return Width and Height as an Int Pair respectively
 	 */
 	fun Position.drawStrings(list: List<String>, context: DrawContext, z: Int = 0, gap: Float = 10f): Pair<Float, Float> {
-		var maxWidth = 0
-
-		list.forEachIndexed { index, text ->
-			maxWidth = drawString(text, context, offsetY = index * gap * scale).coerceAtLeast(maxWidth)
-		}
-
-		// Subtract 3 for final line not having a gap to account for
-		return Pair(maxWidth * scale, list.size * gap * scale - 3)
+		val textList = list.map { str -> Text.of(str.convertFormatting()) }
+		return drawTexts(textList, context, z, gap)
 	}
 
 	fun Position.getMultilineSize(list: List<String>, gap: Int = 10): Pair<Float, Float> {

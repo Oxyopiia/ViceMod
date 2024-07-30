@@ -2,7 +2,9 @@ package net.oxyopia.vice.features
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.entity.boss.BossBar
+import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.ChatColor
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.BossBarEvents
@@ -10,6 +12,9 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.HudUtils.drawText
+import net.oxyopia.vice.utils.HudUtils.drawTexts
+import java.awt.Color
 
 object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 	@SubscribeEvent
@@ -28,19 +33,19 @@ object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 
 		// Anchor top left to (50, 20)
 		val pos50201uc = Position(50f, 20f, centered = false)
-		pos50201uc.drawString("&&b50, 20, s1, uc", event.context)
+		pos50201uc.drawText(Text.literal("Color Test 1 uc").withColor(Color(55,134,255).rgb), event.context)
 
 		// Anchor center to (50, 50)
 		val pos50501 = Position(50f, 50f)
-		pos50501.drawString("&&c50, 50, s1", event.context)
+		pos50501.drawText(Text.literal("Color Test 1 cc").withColor(Color(55,134,255).rgb), event.context)
 
 		// Anchor center to (50, 75) with scale 2
 		val pos50752 = Position(50f, 75f, scale = 2f)
-		pos50752.drawString("&&a50, 75, s2", event.context)
+		pos50752.drawText(Text.literal("Scale Test 2x cc").withColor(Color(55, 134, 255).rgb), event.context)
 
 		// Anchor top left to (50, 100) with scale 2
 		val pos100502uc = Position(50f, 100f, scale = 2f, centered = false)
-		pos100502uc.drawString("&&d50, 100, s2, uc", event.context)
+		pos100502uc.drawText(Text.literal("Scale Test 2x uc").withColor(Color(55, 134, 255).rgb), event.context)
 
 		// Anchor center to (100, 100) with scale 1.5
 		val pos10010015 = Position(100f, 100f, scale = 1.5f)
@@ -55,9 +60,9 @@ object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 
 		// Anchor center to (300, 100) with scale 2
 		val scalar2 = Position(300f, 100f, scale = 2f, centered = false)
-		scalar2.drawStrings(listOf(
-			"&&aScalar 2 Test 1",
-			"&&aScalar 2 Test 2",
+		scalar2.drawTexts(listOf(
+			Text.literal("Scalar 2 Test 1").withColor(ChatColor.GREEN.color.rgb),
+			Text.literal("Scalar 2 Test 2").withColor(ChatColor.GREEN.color.rgb),
 		), event.context)
 	}
 

@@ -7,6 +7,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.MutableText
+import net.minecraft.text.Style
 import net.minecraft.text.Text
 import net.minecraft.util.math.ColorHelper
 import net.oxyopia.vice.Vice
@@ -20,6 +21,18 @@ import net.oxyopia.vice.utils.Utils.convertFormatting
 import java.awt.Color
 
 object HudUtils {
+	fun String.toFormattedText(color: Color = Color.white, bold: Boolean = false, italic: Boolean = false, underline: Boolean = false, obfuscated: Boolean = false, strikethrough: Boolean = false): MutableText {
+		val text = Text.literal(this)
+		return text.setStyle(Style.EMPTY
+			.withColor(color.rgb)
+			.withBold(bold)
+			.withItalic(italic)
+			.withUnderline(underline)
+			.withObfuscated(obfuscated)
+			.withStrikethrough(strikethrough)
+		)
+	}
+
 	fun fillUIArea(stack: MatrixStack, layer: RenderLayer, x1: Int, y1: Int, x2: Int, y2: Int, z: Int, color: Color) {
 		fillUIArea(stack, layer, x1, y1, x2, y2, z, color.rgb)
 	}

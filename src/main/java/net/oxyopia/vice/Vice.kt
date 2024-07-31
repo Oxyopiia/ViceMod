@@ -24,6 +24,7 @@ import net.oxyopia.vice.commands.ViceCommand
 import net.oxyopia.vice.config.Config
 import net.oxyopia.vice.config.DevConfig
 import net.oxyopia.vice.config.Storage
+import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.CommandRegisterEvent
 import net.oxyopia.vice.events.core.EventManager
@@ -110,6 +111,7 @@ class Vice : ClientModInitializer {
 		const val ERROR_PREFIX = "§cVice §cERROR §7|§c "
 		const val WARNING_PREFIX = "§eVice §eWARN §7|§e "
 		const val DEV_PREFIX = "§9Vice §7(Dev) |§r "
+		val PRIMARY = Colors.Wave
 	}
 
 	override fun onInitializeClient() {

@@ -1,14 +1,20 @@
 package net.oxyopia.vice.features.bosses
 
 import net.minecraft.client.gui.DrawContext
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.HudUtils.drawTexts
+import net.oxyopia.vice.utils.HudUtils.toFormattedText
 import net.oxyopia.vice.utils.Utils
+import java.awt.Color
 
 object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPos) {
     private val viceTimeRegex = Regex("You ran out of time to defeat Vice\\. \\(\\d+m\\)")
@@ -25,21 +31,21 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 	override fun drawCondition(): Boolean = Vice.config.BOSS_COUNTER_OUTSIDE || Utils.getDTWorld()?.type == World.WorldType.BOSS
 
 	private fun draw(context: DrawContext): Pair<Float, Float> {
-		val list: MutableList<String> = mutableListOf("&&b&&lBosses")
+		val list: MutableList<Text> = mutableListOf("Bosses".toFormattedText(Vice.PRIMARY, bold = true))
 
-		list.addBossStat("&&5Vice", bosses.vice.completions)
-		list.addBossStat("&&4Wasteyard", bosses.wasteyard.completions)
-		list.addBossStat("&&aEl Gelato", bosses.gelato.completions)
-		list.addBossStat("&&cPPP", bosses.ppp.completions)
-		list.addBossStat("&&bMinehut", bosses.minehut.completions)
-		list.addBossStat("&&dShadow Gelato", bosses.shadowGelato.completions)
-		list.addBossStat("&&8Abyssal Vice", bosses.abyssalVice.completions)
+		list.addBossStat("Vice", Colors.ViceBoss, bosses.vice.completions)
+		list.addBossStat("Wasteyard", Colors.ChatColor.DarkRed, bosses.wasteyard.completions)
+		list.addBossStat("El Gelato", Colors.ChatColor.Green, bosses.gelato.completions)
+		list.addBossStat("PPP", Colors.ChatColor.Red, bosses.ppp.completions)
+		list.addBossStat("Minehut", Colors.ChatColor.Aqua, bosses.minehut.completions)
+		list.addBossStat("Shadow Gelato", Colors.ShadowGelato, bosses.shadowGelato.completions)
+		list.addBossStat("Abyssal Vice", Colors.Diox, bosses.abyssalVice.completions)
 
 		if (list.size == 1) {
-			list.add("&&cNo bosses slain yet!")
+			list.add("No Bosses slain yet!".toFormattedText(Colors.ChatColor.Red))
 		}
 
-		return position.drawStrings(list, context)
+		return position.drawTexts(list, context)
 	}
 
     @SubscribeEvent
@@ -61,6 +67,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 
 	@SubscribeEvent
 	fun onEntityDeath(event: EntityDeathEvent) {
+		if (event.entity is PlayerEntity) return
 		val entityName = event.entity.customName?.string ?: return
 
 		when {
@@ -75,17 +82,18 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 		Vice.storage.markDirty()
 	}
 
+	// Todo: Change to Title Event
 	@SubscribeEvent
     fun onSound(event: SoundEvent) {
-        if (!World.Wasteyard.isInWorld()) return
+        if (!World.Tower.isInWorld()) return
 		if (event.soundName != "ui.toast.challenge_complete" || event.pitch != 1f || event.volume != 9999f) return
 
 		bosses.wasteyard.completions++
 		Vice.storage.markDirty()
     }
 
-	private fun MutableList<String>.addBossStat(string: String, value: Int) {
-		if (value > 0) add("$string &&f$value")
+	private fun MutableList<Text>.addBossStat(string: String, color: Color, value: Int) {
+		if (value > 0) add(string.toFormattedText(color).append(Text.literal(" $value").formatted(Formatting.WHITE)))
 	}
 
     @SubscribeEvent

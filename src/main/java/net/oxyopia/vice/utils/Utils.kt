@@ -10,6 +10,7 @@ import net.minecraft.client.world.ClientWorld
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.sound.SoundEvent
+import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
@@ -36,6 +37,10 @@ object Utils {
 		UChat.chat("${Vice.CHAT_PREFIX}${msg.convertFormatting()}")
 	}
 
+	fun sendViceMessage(msg: Text) {
+		UChat.chat(Text.of(Vice.CHAT_PREFIX).copy().append(msg))
+	}
+
 	fun sendViceMessage(msg: UTextComponent) {
 		msg.text = "${Vice.CHAT_PREFIX}${msg.text}"
 		UChat.chat(msg)
@@ -50,7 +55,7 @@ object Utils {
 	}
 
 	fun playSound(string: String, pitch: Float = 1f, volume: Float = 1f) {
-		playSound(Identifier("minecraft", string), pitch, volume)
+		playSound(Identifier.of("minecraft", string), pitch, volume)
 	}
 
 	fun playDing() {

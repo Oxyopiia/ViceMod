@@ -43,7 +43,7 @@ object BurgerTimer {
 	}
 
 	@SubscribeEvent
-	fun onWorldRender(event: WorldRenderEvent.Last) {
+	fun onWorldRender(event: WorldRenderEvent) {
 		if (!Vice.config.COOKING_TIMER || !World.Burger.isInWorld() || (Utils.getPlayer()?.y ?: 0.0) <= 100.0) return
 
 		val c = cooking ?: return

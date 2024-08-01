@@ -3,7 +3,7 @@ package net.oxyopia.vice.data
 import java.awt.Color
 
 /**
- * Color values sourced from Essential mod in preparation for dropping it.
+ * Color values sourced from Essential mod.
  *
  * @author EssentialGG
  */

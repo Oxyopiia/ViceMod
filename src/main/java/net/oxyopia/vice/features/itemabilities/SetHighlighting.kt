@@ -1,8 +1,7 @@
 package net.oxyopia.vice.features.itemabilities
 
 import gg.essential.elementa.utils.withAlpha
-import net.fabricmc.fabric.api.item.v1.EnchantingContext
-import net.minecraft.enchantment.Enchantments
+import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.ItemStack
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Set
@@ -10,6 +9,7 @@ import net.oxyopia.vice.events.ContainerRenderSlotEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.highlight
 import net.oxyopia.vice.utils.ItemUtils.cleanName
+import net.oxyopia.vice.utils.ItemUtils.getAttributeModifierInAnySlot
 import net.oxyopia.vice.utils.ItemUtils.getLore
 import net.oxyopia.vice.utils.ItemUtils.isPlayerHeadWithArmor
 
@@ -25,7 +25,7 @@ object SetHighlighting {
 		val item = event.slot.stack
 
 		if (!Vice.config.INCLUDE_ARMOR_IN_SET_COLORS &&
-			(item.canBeEnchantedWith(Enchantments.PROTECTION, EnchantingContext.ANVIL) || item.isPlayerHeadWithArmor())
+			(item.getAttributeModifierInAnySlot(EntityAttributes.GENERIC_ARMOR) > 0 || item.isPlayerHeadWithArmor())
 		) return
 
 		val set = event.slot.stack.getSet(event) ?: return

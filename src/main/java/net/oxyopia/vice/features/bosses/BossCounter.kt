@@ -102,13 +102,12 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 	}
 
 	@SubscribeEvent
-    fun onSound(event: SoundEvent) {
-        if (!World.Wasteyard.isInWorld()) return
-		if (event.soundName != "ui.toast.challenge_complete" || event.pitch != 1f || event.volume != 9999f) return
-
-		bosses.wasteyard.completions++
-		Vice.storage.markDirty()
-    }
+	fun onTitle(event: TitleEvent) {
+		if(event.title.equals("YOU ESCAPED WASTEYARD.")) {
+			bosses.wasteyard.completions++
+			Vice.storage.markDirty()
+		}
+	}
 
 	private fun MutableList<Text>.addBossStat(string: String, color: Color, value: Int, value2: Int? = null) {
 		if((value2 != null) && ((value + value2) > 0)) add(string.toFormattedText(color).append(Text.literal(" $value").formatted(Formatting.GREEN)).append(Text.literal(" |").formatted(Formatting.WHITE)).append(Text.literal(" $value2").formatted(Formatting.RED)).append(Text.literal(" (${value+value2})").formatted(Formatting.WHITE)))

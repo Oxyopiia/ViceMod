@@ -110,6 +110,7 @@ class Vice : ClientModInitializer {
 		const val ERROR_PREFIX = "§cVice §cERROR §7|§c "
 		const val WARNING_PREFIX = "§eVice §eWARN §7|§e "
 		const val DEV_PREFIX = "§9Vice §7(Dev) |§r "
+		val PRIMARY = Colors.Wave
 	}
 
 	override fun onInitializeClient() {
@@ -165,7 +166,10 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(WasteyardTimer)
 		EVENT_MANAGER.subscribe(YetiHeadWarning)
 
+		EVENT_MANAGER.subscribe(Delivery)
 		EVENT_MANAGER.subscribe(BossCounter)
+		EVENT_MANAGER.subscribe(WastelandTime)
+		EVENT_MANAGER.subscribe(ScrapRace)
 		EVENT_MANAGER.subscribe(ForgeTimers)
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(HudUtils)
@@ -177,10 +181,12 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(SetHighlighting)
 
+		EVENT_MANAGER.subscribe(DailyQuests)
 		EVENT_MANAGER.subscribe(BurgerTimer)
 		EVENT_MANAGER.subscribe(CurrentOrderDisplay)
 		EVENT_MANAGER.subscribe(CookingAPI)
 		EVENT_MANAGER.subscribe(OrderTracker)
+		EVENT_MANAGER.subscribe(CookingTime)
 
 		EVENT_MANAGER.subscribe(EvanNotification)
 //		EVENT_MANAGER.subscribe(EvanSolver)
@@ -206,6 +212,8 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(AbyssalVice)
 		EVENT_MANAGER.subscribe(ElGelato)
 		EVENT_MANAGER.subscribe(MinehutBoss)
+		EVENT_MANAGER.subscribe(Diox)
+		EVENT_MANAGER.subscribe(Elderpork)
 		EVENT_MANAGER.subscribe(PPP)
 		EVENT_MANAGER.subscribe(ShadowGelato)
 		EVENT_MANAGER.subscribe(ViceBoss)

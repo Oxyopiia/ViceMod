@@ -80,6 +80,7 @@ object ItemAbilityCooldown {
 			// Barbed Shotgun
 			event.soundName == "entity.blaze.shoot" && event.pitch == 1.25f && event.volume == 3f -> {
 				ItemAbility.BARBED_SHOTGUN.onSound()
+				ItemAbility.THE_EXPERIMENT.onSound()
 			}
 
 			// Wasted Boomstick
@@ -153,6 +154,26 @@ object ItemAbilityCooldown {
 			// Snowball Cannon
 			event.soundName == "entity.snowball.throw" && event.pitch == 1f && event.volume == 9999f -> {
 				ItemAbility.SNOWBALL_CANNON.onSound()
+			}
+
+			// Bubble Gun
+			event.soundName == "block.bubble_column.whirlpool_inside" && event.pitch == 0.9869705f && event.volume == 3f -> {
+				ItemAbility.BUBBLE_GUN.onSound()
+			}
+
+			// Bewitched Blowpipe
+			event.soundName == "entity.llama.spit" && event.pitch == 1f && event.volume == 9999f -> {
+				ItemAbility.BEWITCHED_BLOWPIPE.onSound()
+			}
+
+			// Wave Pulser
+			event.soundName == "item.trident.riptide_1" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.WAVE_PULSER.onSound()
+			}
+
+			// The Phantasm
+			event.soundName == "item.trident.return" && event.pitch == 0.5f && event.volume == 3f -> {
+				ItemAbility.THE_PHANTASM.onSound()
 			}
 
 			// Jynx's Chain Gun

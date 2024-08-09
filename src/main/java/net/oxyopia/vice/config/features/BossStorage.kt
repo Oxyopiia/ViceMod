@@ -21,10 +21,19 @@ class BossStorage {
 	val minehut = Boss()
 
 	@Expose
+	val diox = Boss()
+
+	@Expose
+	val dioxEasy = Boss()
+
+	@Expose
 	val shadowGelato = Boss()
 
 	@Expose
 	val abyssalVice = Boss()
+
+	@Expose
+	val elderpork = Boss()
 
 	open class Boss {
 		@Expose

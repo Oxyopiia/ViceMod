@@ -29,7 +29,7 @@ object Delivery {
             }
         }
 
-        if (World.GlitchHQ.isInWorld() || World.WAREHOUSE.isInWorld()) {
+        if (World.GlitchHQ.isInWorld() || World.Warehouse.isInWorld()) {
             deliverySecondsRegex.find(content)?.apply {
                 deliveryMaxTime = groupValues[1].toInt()
                 deliveryLastStart = System.currentTimeMillis()
@@ -57,7 +57,7 @@ object Delivery {
             }
         }
 
-        if (World.GlitchHQ.isInWorld() || World.WAREHOUSE.isInWorld()) {
+        if (World.GlitchHQ.isInWorld() || World.Warehouse.isInWorld()) {
             if (deliveryLastStart.timeDeltaWithin(deliveryMaxTime.seconds)) {
 
                 val total_time = deliveryMaxTime

@@ -44,7 +44,7 @@ enum class ItemAbility(
     BARTENDER_GLOVE("Bartender's Glove", 15f, set = Set.CHEF, setAmount = 1),
     DYNAMITE_BARREL("Dynamite Barrel", 10f, set = Set.DEMOLITIONIST, setAmount = 1),
     FLESH_HATCHET("Flesh Hatchet", 10f, set = Set.FLESHCRAWLER, setAmount = 2),
-    VIRTUASWORD("VIRTUASWORD", 10f, set = Set.DIGITAL, setAmount = 2),
+    VIRTUASWORD("VIRTUASWORD", 17.5f, set = Set.DIGITAL, setAmount = 2),
     GLITCH_MALLET("Glitch Mallet", 15f, set = Set.HEAVY, setAmount = 3),
     WARPED_GRENADE("Warped Grenade", 3f),
     POSEIDONS_FURY("Poseidon's Fury", 15f),

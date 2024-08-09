@@ -110,6 +110,7 @@ class Vice : ClientModInitializer {
 		const val ERROR_PREFIX = "§cVice §cERROR §7|§c "
 		const val WARNING_PREFIX = "§eVice §eWARN §7|§e "
 		const val DEV_PREFIX = "§9Vice §7(Dev) |§r "
+		val PRIMARY = Colors.Wave
 	}
 
 	override fun onInitializeClient() {

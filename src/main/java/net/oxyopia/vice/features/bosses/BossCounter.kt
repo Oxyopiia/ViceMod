@@ -12,7 +12,7 @@ import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawTexts
-import net.oxyopia.vice.utils.HudUtils.toFormattedText
+import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.Utils
 import java.awt.Color
 
@@ -31,7 +31,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 	override fun drawCondition(): Boolean = Vice.config.BOSS_COUNTER_OUTSIDE || Utils.getDTWorld()?.type == World.WorldType.BOSS
 
 	private fun draw(context: DrawContext): Pair<Float, Float> {
-		val list: MutableList<Text> = mutableListOf("Bosses".toFormattedText(Vice.PRIMARY, bold = true))
+		val list: MutableList<Text> = mutableListOf("Bosses".toText(Vice.PRIMARY, bold = true))
 
 		list.addBossStat("Vice", Colors.ViceBoss, bosses.vice.completions)
 		list.addBossStat("Wasteyard", Colors.ChatColor.DarkRed, bosses.wasteyard.completions)
@@ -42,7 +42,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 		list.addBossStat("Abyssal Vice", Colors.Diox, bosses.abyssalVice.completions)
 
 		if (list.size == 1) {
-			list.add("No Bosses slain yet!".toFormattedText(Colors.ChatColor.Red))
+			list.add("No Bosses slain yet!".toText(Colors.ChatColor.Red))
 		}
 
 		return position.drawTexts(list, context)
@@ -93,7 +93,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
     }
 
 	private fun MutableList<Text>.addBossStat(string: String, color: Color, value: Int) {
-		if (value > 0) add(string.toFormattedText(color).append(Text.literal(" $value").formatted(Formatting.WHITE)))
+		if (value > 0) add(string.toText(color).append(Text.literal(" $value").formatted(Formatting.WHITE)))
 	}
 
     @SubscribeEvent

@@ -21,7 +21,7 @@ import net.oxyopia.vice.utils.Utils.convertFormatting
 import java.awt.Color
 
 object HudUtils {
-	fun String.toFormattedText(color: Color = Color.white, bold: Boolean = false, italic: Boolean = false, underline: Boolean = false, obfuscated: Boolean = false, strikethrough: Boolean = false): MutableText {
+	fun String.toText(color: Color = Color.white, bold: Boolean = false, italic: Boolean = false, underline: Boolean = false, obfuscated: Boolean = false, strikethrough: Boolean = false): MutableText {
 		val text = Text.literal(this)
 		return text.setStyle(Style.EMPTY
 			.withColor(color.rgb)

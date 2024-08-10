@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.screen.slot.Slot
 import net.minecraft.util.collection.DefaultedList
 
-class ChestRenderEvent(val chestName: String, val slots: DefaultedList<Slot>, val cursorStack: ItemStack, val isFirstOpened: Boolean) : ViceEvent() {
+class ChestRenderEvent(val chestName: String, val slots: DefaultedList<Slot>, val cursorStack: ItemStack, val id: Int) : ViceEvent() {
 	/**
 	 * Checks if the last element is not air.
 	 */

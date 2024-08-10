@@ -6,19 +6,19 @@ import net.oxyopia.vice.data.gui.Position
 class BossStorage {
 
 	@Expose
-	val vice = Boss()
+	val vice = MasterableBoss()
 
 	@Expose
-	val wasteyard = Boss()
+	val wasteyard = MasterableBoss()
 
 	@Expose
-	val gelato = Boss()
+	val gelato = MasterableBoss()
 
 	@Expose
-	val ppp = Boss()
+	val ppp = MasterableBoss()
 
 	@Expose
-	val minehut = Boss()
+	val minehut = MasterableBoss()
 
 	@Expose
 	val shadowGelato = Boss()
@@ -29,6 +29,14 @@ class BossStorage {
 	open class Boss {
 		@Expose
 		open var completions: Int = 0
+	}
+
+	class MasterableBoss : Boss() {
+		@Expose
+		var masteryCompletions: Int = 0
+
+		@Expose
+		var claimedTiers = mutableListOf<Int>()
 	}
 
 	@Expose

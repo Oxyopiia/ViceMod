@@ -2,12 +2,14 @@ package net.oxyopia.vice.features.hud
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.nbt.NbtElement
+import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.HudUtils.drawTexts
+import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.ItemUtils.getLore
 import net.oxyopia.vice.utils.ItemUtils.isRod
 import net.oxyopia.vice.utils.Utils
@@ -42,23 +44,23 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
             }
         }
 
-        val list: MutableList<String> = mutableListOf()
+        val list: MutableList<Text> = mutableListOf()
 
-        list.add("&&b&&lPlayer Stats")
-        list.add("&&fDefence: &&a\uD83D\uDEE1 $defence")
-        list.add("&&fSpeed: &&e⚡ $speed% &&7(${String.format("%.2f", movementSpeed * 100).toFloat()})")
+        list.add("Player Stats".toText(Vice.PRIMARY, bold = true))
+        list.add("§fDefence: §a\uD83D\uDEE1 $defence".toText())
+        list.add("§fSpeed: §e⚡ $speed% §7(${String.format("%.2f", movementSpeed * 100).toFloat()})".toText())
 
 		if (!fishingTime.isNone()) {
-			list.add("&&fFish Time: &&b\uD83D\uDD51 ${fishingTime.min}-${fishingTime.max}s")
+			list.add("§fFish Time: §b\uD83D\uDD51 ${fishingTime.min}-${fishingTime.max}s".toText())
 		}
 
 		val breakingPower = getBreakingPower()
 		if (breakingPower > 0) {
-			list.add("&&fBreaking Power: &&b⛏ $breakingPower")
-			list.add("&&fBreaking Speed: &&a\uD83D\uDD51 ${getMiningSpeed()}x")
+			list.add("§fBreaking Power: §b⛏ $breakingPower".toText())
+			list.add("§fBreaking Speed: §a\uD83D\uDD51 ${getMiningSpeed()}x".toText())
 		}
 
-        position.drawStrings(list, event.context)
+        position.drawTexts(list, event.context)
     }
 
 
@@ -137,14 +139,14 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 
     override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
         val list = listOf(
-            "&&b&&lPlayer Stats",
-            "&&fDefence: &&a\uD83D\uDEE1 16",
-            "&&fSpeed: &&e⚡ 30.0% &&7(19.5)",
-            "&&fFish Time: &&b\uD83D\uDD51 5-20s",
-			"&&fBreaking Power: &&b⛏ 2",
-			"&&fBreaking Speed: &&a1.2x"
+            "Player Stats".toText(Vice.PRIMARY, bold = true),
+            "§fDefence: §a\uD83D\uDEE1 16".toText(),
+            "§fSpeed: §e⚡ 30.0% §7(19.5)".toText(),
+            "§fFish Time: §b\uD83D\uDD51 5-20s".toText(),
+			"§fBreaking Power: §b⛏ 2".toText(),
+			"§fBreaking Speed: §a1.2x".toText()
         )
 
-        return position.drawStrings(list, context)
+        return position.drawTexts(list, context)
     }
 }

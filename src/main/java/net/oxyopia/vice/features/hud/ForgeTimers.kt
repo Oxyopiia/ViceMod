@@ -11,7 +11,8 @@ import net.oxyopia.vice.events.ChestRenderEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.HudUtils.drawTexts
+import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.ms
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaUntil
@@ -57,21 +58,21 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 		if (!shouldDraw()) return
 		if (misc.forgeList.isEmpty()) return
 
-		val list = mutableListOf("&&b&&lForge")
+		val list = mutableListOf("Forge".toText(Vice.PRIMARY, bold = true))
 
 		misc.forgeList.forEach { item ->
 			val timeText = when {
-				item.timestamp <= System.currentTimeMillis() -> "&&aREADY"
+				item.timestamp <= System.currentTimeMillis() -> "§aREADY"
 				else -> {
 					val remainingMs = item.timestamp.timeDeltaUntil()
-					"&&e\uD83D\uDD51 ${remainingMs.formatDuration(false)}"
+					"§e\uD83D\uDD51 ${remainingMs.formatDuration(false)}"
 				}
 			}
 
-			list.add("&&7- &&f${item.name.removePrefix("1 ")}&&7: " + timeText)
+			list.add("§7- §f${item.name.removePrefix("1 ")}§7: $timeText".toText())
 		}
 
-		position.drawStrings(list, event.context)
+		position.drawTexts(list, event.context)
 	}
 
 	private var lastHighCountError: Long = -1
@@ -90,14 +91,14 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 
 		if (storedCount > inventoryCount) {
 			val error = storedCount - inventoryCount
-			DevUtils.sendWarningMessage("Stored $error more Forge items than expected! &&7(this is likely due to a server rollback!) &&eRemoving the first $error items.", event.getErrorIntervalDump())
+			DevUtils.sendWarningMessage("Stored $error more Forge items than expected! §7(this is likely due to a server rollback!) §eRemoving the first $error items.", event.getErrorIntervalDump())
 			misc.forgeList = misc.forgeList.drop(error).toMutableList()
 			Vice.storage.markDirty()
 
 		} else if (storedCount != inventoryCount && !lastHighCountError.timeDeltaWithin(30.seconds)) {
 			val error = abs(inventoryCount - storedCount)
 
-			DevUtils.sendWarningMessage("Found $error more Forge items than expected! &&7(likely due to another session)", event.getErrorIntervalDump())
+			DevUtils.sendWarningMessage("Found $error more Forge items than expected! §7(likely due to another session)", event.getErrorIntervalDump())
 			lastHighCountError = System.currentTimeMillis()
 		}
 	}
@@ -126,13 +127,13 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
 		val list = listOf(
-			"&&b&&lForge",
-			"&&7- &&fSteel&&7: &&aREADY",
-			"&&7- &&fSteel&&7: &&e\uD83D\uDD51 10:36",
-			"&&7- &&fSteel&&7: &&e\uD83D\uDD51 12:57",
+			"Forge".toText(Vice.PRIMARY, bold = true),
+			"§7- §fSteel§7: §aREADY".toText(),
+			"§7- §fSteel§7: §e\uD83D\uDD51 10:36".toText(),
+			"§7- §fSteel§7: §e\uD83D\uDD51 12:57".toText(),
 		)
 
-		return position.drawStrings(list, context)
+		return position.drawTexts(list, context)
 	}
 
 	data class ForgeItem(

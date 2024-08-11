@@ -10,6 +10,7 @@ import net.minecraft.client.world.ClientWorld
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.sound.SoundEvent
+import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
@@ -31,6 +32,11 @@ object Utils {
 	fun getDTWorld(): World? = World.getById(getWorldString().toString())
 
 	fun net.minecraft.world.World.name(): String = registryKey.value.path
+
+	fun sendViceMessage(msg: Text) {
+		val prefix = Text.literal(Vice.CHAT_PREFIX)
+		client.inGameHud.chatHud.addMessage(prefix.append(msg))
+	}
 
 	fun sendViceMessage(msg: String) {
 		UChat.chat("${Vice.CHAT_PREFIX}${msg.convertFormatting()}")

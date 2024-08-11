@@ -2,7 +2,7 @@ package net.oxyopia.vice.features.expeditions
 
 import net.minecraft.util.math.Vec3d
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.data.ChatColor
+import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.events.WorldRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.expeditions.ExpeditionAPI.rooms
@@ -28,11 +28,11 @@ object RoomWaypoints {
 	}
 	
 	private fun WorldRenderEvent.Last.drawRoomLabels(room: ExpeditionAPI.Room, zPos: Double = room.minZ) {
-		drawString(Vec3d(0.5, 72.0, zPos), room.id.toString(), ChatColor.AQUA.color, size = 2f)
+		drawString(Vec3d(0.5, 72.0, zPos), room.id.toString(), Colors.ChatColor.Aqua, size = 2f)
 		drawString(Vec3d(0.5, 71.5, zPos), room.name, room.type.color, size = 2f)
 
 		if (room.hasMerchant()) {
-			drawString(Vec3d(0.5, 71.0, zPos), "Merchant", ChatColor.GREEN.color, size = 2f)
+			drawString(Vec3d(0.5, 71.0, zPos), "Merchant", Colors.ChatColor.Green, size = 2f)
 		}
 	}
 }

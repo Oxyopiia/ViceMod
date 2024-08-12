@@ -61,7 +61,7 @@ public class DevConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "InGameHud mixin",
-		description = "Debugger for title data, subtitle data, and more",
+		description = "Debugger for title data, subtitle data, and HandledScreen data.",
 		category = "Debugs"
 	)
 	public boolean INGAMEHUD_MIXIN_DEBUGGER = false;

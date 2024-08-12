@@ -582,6 +582,15 @@ public class Config extends Vigilant {
 	)
 	public boolean SHOW_SUMMER_FISHING_TRACKER_GLOBALLY = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Violet's Exchange Overlay",
+		description = "Shows a timer for the next Violet's Fish Exchange stock refresh.",
+		category = "Event",
+		subcategory = "Summer"
+	)
+	public boolean VIOLET_EXCHANGE_OVERLAY = false;
+
 
 	// Sounds
 

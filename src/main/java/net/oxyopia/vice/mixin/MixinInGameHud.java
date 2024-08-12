@@ -55,7 +55,7 @@ public class MixinInGameHud {
 	private void onSubtitle(Text subtitle, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new SubtitleEvent(subtitle, title != null ? title : Text.empty(), ci));
-			DevUtils.sendDebugChat("&&dSUBTITLE &&f" + subtitle.getString(), "INGAMEHUD_MIXIN_DEBUGGER");
+			DevUtils.sendDebugChat("&&dHUD SUBTITLE &&f" + subtitle.getString(), "INGAMEHUD_MIXIN_DEBUGGER");
 		}
 	}
 
@@ -63,7 +63,7 @@ public class MixinInGameHud {
 	private void onTitle(Text title, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new TitleEvent(title.getString(), ci));
-			DevUtils.sendDebugChat("&&dTITLE &&f" + title.getString(), "INGAMEHUD_MIXIN_DEBUGGER");
+			DevUtils.sendDebugChat("&&dHUD TITLE &&f" + title.getString(), "INGAMEHUD_MIXIN_DEBUGGER");
 		}
 	}
 }

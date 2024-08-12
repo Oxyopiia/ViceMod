@@ -36,8 +36,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 
 	@Shadow private ItemStack touchDragStack;
 
-	@Unique
-	private boolean hasOpened = false;
+	@Unique private int id = -1;
 
 	//	@ModifyArg(
 //		at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTooltip(Lnet/minecraft/client/font/TextRenderer;Ljava/util/List;Ljava/util/Optional;II)V"),
@@ -62,9 +61,12 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 	private void onRenderScreen(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			ItemStack cursorStack = touchDragStack.isEmpty() ? handler.getCursorStack() : touchDragStack;
+			if (id == -1) {
+				id = (int) (Math.random() * 25000);
+				DevUtils.sendDebugChat("&&dHUD SCREEN &&fAssigned ID &&b" + id + "&&f to this HandledScreen", "INGAMEHUD_MIXIN_DEBUGGER");
+			}
 
-			EVENT_MANAGER.publish(new ChestRenderEvent(title.getString(), handler.slots, cursorStack, !hasOpened));
-			hasOpened = true;
+			EVENT_MANAGER.publish(new ChestRenderEvent(title.getString(), handler.slots, cursorStack, id));
 		}
 	}
 
@@ -78,7 +80,8 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 	@Inject(at = @At("HEAD"), method = "close")
 	private void onClose(CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			hasOpened = false;
+			id = -1;
+			DevUtils.sendDebugChat("&&dHUD SCREEN &&fReset ID of closed HandledScreen", "INGAMEHUD_MIXIN_DEBUGGER");
 		}
 	}
 

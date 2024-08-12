@@ -38,6 +38,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 		list.addBossStat("El Gelato", Colors.ChatColor.Green, bosses.gelato.completions)
 		list.addBossStat("PPP", Colors.ChatColor.Red, bosses.ppp.completions)
 		list.addBossStat("Minehut", Colors.ChatColor.Aqua, bosses.minehut.completions)
+		list.addBossStat("Elderpork", Colors.Elderpork, bosses.elderpork.completions)
 		list.addBossStat("Shadow Gelato", Colors.ShadowGelato, bosses.shadowGelato.completions)
 		list.addBossStat("Abyssal Vice", Colors.Diox, bosses.abyssalVice.completions)
 
@@ -51,6 +52,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
     @SubscribeEvent
     fun onChatMessage(event: ChatEvent) {
         val content = event.string
+		if (!event.hasNoSender) return
 
 		when {
 			World.Vice.isInWorld() && content.contains(viceTimeRegex) -> bosses.vice.completions--
@@ -59,6 +61,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 			World.Minehut.isInWorld() && content.contains(minehutTimeRegex) -> bosses.minehut.completions--
 			World.ShadowGelato.isInWorld() && content.contains(shadowTimeRegex) -> bosses.shadowGelato.completions--
 			World.AbyssalVice.isInWorld() && content.contains(abyssalCompletionRegex) -> bosses.abyssalVice.completions++
+			World.Elderpork.isInWorld() && content.contains("TAPE FINISHED.") -> bosses.elderpork.completions++
 			else -> return
 		}
 

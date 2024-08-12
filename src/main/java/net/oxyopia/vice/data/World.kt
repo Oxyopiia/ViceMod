@@ -30,6 +30,7 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	AbyssalVice("darkvice", "Abyssal Vice", type = WorldType.BOSS),
 	ShadowGelato("shadowgelato", "Shadow Gelato", type = WorldType.BOSS),
 	Diox("dioxarena", "Diox", type = WorldType.BOSS),
+	Elderpork("elderpork", "Elderpork", type = WorldType.BOSS),
 
 	Floor2Arena("f2arenas", "Void Voyage", type = WorldType.ARENA, displayColor = Colors.ChatColor.Green),
 	Floor3Arena("f3arenas", "Cryonic Caverns", type = WorldType.ARENA, displayColor = Colors.ChatColor.Blue),

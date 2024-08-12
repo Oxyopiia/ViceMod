@@ -59,6 +59,7 @@ import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.itemabilities.CooldownDisplayChanger
 import net.oxyopia.vice.features.itemabilities.SetHighlighting
 import net.oxyopia.vice.features.misc.*
+import net.oxyopia.vice.features.summer.FishingDropsTracker
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger
@@ -192,6 +193,8 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ArenaNotifications)
 		EVENT_MANAGER.subscribe(ArenaSession)
 		EVENT_MANAGER.subscribe(LiveArenaInformation)
+
+		EVENT_MANAGER.subscribe(FishingDropsTracker)
 
 		EVENT_MANAGER.subscribe(DefibCounter)
 		EVENT_MANAGER.subscribe(DoubleTapDrop)

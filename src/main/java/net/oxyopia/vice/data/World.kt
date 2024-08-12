@@ -39,6 +39,8 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 
 	Expeditions("expeditions", "Expeditions", type = WorldType.EXPEDITION),
 
+	Summer("summer", "Summer", type = WorldType.EVENT),
+
 	Tower("overworld", "The Tower", type = WorldType.TOWER);
 
 	fun isInWorld(): Boolean {
@@ -55,6 +57,7 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 		ARENA,
 		AUXILARY,
 		EXPEDITION,
+		EVENT,
 		TOWER
 	}
 

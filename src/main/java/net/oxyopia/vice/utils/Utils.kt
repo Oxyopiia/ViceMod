@@ -42,10 +42,6 @@ object Utils {
 		UChat.chat("${Vice.CHAT_PREFIX}${msg.convertFormatting()}")
 	}
 
-	fun sendViceMessage(msg: Text) {
-		UChat.chat(Text.of(Vice.CHAT_PREFIX).copy().append(msg))
-	}
-
 	fun sendViceMessage(msg: UTextComponent) {
 		msg.text = "${Vice.CHAT_PREFIX}${msg.text}"
 		UChat.chat(msg)

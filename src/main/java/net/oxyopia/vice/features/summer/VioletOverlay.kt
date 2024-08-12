@@ -49,13 +49,18 @@ object VioletOverlay : HudElement("Violet's Exchange Overlay", Vice.storage.summ
 	fun onHudRender(event: HudRenderEvent) {
 		if (!shouldDraw() || !drawCondition()) return
 
-		val reset = Vice.storage.summer.violetReset.timeDeltaUntil()
-		if (reset.inWholeMilliseconds < 0) return
-
-		val list = listOf(
+		val list = mutableListOf(
 			"Violet's Exchange".toText(Color(114, 89, 255), bold = true),
-			"Resets in ".toText(Colors.ChatColor.Grey).append(reset.formatDuration().toText(Color(114, 89, 255)))
 		)
+
+		val reset = Vice.storage.summer.violetReset.timeDeltaUntil()
+
+		if (reset.inWholeMilliseconds < 0) {
+			list.add("Reset!".toText(Colors.ChatColor.Green))
+		} else {
+			list.add("Resets in ".toText(Colors.ChatColor.Grey).append(reset.formatDuration().toText(Color(114, 89, 255))))
+		}
+
 
 		position.drawTexts(list, event.context)
 	}

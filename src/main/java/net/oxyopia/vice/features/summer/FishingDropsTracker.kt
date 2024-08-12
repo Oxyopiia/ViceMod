@@ -44,9 +44,14 @@ object FishingDropsTracker : HudElement("Summer Fishing Drops Tracker", Vice.sto
 			list.add(text)
 		}
 
-		if (list.size == 1) {
-			list.add("No fish-ups yet!".toText(Colors.ChatColor.Red))
-		}
+		val counts = Pufferfish.entries.associateWith { Vice.storage.summer.pufferfishOpened[it.name] ?: 0 }
+		val text = counts
+			.map { (fish, count) -> count.toString().toText(fish.color) }
+			.reduceIndexed { index, acc, text ->
+				if (index == 0) acc.append(text) else acc.append("-".toText(Colors.ChatColor.Grey)).append(text)
+			}
+		list.add(Text.empty())
+		list.add("Pufferfish ".toText(Colors.ChatColor.Yellow).append(text))
 
 		return position.drawTexts(list, context)
 	}

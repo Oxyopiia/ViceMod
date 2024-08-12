@@ -82,11 +82,9 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 		Vice.storage.markDirty()
 	}
 
-	// Todo: Change to Title Event
 	@SubscribeEvent
-    fun onSound(event: SoundEvent) {
-        if (!World.Tower.isInWorld()) return
-		if (event.soundName != "ui.toast.challenge_complete" || event.pitch != 1f || event.volume != 9999f) return
+    fun onTitle(event: TitleEvent) {
+        if (!World.Tower.isInWorld() || event.title != "You Have Escaped Wasteyard.") return
 
 		bosses.wasteyard.completions++
 		Vice.storage.markDirty()

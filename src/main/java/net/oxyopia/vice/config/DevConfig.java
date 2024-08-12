@@ -60,6 +60,14 @@ public class DevConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "InGameHud mixin",
+		description = "Debugger for title data, subtitle data, and more",
+		category = "Debugs"
+	)
+	public boolean INGAMEHUD_MIXIN_DEBUGGER = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Bossbar debugger",
 		description = "yep",
 		category = "Debugs"
@@ -97,14 +105,6 @@ public class DevConfig extends Vigilant {
 		category = "Debugs"
 	)
 	public boolean GAME_RENDERER_DEBUGGER = false;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "InGameHud mixin",
-		description = "Debugger for title data, subtitle data, and more",
-		category = "Debugs"
-	)
-	public boolean INGAMEHUD_MIXIN_DEBUGGER = false;
 
 	@Property(
 		type = PropertyType.SWITCH,

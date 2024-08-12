@@ -43,6 +43,7 @@ abstract class Boss (
 
 			val phase = groupValues[2].toIntOrNull() ?: return
 			val phaseTime = getPhaseTimeSec(phase) ?: return
+			if (phaseTime <= 0) return
 			val diff = lastSpawned.timeDelta()
 
 			val timer = diff.formatTimer(phaseTime.seconds)

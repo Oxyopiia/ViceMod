@@ -11,6 +11,7 @@ import net.oxyopia.vice.config.features.ExpeditionsStorage
 import net.oxyopia.vice.config.features.worlds.CookingStorage
 import net.oxyopia.vice.config.features.worlds.LostInTimeStorage
 import net.oxyopia.vice.config.features.worlds.ShowdownStorage
+import net.oxyopia.vice.config.features.worlds.SummerStorage
 import java.io.File
 import java.io.Reader
 import java.io.Writer
@@ -37,6 +38,9 @@ class Storage : PersistentSave(File("./config/vice/storage.json")) {
 
 	@Expose
 	var expeditions = ExpeditionsStorage()
+
+	@Expose
+	var summer = SummerStorage()
 
 	@Expose
 	var showdown = ShowdownStorage()

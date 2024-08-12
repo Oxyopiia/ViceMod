@@ -1,8 +1,9 @@
 package net.oxyopia.vice.data
 
 import net.oxyopia.vice.utils.Utils
+import java.awt.Color
 
-enum class World(val id: String, val displayName: String, val type: WorldType = WorldType.NORMAL, val displayColor: String = "") {
+enum class World(val id: String, val displayName: String, val type: WorldType = WorldType.NORMAL, val displayColor: Color = Color.white) {
 	RealityPeak("realitypeak", "Reality Peak"),
 	Desert("deserteddunes", "Deserted Dunes"),
 	Space("spaceescape", "World 3 or 4"),
@@ -29,14 +30,17 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	AbyssalVice("darkvice", "Abyssal Vice", type = WorldType.BOSS),
 	ShadowGelato("shadowgelato", "Shadow Gelato", type = WorldType.BOSS),
 	Diox("dioxarena", "Diox", type = WorldType.BOSS),
+	Elderpork("elderpork", "Elderpork", type = WorldType.BOSS),
 
-	Floor2Arena("f2arenas", "Void Voyage", type = WorldType.ARENA, displayColor = "a"),
-	Floor3Arena("f3arenas", "Cryonic Caverns", type = WorldType.ARENA, displayColor = "b"),
-	Floor4Arena("f4arenas", "Tidal Zone", type = WorldType.ARENA, displayColor = "3"),
+	Floor2Arena("f2arenas", "Void Voyage", type = WorldType.ARENA, displayColor = Colors.ChatColor.Green),
+	Floor3Arena("f3arenas", "Cryonic Caverns", type = WorldType.ARENA, displayColor = Colors.ChatColor.Blue),
+	Floor4Arena("f4arenas", "Tidal Zone", type = WorldType.ARENA, displayColor = Colors.ChatColor.Cyan),
 
 	Exonitas("bigcity", "Exonitas", type = WorldType.AUXILARY),
 
 	Expeditions("expeditions", "Expeditions", type = WorldType.EXPEDITION),
+
+	Summer("summer", "Summer", type = WorldType.EVENT),
 
 	Tower("overworld", "The Tower", type = WorldType.TOWER);
 
@@ -54,6 +58,7 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 		ARENA,
 		AUXILARY,
 		EXPEDITION,
+		EVENT,
 		TOWER
 	}
 

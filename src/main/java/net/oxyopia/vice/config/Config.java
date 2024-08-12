@@ -302,7 +302,8 @@ public class Config extends Vigilant {
 		name = "Arenas Cooldown Notification",
 		description = "Sends a chat notification when an Arena cooldown has expired.",
 		category = "Arenas",
-		subcategory = "Quality of Life"
+		subcategory = "Quality of Life",
+		hidden = true
 	)
 	public boolean ARENAS_COOLDOWN_NOTIFIER = true;
 
@@ -313,7 +314,8 @@ public class Config extends Vigilant {
 		name = "Live Arena Information",
 		description = "Display useful statistics during an Arena session. At base, displays current Wave.",
 		category = "Arenas",
-		subcategory = "Live Arena Info"
+		subcategory = "Live Arena Info",
+		hidden = true
 	)
 	public boolean LIVE_ARENA_TOGGLE = false;
 
@@ -322,7 +324,8 @@ public class Config extends Vigilant {
 		name = "Display Mobs Remaining",
 		description = "Adds a Mobs remaining stat to the Live Arena Information.",
 		category = "Arenas",
-		subcategory = "Live Arena Info"
+		subcategory = "Live Arena Info",
+		hidden = true
 	)
 	public boolean LIVE_ARENA_MOBS = false;
 
@@ -331,7 +334,8 @@ public class Config extends Vigilant {
 		name = "Display Wave Timer",
 		description = "Adds the time remaining for the wave to the Live Arena Information.",
 		category = "Arenas",
-		subcategory = "Live Arena Info"
+		subcategory = "Live Arena Info",
+		hidden = true
 	)
 	public boolean LIVE_ARENA_ROUND_TIMER = true;
 
@@ -341,7 +345,8 @@ public class Config extends Vigilant {
 		description = "Adds drops to Live Arena Information.\nBasic Drops: Amethyst, Polar Fur, Glowing Matter, etc\nUnique Drops: Chance for Galactic Hand Cannon, Arctic Scroll, etc",
 		category = "Arenas",
 		subcategory = "Live Arena Info",
-		options = {"None", "Basic Drops Only", "Unique Drops Only", "All"}
+		options = {"None", "Basic Drops Only", "Unique Drops Only", "All"},
+		hidden = true
 	)
 	public int LIVE_ARENA_DROPS = 2;
 
@@ -350,7 +355,8 @@ public class Config extends Vigilant {
 		name = "Mob Effects Notification",
 		description = "Sends a chat message when mobs gain certain potion effects during an Arena.",
 		category = "Arenas",
-		subcategory = "Live Arena Info"
+		subcategory = "Live Arena Info",
+		hidden = true
 	)
 	public boolean ARENAS_MOB_EFFECT_NOTIFICATION = true;
 
@@ -546,6 +552,37 @@ public class Config extends Vigilant {
 		subcategory = "Information Sharing"
 	)
 	public boolean FILTER_EXPEDITION_COMMUNICATIONS = true;
+
+
+	// Event
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Fishing Drops Tracker",
+		description = "Shows your Summer Fishing Drop counts.",
+		category = "Event",
+		subcategory = "Summer"
+	)
+	public boolean SUMMER_FISHING_TRACKER = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Show Fishing Tracker Globally",
+		description = "Whether to show the Summer Fishing Tracker outside of the Summer world.",
+		category = "Event",
+		subcategory = "Summer"
+	)
+	public boolean SHOW_SUMMER_FISHING_TRACKER_GLOBALLY = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Violet's Exchange Overlay",
+		description = "Shows a timer for the next Violet's Fish Exchange stock refresh.",
+		category = "Event",
+		subcategory = "Summer"
+	)
+	public boolean VIOLET_EXCHANGE_OVERLAY = false;
+
 
 	// Sounds
 

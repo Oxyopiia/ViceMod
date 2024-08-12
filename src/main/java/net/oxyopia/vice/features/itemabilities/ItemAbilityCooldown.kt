@@ -14,6 +14,7 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.HudUtils.drawString
+import net.oxyopia.vice.utils.HudUtils.highlight
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.ItemUtils.getEquippedSets
@@ -74,6 +75,7 @@ object ItemAbilityCooldown {
 			// Wasted Shotgun
 			event.soundName == "entity.blaze.shoot" && event.pitch == 0.5f && event.volume == 9999f -> {
 				ItemAbility.WASTED_SHOTGUN.onSound()
+				ItemAbility.THE_EXPERIMENT.onSound()
 			}
 
 			// Barbed Shotgun
@@ -193,6 +195,11 @@ object ItemAbilityCooldown {
 			event.soundName == "entity.arrow.shoot" && event.pitch == 0.3f -> {
 				ItemAbility.BEWITCHED_BLOWPIPE.onSound()
 			}
+
+			// Bubble Gun
+			event.soundName == "block.bubble_column.whirlpool_inside" && event.volume == 3f -> {
+				ItemAbility.BUBBLE_GUN.onSound()
+			}
 		}
 	}
 
@@ -260,17 +267,7 @@ object ItemAbilityCooldown {
 		ability?.apply {
 			if(Vice.config.WRONG_SET_INDICATOR && setAmount > 0) {
 				if ((Utils.getPlayer()?.getEquippedSets()?.getOrDefault(set, 0) ?: 0) < setAmount) {
-//					TODO("Create Position.fillUIArea()")
-					HudUtils.fillUIArea(
-						matrices,
-						RenderLayer.getGuiOverlay(),
-						event.x,
-						event.y,
-						event.x + 16,
-						event.y + 16,
-						-500,
-						Color(255, 90, 15).withAlpha(bgOpacity)
-					)
+					event.highlight(Color(255, 0, 0).withAlpha(bgOpacity))
 					drawStatus(event.x, event.y + 9, event.context)
 					return
 				}
@@ -291,7 +288,7 @@ object ItemAbilityCooldown {
 					}
 
 					DisplayType.STATIC -> {
-						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, -500, Color(0.9f, 0f, 0f, bgOpacity))
+						event.highlight(Color(0.9f, 0f, 0f).withAlpha(bgOpacity))
 					}
 
 					DisplayType.COLOR_FADE -> {
@@ -303,23 +300,23 @@ object ItemAbilityCooldown {
 							greenness = (Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE - (Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE * progressLeft)).clamp(0f, 1f)
 						}
 
-						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, Color(redness, greenness, 0f, bgOpacity))
+						event.highlight(Color(redness, greenness, 0f, bgOpacity))
 					}
 
 					DisplayType.PERCENTAGE -> {
 						val col = when {
 							progressLeft <= 0.075f -> Color(0.4f, 1f, 0f)
 							progressLeft > 0.075 && progressLeft <= 0.5f -> Color.yellow
-							else -> Color.green
+							else -> Color(0.9f, 0f, 0f)
 						}.withAlpha(bgOpacity)
 
-						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, col)
+						event.highlight(col)
 					}
 				}
 
 
 			} else if (!Vice.config.HIDE_ITEMCD_WHEN_READY && (displayType != DisplayType.VANILLA && displayType != DisplayType.TEXT_ONLY)) {
-				HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, event.y, event.x + 16, event.y + 16, 0, Color.green.withAlpha(bgOpacity))
+				event.highlight(Color.green.withAlpha(bgOpacity))
 			}
 
 			drawStatus(event.x, event.y + 9, event.context)

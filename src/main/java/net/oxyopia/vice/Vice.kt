@@ -24,6 +24,7 @@ import net.oxyopia.vice.commands.ViceCommand
 import net.oxyopia.vice.config.Config
 import net.oxyopia.vice.config.DevConfig
 import net.oxyopia.vice.config.Storage
+import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.CommandRegisterEvent
 import net.oxyopia.vice.events.core.EventManager
@@ -58,6 +59,8 @@ import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.itemabilities.CooldownDisplayChanger
 import net.oxyopia.vice.features.itemabilities.SetHighlighting
 import net.oxyopia.vice.features.misc.*
+import net.oxyopia.vice.features.summer.FishingDropsTracker
+import net.oxyopia.vice.features.summer.VioletOverlay
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger
@@ -110,6 +113,7 @@ class Vice : ClientModInitializer {
 		const val ERROR_PREFIX = "§cVice §cERROR §7|§c "
 		const val WARNING_PREFIX = "§eVice §eWARN §7|§e "
 		const val DEV_PREFIX = "§9Vice §7(Dev) |§r "
+		val PRIMARY = Colors.Wave
 	}
 
 	override fun onInitializeClient() {
@@ -190,6 +194,9 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ArenaNotifications)
 		EVENT_MANAGER.subscribe(ArenaSession)
 		EVENT_MANAGER.subscribe(LiveArenaInformation)
+
+		EVENT_MANAGER.subscribe(FishingDropsTracker)
+		EVENT_MANAGER.subscribe(VioletOverlay)
 
 		EVENT_MANAGER.subscribe(DefibCounter)
 		EVENT_MANAGER.subscribe(DoubleTapDrop)

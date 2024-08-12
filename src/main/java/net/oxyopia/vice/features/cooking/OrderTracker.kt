@@ -2,13 +2,15 @@ package net.oxyopia.vice.features.cooking
 
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
+import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.HudUtils.drawTexts
+import net.oxyopia.vice.utils.HudUtils.toText
 
 object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.orderTrackerPos, searchTerm = "order tracker") {
 	private val requests get() = Vice.storage.cooking.totalBurgerRequests
@@ -25,9 +27,9 @@ object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.o
 	}
 
 	private fun draw(position: Position, context: DrawContext): Pair<Float, Float> {
-		val bossOrderList = mutableListOf<String>()
-		val list = mutableListOf(
-			"&&b&&lCooking Order Tracker"
+		val bossOrderList = mutableListOf<Text>()
+		val list = mutableListOf<Text>(
+			"Cooking Order Tracker".toText(Vice.PRIMARY, bold = true)
 		)
 
 		var totalOrders = 0
@@ -40,12 +42,12 @@ object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.o
 				val percentageComplete = ((completions.toDouble() / it.value.toDouble()) * 100).toInt()
 				val percentageColor = getPercentageColour(percentageComplete)
 
-				val text = "&&a${displayName}&&7: &&a$completions&&f/${it.value} &&7($percentageColor$percentageComplete&&7%)"
+				val text = "§a${displayName}§7: §a$completions§7/${it.value} §7($percentageColor$percentageComplete§7%)"
 
 				if (isBossOrder) {
-					bossOrderList.add(text.replaceFirst("&&a", "&&5"))
+					bossOrderList.add(text.replaceFirst("§a", "§5").toText())
 				} else {
-					list.add(text)
+					list.add(text.toText())
 				}
 
 				totalOrders += it.value
@@ -54,19 +56,19 @@ object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.o
 		}
 
 		list.addAll(bossOrderList)
-		list.add("")
-		list.add("&&7Total Orders: &&a$totalOrdersComp&&f/$totalOrders")
+		list.add(Text.empty())
+		list.add("§7Total Orders: §a$totalOrdersComp§7/$totalOrders".toText())
 
-		return position.drawStrings(list, context)
+		return position.drawTexts(list, context)
 	}
 
 	private fun getPercentageColour(percentage: Int): String {
 		@Suppress("KotlinConstantConditions")
 		return when {
-			percentage >= 75 -> "&&a"
-			percentage in 25..74 -> "&&e"
-			percentage < 25 -> "&&c"
-			else -> "&&8"
+			percentage >= 75 -> "§a"
+			percentage in 25..74 -> "§e"
+			percentage < 25 -> "§c"
+			else -> "§8"
 		}
 	}
 

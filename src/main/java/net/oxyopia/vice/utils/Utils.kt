@@ -33,6 +33,11 @@ object Utils {
 
 	fun net.minecraft.world.World.name(): String = registryKey.value.path
 
+	fun sendViceMessage(msg: Text) {
+		val prefix = Text.literal(Vice.CHAT_PREFIX)
+		client.inGameHud.chatHud.addMessage(prefix.append(msg))
+	}
+
 	fun sendViceMessage(msg: String) {
 		UChat.chat("${Vice.CHAT_PREFIX}${msg.convertFormatting()}")
 	}

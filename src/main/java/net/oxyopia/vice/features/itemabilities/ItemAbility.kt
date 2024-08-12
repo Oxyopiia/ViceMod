@@ -4,6 +4,7 @@ import net.minecraft.util.ClickType
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.data.Set
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
+import net.oxyopia.vice.utils.Utils
 import kotlin.time.Duration.Companion.milliseconds
 
 /**
@@ -44,18 +45,20 @@ enum class ItemAbility(
     BARTENDER_GLOVE("Bartender's Glove", 15f, set = Set.CHEF, setAmount = 1),
     DYNAMITE_BARREL("Dynamite Barrel", 10f, set = Set.DEMOLITIONIST, setAmount = 1),
     FLESH_HATCHET("Flesh Hatchet", 10f, set = Set.FLESHCRAWLER, setAmount = 2),
-    VIRTUASWORD("VIRTUASWORD", 10f, set = Set.DIGITAL, setAmount = 2),
+    VIRTUASWORD("VIRTUASWORD", 17.5f, set = Set.DIGITAL, setAmount = 2),
     GLITCH_MALLET("Glitch Mallet", 15f, set = Set.HEAVY, setAmount = 3),
     WARPED_GRENADE("Warped Grenade", 3f),
     POSEIDONS_FURY("Poseidon's Fury", 15f),
     ZIP_BOMB("Zip Bomb", 9f, set = Set.DEMOLITIONIST, setAmount = 2),
     THE_SYNTHFLESH("The Synthflesh", 3f, set = Set.FLESHCRAWLER, setAmount = 2), // 2 for 1st ability, 3 for 2nd ability
+    THE_EXPERIMENT("The Experiment", 6f, set = Set.FLESHCRAWLER, setAmount = 2),
     WAVE_PULSER("Wave Pulser", 10f, set = Set.DIGITAL, setAmount = 2),
     THE_PHANTASM("The Phantasm", 10f, set = Set.DIGITAL, setAmount = 2),
     BEWITCHED_BLOWPIPE("Bewitched Blowpipe", 5f),
 
     // No Display
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, set = Set.HEAVY, setAmount = 2),
+    BUBBLE_GUN("Bubble Gun", 0.5f),
     CARNAGE_RIFLE("Carnage Rifle", 0.5f, set = Set.FLESHCRAWLER, setAmount = 2),
     SNOWBALL_CANNON("Snowball Cannon", 0.5f),
     SHADOW_GELATO_DRUM_GUN("Shadow Gelato's Drum Gun", 0.1f),
@@ -88,7 +91,11 @@ enum class ItemAbility(
 
     fun remainingCooldown() : Float {
         val lastActivation = sharedCooldownId?.let { sharedCooldowns[it] } ?: lastActivated
-        val diff = lastActivation.timeDelta()
+        var diff = lastActivation.timeDelta()
+
+        if (this == THE_EXPERIMENT && (Utils.getPlayer()?.health ?: 0f) <= 10f) {
+            diff /= 2
+        }
 
         return maxOf(cooldown - (diff.inWholeMilliseconds / 1000.0f), 0f)
     }

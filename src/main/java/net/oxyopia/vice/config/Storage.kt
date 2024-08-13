@@ -51,6 +51,8 @@ class Storage : PersistentSave(File("./config/vice/storage.json")) {
 	@Expose
 	var misc = MiscStorage()
 
+	override fun canWrite() = !Vice.config.DEVMODE || Vice.devConfig.STORAGE_MARK_DIRTY
+
 	override fun write(writer: Writer) {
 		Vice.gson.toJson(this, writer)
 	}

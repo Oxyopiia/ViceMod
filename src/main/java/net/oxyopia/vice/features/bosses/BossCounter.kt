@@ -1,15 +1,20 @@
 package net.oxyopia.vice.features.bosses
 
 import net.minecraft.client.gui.DrawContext
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.config.features.BossStorage
+import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.HudUtils.drawTexts
+import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.Utils
+import java.awt.Color
 
 object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPos) {
     private val viceTimeRegex = Regex("You ran out of time to defeat Vice\\. \\(\\d+m\\)")
@@ -31,17 +36,17 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 			val completions = bosses.wasteyard.masteryCompletions
 
 			val tierIndex = thresholds.indexOfFirst { completions < it }.takeIf { it != -1 } ?: thresholds.size
-			val tierColor = if (tierIndex >= thresholds.size) "&&6" else "&&a"
+			val tierColor = if (tierIndex >= thresholds.size) Colors.ChatColor.Gold else Colors.ChatColor.Green
 			val list = mutableListOf(
-				"&&c&&lWasteyard",
-				"$tierColor✪ Tier $tierIndex",
-				"&&7Completions: &&c${bosses.wasteyard.completions}",
-				"&&7Masteries: &&c$completions"
+				"§c§lWasteyard".toText(),
+				"✪ Tier $tierIndex".toText(tierColor),
+				"§7Completions: §c${bosses.wasteyard.completions}".toText(),
+				"§7Masteries: §c$completions".toText()
 			)
 
 			if (tierIndex < thresholds.size) {
 				val remainingRuns = thresholds[tierIndex] - completions
-				list.add("&&7Tier &&a${tierIndex + 1} &&7in &&a$remainingRuns &&7runs.")
+				list.add("§7Tier §a${tierIndex + 1} §7in §a$remainingRuns §7runs.".toText())
 			}
 
 			val unclaimedTiers = (1..tierIndex).filterNot { bosses.wasteyard.claimedTiers.contains(it) }
@@ -56,33 +61,35 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 					"Tiers $allButLast and $last are unclaimed!"
 				}
 
-				list.add("")
-				list.add("&&c$message")
+				list.add("".toText())
+				list.add("§c$message".toText())
 			}
 
-			return position.drawStrings(list, context)
+			return position.drawTexts(list, context)
 		}
 
-		val list: MutableList<String> = mutableListOf("&&b&&lBosses")
+		val list: MutableList<Text> = mutableListOf("Bosses".toText(Vice.PRIMARY, bold = true))
 
-		list.addBossStat("&&5Vice", bosses.vice)
-		list.addBossStat("&&4Wasteyard", bosses.wasteyard)
-		list.addBossStat("&&aEl Gelato", bosses.gelato)
-		list.addBossStat("&&cPPP", bosses.ppp)
-		list.addBossStat("&&bMinehut", bosses.minehut)
-		list.addBossStat("&&dShadow Gelato", bosses.shadowGelato)
-		list.addBossStat("&&8Abyssal Vice", bosses.abyssalVice)
+		list.addBossStat("Vice", Colors.ViceBoss, bosses.vice)
+		list.addBossStat("Wasteyard", Colors.ChatColor.DarkRed, bosses.wasteyard)
+		list.addBossStat("El Gelato", Colors.ChatColor.Green, bosses.gelato)
+		list.addBossStat("PPP", Colors.ChatColor.Red, bosses.ppp)
+		list.addBossStat("Minehut", Colors.ChatColor.Aqua, bosses.minehut)
+		list.addBossStat("Elderpork", Colors.Elderpork, bosses.elderpork)
+		list.addBossStat("Shadow Gelato", Colors.ShadowGelato, bosses.shadowGelato)
+		list.addBossStat("Abyssal Vice", Colors.Diox, bosses.abyssalVice)
 
 		if (list.size == 1) {
-			list.add("&&cNo bosses slain yet!")
+			list.add("No Bosses slain yet!".toText(Colors.ChatColor.Red))
 		}
 
-		return position.drawStrings(list, context)
+		return position.drawTexts(list, context)
 	}
 
     @SubscribeEvent
     fun onChatMessage(event: ChatEvent) {
         val content = event.string
+		if (!event.hasNoSender) return
 
 		when {
 			World.Vice.isInWorld() && content.contains(viceTimeRegex) -> bosses.vice.decrementCompletions()
@@ -91,6 +98,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 			World.Minehut.isInWorld() && content.contains(minehutTimeRegex) -> bosses.minehut.decrementCompletions()
 			World.ShadowGelato.isInWorld() && content.contains(shadowTimeRegex) -> bosses.shadowGelato.decrementCompletions()
 			World.AbyssalVice.isInWorld() && content.contains(abyssalCompletionRegex) -> bosses.abyssalVice.incrementCompletions()
+			World.Elderpork.isInWorld() && content.contains("TAPE FINISHED.") -> bosses.elderpork.incrementCompletions()
 			else -> return
 		}
 
@@ -99,6 +107,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 
 	@SubscribeEvent
 	fun onEntityDeath(event: EntityDeathEvent) {
+		if (event.entity is PlayerEntity) return
 		val entityName = event.entity.customName?.string ?: return
 
 		when {
@@ -114,28 +123,32 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 	}
 
 	@SubscribeEvent
-    fun onSound(event: SoundEvent) {
-        if (!World.Tower.isInWorld()) return
-		if (event.soundName != "ui.toast.challenge_complete" || event.pitch != 1f || event.volume != 9999f) return
+    fun onTitle(event: TitleEvent) {
+        if (!World.Tower.isInWorld() || event.title != "You Have Escaped Wasteyard.") return
 
 		bosses.wasteyard.incrementCompletions()
 		Vice.storage.markDirty()
     }
 
-	private fun MutableList<String>.addBossStat(string: String, data: BossStorage.Boss) {
+	private fun MutableList<Text>.addBossStat(string: String, color: Color, data: BossStorage.Boss) {
 		val completions = data.completions
 
-		if (completions <= 0) return
-		if (data is BossStorage.MasterableBoss) {
+		if (data is BossStorage.MasterableBoss && data.masteryCompletions > 0) {
 			val masteries = data.masteryCompletions
+			val text = string.toText(color)
 
-			if (completions != masteries && masteries != 0) {
-				add("$string &&f$completions &&7(&&c$masteries&&7)")
+			if (completions <= masteries) {
+				add(text.append(" §f$masteries".toText()))
+				return
+
+			} else {
+				add(text.append(" §f$masteries §7(§c$completions§7)".toText()))
 				return
 			}
 		}
 
-		add("$string &&f$completions")
+		if (completions <= 0) return
+		add(string.toText(color).append(" $completions".toText()))
 	}
 
     @SubscribeEvent

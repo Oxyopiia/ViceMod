@@ -2,6 +2,7 @@ package net.oxyopia.vice.config;
 
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
+import net.oxyopia.vice.Vice;
 
 import java.io.File;
 
@@ -49,6 +50,38 @@ public class DevConfig extends Vigilant {
 	)
 	public boolean BYPASS_INSTANCE_CHECK = false;
 
+	@Property(
+		type = PropertyType.BUTTON,
+		name = "Reload Storage from File",
+		description = "Unloads the current Storage file, §cwithout saving§7, and creates a new instance from the storage.json file. Good for editing without a restart.",
+		category = "Bypasses",
+		placeholder = "Reload Storage"
+	)
+	public void reloadStorageFromFile() {
+		Vice.storage = new Storage();
+		Vice.storage.initialize();
+		STORAGE_MARK_DIRTY = true;
+	}
+
+	@Property(
+		type = PropertyType.BUTTON,
+		name = "Force Save Storage",
+		description = "force save storage.json, even if not dirty\nuse to unmark dirty",
+		category = "Bypasses",
+		placeholder = "Force Save Storage"
+	)
+	public void forceSaveStorage() {
+		Vice.storage.forceSave();
+	}
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Allow Dirty Storage",
+		description = "Whether Storage.json can be overwritten. §cONLY DISABLE IF YOU KNOW WHAT YOU'RE DOING!\n§cRequires Dev Mode enabled.",
+		category = "Bypasses"
+	)
+	public boolean STORAGE_MARK_DIRTY = true;
+
 	/** DEBUGS */
 	@Property(
 		type = PropertyType.SWITCH,
@@ -57,6 +90,14 @@ public class DevConfig extends Vigilant {
 		category = "Debugs"
 	)
 	public boolean SEND_SOUND_INFO = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "InGameHud mixin",
+		description = "Debugger for title data, subtitle data, and HandledScreen data.",
+		category = "Debugs"
+	)
+	public boolean INGAMEHUD_MIXIN_DEBUGGER = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -97,14 +138,6 @@ public class DevConfig extends Vigilant {
 		category = "Debugs"
 	)
 	public boolean GAME_RENDERER_DEBUGGER = false;
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "InGameHud mixin",
-		description = "Debugger for title data, subtitle data, and more",
-		category = "Debugs"
-	)
-	public boolean INGAMEHUD_MIXIN_DEBUGGER = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -169,5 +202,6 @@ public class DevConfig extends Vigilant {
 	public void init() {
 		initialize();
 		markDirty();
+		STORAGE_MARK_DIRTY = true;
 	}
 }

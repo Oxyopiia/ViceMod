@@ -3,7 +3,7 @@ package net.oxyopia.vice.features.cooking
 import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
 import net.oxyopia.vice.Vice
-import net.oxyopia.vice.data.ChatColor
+import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.BlockInteractEvent
 import net.oxyopia.vice.events.ChatEvent
@@ -52,12 +52,12 @@ object BurgerTimer {
 		if (delta >= BURN_TIME) return
 		if (delta > 0.seconds) {
 			val formatted = (BURN_TIME - delta).formatShortDuration()
-			event.drawString(c.pos.toCenterPos().add(0.0, 0.3, 0.0), "DONE", ChatColor.GREEN.color)
-			event.drawString(c.pos.toCenterPos(), formatted, ChatColor.RED.color)
+			event.drawString(c.pos.toCenterPos().add(0.0, 0.3, 0.0), "DONE", Colors.ChatColor.Green)
+			event.drawString(c.pos.toCenterPos(), formatted, Colors.ChatColor.Red)
 		} else {
 			val formatted = c.completionTime.timeDeltaUntil().formatShortDuration()
-			event.drawString(c.pos.toCenterPos().add(0.0, 0.3, 0.0), "COOKING", ChatColor.YELLOW.color)
-			event.drawString(c.pos.toCenterPos(), formatted, ChatColor.YELLOW.color)
+			event.drawString(c.pos.toCenterPos().add(0.0, 0.3, 0.0), "COOKING", Colors.ChatColor.Yellow)
+			event.drawString(c.pos.toCenterPos(), formatted, Colors.ChatColor.Yellow)
 		}
 	}
 

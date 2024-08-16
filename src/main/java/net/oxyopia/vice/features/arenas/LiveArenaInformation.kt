@@ -2,11 +2,14 @@ package net.oxyopia.vice.features.arenas
 
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.HudUtils.drawTexts
+import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
@@ -24,33 +27,34 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 
 		val session = ArenaSession
 		val world = session.relatedWorld
-		val color = "&&${world.displayColor}"
+		val color = world.displayColor
 		val dropName = ArenaAPI.getUniqueDropName(world)
 
 		val list = mutableListOf(
-			"${color}&&l${world.displayName}",
-			"${color}Wave ${session.waveNumber}",
+			world.displayName.toText(color, bold = true),
+			"Wave ${session.waveNumber}".toText(color),
 		)
 
 		if (Vice.config.LIVE_ARENA_ROUND_TIMER){
-			list.add("")
-			list.add(session.waveStartTime.timeDelta().formatTimer(WAVE_TIME_SECONDS.seconds))
+			list.add("".toText())
+			list.add(session.waveStartTime.timeDelta().formatTimer(WAVE_TIME_SECONDS.seconds).toText())
 		}
 
 		val showDropsState = Vice.config.LIVE_ARENA_DROPS
 		if (showDropsState != DisplayType.NONE) {
-			list.add("")
+			list.add("".toText())
 
-			if (showDropsState != DisplayType.UNIQUE_DROPS_ONLY) list.add("&&fCommon Drop &&7${session.calcCommonDrops()}x")
-			if (showDropsState != DisplayType.BASIC_DROPS_ONLY) list.add("${color}${dropName} &&7${session.calcUniqueDropChance()}%")
+			if (showDropsState != DisplayType.UNIQUE_DROPS_ONLY) list.add("§fCommon Drop §7${session.calcCommonDrops()}x".toText())
+			if (showDropsState != DisplayType.BASIC_DROPS_ONLY) list.add(dropName.toText(color)
+				.append(session.calcUniqueDropChance().toString().toText(Colors.ChatColor.Grey)))
 		}
 
 		if (Vice.config.LIVE_ARENA_MOBS) {
-			list.add("")
-			list.add("&&fMobs Remaining &&c${session.mobsRemaining.coerceAtLeast(0)}")
+			list.add("".toText())
+			list.add("§fMobs Remaining §c${session.mobsRemaining.coerceAtLeast(0)}".toText())
 		}
 
-		position.drawStrings(list, event.context)
+		position.drawTexts(list, event.context)
 	}
 
 	override fun storePosition(position: Position) {
@@ -60,8 +64,8 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 
 	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
 		val list = mutableListOf(
-			"&&b&&lCryonic Caverns",
-			"&&bWave 16",
+			"§b&&lCryonic Caverns",
+			"§bWave 16",
 		)
 
 		if (Vice.config.LIVE_ARENA_ROUND_TIMER){
@@ -73,13 +77,13 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 		if (showDropsState != DisplayType.NONE) {
 			list.add("")
 
-			if (showDropsState != DisplayType.UNIQUE_DROPS_ONLY) list.add("&&fCommon Drop &&733x")
-			if (showDropsState != DisplayType.BASIC_DROPS_ONLY) list.add("&&bArctic Scroll &&76.5%")
+			if (showDropsState != DisplayType.UNIQUE_DROPS_ONLY) list.add("§fCommon Drop §733x")
+			if (showDropsState != DisplayType.BASIC_DROPS_ONLY) list.add("§bArctic Scroll §76.5%")
 		}
 
 		if (Vice.config.LIVE_ARENA_MOBS) {
 			list.add("")
-			list.add("&&fMobs Remaining &&c7")
+			list.add("§fMobs Remaining §c7")
 		}
 
 		return position.drawStrings(list, context)

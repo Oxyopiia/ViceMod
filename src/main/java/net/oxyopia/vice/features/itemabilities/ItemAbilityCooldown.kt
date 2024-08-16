@@ -75,6 +75,7 @@ object ItemAbilityCooldown {
 			// Wasted Shotgun
 			event.soundName == "entity.blaze.shoot" && event.pitch == 0.5f && event.volume == 9999f -> {
 				ItemAbility.WASTED_SHOTGUN.onSound()
+				ItemAbility.THE_EXPERIMENT.onSound()
 			}
 
 			// Barbed Shotgun
@@ -194,6 +195,11 @@ object ItemAbilityCooldown {
 			event.soundName == "entity.arrow.shoot" && event.pitch == 0.3f -> {
 				ItemAbility.BEWITCHED_BLOWPIPE.onSound()
 			}
+
+			// Bubble Gun
+			event.soundName == "block.bubble_column.whirlpool_inside" && event.volume == 3f -> {
+				ItemAbility.BUBBLE_GUN.onSound()
+			}
 		}
 	}
 
@@ -242,7 +248,7 @@ object ItemAbilityCooldown {
 	private fun handleClickEventAbility(ability: ItemAbility) {
 		ability.apply {
 			lastClicked = System.currentTimeMillis()
-			DevUtils.sendDebugChat("&&bITEMABILITY &&conLeftClick as&&b $name", "ITEM_ABILITY_DEBUGGER")
+			DevUtils.sendDebugChat("&&bITEMABILITY &&conClick as&&b $name", "ITEM_ABILITY_DEBUGGER")
 
 			if (soundOnUse || remainingCooldown() > 0f) return
 			if (set == null || (MinecraftClient.getInstance().player?.getEquippedSets()?.getOrDefault(set, 0) ?: 0) >= setAmount) {

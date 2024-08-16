@@ -62,7 +62,8 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			ItemStack cursorStack = touchDragStack.isEmpty() ? handler.getCursorStack() : touchDragStack;
 			if (id == -1) {
-				id = (int) (Math.random() * 10000);
+				id = (int) (Math.random() * 25000);
+				DevUtils.sendDebugChat("&&dHUD SCREEN &&fAssigned ID &&b" + id + "&&f to this HandledScreen", "INGAMEHUD_MIXIN_DEBUGGER");
 			}
 
 			EVENT_MANAGER.publish(new ChestRenderEvent(title.getString(), handler.slots, cursorStack, id));
@@ -80,6 +81,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 	private void onClose(CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			id = -1;
+			DevUtils.sendDebugChat("&&dHUD SCREEN &&fReset ID of closed HandledScreen", "INGAMEHUD_MIXIN_DEBUGGER");
 		}
 	}
 

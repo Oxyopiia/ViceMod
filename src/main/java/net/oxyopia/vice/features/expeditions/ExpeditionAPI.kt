@@ -3,7 +3,7 @@ package net.oxyopia.vice.features.expeditions
 import net.minecraft.block.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
-import net.oxyopia.vice.data.ChatColor
+import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.BlockUpdateEvent
 import net.oxyopia.vice.events.ChatEvent
@@ -48,10 +48,10 @@ object ExpeditionAPI {
 	}
 
 	internal enum class RoomType(val color: Color) {
-		STARTER(ChatColor.YELLOW.color),
+		STARTER(Colors.ChatColor.Yellow),
 		MOB(Color.white),
-		LOOTBOX(ChatColor.GOLD.color),
-		BOSS(ChatColor.DARK_RED.color)
+		LOOTBOX(Colors.ChatColor.Gold),
+		BOSS(Colors.ChatColor.DarkRed),
 	}
 
 	private var lastClickedShopItemIndex = -1

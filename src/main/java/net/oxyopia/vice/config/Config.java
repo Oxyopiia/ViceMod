@@ -466,6 +466,17 @@ public class Config extends Vigilant {
 	)
 	public float WASTEYARD_TIMER_PITCH = 1.0f;
 
+	// Bosses/Elderpork
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Elderpork Start Timer",
+		description = "Displays a timer during the window to enter the Elderpork Boss with the computer.",
+		category = "Bosses",
+		subcategory = "Elderpork"
+	)
+	public boolean ELDERPORK_START_TIMER = false;
+
 	// Bosses/Abyssal Vice
 
 	@Property(

@@ -5,7 +5,7 @@ import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils
-import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.SoundUtils
 
 object EvanSolver {
 	@SubscribeEvent
@@ -14,10 +14,10 @@ object EvanSolver {
 
 		questions[event.string.lowercase()]?.let { isCorrect ->
 			val text = if (isCorrect) {
-				Utils.playSound("block.note_block.pling", 2f)
+				SoundUtils.playSound("block.note_block.pling", 2f)
 				"&&a&&lTRUE"
 			} else {
-				Utils.playSound("block.note_block.pling", 0.5f)
+				SoundUtils.playSound("block.note_block.pling", 0.5f)
 				"&&c&&lFALSE"
 			}
 

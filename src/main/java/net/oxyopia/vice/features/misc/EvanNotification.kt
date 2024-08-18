@@ -6,7 +6,7 @@ import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.ChatUtils
-import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.minutes
 
@@ -32,7 +32,7 @@ object EvanNotification {
             storage.markDirty()
 
             ChatUtils.sendViceMessage("Your Evan Quiz is ready to start!")
-            Utils.playSound("block.note_block.pling", 2f)
+            SoundUtils.playSound("block.note_block.pling", 2f)
         }
     }
 }

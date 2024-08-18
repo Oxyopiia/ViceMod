@@ -14,7 +14,7 @@ import net.oxyopia.vice.features.expeditions.ExpeditionRarity.Companion.getExped
 import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
-import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.Utils.convertFormatting
 
 object AutoCommunications {
@@ -43,7 +43,7 @@ object AutoCommunications {
 			}
 
 			ChatUtils.sendViceMessage("&&a${sender} &&fpurchased &&a${original?.cleanName()} &&ffrom the Villager in &&aRoom $room")
-			Utils.playDing()
+			SoundUtils.playDing()
 
 			merchants[room]?.set(itemIndex, ItemStack.EMPTY)
 			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fSet index &&a$itemIndex&&f of merchant &&a$room &&fto &&cEMPTY.", "EXPEDITION_DEBUGGER")
@@ -59,7 +59,7 @@ object AutoCommunications {
 			val data = groupValues[2]
 
 			ChatUtils.sendViceMessage("&&a${sender} &&ffound a Villager in &&aRoom $room&&f!")
-			Utils.playDing()
+			SoundUtils.playDing()
 
 			if (room < 0 || room > 15 || merchants[room]?.isNotEmpty() == true) return
 			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fImporting shopkeeper &&a$room&&f data from ${sender}.", "EXPEDITION_DEBUGGER")

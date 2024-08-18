@@ -6,8 +6,8 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
 import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
-import net.oxyopia.vice.utils.Utils
 import kotlin.time.Duration.Companion.seconds
 
 object DoubleTapDrop {
@@ -27,7 +27,7 @@ object DoubleTapDrop {
 			lastItemDropped = name
 			lastDropAttempt = System.currentTimeMillis()
 			ChatUtils.sendViceMessage("&&cStopped you from dropping that item as it is ${protectionThreshold.cleanText} or higher! Drop it again to actually drop it.")
-			Utils.playFail()
+			SoundUtils.playFail()
 			event.cancel()
 		}
 	}

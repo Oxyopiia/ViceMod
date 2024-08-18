@@ -13,7 +13,7 @@ import java.awt.Color
 import kotlin.time.Duration.Companion.seconds
 
 object BarTimer {
-	private val BAR_MAX_TIME = 46.seconds
+	private val BAR_MAX_TIME = 53.seconds // Adjusted as captured message is sent late
 
 	@SubscribeEvent
 	fun onBossbarAfter(event: BossBarEvents.Insert) {

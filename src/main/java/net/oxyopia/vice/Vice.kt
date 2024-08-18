@@ -59,6 +59,7 @@ import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.itemabilities.CooldownDisplayChanger
 import net.oxyopia.vice.features.itemabilities.SetHighlighting
 import net.oxyopia.vice.features.misc.*
+import net.oxyopia.vice.features.summer.BarTimer
 import net.oxyopia.vice.features.summer.FishingDropsTracker
 import net.oxyopia.vice.features.summer.SummerAPI
 import net.oxyopia.vice.features.summer.SummerTimers
@@ -196,6 +197,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(ArenaSession)
 		EVENT_MANAGER.subscribe(LiveArenaInformation)
 
+		EVENT_MANAGER.subscribe(BarTimer)
 		EVENT_MANAGER.subscribe(FishingDropsTracker)
 		EVENT_MANAGER.subscribe(SummerAPI)
 		EVENT_MANAGER.subscribe(SummerTimers)

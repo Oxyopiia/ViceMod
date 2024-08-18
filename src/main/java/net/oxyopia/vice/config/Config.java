@@ -591,6 +591,14 @@ public class Config extends Vigilant {
 	)
 	public boolean SUMMER_TIMERS = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Bar Minigame Bossbar",
+		description = "Shows a bossbar of the remaining time to complete the Bar Minigame.",
+		category = "Event",
+		subcategory = "Summer"
+	)
+	public boolean SUMMER_BAR_MINIGAME_BOSSBAR = false;
 
 	// Sounds
 

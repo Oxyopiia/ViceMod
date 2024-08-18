@@ -1,8 +1,6 @@
 package net.oxyopia.vice.utils
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException
-import gg.essential.universal.UChat
-import gg.essential.universal.wrappers.message.UTextComponent
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.sound.PositionedSoundInstance
@@ -10,7 +8,6 @@ import net.minecraft.client.world.ClientWorld
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.sound.SoundEvent
-import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
@@ -32,20 +29,6 @@ object Utils {
 	fun getDTWorld(): World? = World.getById(getWorldString().toString())
 
 	fun net.minecraft.world.World.name(): String = registryKey.value.path
-
-	fun sendViceMessage(msg: Text) {
-		val prefix = Text.literal(Vice.CHAT_PREFIX)
-		client.inGameHud.chatHud.addMessage(prefix.append(msg))
-	}
-
-	fun sendViceMessage(msg: String) {
-		UChat.chat("${Vice.CHAT_PREFIX}${msg.convertFormatting()}")
-	}
-
-	fun sendViceMessage(msg: UTextComponent) {
-		msg.text = "${Vice.CHAT_PREFIX}${msg.text}"
-		UChat.chat(msg)
-	}
 
 	fun playSound(identifier: Identifier, pitch: Float = 1f, volume: Float = 1f) {
 		try {

@@ -11,7 +11,7 @@ import net.minecraft.text.HoverEvent
 import net.minecraft.text.HoverEvent.ItemStackContent
 import net.oxyopia.vice.utils.ItemUtils.getHeldItem
 import net.oxyopia.vice.utils.Utils.inDoomTowers
-import net.oxyopia.vice.utils.Utils.sendViceMessage
+import net.oxyopia.vice.utils.ChatUtils.sendViceMessage
 
 object DevDataCommand {
 	fun register(dispatcher: CommandDispatcher<FabricClientCommandSource?>) {

@@ -5,6 +5,7 @@ import net.oxyopia.vice.Vice.Companion.storage
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
+import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.minutes
@@ -30,7 +31,7 @@ object EvanNotification {
             misc.lastEvanQuiz = -1L
             storage.markDirty()
 
-            Utils.sendViceMessage("Your Evan Quiz is ready to start!")
+            ChatUtils.sendViceMessage("Your Evan Quiz is ready to start!")
             Utils.playSound("block.note_block.pling", 2f)
         }
     }

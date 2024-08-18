@@ -35,7 +35,7 @@ object Elderpork : Boss(
 			val percentageComplete = elapsedTime / MONITOR_MAX_TIME
 
 			event.add(
-				"Delivery Start ${elapsedTime.formatTimer(MONITOR_MAX_TIME)}".toText(Colors.Elderpork),
+				"Elderpork starts in ${elapsedTime.formatTimer(MONITOR_MAX_TIME, showClock = false)}".toText(Colors.Elderpork),
 				1f - percentageComplete.toFloat(),
 				BossBar.Color.PINK,
 				BossBar.Style.NOTCHED_10

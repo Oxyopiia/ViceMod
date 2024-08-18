@@ -215,6 +215,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(PowerBoxTimer)
 
 		EVENT_MANAGER.subscribe(AbyssalVice)
+		EVENT_MANAGER.subscribe(Elderpork)
 		EVENT_MANAGER.subscribe(ElGelato)
 		EVENT_MANAGER.subscribe(MinehutBoss)
 		EVENT_MANAGER.subscribe(PPP)

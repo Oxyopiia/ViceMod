@@ -7,10 +7,10 @@ import net.oxyopia.vice.events.EntityDeathEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.hours
@@ -66,7 +66,7 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 			Vice.storage.markDirty()
 			aliveCount = 3
 
-			if (Vice.config.TRAIN_TIMER) Utils.playSound("block.bell.use", volume = 9999f)
+			if (Vice.config.TRAIN_TIMER) SoundUtils.playSound("block.bell.use", volume = 9999f)
 		}
 	}
 

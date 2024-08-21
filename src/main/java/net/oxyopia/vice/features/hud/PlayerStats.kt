@@ -19,7 +19,7 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 	private val defenseRegex = Regex("Defence: ([+-]?\\d+)")
 	private val speedRegex = Regex("Speed: ([+-]?\\d+(?:\\.\\d+)?)%")
 	private val fishReduceTimeRegex = Regex("Fish Time: ([+-]?\\d+\\.\\d+)s")
-	private val fishTimeRegex = Regex("Fish Time: (\\d+)-(\\d+(\\.\\d+)?)s")
+	private val fishTimeRegex = Regex("Fish Time: (\\d+)(?:-(\\d+(\\.\\d+)?))?s")
 
     @SubscribeEvent
     fun onHudRender(event: HudRenderEvent) {
@@ -52,7 +52,11 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
         list.add("§fSpeed: §e⚡ $speed% §7(${String.format("%.2f", movementSpeed * 100).toFloat()})".toText())
 
 		if (!fishingTime.isNone()) {
-			list.add("§fFish Time: §b\uD83D\uDD51 ${fishingTime.min}-${fishingTime.max}s".toText())
+			if (fishingTime.min != 0.0) {
+				list.add("§fFish Time: §b\uD83D\uDD51 ${fishingTime.min}-${fishingTime.max}s".toText())
+			} else {
+				list.add("§fFish Time: §b\uD83D\uDD51 ${fishingTime.max}s".toText())
+			}
 		}
 
 		val breakingPower = getBreakingPower()

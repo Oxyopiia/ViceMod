@@ -13,8 +13,10 @@ import net.oxyopia.vice.events.CommandRegisterEvent
 import net.oxyopia.vice.events.ItemRenameEvent
 import net.oxyopia.vice.events.ModifyChestNameEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
+import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.getLore
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.Utils.convertFormatting
 
@@ -65,15 +67,15 @@ object BackpackRenaming {
 			storage.misc.backpackNames.remove(id)
 			storage.markDirty()
 
-			Utils.sendViceMessage("&&cReset the name of Backpack &&f$id&&c!")
+			ChatUtils.sendViceMessage("&&cReset the name of Backpack &&f$id&&c!")
 			return
 		}
 
 		storage.misc.backpackNames[id] = argument.replace(Regex("&(.)"), "&&$1").convertFormatting()
 		storage.markDirty()
 
-		Utils.sendViceMessage("&&aChanged the name of Backpack &&f$id &&ato &&f$argument&&a!")
-		Utils.playSound("random.orb", volume = 3f)
+		ChatUtils.sendViceMessage("&&aChanged the name of Backpack &&f$id &&ato &&f$argument&&a!")
+		SoundUtils.playDing()
 	}
 
 	private fun warnEmpty() = DevUtils.sendWarningMessage("You are not holding a backpack!")

@@ -60,27 +60,17 @@ object ItemUtils {
 	}
 
 
-	fun ItemStack.isRod(): Boolean {
-
-		val itemName = this.cleanName()
-
-		return itemName.contains("Basic Fishing Rod") ||
-				itemName.contains("Reinforced Fishing Rod") ||
-				itemName.contains("Frigid Fishing Rod") ||
-				itemName.contains("Polar Rod") ||
-				itemName.contains("Gilded Fishing Rod") ||
-				itemName.contains("RGB Rod")
-	}
-
-	fun ItemStack.isHook(): Boolean {
-
-		val itemName = this.cleanName()
-
-		return itemName.contains("Adventurer's Hook") ||
-				itemName.contains("Slime Hook") ||
-				itemName.contains("Luminescent Hook") ||
-				itemName.contains("Genhook")
-	}
+	private val validRods = listOf(
+		"Basic Fishing Rod",
+		"Reinforced Fishing Rod",
+		"Frigid Fishing Rod",
+		"Polar Rod",
+		"Gilded Fishing Rod",
+		"RGB Rod",
+		"Wave Tamer",
+	)
+	// TODO: Convert to NBT detection.
+	fun ItemStack.isRod(): Boolean = validRods.contains(cleanName())
 
 	fun ClientPlayerEntity.getEquippedSets(): Map<Set, Int> {
 		val setsMap: MutableMap<Set, Int> = EnumMap(Set::class.java)

@@ -8,7 +8,7 @@ import net.oxyopia.vice.events.BossBarEvents
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
-import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import java.util.*
@@ -70,7 +70,7 @@ abstract class Boss (
 			(lastDespawnNotify > 0 && lastDespawnNotify.timeDelta() <= phaseTime.milliseconds * warningPercentage)
 		) return
 
-		Utils.playSound("block.note_block.pling", pitch = 0.8f, volume = 3f)
+		SoundUtils.playSound("block.note_block.pling", pitch = 0.8f, volume = 3f)
 		HudUtils.sendViceTitle("&&cLow boss time!", 2f)
 
 		lastDespawnNotify = System.currentTimeMillis()

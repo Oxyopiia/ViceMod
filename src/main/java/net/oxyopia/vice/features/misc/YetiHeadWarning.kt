@@ -8,6 +8,7 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.hud.PlayerStats
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.ItemUtils.getLore
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaWithin
 import net.oxyopia.vice.utils.Utils
 import kotlin.time.Duration.Companion.seconds
@@ -25,7 +26,7 @@ object YetiHeadWarning {
 		if (!armor.getLore().contains("Ability: Yeti Scare") && !lastNotified.timeDeltaWithin(NOTIFICATION_RATE)) {
 			lastNotified = System.currentTimeMillis()
 			HudUtils.sendViceTitle("&&cNo Yeti Head!", 3f)
-			Utils.playDing()
+			SoundUtils.playDing()
 		}
 	}
 }

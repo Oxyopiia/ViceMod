@@ -13,8 +13,11 @@ abstract class PersistentSave(private val file: File) {
 
 	abstract fun write(writer: Writer)
 	abstract fun read(reader: Reader)
+	open fun canWrite(): Boolean = true
 
 	private fun writeFile() {
+		if (!canWrite()) return
+
 		try {
 			file.ensureFile()
 			file.bufferedWriter().use {

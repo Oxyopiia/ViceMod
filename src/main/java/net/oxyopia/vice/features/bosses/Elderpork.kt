@@ -1,6 +1,7 @@
 package net.oxyopia.vice.features.bosses
 
 import net.minecraft.entity.boss.BossBar
+import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.BossBarEvents
@@ -30,12 +31,13 @@ object Elderpork : Boss(
 
 	@SubscribeEvent
 	fun onBossbarAfter(event: BossBarEvents.Insert) {
+		if (!Vice.config.ELDERPORK_START_TIMER) return
 		if (monitorLastStart.timeDeltaWithin(MONITOR_MAX_TIME)) {
 			val elapsedTime = monitorLastStart.timeDelta()
 			val percentageComplete = elapsedTime / MONITOR_MAX_TIME
 
 			event.add(
-				"Delivery Start ${elapsedTime.formatTimer(MONITOR_MAX_TIME)}".toText(Colors.Elderpork),
+				"Elderpork starts in ${elapsedTime.formatTimer(MONITOR_MAX_TIME, showClock = false)}".toText(Colors.Elderpork),
 				1f - percentageComplete.toFloat(),
 				BossBar.Color.PINK,
 				BossBar.Style.NOTCHED_10

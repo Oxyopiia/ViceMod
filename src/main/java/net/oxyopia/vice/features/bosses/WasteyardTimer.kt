@@ -9,11 +9,12 @@ import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
+import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.HudUtils.drawString
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaWithin
-import net.oxyopia.vice.utils.Utils
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
@@ -51,8 +52,8 @@ object WasteyardTimer : HudElement("Wasteyard Timer", Vice.storage.bosses.wastey
 		if (!event.repeatSeconds(1) || !Vice.config.WASTEYARD_TIMER) return
 		if (lastNotification >= startTime || startTime.timeDeltaWithin(COOLDOWN_TIME_SECS.seconds)) return
 
-		Utils.sendViceMessage("&&aYour Wasteyard cooldown has worn off.")
-		Utils.playSound(Vice.config.WASTEYARD_TIMER_SOUND, pitch = Vice.config.WASTEYARD_TIMER_PITCH)
+		ChatUtils.sendViceMessage("&&aYour Wasteyard cooldown has worn off.")
+		SoundUtils.playSound(Vice.config.WASTEYARD_TIMER_SOUND, pitch = Vice.config.WASTEYARD_TIMER_PITCH)
 		lastNotification = System.currentTimeMillis()
 	}
 

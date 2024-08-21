@@ -458,6 +458,17 @@ public class Config extends Vigilant {
 	)
 	public float WASTEYARD_TIMER_PITCH = 1.0f;
 
+	// Bosses/Elderpork
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Elderpork Start Timer",
+		description = "Displays a timer during the window to enter the Elderpork Boss with the computer.",
+		category = "Bosses",
+		subcategory = "Elderpork"
+	)
+	public boolean ELDERPORK_START_TIMER = false;
+
 	// Bosses/Abyssal Vice
 
 	@Property(
@@ -576,13 +587,21 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Violet's Exchange Overlay",
-		description = "Shows a timer for the next Violet's Fish Exchange stock refresh.",
+		name = "Summer Timers",
+		description = "Shows timers for Violet's Exchange Refresh and Summer Minigames.",
 		category = "Event",
 		subcategory = "Summer"
 	)
-	public boolean VIOLET_EXCHANGE_OVERLAY = false;
+	public boolean SUMMER_TIMERS = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Bar Minigame Bossbar",
+		description = "Shows a bossbar of the remaining time to complete the Bar Minigame.",
+		category = "Event",
+		subcategory = "Summer"
+	)
+	public boolean SUMMER_BAR_MINIGAME_BOSSBAR = false;
 
 	// Sounds
 
@@ -866,6 +885,9 @@ public class Config extends Vigilant {
 			move(config, "general.world_4.auto_apply_bread", "worlds.fastest_food.auto_apply_bread");
 			move(config, "general.quality_of_life.train_timer", "worlds.showdown.train_timer");
 			move(config, "general.quality_of_life.show_train_timer_outside_world_11", "worlds.showdown.show_train_timer_outside_world_11");
+		});
+		migrations.add(config -> { // Migration 3: Cherry Overlay -> Summer Timers
+			move(config, "event.summer.violet's_exchange_overlay", "event.summer.summer_timers");
 		});
 		return migrations;
 	}

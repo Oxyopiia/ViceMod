@@ -248,7 +248,7 @@ object ItemAbilityCooldown {
 	private fun handleClickEventAbility(ability: ItemAbility) {
 		ability.apply {
 			lastClicked = System.currentTimeMillis()
-			DevUtils.sendDebugChat("&&bITEMABILITY &&conLeftClick as&&b $name", "ITEM_ABILITY_DEBUGGER")
+			DevUtils.sendDebugChat("&&bITEMABILITY &&conClick as&&b $name", "ITEM_ABILITY_DEBUGGER")
 
 			if (soundOnUse || remainingCooldown() > 0f) return
 			if (set == null || (MinecraftClient.getInstance().player?.getEquippedSets()?.getOrDefault(set, 0) ?: 0) >= setAmount) {

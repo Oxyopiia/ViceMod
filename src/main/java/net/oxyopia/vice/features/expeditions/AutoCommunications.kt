@@ -11,9 +11,10 @@ import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.features.expeditions.ExpeditionAPI.merchants
 import net.oxyopia.vice.features.expeditions.ExpeditionItemType.Companion.getExpeditionItemType
 import net.oxyopia.vice.features.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
+import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
-import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.Utils.convertFormatting
 
 object AutoCommunications {
@@ -42,8 +43,8 @@ object AutoCommunications {
 				original.set(DataComponentTypes.CUSTOM_NAME, Text.of(groupValues[1]))
 			}
 
-			Utils.sendViceMessage("&&a${sender} &&fpurchased &&a${original.cleanName()} &&ffrom the Villager in &&aRoom $room")
-			Utils.playDing()
+			ChatUtils.sendViceMessage("&&a${sender} &&fpurchased &&a${original.cleanName()} &&ffrom the Villager in &&aRoom $room")
+			SoundUtils.playDing()
 
 			merchants[room]?.set(itemIndex, ItemStack.EMPTY)
 			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fSet index &&a$itemIndex&&f of merchant &&a$room &&fto &&cEMPTY.", "EXPEDITION_DEBUGGER")
@@ -58,8 +59,8 @@ object AutoCommunications {
 			val room = groupValues[1].toIntOrNull() ?: return
 			val data = groupValues[2]
 
-			Utils.sendViceMessage("&&a${sender} &&ffound a Villager in &&aRoom $room&&f!")
-			Utils.playDing()
+			ChatUtils.sendViceMessage("&&a${sender} &&ffound a Villager in &&aRoom $room&&f!")
+			SoundUtils.playDing()
 
 			if (room < 0 || room > 15 || merchants[room]?.isNotEmpty() == true) return
 			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fImporting shopkeeper &&a$room&&f data from ${sender}.", "EXPEDITION_DEBUGGER")

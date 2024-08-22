@@ -104,7 +104,7 @@ abstract class
 
 			GLFW.GLFW_KEY_V -> position.y = getClient().window.scaledHeight / 2f
 			GLFW.GLFW_KEY_H -> {
-				position.x = (getClient().window.scaledWidth / 2f)
+				position.x = getClient().window.scaledWidth / 2f
 				position.centered = true
 			}
 
@@ -147,13 +147,13 @@ abstract class
 		position.centered = !position.centered
 	}
 
-	override fun isHovered(): Boolean = (visible && hoveredElement == this)
+	override fun isHovered(): Boolean = visible && hoveredElement == this
 
-	override fun isSelected(): Boolean = (visible && selectedElement == this)
+	override fun isSelected(): Boolean = visible && selectedElement == this
 
-	private fun isDragging(): Boolean = (visible && draggedElement == this)
+	private fun isDragging(): Boolean = visible && draggedElement == this
 
-	private fun isResetting(): Boolean = (visible && resettingElement == this)
+	private fun isResetting(): Boolean = visible && resettingElement == this
 
 	fun getDisplayName(): String = displayName
 

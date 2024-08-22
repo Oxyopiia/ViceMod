@@ -63,7 +63,7 @@ object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions
 		val rarityValue = getExpeditionRarity()?.rarityValue ?: return -1.0
 		val typeValue = getExpeditionItemType()?.typeValue ?: return -2.0
 
-		return (rarityValue * typeValue * (1.0 + gameState.toDouble() / 16.0))
+		return rarityValue * typeValue * (1.0 + gameState.toDouble() / 16.0)
 	}
 
 

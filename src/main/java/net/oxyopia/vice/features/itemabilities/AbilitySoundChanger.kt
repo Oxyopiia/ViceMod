@@ -39,11 +39,11 @@ object AbilitySoundChanger {
 				event.setReturnValue(config.GLITCH_MALLET_VOLUME)
 			}
 
-			(sound == "entity.guardian.attack" && ItemAbility.JYNX_CHAIN_GUN.isOnCooldown()) -> {
+			sound == "entity.guardian.attack" && ItemAbility.JYNX_CHAIN_GUN.isOnCooldown() -> {
 				event.setReturnValue(config.JYNX_CHAIN_GUN_VOLUME)
 			}
 
-			(sound == "entity.illusioner.cast_spell" && ItemAbility.SHADOW_GELATO_DRUM_GUN.isOnCooldown()) -> {
+			sound == "entity.illusioner.cast_spell" && ItemAbility.SHADOW_GELATO_DRUM_GUN.isOnCooldown() -> {
 				event.setReturnValue(config.SHADOW_DRUM_GUN_VOLUME)
 			}
 

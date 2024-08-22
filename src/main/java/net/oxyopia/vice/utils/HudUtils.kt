@@ -126,7 +126,7 @@ object HudUtils {
 		var width = size.first + padding
 		val height = size.second + padding
 
-		val pureX = x - (if (centered) (width / 2f) else 0f)
+		val pureX = x - if (centered) width / 2f else 0f
 		if (centered) width /= 2f
 
 		return Quad(pureX, y, x + width, y + height)
@@ -164,7 +164,7 @@ object HudUtils {
 		var maxWidth = 0
 
 		list.forEachIndexed { index, text ->
-			maxWidth = drawText(text, context, offsetY = index * gap * scale).coerceAtLeast(maxWidth)
+			maxWidth = drawText(text, context, offsetY = index * gap * scale, z = z).coerceAtLeast(maxWidth)
 		}
 
 		// Subtract 3 for final line not having a gap to account for
@@ -177,21 +177,6 @@ object HudUtils {
 	fun Position.drawStrings(list: List<String>, context: DrawContext, z: Int = 0, gap: Float = 10f): Pair<Float, Float> {
 		val textList = list.map { str -> Text.of(str.convertFormatting()) }
 		return drawTexts(textList, context, z, gap)
-	}
-
-	fun Position.getMultilineSize(list: List<String>, gap: Int = 10): Pair<Float, Float> {
-		val textRenderer = MinecraftClient.getInstance().textRenderer
-		var maxWidth = 0
-
-		list.forEach { text ->
-			maxWidth = textRenderer.getSpecialTextWidth(text.convertFormatting()).coerceAtLeast(maxWidth)
-		}
-
-		return Pair(maxWidth.toFloat(), list.size * gap * scale - 3)
-	}
-
-	fun Position.getMultilineHeight(rows: Int, gap: Int = 10): Float {
-		return rows * gap * scale - 3
 	}
 
 	fun TextRenderer.getSpecialTextWidth(text: String, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW): Int {

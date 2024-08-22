@@ -23,7 +23,7 @@ class EventManager {
 				if (method.isAnnotationPresent(SubscribeEvent::class.java)) {
 					val parameterTypes = method.parameterTypes
 
-					if (parameterTypes.isNotEmpty() && (ViceEvent::class.java.isAssignableFrom(parameterTypes[0]))) {
+					if (parameterTypes.isNotEmpty() && ViceEvent::class.java.isAssignableFrom(parameterTypes[0])) {
 						val eventClazz = parameterTypes[0]
 
 						if (ViceEvent::class.java.isAssignableFrom(eventClazz)) {

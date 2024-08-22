@@ -39,7 +39,7 @@ object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.o
 			CookingOrder.getById(it.key)?.apply {
 				val completions = completions.getOrDefault(it.key, 0)
 
-				val percentageComplete = ((completions.toDouble() / it.value.toDouble()) * 100).toInt()
+				val percentageComplete = (completions.toDouble() / it.value.toDouble() * 100).toInt()
 				val percentageColor = getPercentageColour(percentageComplete)
 
 				val text = "§a${displayName}§7: §a$completions§7/${it.value} §7($percentageColor$percentageComplete§7%)"

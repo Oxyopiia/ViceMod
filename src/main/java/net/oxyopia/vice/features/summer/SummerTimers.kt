@@ -4,6 +4,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.MutableText
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -18,15 +19,18 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
-object SummerTimers : HudElement("Summer Timers", Vice.storage.summer.violetInfoPos){
-	override fun shouldDraw(): Boolean = Vice.config.SUMMER_TIMERS
-	override fun drawCondition(): Boolean = World.Summer.isInWorld()
-
+object SummerTimers : HudElement(
+	"Summer Timers",
+	Vice.storage.summer.violetInfoPos,
+	{ Vice.storage.summer.violetInfoPos = it },
+	enabled = { Vice.config.SUMMER_TIMERS },
+	drawCondition = { World.Summer.isInWorld() }
+){
 	private val storage get() = Vice.storage.summer
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!shouldDraw() || !drawCondition()) return
+		if (!canDraw()) return
 
 		val list = mutableListOf(
 			"Summer Timers".toText(Vice.PRIMARY, bold = true)
@@ -58,7 +62,7 @@ object SummerTimers : HudElement("Summer Timers", Vice.storage.summer.violetInfo
 		}
 	}
 
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		val list = mutableListOf(
 			"Summer Timers".toText(Vice.PRIMARY, bold = true),
 		)
@@ -68,10 +72,5 @@ object SummerTimers : HudElement("Summer Timers", Vice.storage.summer.violetInfo
 		list.addTimerInternal("Bar Minigame", 19.minutes.plus(52.seconds), Color(122, 252, 133))
 
 		return position.drawTexts(list, context)
-	}
-
-	override fun storePosition(position: Position) {
-		Vice.storage.summer.violetInfoPos = position
-		Vice.storage.markDirty()
 	}
 }

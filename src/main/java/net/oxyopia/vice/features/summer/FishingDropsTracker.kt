@@ -4,6 +4,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -15,10 +16,13 @@ import net.oxyopia.vice.utils.HudUtils.drawTexts
 import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.Utils
 
-object FishingDropsTracker : HudElement("Summer Fishing Drops Tracker", Vice.storage.summer.fishingDropsPos) {
-	override fun shouldDraw(): Boolean = Vice.config.SUMMER_FISHING_TRACKER
-	override fun drawCondition(): Boolean = World.Summer.isInWorld() || Vice.config.SHOW_SUMMER_FISHING_TRACKER_GLOBALLY
-
+object FishingDropsTracker : HudElement(
+	"Summer Fishing Drops Tracker",
+	Vice.storage.summer.fishingDropsPos,
+	{ Vice.storage.summer.fishingDropsPos = it },
+	enabled = { Vice.config.SUMMER_FISHING_TRACKER },
+	drawCondition = {  World.Summer.isInWorld() || Vice.config.SHOW_SUMMER_FISHING_TRACKER_GLOBALLY }
+) {
 	private val localDropRegex by lazy {
 		Regex("You Fished up (.+)! \\(\\d+(?:.\\d+)?%\\)")
 	}
@@ -31,11 +35,11 @@ object FishingDropsTracker : HudElement("Summer Fishing Drops Tracker", Vice.sto
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!shouldDraw() || !drawCondition()) return
+		if (!canDraw()) return
 		draw(event.context)
 	}
 
-	private fun draw(context: DrawContext): Pair<Float, Float> {
+	private fun draw(context: DrawContext): Size {
 		val list: MutableList<Text> = mutableListOf("Summer Fishing Drops".toText(Vice.PRIMARY, bold = true))
 
 		FishingDrops.entries.forEach {
@@ -89,12 +93,7 @@ object FishingDropsTracker : HudElement("Summer Fishing Drops Tracker", Vice.sto
 		}	
 	}
 
-	override fun storePosition(position: Position) {
-		Vice.storage.summer.fishingDropsPos = position
-		Vice.storage.markDirty()
-	}
-
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		return draw(context)
 	}
 }

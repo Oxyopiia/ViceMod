@@ -41,17 +41,6 @@ public class DevConfig extends Vigilant {
 	)
 	public boolean LIVE_ARENA_OVERLAY_THING = false;
 
-	@Property(
-		type = PropertyType.SLIDER,
-		name = "Default Font Height (Size class)",
-		description = "Default font height, used for backgrounds and stuff like that",
-		category = "Experiments",
-		subcategory = "HudManager",
-		min = 1,
-		max = 20
-	)
-	public int DEFAULT_FONT_HEIGHT = 7;
-
 	/** BYPASSES */
 	@Property(
 		type = PropertyType.SWITCH,

@@ -17,7 +17,13 @@ import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.seconds
 
-object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPos){
+object TrainTimer : HudElement(
+	"Train Timer",
+	Vice.storage.showdown.trainTimerPos,
+	{ Vice.storage.showdown.trainTimerPos = it },
+	enabled = { Vice.config.TRAIN_TIMER },
+	drawCondition = { Vice.config.TRAIN_TIMER_OUTSIDE || World.Showdown.isInWorld() }
+) {
 	private const val SPAWN_COOLDOWN_TIME_SECONDS = 45 * 60
 	private const val SPAWN_MESSAGE = "The Train Conductor has returned!"
 	private const val CONDUCTOR_NAME = "The Train Conductor"
@@ -26,12 +32,9 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 	private val spawnTime get() = Vice.storage.showdown.lastKnownTrainSpawn
 	private var aliveCount = 0
 
-	override fun shouldDraw(): Boolean = Vice.config.TRAIN_TIMER
-	override fun drawCondition(): Boolean = Vice.config.TRAIN_TIMER_OUTSIDE || World.Showdown.isInWorld()
-
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!Vice.config.TRAIN_TIMER || !drawCondition()) return
+		if (!canDraw()) return
 
 		val list: MutableList<String> = mutableListOf()
 
@@ -78,11 +81,6 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 		if (event.entity.customName.toString().contains(CONDUCTOR_NAME) || event.entity.customName.toString().contains(PORTER_NAME)) {
 			aliveCount--
 		}
-	}
-
-	override fun storePosition(position: Position) {
-		Vice.storage.showdown.trainTimerPos = position
-		Vice.storage.markDirty()
 	}
 
 	override fun Position.drawPreview(context: DrawContext): Size {

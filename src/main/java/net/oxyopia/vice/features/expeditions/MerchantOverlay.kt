@@ -14,13 +14,16 @@ import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import kotlin.math.roundToInt
 
-object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions.merchantOverlayPos) {
-	override fun shouldDraw(): Boolean = Vice.config.EXPEDITION_MERCHANT_OVERLAY
-	override fun drawCondition(): Boolean = ExpeditionAPI.isInExpedition()
-
+object MerchantOverlay : HudElement(
+	"Merchant Overlay",
+	Vice.storage.expeditions.merchantOverlayPos,
+	{ Vice.storage.expeditions.merchantOverlayPos = it },
+	enabled = { Vice.config.EXPEDITION_MERCHANT_OVERLAY },
+	drawCondition = {  ExpeditionAPI.isInExpedition() }
+) {
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!shouldDraw() || !drawCondition()) return
+		if (!canDraw()) return
 		if (ExpeditionAPI.merchants.isEmpty() && !DevUtils.hasDevMode(Vice.devConfig.EXPEDITION_DEBUGGER)) return
 
 		val state = ExpeditionAPI.currentSession.gameState
@@ -65,12 +68,6 @@ object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions
 		val typeValue = getExpeditionItemType()?.typeValue ?: return -2.0
 
 		return rarityValue * typeValue * (1.0 + gameState.toDouble() / 16.0)
-	}
-
-
-	override fun storePosition(position: Position) {
-		Vice.storage.expeditions.merchantOverlayPos = position
-		Vice.storage.markDirty()
 	}
 
 	override fun Position.drawPreview(context: DrawContext): Size {

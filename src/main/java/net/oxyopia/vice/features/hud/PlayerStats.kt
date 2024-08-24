@@ -15,7 +15,12 @@ import net.oxyopia.vice.utils.ItemUtils.getLore
 import net.oxyopia.vice.utils.ItemUtils.isRod
 import net.oxyopia.vice.utils.Utils
 
-object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos) {
+object PlayerStats : HudElement(
+	"Player Stats",
+	Vice.storage.misc.playerStatsPos,
+	{  Vice.storage.misc.playerStatsPos = it },
+	enabled = { Vice.config.PLAYER_STATS }
+) {
 	private val defenseRegex = Regex("Defence: ([+-]?\\d+)")
 	private val speedRegex = Regex("Speed: ([+-]?\\d+(?:\\.\\d+)?)%")
 	private val fishReduceTimeRegex = Regex("Fish Time: ([+-]?\\d+\\.\\d+)s")
@@ -23,7 +28,7 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 
     @SubscribeEvent
     fun onHudRender(event: HudRenderEvent) {
-        if (!Vice.config.PLAYER_STATS) return
+        if (!canDraw()) return
         val player = Utils.getPlayer() ?: return
 
         var defence = 0
@@ -134,13 +139,6 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 
 		return 0
 	}
-
-    override fun storePosition(position: Position) {
-        Vice.storage.misc.playerStatsPos = position
-        Vice.storage.markDirty()
-    }
-
-    override fun shouldDraw(): Boolean = Vice.config.PLAYER_STATS
 
     override fun Position.drawPreview(context: DrawContext): Size {
         val list = listOf(

@@ -19,26 +19,28 @@ import org.lwjgl.glfw.GLFW
 import java.awt.Color
 import kotlin.time.Duration.Companion.seconds
 
-abstract class
-	HudElement(
-		private val displayName: String,
-		var position: Position,
-		private val padding: Float = 2f,
-		private val searchTerm: String = displayName) :
-	ClickableWidget(-1, 0, 0, 0, null)
-{
+abstract class HudElement(
+	private val displayName: String,
+	var position: Position,
+	private val storePosition: (Position) -> Unit,
+	var enabled: () -> Boolean,
+	var drawCondition: () -> Boolean = { true },
+	private val padding: Float = 2f,
+	private val searchTerm: String = displayName
+) : ClickableWidget(-1, 0, 0, 0, null) {
 	private var lastClicked: Long = -1
 
-	abstract fun storePosition(position: Position)
 	abstract fun Position.drawPreview(context: DrawContext): Size
 
-	open fun drawCondition(): Boolean = true
-	abstract fun shouldDraw(): Boolean
 	private fun shouldDrawInternal(): Boolean {
-		return shouldDraw() && MinecraftClient.getInstance().currentScreen == HudEditor && (Vice.storage.misc.showAllHudEditorElements || drawCondition())
+		return enabled() && MinecraftClient.getInstance().currentScreen == HudEditor && (Vice.storage.misc.showAllHudEditorElements || drawCondition())
 	}
+	fun canDraw() = enabled() && drawCondition()
 
-	fun save() = storePosition(position)
+	fun save() {
+		storePosition(position)
+		Vice.storage.markDirty()
+	}
 
 	@SubscribeEvent
 	fun drawHudEditor(event: HudEditorRenderEvent) {

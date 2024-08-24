@@ -17,10 +17,15 @@ import net.oxyopia.vice.utils.HudUtils.drawText
 import net.oxyopia.vice.utils.HudUtils.drawTexts
 import java.awt.Color
 
-object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
+object RenderTest : HudElement(
+	"WHAT???",
+	Position(100f, 100f),
+	{},
+	enabled = { Vice.config.DEVMODE && Vice.devConfig.LIVE_ARENA_OVERLAY_THING }
+){
 	@SubscribeEvent
 	fun onBossbarAfter(event: BossBarEvents.Insert) {
-		if (!shouldDraw()) return
+		if (!canDraw()) return
 
 		event.add("Hello World!", 0.72f, BossBar.Color.PINK, BossBar.Style.PROGRESS)
 		event.add("He3llo World!", 0.2f, BossBar.Color.YELLOW, BossBar.Style.NOTCHED_10)
@@ -30,7 +35,7 @@ object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!shouldDraw()) return
+		if (!canDraw()) return
 
 		// Anchor top left to (50, 20)
 		val pos50201uc = Position(50f, 20f, centered = false)
@@ -65,12 +70,6 @@ object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 			Text.literal("Scalar 2 Test 1").withColor(Colors.ChatColor.Green.rgb),
 			Text.literal("Scalar 2 Test 2").withColor(Colors.ChatColor.Green.rgb),
 		), event.context)
-	}
-
-	override fun storePosition(position: Position) {}
-
-	override fun shouldDraw(): Boolean {
-		return Vice.config.DEVMODE && Vice.devConfig.LIVE_ARENA_OVERLAY_THING
 	}
 
 	override fun Position.drawPreview(context: DrawContext): Size {

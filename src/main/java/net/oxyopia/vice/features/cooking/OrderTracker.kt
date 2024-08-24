@@ -10,20 +10,25 @@ import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
+import net.oxyopia.vice.features.cooking.OrderTracker.mc
 import net.oxyopia.vice.utils.HudUtils.drawTexts
 import net.oxyopia.vice.utils.HudUtils.toText
 
-object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.orderTrackerPos, searchTerm = "order tracker") {
+object OrderTracker : HudElement(
+	"Cooking Order Tracker",
+	Vice.storage.cooking.orderTrackerPos,
+	{ Vice.storage.cooking.orderTrackerPos = it },
+	enabled = { Vice.config.COOKING_ORDER_TRACKER },
+	drawCondition = { World.Burger.isInWorld() && (mc.player?.y ?: 0.0) > 100.0 },
+	searchTerm = "order tracker"
+) {
 	private val requests get() = Vice.storage.cooking.totalBurgerRequests
 	private val completions get() = Vice.storage.cooking.totalBurgersComplete
 	private val mc = MinecraftClient.getInstance()
 
-	override fun shouldDraw(): Boolean = Vice.config.COOKING_ORDER_TRACKER
-	override fun drawCondition(): Boolean = World.Burger.isInWorld() && (mc.player?.y ?: 0.0) > 100.0
-
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!Vice.config.COOKING_ORDER_TRACKER || !drawCondition()) return
+		if (!canDraw()) return
 		draw(position, event.context)
 	}
 
@@ -71,11 +76,6 @@ object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.o
 			percentage < 25 -> "§c"
 			else -> "§8"
 		}
-	}
-
-	override fun storePosition(position: Position) {
-		Vice.storage.cooking.orderTrackerPos = position
-		Vice.storage.markDirty()
 	}
 
 	override fun Position.drawPreview(context: DrawContext): Size {

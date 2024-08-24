@@ -16,10 +16,13 @@ import net.oxyopia.vice.utils.HudUtils.drawTexts
 import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.Utils
 
-object FishingDropsTracker : HudElement("Summer Fishing Drops Tracker", Vice.storage.summer.fishingDropsPos) {
-	override fun shouldDraw(): Boolean = Vice.config.SUMMER_FISHING_TRACKER
-	override fun drawCondition(): Boolean = World.Summer.isInWorld() || Vice.config.SHOW_SUMMER_FISHING_TRACKER_GLOBALLY
-
+object FishingDropsTracker : HudElement(
+	"Summer Fishing Drops Tracker",
+	Vice.storage.summer.fishingDropsPos,
+	{ Vice.storage.summer.fishingDropsPos = it },
+	enabled = { Vice.config.SUMMER_FISHING_TRACKER },
+	drawCondition = {  World.Summer.isInWorld() || Vice.config.SHOW_SUMMER_FISHING_TRACKER_GLOBALLY }
+) {
 	private val localDropRegex by lazy {
 		Regex("You Fished up (.+)! \\(\\d+(?:.\\d+)?%\\)")
 	}
@@ -32,7 +35,7 @@ object FishingDropsTracker : HudElement("Summer Fishing Drops Tracker", Vice.sto
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!shouldDraw() || !drawCondition()) return
+		if (!canDraw()) return
 		draw(event.context)
 	}
 
@@ -88,11 +91,6 @@ object FishingDropsTracker : HudElement("Summer Fishing Drops Tracker", Vice.sto
 			fishups[FishingDrops.TIDAL_VANGUARD.name] = fishups.getOrDefault(FishingDrops.TIDAL_VANGUARD.name, 0) + 1
 			Vice.storage.markDirty()
 		}	
-	}
-
-	override fun storePosition(position: Position) {
-		Vice.storage.summer.fishingDropsPos = position
-		Vice.storage.markDirty()
 	}
 
 	override fun Position.drawPreview(context: DrawContext): Size {

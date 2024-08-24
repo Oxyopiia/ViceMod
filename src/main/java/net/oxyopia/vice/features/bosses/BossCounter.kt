@@ -17,7 +17,13 @@ import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.Utils
 import java.awt.Color
 
-object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPos) {
+object BossCounter: HudElement(
+	"Boss Counter",
+	Vice.storage.bosses.bossCounterPos,
+	{ Vice.storage.bosses.bossCounterPos = it },
+	enabled = { Vice.config.BOSS_COUNTER },
+	drawCondition = { Vice.config.BOSS_COUNTER_OUTSIDE || Utils.getDTWorld()?.type == World.WorldType.BOSS }
+) {
     private val viceTimeRegex = Regex("You ran out of time to defeat Vice\\. \\(\\d+m\\)")
     private val gelatoTimeRegex = Regex("You ran out of time to defeat \"Corrupted Vice\" Phase 3\\. \\(\\d+m\\)")
     private val pppTimeRegex = Regex("You ran out of time to defeat Percentage Player Percentage. \\(\\d+m\\)")
@@ -27,9 +33,6 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
     private val abyssalCompletionRegex = Regex("Abyssal Vice: No\\.\\. This- This Can't Be\\?!")
 
     private val bosses get() = Vice.storage.bosses
-
-	override fun shouldDraw(): Boolean = Vice.config.BOSS_COUNTER
-	override fun drawCondition(): Boolean = Vice.config.BOSS_COUNTER_OUTSIDE || Utils.getDTWorld()?.type == World.WorldType.BOSS
 
 	private fun draw(context: DrawContext): Size {
 		val list: MutableList<Text> = mutableListOf("Bosses".toText(Vice.PRIMARY, bold = true))
@@ -100,16 +103,11 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 
     @SubscribeEvent
     fun onHudRender(event: HudRenderEvent) {
-        if (!shouldDraw() || !drawCondition()) return
+        if (!enabled() || !drawCondition()) return
 		draw(event.context)
     }
 
-    override fun storePosition(position: Position) {
-        Vice.storage.bosses.bossCounterPos = position
-        Vice.storage.markDirty()
-    }
-
-    override fun Position.drawPreview(context: DrawContext): Size {
+	override fun Position.drawPreview(context: DrawContext): Size {
         return draw(context)
     }
 }

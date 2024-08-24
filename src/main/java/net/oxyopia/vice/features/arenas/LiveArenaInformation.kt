@@ -16,15 +16,18 @@ import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.seconds
 
-object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.arenas.liveArenaPos) {
+object LiveArenaInformation : HudElement(
+	"Live Arena Information",
+	Vice.storage.arenas.liveArenaPos,
+	{ Vice.storage.arenas.liveArenaPos = it },
+	enabled = { Vice.config.LIVE_ARENA_TOGGLE },
+	drawCondition = { ArenaSession.active && ArenaSession.relatedWorld == Utils.getDTWorld() }
+) {
 	private const val WAVE_TIME_SECONDS = 60
-
-	override fun shouldDraw(): Boolean = Vice.config.LIVE_ARENA_TOGGLE
-	override fun drawCondition(): Boolean = ArenaSession.active && ArenaSession.relatedWorld == Utils.getDTWorld()
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!shouldDraw() || !drawCondition()) return
+		if (!canDraw()) return
 
 		val session = ArenaSession
 		val world = session.relatedWorld
@@ -56,11 +59,6 @@ object LiveArenaInformation : HudElement("Live Arena Information", Vice.storage.
 		}
 
 		position.drawTexts(list, event.context)
-	}
-
-	override fun storePosition(position: Position) {
-		Vice.storage.arenas.liveArenaPos = position
-		Vice.storage.markDirty()
 	}
 
 	override fun Position.drawPreview(context: DrawContext): Size {

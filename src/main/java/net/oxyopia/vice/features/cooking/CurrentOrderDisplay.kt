@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice.Companion.config
 import net.oxyopia.vice.Vice.Companion.storage
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.data.World
@@ -77,7 +78,7 @@ object CurrentOrderDisplay : HudElement("Cooking Display", storage.cooking.curre
 		storage.markDirty()
 	}
 
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		val list = mutableListOf("&&6&&lHamburger")
 
 		var text = "&&aBread"

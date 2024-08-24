@@ -4,6 +4,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.MutableText
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -58,7 +59,7 @@ object SummerTimers : HudElement("Summer Timers", Vice.storage.summer.violetInfo
 		}
 	}
 
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		val list = mutableListOf(
 			"Summer Timers".toText(Vice.PRIMARY, bold = true),
 		)

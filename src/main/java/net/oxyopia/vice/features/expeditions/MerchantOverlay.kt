@@ -3,6 +3,7 @@ package net.oxyopia.vice.features.expeditions
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.item.ItemStack
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
@@ -72,7 +73,7 @@ object MerchantOverlay : HudElement("Merchant Overlay", Vice.storage.expeditions
 		Vice.storage.markDirty()
 	}
 
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		val list = mutableListOf(
 			"&&a&&lMerchants",
 			"&&aRoom 1",

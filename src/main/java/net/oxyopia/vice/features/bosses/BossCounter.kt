@@ -6,6 +6,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -30,7 +31,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
 	override fun shouldDraw(): Boolean = Vice.config.BOSS_COUNTER
 	override fun drawCondition(): Boolean = Vice.config.BOSS_COUNTER_OUTSIDE || Utils.getDTWorld()?.type == World.WorldType.BOSS
 
-	private fun draw(context: DrawContext): Pair<Float, Float> {
+	private fun draw(context: DrawContext): Size {
 		val list: MutableList<Text> = mutableListOf("Bosses".toText(Vice.PRIMARY, bold = true))
 
 		list.addBossStat("Vice", Colors.ViceBoss, bosses.vice.completions)
@@ -108,7 +109,7 @@ object BossCounter: HudElement("Boss Counter", Vice.storage.bosses.bossCounterPo
         Vice.storage.markDirty()
     }
 
-    override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+    override fun Position.drawPreview(context: DrawContext): Size {
         return draw(context)
     }
 }

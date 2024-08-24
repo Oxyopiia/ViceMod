@@ -3,6 +3,7 @@ package net.oxyopia.vice.features.hud
 import com.google.gson.annotations.Expose
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -125,7 +126,7 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 		Vice.storage.markDirty()
 	}
 
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		val list = listOf(
 			"Forge".toText(Vice.PRIMARY, bold = true),
 			"§7- §fSteel§7: §aREADY".toText(),

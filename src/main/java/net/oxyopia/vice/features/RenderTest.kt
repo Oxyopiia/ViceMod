@@ -5,6 +5,7 @@ import net.minecraft.entity.boss.BossBar
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.BossBarEvents
@@ -72,7 +73,7 @@ object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 		return Vice.config.DEVMODE && Vice.devConfig.LIVE_ARENA_OVERLAY_THING
 	}
 
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		val list = listOf(
 			"&&b&&lCryonic Caverns",
 			"&&bWave 26",

@@ -4,6 +4,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.nbt.NbtElement
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
@@ -141,7 +142,7 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 
     override fun shouldDraw(): Boolean = Vice.config.PLAYER_STATS
 
-    override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+    override fun Position.drawPreview(context: DrawContext): Size {
         val list = listOf(
             "Player Stats".toText(Vice.PRIMARY, bold = true),
             "§fDefence: §a\uD83D\uDEE1 16".toText(),

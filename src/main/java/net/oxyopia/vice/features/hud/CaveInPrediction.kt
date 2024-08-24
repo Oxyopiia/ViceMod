@@ -2,6 +2,7 @@ package net.oxyopia.vice.features.hud
 
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -82,7 +83,7 @@ object CaveInPrediction : HudElement("Cave-In Prediction", Vice.storage.lostInTi
 		Vice.storage.markDirty()
 	}
 
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		val list = listOf(
 			"Average blocks/second: &&a0.20",
 			"Blocks until Collapse: &&a20",

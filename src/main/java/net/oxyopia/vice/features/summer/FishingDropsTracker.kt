@@ -4,6 +4,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -35,7 +36,7 @@ object FishingDropsTracker : HudElement("Summer Fishing Drops Tracker", Vice.sto
 		draw(event.context)
 	}
 
-	private fun draw(context: DrawContext): Pair<Float, Float> {
+	private fun draw(context: DrawContext): Size {
 		val list: MutableList<Text> = mutableListOf("Summer Fishing Drops".toText(Vice.PRIMARY, bold = true))
 
 		FishingDrops.entries.forEach {
@@ -94,7 +95,7 @@ object FishingDropsTracker : HudElement("Summer Fishing Drops Tracker", Vice.sto
 		Vice.storage.markDirty()
 	}
 
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		return draw(context)
 	}
 }

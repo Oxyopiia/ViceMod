@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -26,7 +27,7 @@ object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.o
 		draw(position, event.context)
 	}
 
-	private fun draw(position: Position, context: DrawContext): Pair<Float, Float> {
+	private fun draw(position: Position, context: DrawContext): Size {
 		val bossOrderList = mutableListOf<Text>()
 		val list = mutableListOf<Text>(
 			"Cooking Order Tracker".toText(Vice.PRIMARY, bold = true)
@@ -77,7 +78,7 @@ object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.o
 		Vice.storage.markDirty()
 	}
 
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		return draw(this, context)
 	}
 

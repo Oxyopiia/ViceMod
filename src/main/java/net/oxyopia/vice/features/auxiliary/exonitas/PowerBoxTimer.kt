@@ -2,6 +2,7 @@ package net.oxyopia.vice.features.auxiliary.exonitas
 
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -74,7 +75,7 @@ object PowerBoxTimer : HudElement("Power Box Timer", Vice.storage.auxiliary.city
 		Vice.storage.markDirty()
 	}
 
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
-		return Pair(position.drawString("&&a1.5s", context) * position.scale, 7f)
+	override fun Position.drawPreview(context: DrawContext): Size {
+		return position.drawString("&&a1.5s", context)
 	}
 }

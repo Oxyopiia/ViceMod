@@ -17,8 +17,6 @@ import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.HudUtils.highlight
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
-import net.oxyopia.vice.utils.ItemUtils.getEquippedSets
-import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.NumberUtils.clamp
 import java.awt.Color
 import kotlin.math.ceil
@@ -251,7 +249,7 @@ object ItemAbilityCooldown {
 			DevUtils.sendDebugChat("&&bITEMABILITY &&conClick as&&b $name", "ITEM_ABILITY_DEBUGGER")
 
 			if (soundOnUse || remainingCooldown() > 0f) return
-			if (set == null || (MinecraftClient.getInstance().player?.getEquippedSets()?.getOrDefault(set, 0) ?: 0) >= setAmount) {
+			if (set == null || hasSet()) {
 				activate()
 			}
 		}
@@ -259,68 +257,25 @@ object ItemAbilityCooldown {
 
 	@SubscribeEvent
 	fun onRenderItemSlot(event: RenderHotbarSlotEvent) {
-		val ability: ItemAbility? = ItemAbility.getByName(event.itemStack.cleanName())
-
+		val ability: ItemAbility = ItemAbility.getByName(event.itemStack.cleanName()) ?: return
 		val bgOpacity = Vice.config.ITEMCD_BACKGROUND_OPACITY
-		val matrices = event.context.matrices
 
-		ability?.apply {
-			if(Vice.config.WRONG_SET_INDICATOR && setAmount > 0) {
-				if ((Utils.getPlayer()?.getEquippedSets()?.getOrDefault(set, 0) ?: 0) < setAmount) {
-					event.highlight(Color(255, 0, 0).withAlpha(bgOpacity))
-					drawStatus(event.x, event.y + 9, event.context)
-					return
-				}
-			}
-
-			if (!Vice.config.ITEM_COOLDOWN_DISPLAY || !displayCooldown) return
-			val displayType = Vice.config.ITEMCD_DISPLAY_TYPE
-
-			if (isOnCooldown()) {
-				val progressLeft: Float = remainingCooldown() / cooldown
-
-				when (displayType) {
-					DisplayType.VANILLA -> {
-						val topLeft = event.y + MathHelper.floor(16.0f * (1.0f - progressLeft))
-						val bottomRight = topLeft + MathHelper.ceil(16.0f * progressLeft)
-
-						HudUtils.fillUIArea(matrices, RenderLayer.getGuiOverlay(), event.x, topLeft, event.x + 16, bottomRight, 0, Int.MAX_VALUE)
-					}
-
-					DisplayType.STATIC -> {
-						event.highlight(Color(0.9f, 0f, 0f).withAlpha(bgOpacity))
-					}
-
-					DisplayType.COLOR_FADE -> {
-						var redness: Float = (2.7f * progressLeft).clamp(0f, 1f)
-						var greenness: Float = (1.3f - (1.3f * progressLeft)).clamp(0f, 1f)
-
-						if (Vice.config.DEVMODE) {
-							redness = (Vice.devConfig.ITEMCD_RED_FADE_OVERRIDE * progressLeft).clamp(0f, 1f)
-							greenness = (Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE - (Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE * progressLeft)).clamp(0f, 1f)
-						}
-
-						event.highlight(Color(redness, greenness, 0f, bgOpacity))
-					}
-
-					DisplayType.PERCENTAGE -> {
-						val col = when {
-							progressLeft <= 0.075f -> Color(0.4f, 1f, 0f)
-							progressLeft > 0.075 && progressLeft <= 0.5f -> Color.yellow
-							else -> Color(0.9f, 0f, 0f)
-						}.withAlpha(bgOpacity)
-
-						event.highlight(col)
-					}
-				}
-
-
-			} else if (!Vice.config.HIDE_ITEMCD_WHEN_READY && (displayType != DisplayType.VANILLA && displayType != DisplayType.TEXT_ONLY)) {
-				event.highlight(Color.green.withAlpha(bgOpacity))
-			}
-
-			drawStatus(event.x, event.y + 9, event.context)
+		if (Vice.config.WRONG_SET_INDICATOR && ability.setAmount > 0 && !ability.hasSet()) {
+			event.highlight(Color(255, 0, 0).withAlpha(bgOpacity))
+			ability.drawStatus(event.x, event.y + 9, event.context)
+			return
 		}
+
+		if (!Vice.config.ITEM_COOLDOWN_DISPLAY || !ability.displayCooldown) return
+		val displayType = Vice.config.ITEMCD_DISPLAY_TYPE
+
+		if (ability.isOnCooldown()) {
+			ability.drawCooldownBackground(event, displayType, bgOpacity)
+		} else if (!Vice.config.HIDE_ITEMCD_WHEN_READY && displayType != DisplayType.VANILLA && displayType != DisplayType.TEXT_ONLY) {
+			event.highlight(Color.green.withAlpha(bgOpacity))
+		}
+
+		ability.drawStatus(event.x, event.y + 9, event.context)
 	}
 
 	private fun ItemAbility.drawStatus(x: Int, y: Int, context: DrawContext, centered: Boolean = false, defaultColor: Color = Color.white) {
@@ -348,5 +303,44 @@ object ItemAbilityCooldown {
 		}
 
 		matrices.pop()
+	}
+
+	private fun ItemAbility.drawCooldownBackground(event: RenderHotbarSlotEvent, displayType: Int, bgOpacity: Float) {
+		val progressLeft: Float = remainingCooldown() / cooldown
+
+		when (displayType) {
+			DisplayType.VANILLA -> {
+				val topLeft = event.y + MathHelper.floor(16.0f * (1.0f - progressLeft))
+				val bottomRight = topLeft + MathHelper.ceil(16.0f * progressLeft)
+
+				HudUtils.fillUIArea(event.context.matrices, RenderLayer.getGuiOverlay(), event.x, topLeft, event.x + 16, bottomRight, 0, Int.MAX_VALUE)
+			}
+
+			DisplayType.STATIC -> {
+				event.highlight(Color(0.9f, 0f, 0f).withAlpha(bgOpacity))
+			}
+
+			DisplayType.COLOR_FADE -> {
+				var redness: Float = (2.7f * progressLeft).clamp(0f, 1f)
+				var greenness: Float = (1.3f - (1.3f * progressLeft)).clamp(0f, 1f)
+
+				if (Vice.config.DEVMODE) {
+					redness = (Vice.devConfig.ITEMCD_RED_FADE_OVERRIDE * progressLeft).clamp(0f, 1f)
+					greenness = (Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE - (Vice.devConfig.ITEMCD_GREEN_FADE_OVERRIDE * progressLeft)).clamp(0f, 1f)
+				}
+
+				event.highlight(Color(redness, greenness, 0f, bgOpacity))
+			}
+
+			DisplayType.PERCENTAGE -> {
+				val col = when {
+					progressLeft <= 0.075f -> Color(0.4f, 1f, 0f)
+					progressLeft > 0.075 && progressLeft <= 0.5f -> Color.yellow
+					else -> Color(0.9f, 0f, 0f)
+				}.withAlpha(bgOpacity)
+
+				event.highlight(col)
+			}
+		}
 	}
 }

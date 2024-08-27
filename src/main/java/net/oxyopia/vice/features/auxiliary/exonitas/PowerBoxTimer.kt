@@ -2,6 +2,7 @@ package net.oxyopia.vice.features.auxiliary.exonitas
 
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -16,15 +17,18 @@ import net.oxyopia.vice.utils.TimeUtils.formatShortDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.seconds
 
-object PowerBoxTimer : HudElement("Power Box Timer", Vice.storage.auxiliary.city.powerBoxTimerPos) {
+object PowerBoxTimer : HudElement(
+	"Power Box Timer",
+	Vice.storage.auxiliary.city.powerBoxTimerPos,
+	{ Vice.storage.auxiliary.city.powerBoxTimerPos = it },
+	enabled = { Vice.config.EXONITAS_POWER_BOX_TIMER },
+	drawCondition = { World.Exonitas.isInWorld() }
+) {
 	private val POWER_BOX_TIMER = 1.75.seconds
 	private val levelRegex = Regex("LEVEL (\\d*)")
 
 	private var lastPowerBoxActivation = -1L
 	private var lastKnownLevel = -1
-
-	override fun shouldDraw(): Boolean = Vice.config.EXONITAS_POWER_BOX_TIMER
-	override fun drawCondition(): Boolean = World.Exonitas.isInWorld()
 
 	@SubscribeEvent
 	fun onTitle(event: TitleEvent) {
@@ -59,7 +63,7 @@ object PowerBoxTimer : HudElement("Power Box Timer", Vice.storage.auxiliary.city
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!shouldDraw() || !World.Exonitas.isInWorld() || lastKnownLevel < 4) return
+		if (!enabled() || !drawCondition() || lastKnownLevel < 4) return
 
 		val text = when {
 			lastPowerBoxActivation.timeDelta() <= POWER_BOX_TIMER -> (POWER_BOX_TIMER - lastPowerBoxActivation.timeDelta()).formatShortDuration()
@@ -69,12 +73,7 @@ object PowerBoxTimer : HudElement("Power Box Timer", Vice.storage.auxiliary.city
 		position.drawString(text, event.context)
 	}
 
-	override fun storePosition(position: Position) {
-		Vice.storage.auxiliary.city.powerBoxTimerPos = position
-		Vice.storage.markDirty()
-	}
-
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
-		return Pair(position.drawString("&&a1.5s", context) * position.scale, 7f)
+	override fun Position.drawPreview(context: DrawContext): Size {
+		return position.drawString("&&a1.5s", context)
 	}
 }

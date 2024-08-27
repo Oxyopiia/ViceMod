@@ -4,29 +4,35 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
+import net.oxyopia.vice.features.cooking.OrderTracker.mc
 import net.oxyopia.vice.utils.HudUtils.drawTexts
 import net.oxyopia.vice.utils.HudUtils.toText
 
-object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.orderTrackerPos, searchTerm = "order tracker") {
+object OrderTracker : HudElement(
+	"Cooking Order Tracker",
+	Vice.storage.cooking.orderTrackerPos,
+	{ Vice.storage.cooking.orderTrackerPos = it },
+	enabled = { Vice.config.COOKING_ORDER_TRACKER },
+	drawCondition = { World.Burger.isInWorld() && (mc.player?.y ?: 0.0) > 100.0 },
+	searchTerm = "order tracker"
+) {
 	private val requests get() = Vice.storage.cooking.totalBurgerRequests
 	private val completions get() = Vice.storage.cooking.totalBurgersComplete
 	private val mc = MinecraftClient.getInstance()
 
-	override fun shouldDraw(): Boolean = Vice.config.COOKING_ORDER_TRACKER
-	override fun drawCondition(): Boolean = World.Burger.isInWorld() && (mc.player?.y ?: 0.0) > 100.0
-
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!Vice.config.COOKING_ORDER_TRACKER || !drawCondition()) return
+		if (!canDraw()) return
 		draw(position, event.context)
 	}
 
-	private fun draw(position: Position, context: DrawContext): Pair<Float, Float> {
+	private fun draw(position: Position, context: DrawContext): Size {
 		val bossOrderList = mutableListOf<Text>()
 		val list = mutableListOf<Text>(
 			"Cooking Order Tracker".toText(Vice.PRIMARY, bold = true)
@@ -39,7 +45,7 @@ object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.o
 			CookingOrder.getById(it.key)?.apply {
 				val completions = completions.getOrDefault(it.key, 0)
 
-				val percentageComplete = ((completions.toDouble() / it.value.toDouble()) * 100).toInt()
+				val percentageComplete = (completions.toDouble() / it.value.toDouble() * 100).toInt()
 				val percentageColor = getPercentageColour(percentageComplete)
 
 				val text = "§a${displayName}§7: §a$completions§7/${it.value} §7($percentageColor$percentageComplete§7%)"
@@ -72,12 +78,7 @@ object OrderTracker : HudElement("Cooking Order Tracker", Vice.storage.cooking.o
 		}
 	}
 
-	override fun storePosition(position: Position) {
-		Vice.storage.cooking.orderTrackerPos = position
-		Vice.storage.markDirty()
-	}
-
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		return draw(this, context)
 	}
 

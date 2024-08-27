@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder
 import net.minecraft.client.gui.widget.ClickableWidget
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.config.HudEditor
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.events.HudEditorRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.HudUtils.drawBackground
@@ -18,23 +19,28 @@ import org.lwjgl.glfw.GLFW
 import java.awt.Color
 import kotlin.time.Duration.Companion.seconds
 
-abstract class
-	HudElement(private val displayName: String, defaultState: Position, private val padding: Float = 2f, private val searchTerm: String = displayName) :
-	ClickableWidget(-1, 0, 0, 0, null)
-{
-	var position: Position = defaultState
+abstract class HudElement(
+	private val displayName: String,
+	var position: Position,
+	private val storePosition: (Position) -> Unit,
+	var enabled: () -> Boolean,
+	var drawCondition: () -> Boolean = { true },
+	private val padding: Float = 2f,
+	private val searchTerm: String = displayName
+) : ClickableWidget(-1, 0, 0, 0, null) {
 	private var lastClicked: Long = -1
 
-	abstract fun storePosition(position: Position)
-	abstract fun Position.drawPreview(context: DrawContext): Pair<Float, Float>?
+	abstract fun Position.drawPreview(context: DrawContext): Size
 
-	open fun drawCondition(): Boolean = true
-	abstract fun shouldDraw(): Boolean
 	private fun shouldDrawInternal(): Boolean {
-		return shouldDraw() && MinecraftClient.getInstance().currentScreen == HudEditor && (Vice.storage.misc.showAllHudEditorElements || drawCondition())
+		return enabled() && MinecraftClient.getInstance().currentScreen == HudEditor && (Vice.storage.misc.showAllHudEditorElements || drawCondition())
 	}
+	fun canDraw() = enabled() && drawCondition()
 
-	fun save() = storePosition(position)
+	fun save() {
+		storePosition(position)
+		Vice.storage.markDirty()
+	}
 
 	@SubscribeEvent
 	fun drawHudEditor(event: HudEditorRenderEvent) {
@@ -49,16 +55,16 @@ abstract class
 		val color = if (isResetting()) Color.red else Color.gray
 		val alpha = if (isHovered) 0.5f else 0.3f
 
-		position.drawPreview(context)?.run {
-			position.drawBackground(this, context, padding = padding, color = color.withAlpha(alpha)).apply {
-				x = minX.toInt()
-				y = minY.toInt()
-				width = width().toInt()
-				height = height().toInt()
-			}
+		val size = position.drawPreview(context)
 
-			visible = true
+		position.drawBackground(size, context, padding = padding, color = color.withAlpha(alpha)).apply {
+			x = minX.toInt()
+			y = minY.toInt()
+			width = width().toInt()
+			height = height().toInt()
 		}
+
+		visible = true
 	}
 
 	override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, deltaX: Double, deltaY: Double): Boolean {
@@ -104,7 +110,7 @@ abstract class
 
 			GLFW.GLFW_KEY_V -> position.y = getClient().window.scaledHeight / 2f
 			GLFW.GLFW_KEY_H -> {
-				position.x = (getClient().window.scaledWidth / 2f)
+				position.x = getClient().window.scaledWidth / 2f
 				position.centered = true
 			}
 
@@ -147,13 +153,13 @@ abstract class
 		position.centered = !position.centered
 	}
 
-	override fun isHovered(): Boolean = (visible && hoveredElement == this)
+	override fun isHovered(): Boolean = visible && hoveredElement == this
 
-	override fun isSelected(): Boolean = (visible && selectedElement == this)
+	override fun isSelected(): Boolean = visible && selectedElement == this
 
-	private fun isDragging(): Boolean = (visible && draggedElement == this)
+	private fun isDragging(): Boolean = visible && draggedElement == this
 
-	private fun isResetting(): Boolean = (visible && resettingElement == this)
+	private fun isResetting(): Boolean = visible && resettingElement == this
 
 	fun getDisplayName(): String = displayName
 

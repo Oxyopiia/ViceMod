@@ -2,6 +2,7 @@ package net.oxyopia.vice.features.hud
 
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -15,7 +16,13 @@ import net.oxyopia.vice.utils.Utils
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
-object CaveInPrediction : HudElement("Cave-In Prediction", Vice.storage.lostInTime.caveInEstimatePos) {
+object CaveInPrediction : HudElement(
+	"Cave-In Prediction",
+	Vice.storage.lostInTime.caveInEstimatePos,
+	{ Vice.storage.lostInTime.caveInEstimatePos = it },
+	enabled = { Vice.config.LOST_IN_TIME_CAVE_PREDICTION },
+	drawCondition = { World.SoulswiftSands.isInWorld() && (Utils.getPlayer()?.y ?: 100.0) <= 35.0 }
+) {
 	private val bossbarRegex = Regex("(\\d+)/(\\d+) BLOCKS MINED UNTIL A CAVE-IN")
 
 	private var currentCount = -1
@@ -24,9 +31,6 @@ object CaveInPrediction : HudElement("Cave-In Prediction", Vice.storage.lostInTi
 	private var lastUpdated = -1L
 
 	private data class TrackingPoint(val timestamp: Long, val count: Int)
-
-	override fun shouldDraw(): Boolean = Vice.config.LOST_IN_TIME_CAVE_PREDICTION
-	override fun drawCondition(): Boolean = World.SoulswiftSands.isInWorld() && (Utils.getPlayer()?.y ?: 100.0) <= 35.0
 
 	@SubscribeEvent
 	fun onBossbar(event: BossBarEvents.Read) {
@@ -48,7 +52,7 @@ object CaveInPrediction : HudElement("Cave-In Prediction", Vice.storage.lostInTi
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!shouldDraw() || !drawCondition()) return
+		if (!canDraw()) return
 
 		val tracking = tracking ?: return
 
@@ -77,12 +81,7 @@ object CaveInPrediction : HudElement("Cave-In Prediction", Vice.storage.lostInTi
 		return truncated * 100
 	}
 
-	override fun storePosition(position: Position) {
-		Vice.storage.lostInTime.caveInEstimatePos = position
-		Vice.storage.markDirty()
-	}
-
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		val list = listOf(
 			"Average blocks/second: &&a0.20",
 			"Blocks until Collapse: &&a20",

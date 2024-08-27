@@ -5,6 +5,7 @@ import net.minecraft.entity.boss.BossBar
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.BossBarEvents
@@ -16,10 +17,15 @@ import net.oxyopia.vice.utils.HudUtils.drawText
 import net.oxyopia.vice.utils.HudUtils.drawTexts
 import java.awt.Color
 
-object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
+object RenderTest : HudElement(
+	"WHAT???",
+	Position(100f, 100f),
+	{},
+	enabled = { Vice.config.DEVMODE && Vice.devConfig.LIVE_ARENA_OVERLAY_THING }
+){
 	@SubscribeEvent
 	fun onBossbarAfter(event: BossBarEvents.Insert) {
-		if (!shouldDraw()) return
+		if (!canDraw()) return
 
 		event.add("Hello World!", 0.72f, BossBar.Color.PINK, BossBar.Style.PROGRESS)
 		event.add("He3llo World!", 0.2f, BossBar.Color.YELLOW, BossBar.Style.NOTCHED_10)
@@ -29,7 +35,7 @@ object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!shouldDraw()) return
+		if (!canDraw()) return
 
 		// Anchor top left to (50, 20)
 		val pos50201uc = Position(50f, 20f, centered = false)
@@ -66,13 +72,7 @@ object RenderTest : HudElement("WHAT???", Position(100f, 100f)){
 		), event.context)
 	}
 
-	override fun storePosition(position: Position) {}
-
-	override fun shouldDraw(): Boolean {
-		return Vice.config.DEVMODE && Vice.devConfig.LIVE_ARENA_OVERLAY_THING
-	}
-
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		val list = listOf(
 			"&&b&&lCryonic Caverns",
 			"&&bWave 26",

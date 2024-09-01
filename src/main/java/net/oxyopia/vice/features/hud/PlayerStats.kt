@@ -1,6 +1,7 @@
 package net.oxyopia.vice.features.hud
 
 import net.minecraft.client.gui.DrawContext
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.nbt.NbtElement
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
@@ -110,10 +111,10 @@ object PlayerStats : HudElement(
 
 	private fun getMiningSpeed(): Float {
 		Utils.getPlayer()?.mainHandStack?.apply {
-			val nbt = nbt ?: return 0f
+			val data = get(DataComponentTypes.CUSTOM_DATA)?.copyNbt() ?: return 0f
 
-			if (nbt.contains("custom", NbtElement.COMPOUND_TYPE.toInt())) {
-				val nbtCompound = nbt.getCompound("custom")
+			if (data.contains("custom", NbtElement.COMPOUND_TYPE.toInt())) {
+				val nbtCompound = data.getCompound("custom")
 
 				if (nbtCompound.contains("miningspeed", NbtElement.FLOAT_TYPE.toInt())) {
 					return nbtCompound.getFloat("miningspeed")
@@ -126,10 +127,10 @@ object PlayerStats : HudElement(
 
 	private fun getBreakingPower(): Int {
 		Utils.getPlayer()?.mainHandStack?.apply {
-			val nbt = nbt ?: return 0
+			val data = get(DataComponentTypes.CUSTOM_DATA)?.copyNbt() ?: return 0
 
-			if (nbt.contains("custom", NbtElement.COMPOUND_TYPE.toInt())) {
-				val nbtCompound = nbt.getCompound("custom")
+			if (data.contains("custom", NbtElement.COMPOUND_TYPE.toInt())) {
+				val nbtCompound = data.getCompound("custom")
 
 				if (nbtCompound.contains("breakingpower", NbtElement.INT_TYPE.toInt())) {
 					return nbtCompound.getInt("breakingpower")

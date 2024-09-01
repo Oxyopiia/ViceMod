@@ -2,16 +2,19 @@ package net.oxyopia.vice.utils
 
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayerEntity
-import net.minecraft.entity.EquipmentSlot
+import net.minecraft.component.DataComponentTypes
+import net.minecraft.component.type.AttributeModifierSlot
+import net.minecraft.component.type.AttributeModifiersComponent
+import net.minecraft.entity.attribute.EntityAttribute
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
-import net.minecraft.nbt.NbtElement
-import net.minecraft.text.Text
+import net.minecraft.registry.entry.RegistryEntry
 import net.oxyopia.vice.data.Set
 import java.util.*
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
+import java.util.stream.Collectors
+
 
 object ItemUtils {
 	fun ItemStack.cleanName(): String {
@@ -28,26 +31,34 @@ object ItemUtils {
 	 * @author Mojang
 	 */
 	fun ItemStack.getLore(): List<String> {
-		val lore: MutableList<String> = ArrayList()
+		val lines = components.get(DataComponentTypes.LORE)?.lines ?: return ArrayList()
 
-		if (this.hasNbt()) {
-			if (this.nbt!!.contains(ItemStack.DISPLAY_KEY, NbtElement.COMPOUND_TYPE.toInt())) {
-				val nbtCompound = this.nbt!!.getCompound(ItemStack.DISPLAY_KEY)
+		return lines.map { it.string }
+	}
 
-				if (nbtCompound.getType(ItemStack.LORE_KEY) == NbtElement.LIST_TYPE) {
-					val nbtList = nbtCompound.getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE.toInt())
+	fun ItemStack.getNbtString(): String {
+		val stream = components.stream().map { it.toString() }
+		return "{" + stream.collect(Collectors.joining(", ")) + "}"
+	}
 
-					for (i in nbtList.indices) {
-						val lineLore: Text? = Text.Serialization.fromJson(nbtList.getString(i))
+	fun ItemStack.getAttributeModifier(modifier: RegistryEntry<EntityAttribute>, slot: AttributeModifierSlot = AttributeModifierSlot.MAINHAND): Double {
+		val attributeModifiers = getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.DEFAULT).modifiers()
 
-						if (lineLore != null) lore.add(lineLore.string)
-					}
-				}
+		for (entry in attributeModifiers) {
+			if (entry.attribute() == modifier && entry.slot() == slot) {
+				return entry.modifier().value()
 			}
 		}
 
-		return lore
+		return -1.0
 	}
+
+	fun ItemStack.getAttributeModifierInAnySlot(modifier: RegistryEntry<EntityAttribute>): Double {
+		return AttributeModifierSlot.entries.stream()
+			.mapToDouble { modifierSlot -> getAttributeModifier(modifier, modifierSlot) }
+			.sum()
+	}
+
 
 	private val validRods = listOf(
 		"Basic Fishing Rod",
@@ -81,6 +92,6 @@ object ItemUtils {
 	}
 
 	fun ItemStack.isPlayerHeadWithArmor(): Boolean {
-		return item == Items.PLAYER_HEAD && getAttributeModifiers(EquipmentSlot.HEAD)[EntityAttributes.GENERIC_ARMOR].isNotEmpty()
+		return item == Items.PLAYER_HEAD && getAttributeModifier(EntityAttributes.GENERIC_ARMOR, AttributeModifierSlot.HEAD) >= 4.0
 	}
 }

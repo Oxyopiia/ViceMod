@@ -1,12 +1,10 @@
 package net.oxyopia.vice.config;
 
-import gg.essential.api.EssentialAPI;
 import gg.essential.universal.UDesktop;
 import gg.essential.universal.UScreen;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
 import net.oxyopia.vice.Vice;
-import net.oxyopia.vice.utils.Utils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -31,11 +29,6 @@ public class Config extends Vigilant {
 		placeholder = "Edit HUD Locations"
 	)
 	public void EDIT_HUD_LOCATIONS() {
-		if (!Utils.INSTANCE.getInDoomTowers()) {
-			EssentialAPI.getNotifications().push("HUD Manager", "Please open while in DoomTowers!", 3f);
-			return;
-		}
-
 		UScreen.displayScreen(HudEditor.INSTANCE);
 	}
 
@@ -60,7 +53,6 @@ public class Config extends Vigilant {
 	)
 	public void JOIN_VICE_DISCORD() {
 		UDesktop.browse(URI.create("https://discord.gg/7nb9KcZHug"));
-		EssentialAPI.getNotifications().push("Vice", "Hopefully opened Discord/Web Browser!", 3f);
 	}
 
 	// General/Developer

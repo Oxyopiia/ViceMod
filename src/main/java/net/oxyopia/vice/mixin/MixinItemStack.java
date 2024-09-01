@@ -1,13 +1,12 @@
 package net.oxyopia.vice.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.oxyopia.vice.events.ItemRenameEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 import static net.oxyopia.vice.Vice.EVENT_MANAGER;
 
@@ -15,22 +14,16 @@ import static net.oxyopia.vice.Vice.EVENT_MANAGER;
 abstract class MixinItemStack {
 	@Shadow public abstract ItemStack copy();
 
-	@Redirect(
-		at = @At(value="INVOKE", target = "Lnet/minecraft/text/Text$Serialization;fromJson(Ljava/lang/String;)Lnet/minecraft/text/MutableText;"),
-		method = "getName"
+	@ModifyReturnValue(
+		method = "getName",
+		at = @At("RETURN")
 	)
-	private MutableText getName(String json) {
-		MutableText name = Text.Serialization.fromJson(json);
-
-		if (name != null) {
-			ItemStack newStack = this.copy();
-
-			ItemRenameEvent result = EVENT_MANAGER.publish(new ItemRenameEvent(newStack, name));
-			if (result.hasReturnValue()) {
-				return result.getReturnValue();
-			}
+	private Text getName(Text original) {
+		ItemRenameEvent result = EVENT_MANAGER.publish(new ItemRenameEvent(this.copy(), original.copy()));
+		if (result.hasReturnValue()) {
+			return result.getReturnValue();
 		}
 
-		return name;
+		return original;
 	}
 }

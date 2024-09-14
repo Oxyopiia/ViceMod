@@ -127,7 +127,7 @@ class Vice : ClientModInitializer {
 		storage.initialize()
 
 		subscribeEventListeners()
-		initConnectionEvents()
+		initEvents()
 
 		if (storage.lastVersion != version.friendlyString) {
 			storage.lastVersion = version.friendlyString
@@ -141,7 +141,7 @@ class Vice : ClientModInitializer {
 		}
 	}
 
-	private fun initConnectionEvents() {
+	private fun initEvents() {
 		// If still in DoomTowers, will be updated back to true by Mixin
 		ClientPlayConnectionEvents.DISCONNECT.register(ClientPlayConnectionEvents.Disconnect { _: ClientPlayNetworkHandler?, _: MinecraftClient? ->
 			inDoomTowers = false

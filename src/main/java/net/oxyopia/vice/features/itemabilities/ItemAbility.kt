@@ -110,7 +110,7 @@ enum class ItemAbility(
         }
     }
 
-    fun hasSet(): Boolean = (Utils.getPlayer()?.getEquippedSets()?.get(set) ?: 0) >= setAmount
+    fun hasSetEquipped(): Boolean = (Utils.getPlayer()?.getEquippedSets()?.get(set) ?: 0) >= setAmount
 
     companion object {
         var sharedCooldowns = HashMap<String, Long>()

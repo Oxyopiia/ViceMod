@@ -197,6 +197,15 @@ public class Config extends Vigilant {
 		options = {"Normal", "Action Bar", "Hidden"}
 	)
 	public int ITEM_COOLDOWN_TITLE_TYPE = 0;
+	
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Show Extra Info in Tooltip",
+		description = "Shows extra info, such as Cooldowns and increased Damage, in the tooltip of ability items.",
+		category = "Abilities",
+		subcategory = "Quality of Life"
+	)
+	public boolean SHOW_EXTRA_ABILITY_INFO = true;
 
 	@Property(
 		type = PropertyType.SWITCH,

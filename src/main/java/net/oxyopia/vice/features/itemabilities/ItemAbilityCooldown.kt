@@ -249,7 +249,7 @@ object ItemAbilityCooldown {
 			DevUtils.sendDebugChat("&&bITEMABILITY &&conClick as&&b $name", "ITEM_ABILITY_DEBUGGER")
 
 			if (soundOnUse || remainingCooldown() > 0f) return
-			if (set == null || hasSet()) {
+			if (set == null || hasSetEquipped()) {
 				activate()
 			}
 		}
@@ -260,7 +260,7 @@ object ItemAbilityCooldown {
 		val ability: ItemAbility = ItemAbility.getByName(event.itemStack.cleanName()) ?: return
 		val bgOpacity = Vice.config.ITEMCD_BACKGROUND_OPACITY
 
-		if (Vice.config.WRONG_SET_INDICATOR && ability.setAmount > 0 && !ability.hasSet()) {
+		if (Vice.config.WRONG_SET_INDICATOR && ability.setAmount > 0 && !ability.hasSetEquipped()) {
 			event.highlight(Color(255, 0, 0).withAlpha(bgOpacity))
 			ability.drawStatus(event.x, event.y + 9, event.context)
 			return

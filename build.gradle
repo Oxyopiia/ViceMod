@@ -45,7 +45,7 @@ dependencies {
 	modImplementation(include("gg.essential:vigilance-1.18.1-fabric:299") {
 		exclude(group: "gg.essential", module: "universalcraft-1.18.1-fabric")
 	})
-	modImplementation(include("gg.essential:elementa-1.18.1-fabric:652") {
+	modImplementation(include("gg.essential:elementa-1.18.1-fabric:657") {
 		exclude(group: "gg.essential", module: "universalcraft-1.18.1-fabric")
 	})
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.1")

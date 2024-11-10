@@ -39,7 +39,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:1.12.1+kotlin.2.0.20"
 
-	modApi "com.terraformersmc:modmenu:11.0.2"
+	modApi "com.terraformersmc:modmenu:11.0.3"
 
 	modImplementation(include("gg.essential:universalcraft-1.21-fabric:365"))
 	modImplementation(include("gg.essential:vigilance-1.18.1-fabric:299") {

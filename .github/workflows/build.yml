@@ -36,15 +36,8 @@ jobs:
         with:
           name: Artifacts
           path: build/libs/
-      # - name: upload dev release
-      #   if: ${{ runner.os == 'Linux' && matrix.java == '21' }} # Only upload artifacts built from latest java on one OS
-      #   uses: pyTooling/Actions/releaser@r0
-      #   with:
-      #     tag: nightly
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     rm: true
-      #     files: build/libs/*.jar
-      - name: update dev release
+      - name: update dev release # push only
+        if: github.event.type == 'push'
         uses: andelf/nightly-release@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -52,7 +45,8 @@ jobs:
           tag_name: nightly
           name: 'Development Release'
           body: |
-            dev release for ${{ github.sha }}. bugs are to be expected, and may literally break your MC or sth, good luck ig
+            dev release for ${{ github.sha }}
+            bugs are to be expected, and may literally break your MC or sth, good luck ig
           prerelease: true
           files: |
             ./build/libs/*.jar

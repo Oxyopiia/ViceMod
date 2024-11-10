@@ -1,9 +1,11 @@
 package net.oxyopia.vice.features.hud
 
 import net.minecraft.client.gui.DrawContext
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.nbt.NbtElement
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
@@ -14,15 +16,20 @@ import net.oxyopia.vice.utils.ItemUtils.getLore
 import net.oxyopia.vice.utils.ItemUtils.isRod
 import net.oxyopia.vice.utils.Utils
 
-object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos) {
+object PlayerStats : HudElement(
+	"Player Stats",
+	Vice.storage.misc.playerStatsPos,
+	{  Vice.storage.misc.playerStatsPos = it },
+	enabled = { Vice.config.PLAYER_STATS }
+) {
 	private val defenseRegex = Regex("Defence: ([+-]?\\d+)")
 	private val speedRegex = Regex("Speed: ([+-]?\\d+(?:\\.\\d+)?)%")
 	private val fishReduceTimeRegex = Regex("Fish Time: ([+-]?\\d+\\.\\d+)s")
-	private val fishTimeRegex = Regex("Fish Time: (\\d+)-(\\d+(\\.\\d+)?)s")
+	private val fishTimeRegex = Regex("Fish Time: (\\d+)(?:-(\\d+(\\.\\d+)?))?s")
 
     @SubscribeEvent
     fun onHudRender(event: HudRenderEvent) {
-        if (!Vice.config.PLAYER_STATS) return
+        if (!canDraw()) return
         val player = Utils.getPlayer() ?: return
 
         var defence = 0
@@ -51,7 +58,11 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
         list.add("§fSpeed: §e⚡ $speed% §7(${String.format("%.2f", movementSpeed * 100).toFloat()})".toText())
 
 		if (!fishingTime.isNone()) {
-			list.add("§fFish Time: §b\uD83D\uDD51 ${fishingTime.min}-${fishingTime.max}s".toText())
+			if (fishingTime.min != 0.0) {
+				list.add("§fFish Time: §b\uD83D\uDD51 ${fishingTime.min}-${fishingTime.max}s".toText())
+			} else {
+				list.add("§fFish Time: §b\uD83D\uDD51 ${fishingTime.max}s".toText())
+			}
 		}
 
 		val breakingPower = getBreakingPower()
@@ -100,10 +111,10 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 
 	private fun getMiningSpeed(): Float {
 		Utils.getPlayer()?.mainHandStack?.apply {
-			val nbt = nbt ?: return 0f
+			val data = get(DataComponentTypes.CUSTOM_DATA)?.copyNbt() ?: return 0f
 
-			if (nbt.contains("custom", NbtElement.COMPOUND_TYPE.toInt())) {
-				val nbtCompound = nbt.getCompound("custom")
+			if (data.contains("custom", NbtElement.COMPOUND_TYPE.toInt())) {
+				val nbtCompound = data.getCompound("custom")
 
 				if (nbtCompound.contains("miningspeed", NbtElement.FLOAT_TYPE.toInt())) {
 					return nbtCompound.getFloat("miningspeed")
@@ -116,10 +127,10 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 
 	private fun getBreakingPower(): Int {
 		Utils.getPlayer()?.mainHandStack?.apply {
-			val nbt = nbt ?: return 0
+			val data = get(DataComponentTypes.CUSTOM_DATA)?.copyNbt() ?: return 0
 
-			if (nbt.contains("custom", NbtElement.COMPOUND_TYPE.toInt())) {
-				val nbtCompound = nbt.getCompound("custom")
+			if (data.contains("custom", NbtElement.COMPOUND_TYPE.toInt())) {
+				val nbtCompound = data.getCompound("custom")
 
 				if (nbtCompound.contains("breakingpower", NbtElement.INT_TYPE.toInt())) {
 					return nbtCompound.getInt("breakingpower")
@@ -130,14 +141,7 @@ object PlayerStats : HudElement("Player Stats", Vice.storage.misc.playerStatsPos
 		return 0
 	}
 
-    override fun storePosition(position: Position) {
-        Vice.storage.misc.playerStatsPos = position
-        Vice.storage.markDirty()
-    }
-
-    override fun shouldDraw(): Boolean = Vice.config.PLAYER_STATS
-
-    override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+    override fun Position.drawPreview(context: DrawContext): Size {
         val list = listOf(
             "Player Stats".toText(Vice.PRIMARY, bold = true),
             "§fDefence: §a\uD83D\uDEE1 16".toText(),

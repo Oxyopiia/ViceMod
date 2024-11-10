@@ -3,6 +3,7 @@ package net.oxyopia.vice.features.itemabilities
 import net.minecraft.util.ClickType
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.data.Set
+import net.oxyopia.vice.utils.ItemUtils.getEquippedSets
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils
 import kotlin.time.Duration.Companion.milliseconds
@@ -108,6 +109,8 @@ enum class ItemAbility(
             activate()
         }
     }
+
+    fun hasSet(): Boolean = (Utils.getPlayer()?.getEquippedSets()?.get(set) ?: 0) >= setAmount
 
     companion object {
         var sharedCooldowns = HashMap<String, Long>()

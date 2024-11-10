@@ -7,7 +7,7 @@ import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.seconds
 
@@ -80,7 +80,7 @@ object CookingAPI {
 				if (hideHandledMessages) {
 					event.cancel()
 					if (heldItem == CookingItem.COOKED_MEAT) {
-						Utils.playSound("block.note_block.pling", pitch = 1.5f, volume = 3f)
+						SoundUtils.playSound("block.note_block.pling", pitch = 1.5f, volume = 3f)
 						BurgerTimer.cooking = null
 					}
 				}

@@ -1,7 +1,9 @@
 package net.oxyopia.vice.config
 
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.util.InputUtil
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.HudElement
@@ -21,30 +23,7 @@ object HudEditor : Screen(Text.of("Vice HUD Editor")) {
 
 		Vice.EVENT_MANAGER.publish(HudEditorRenderEvent(context, mouseX, mouseY, delta))
 
-		val previewPos = Position(context.scaledWindowWidth.toFloat() / 2, 10f)
-		var previewText = mutableListOf(
-			"&&bVice HUD Editor",
-			"&&7Double-click elements to edit settings.",
-			"&&7Press &&aQ&&7 to edit only visible elements."
-		)
-
-		if (!misc.showAllHudEditorElements) {
-			previewText[2] = "&&7Press &&aQ&&7 to edit all enabled elements."
-		}
-
-		val element = HudElement.draggedElement ?: HudElement.hoveredElement
-		element?.apply {
-			previewText = mutableListOf(
-				"&&b${getDisplayName()}",
-				"&&7x: &&a${position.x.toInt()}&&7, y: &&a${position.y.toInt()}&&7, scale: &&a${round(position.scale * 10) / 10.0}"
-			)
-
-			if (HudElement.resettingElement == this) {
-				previewText.add("&&cRight Click again to reset to &&7(&&a0&&7, &&a0&&7, scale &&a1.0&&7)")
-			}
-		}
-
-		previewPos.drawStrings(previewText, context, 1000)
+		if (!InputUtil.isKeyPressed(MinecraftClient.getInstance().window.handle, GLFW.GLFW_KEY_LEFT_SHIFT)) drawHudEditorText(context)
 	}
 
 	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
@@ -98,5 +77,32 @@ object HudEditor : Screen(Text.of("Vice HUD Editor")) {
 	override fun close() {
 		Vice.storage.forceSave()
 		super.close()
+	}
+
+	private fun drawHudEditorText(context: DrawContext) {
+		val previewPos = Position(context.scaledWindowWidth.toFloat() / 2, 10f)
+		var previewText = mutableListOf(
+			"&&bVice HUD Editor",
+			"&&7Double-click elements to edit settings.",
+			"&&7Press &&aQ&&7 to edit only visible elements."
+		)
+
+		if (!misc.showAllHudEditorElements) {
+			previewText[2] = "&&7Press &&aQ&&7 to edit all enabled elements."
+		}
+
+		val element = HudElement.draggedElement ?: HudElement.hoveredElement
+		element?.apply {
+			previewText = mutableListOf(
+				"&&b${getDisplayName()}",
+				"&&7x: &&a${position.x.toInt()}&&7, y: &&a${position.y.toInt()}&&7, scale: &&a${round(position.scale * 10) / 10.0}"
+			)
+
+			if (HudElement.resettingElement == this) {
+				previewText.add("&&cRight Click again to reset to &&7(&&a0&&7, &&a0&&7, scale &&a1.0&&7)")
+			}
+		}
+
+		previewPos.drawStrings(previewText, context, 1000)
 	}
 }

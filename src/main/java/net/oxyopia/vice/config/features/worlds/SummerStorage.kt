@@ -5,6 +5,7 @@ import net.oxyopia.vice.data.gui.Position
 
 class SummerStorage {
 
+
 	@Expose
 	var fishups = hashMapOf<String, Int>()
 
@@ -13,6 +14,12 @@ class SummerStorage {
 
 	@Expose
 	var violetReset = -1L
+
+	@Expose
+	var iceCreamReset = -1L
+
+	@Expose
+	var barReset = -1L
 
 	@Expose
 	var fishingDropsPos = Position(200f, 10f, centered = false)

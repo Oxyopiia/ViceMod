@@ -1,7 +1,7 @@
 plugins {
 	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
-	id 'org.jetbrains.kotlin.jvm' version '1.9.23'
+	id 'org.jetbrains.kotlin.jvm' version '2.0.0'
 }
 
 version = project.mod_version
@@ -37,12 +37,17 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation "net.fabricmc:fabric-language-kotlin:1.11.0+kotlin.2.0.0"
+	modImplementation "net.fabricmc:fabric-language-kotlin:1.12.1+kotlin.2.0.20"
 
-	modApi "com.terraformersmc:modmenu:9.1.0-beta.1"
+	modApi "com.terraformersmc:modmenu:11.0.2"
 
-	modImplementation include("gg.essential:loader-fabric:1.2.3")
-	modCompileOnly "gg.essential:essential-${project.minecraft_version}-fabric:16719+g53e79466ed"
+	modImplementation(include("gg.essential:universalcraft-1.21-fabric:344"))
+	modImplementation(include("gg.essential:vigilance-1.18.1-fabric:299") {
+		exclude(group: "gg.essential", module: "universalcraft-1.18.1-fabric")
+	})
+	modImplementation(include("gg.essential:elementa-1.18.1-fabric:652") {
+		exclude(group: "gg.essential", module: "universalcraft-1.18.1-fabric")
+	})
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.1")
 
 
@@ -61,14 +66,14 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 17
+	it.options.release = 21
 }
 
 java {
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {

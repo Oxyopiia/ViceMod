@@ -1,19 +1,20 @@
 package net.oxyopia.vice.features.expeditions
 
 import net.minecraft.client.MinecraftClient
+import net.minecraft.component.DataComponentTypes
+import net.minecraft.component.type.LoreComponent
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
-import net.minecraft.nbt.NbtElement
-import net.minecraft.nbt.NbtString
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.features.expeditions.ExpeditionAPI.merchants
 import net.oxyopia.vice.features.expeditions.ExpeditionItemType.Companion.getExpeditionItemType
 import net.oxyopia.vice.features.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
+import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
-import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.Utils.convertFormatting
 
 object AutoCommunications {
@@ -38,11 +39,12 @@ object AutoCommunications {
 
 			var original = merchants[room]?.get(itemIndex)
 			if (original == ItemStack.EMPTY || original == null) {
-				original = ItemStack(Items.IRON_SWORD).setCustomName(Text.of(groupValues[1]))
+				original = ItemStack(Items.IRON_SWORD)
+				original.set(DataComponentTypes.CUSTOM_NAME, Text.of(groupValues[1]))
 			}
 
-			Utils.sendViceMessage("&&a${sender} &&fpurchased &&a${original?.cleanName()} &&ffrom the Villager in &&aRoom $room")
-			Utils.playDing()
+			ChatUtils.sendViceMessage("&&a${sender} &&fpurchased &&a${original.cleanName()} &&ffrom the Villager in &&aRoom $room")
+			SoundUtils.playDing()
 
 			merchants[room]?.set(itemIndex, ItemStack.EMPTY)
 			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fSet index &&a$itemIndex&&f of merchant &&a$room &&fto &&cEMPTY.", "EXPEDITION_DEBUGGER")
@@ -57,8 +59,8 @@ object AutoCommunications {
 			val room = groupValues[1].toIntOrNull() ?: return
 			val data = groupValues[2]
 
-			Utils.sendViceMessage("&&a${sender} &&ffound a Villager in &&aRoom $room&&f!")
-			Utils.playDing()
+			ChatUtils.sendViceMessage("&&a${sender} &&ffound a Villager in &&aRoom $room&&f!")
+			SoundUtils.playDing()
 
 			if (room < 0 || room > 15 || merchants[room]?.isNotEmpty() == true) return
 			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fImporting shopkeeper &&a$room&&f data from ${sender}.", "EXPEDITION_DEBUGGER")
@@ -74,10 +76,9 @@ object AutoCommunications {
 				val rarity = ExpeditionRarity.fromShorthand(importantLore) ?: ExpeditionRarity.DEFAULT
 				val type = ExpeditionItemType.fromShorthand(importantLore) ?: ExpeditionItemType.ITEM
 
-				val stack = ItemStack(Items.IRON_SWORD).setCustomName(Text.of("${rarity.color}$name".convertFormatting()))
-				val loreList = stack.getOrCreateSubNbt(ItemStack.DISPLAY_KEY).getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE.toInt())
-				loreList.add(NbtString.of(Text.Serialization.toJsonString(Text.of("${rarity.text} ${type.text}"))))
-				stack.getOrCreateSubNbt(ItemStack.DISPLAY_KEY).put(ItemStack.LORE_KEY, loreList)
+				val stack = ItemStack(Items.IRON_SWORD)
+				stack.set(DataComponentTypes.CUSTOM_NAME, Text.of("${rarity.color}$name".convertFormatting()))
+				stack.set(DataComponentTypes.LORE, LoreComponent(listOf(Text.of("${rarity.text} ${type.text}"))))
 
 				merchants[room]?.add(stack)
 			}

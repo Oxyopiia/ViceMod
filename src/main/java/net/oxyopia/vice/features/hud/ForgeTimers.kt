@@ -3,6 +3,7 @@ package net.oxyopia.vice.features.hud
 import com.google.gson.annotations.Expose
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
@@ -21,12 +22,16 @@ import kotlin.math.abs
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
-object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos) {
+object ForgeTimers : HudElement(
+	"Forge Times",
+	Vice.storage.misc.forgeTimersPos,
+	{ Vice.storage.misc.forgeTimersPos = it },
+	enabled = { Vice.config.FORGE_TIMERS },
+	drawCondition = { Vice.storage.misc.forgeList.isNotEmpty() }
+) {
 	private val misc = Vice.storage.misc
 	private val startRegex = Regex("\\+⌚ (\\d+ .+) \\((\\d+)m\\)")
 	private val collectRegex = Regex("\\+(.+)")
-
-	override fun shouldDraw(): Boolean = Vice.config.FORGE_TIMERS
 
 	@SubscribeEvent
 	fun onChatMessage(event: ChatEvent) {
@@ -55,8 +60,7 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!shouldDraw()) return
-		if (misc.forgeList.isEmpty()) return
+		if (!canDraw()) return
 
 		val list = mutableListOf("Forge".toText(Vice.PRIMARY, bold = true))
 
@@ -120,12 +124,7 @@ object ForgeTimers : HudElement("Forge Times", Vice.storage.misc.forgeTimersPos)
 		""".trimIndent()
 	}
 
-	override fun storePosition(position: Position) {
-		Vice.storage.misc.forgeTimersPos = position
-		Vice.storage.markDirty()
-	}
-
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		val list = listOf(
 			"Forge".toText(Vice.PRIMARY, bold = true),
 			"§7- §fSteel§7: §aREADY".toText(),

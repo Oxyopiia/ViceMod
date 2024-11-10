@@ -10,7 +10,7 @@ import net.oxyopia.vice.utils.RenderUtils.drawString
 
 object RoomWaypoints {
 	@SubscribeEvent
-	fun onRenderWorldLast(event: WorldRenderEvent.Last) {
+	fun onRenderWorldLast(event: WorldRenderEvent) {
 		if (!Vice.config.EXPEDITION_ROOM_WAYPOINTS) return
 		if (!ExpeditionAPI.isInExpedition()) return
 
@@ -27,7 +27,7 @@ object RoomWaypoints {
 		event.drawRoomLabels(nextRoom)
 	}
 	
-	private fun WorldRenderEvent.Last.drawRoomLabels(room: ExpeditionAPI.Room, zPos: Double = room.minZ) {
+	private fun WorldRenderEvent.drawRoomLabels(room: ExpeditionAPI.Room, zPos: Double = room.minZ) {
 		drawString(Vec3d(0.5, 72.0, zPos), room.id.toString(), Colors.ChatColor.Aqua, size = 2f)
 		drawString(Vec3d(0.5, 71.5, zPos), room.name, room.type.color, size = 2f)
 

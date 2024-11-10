@@ -2,21 +2,28 @@ package net.oxyopia.vice.features.hud
 
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.EntityDeathEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.seconds
 
-object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPos){
+object TrainTimer : HudElement(
+	"Train Timer",
+	Vice.storage.showdown.trainTimerPos,
+	{ Vice.storage.showdown.trainTimerPos = it },
+	enabled = { Vice.config.TRAIN_TIMER },
+	drawCondition = { Vice.config.TRAIN_TIMER_OUTSIDE || World.Showdown.isInWorld() }
+) {
 	private const val SPAWN_COOLDOWN_TIME_SECONDS = 45 * 60
 	private const val SPAWN_MESSAGE = "The Train Conductor has returned!"
 	private const val CONDUCTOR_NAME = "The Train Conductor"
@@ -25,12 +32,9 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 	private val spawnTime get() = Vice.storage.showdown.lastKnownTrainSpawn
 	private var aliveCount = 0
 
-	override fun shouldDraw(): Boolean = Vice.config.TRAIN_TIMER
-	override fun drawCondition(): Boolean = Vice.config.TRAIN_TIMER_OUTSIDE || World.Showdown.isInWorld()
-
 	@SubscribeEvent
 	fun onHudRender(event: HudRenderEvent) {
-		if (!Vice.config.TRAIN_TIMER || !drawCondition()) return
+		if (!canDraw()) return
 
 		val list: MutableList<String> = mutableListOf()
 
@@ -66,7 +70,7 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 			Vice.storage.markDirty()
 			aliveCount = 3
 
-			if (Vice.config.TRAIN_TIMER) Utils.playSound("block.bell.use", volume = 9999f)
+			if (Vice.config.TRAIN_TIMER) SoundUtils.playSound("block.bell.use", volume = 9999f)
 		}
 	}
 
@@ -79,12 +83,7 @@ object TrainTimer : HudElement("Train Timer", Vice.storage.showdown.trainTimerPo
 		}
 	}
 
-	override fun storePosition(position: Position) {
-		Vice.storage.showdown.trainTimerPos = position
-		Vice.storage.markDirty()
-	}
-
-	override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
+	override fun Position.drawPreview(context: DrawContext): Size {
 		val list = listOf(
 			"&&6&&lTrain Arrived! &&e2 Porters",
 			"&&6Next train in: &&a13:56"

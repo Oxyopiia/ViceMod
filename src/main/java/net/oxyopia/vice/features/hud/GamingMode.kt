@@ -1,6 +1,7 @@
 package net.oxyopia.vice.features.hud
 
 import com.mojang.blaze3d.systems.RenderSystem
+import net.minecraft.client.render.BufferRenderer
 import net.minecraft.client.render.GameRenderer
 import net.minecraft.client.render.Tessellator
 import net.minecraft.client.render.VertexFormat
@@ -32,20 +33,19 @@ object GamingMode {
 
 		val positionMatrix: Matrix4f = event.context.matrices.peek().positionMatrix
 		val tessellator = Tessellator.getInstance()
-		val buffer = tessellator.buffer
 
-		buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE)
-		buffer.vertex(positionMatrix, 0f, 0f, Z_LAYER).color(1f, 1f, 1f, 1f).texture(0f, 0f).next()
-		buffer.vertex(positionMatrix, 0f, data.height * data.scale, Z_LAYER).color(1f, 1f, 1f, 1f).texture(0f, 1f).next()
-		buffer.vertex(positionMatrix, data.width * data.scale, data.height * data.scale, Z_LAYER).color(1f, 1f, 1f, 1f).texture(1f, 1f).next()
-		buffer.vertex(positionMatrix, data.width * data.scale, 0f, Z_LAYER).color(1f, 1f, 1f, 1f).texture(1f, 0f).next()
+		val buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR)
+		buffer.vertex(positionMatrix, 0f, 0f, Z_LAYER).texture(0f, 0f).color(1f, 1f, 1f, 1f)
+		buffer.vertex(positionMatrix, 0f, data.height * data.scale, Z_LAYER).texture(0f, 1f).color(1f, 1f, 1f, 1f)
+		buffer.vertex(positionMatrix, data.width * data.scale, data.height * data.scale, Z_LAYER).texture(1f, 1f).color(1f, 1f, 1f, 1f)
+		buffer.vertex(positionMatrix, data.width * data.scale, 0f, Z_LAYER).texture(1f, 0f).color(1f, 1f, 1f, 1f)
 
-		RenderSystem.setShader { GameRenderer.getPositionColorTexProgram() }
+		RenderSystem.setShader { GameRenderer.getPositionTexColorProgram() }
 
-		RenderSystem.setShaderTexture(0, Identifier("vice", data.path))
-
+		RenderSystem.setShaderTexture(0, Identifier.of("vice", data.path))
 		RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
-		tessellator.draw()
+
+		BufferRenderer.drawWithGlobalProgram(buffer.end())
 	}
 }
 

@@ -11,6 +11,7 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.CommandRegisterEvent
 import net.oxyopia.vice.events.SlotClickEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
+import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.ItemUtils.isPlayerHeadWithArmor
@@ -93,7 +94,7 @@ object ItemProtection {
 				else -> "FavoriteItem"
 			}
 
-			Utils.sendViceMessage("&&cStopped you disposing that item! &&7($cause)")
+			ChatUtils.sendViceMessage("&&cStopped you disposing that item! &&7($cause)")
 			event.cancel()
 		}
 	}
@@ -116,16 +117,16 @@ object ItemProtection {
 
 		if (item.isEmpty) return DevUtils.sendWarningMessage("You are not holding an item to protect!")
 		if (defaultProtectedItems.contains(item.item) || defaultProtectedItems.contains(itemName)) {
-			Utils.sendViceMessage("&&eThis item is protected by default!")
-			Utils.sendViceMessage("&&7Hold LCONTROL while clicking to bypass this!")
+			ChatUtils.sendViceMessage("&&eThis item is protected by default!")
+			ChatUtils.sendViceMessage("&&7Hold LCONTROL while clicking to bypass this!")
 			return
 		}
 
 		if (favoriteItems.remove(itemName)) {
-			Utils.sendViceMessage("&&cYour $itemName &&cwill no longer be protected!")
+			ChatUtils.sendViceMessage("&&cYour $itemName &&cwill no longer be protected!")
 		} else {
 			favoriteItems.add(itemName)
-			Utils.sendViceMessage("&&aYour $itemName &&ais now protected!")
+			ChatUtils.sendViceMessage("&&aYour $itemName &&ais now protected!")
 		}
 
 		Vice.storage.markDirty()

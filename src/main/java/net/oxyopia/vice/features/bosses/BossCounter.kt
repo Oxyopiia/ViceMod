@@ -71,6 +71,7 @@ object BossCounter : HudElement(
 
 			return position.drawTexts(list, context)
 		}
+
 		val list: MutableList<Text> = mutableListOf("Bosses".toText(Vice.PRIMARY, bold = true))
 
 		list.addBossStat("Vice", Colors.ViceBoss, bosses.vice)
@@ -174,12 +175,7 @@ object BossCounter : HudElement(
 		}
 	}
 
-    override fun storePosition(position: Position) {
-        Vice.storage.bosses.bossCounterPos = position
-        Vice.storage.markDirty()
-    }
 
-    override fun Position.drawPreview(context: DrawContext): Pair<Float, Float> {
 	override fun Position.drawPreview(context: DrawContext): Size {
         return draw(context)
     }

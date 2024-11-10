@@ -37,7 +37,7 @@ jobs:
           name: Artifacts
           path: build/libs/
       - name: update dev release # push only
-        if: github.event.type == 'push'
+        if: ${{ github.event.type == 'push' }}
         uses: andelf/nightly-release@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

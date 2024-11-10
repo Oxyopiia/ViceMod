@@ -55,4 +55,4 @@ jobs:
             dev release for ${{ github.sha }}. bugs are to be expected, and may literally break your MC or sth, good luck ig
           prerelease: true
           files: |
-            ./*.jar
+            ./build/libs/*.jar

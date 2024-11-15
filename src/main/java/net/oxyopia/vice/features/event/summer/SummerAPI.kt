@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.summer
+package net.oxyopia.vice.features.event.summer
 
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World

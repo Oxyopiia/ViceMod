@@ -62,10 +62,10 @@ import net.oxyopia.vice.features.itemabilities.CooldownDisplayChanger
 import net.oxyopia.vice.features.itemabilities.ExtraAbilityTooltipInfo
 import net.oxyopia.vice.features.itemabilities.SetHighlighting
 import net.oxyopia.vice.features.misc.*
-import net.oxyopia.vice.features.summer.BarTimer
-import net.oxyopia.vice.features.summer.FishingDropsTracker
-import net.oxyopia.vice.features.summer.SummerAPI
-import net.oxyopia.vice.features.summer.SummerTimers
+import net.oxyopia.vice.features.event.summer.BarTimer
+import net.oxyopia.vice.features.event.summer.FishingDropsTracker
+import net.oxyopia.vice.features.event.summer.SummerAPI
+import net.oxyopia.vice.features.event.summer.SummerTimers
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger

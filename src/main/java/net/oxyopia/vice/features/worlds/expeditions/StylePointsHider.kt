@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.expeditions
+package net.oxyopia.vice.features.worlds.expeditions
 
 import net.minecraft.entity.decoration.DisplayEntity.TextDisplayEntity
 import net.oxyopia.vice.Vice

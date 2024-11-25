@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.expeditions
+package net.oxyopia.vice.features.worlds.expeditions
 
 import com.google.gson.annotations.Expose
 import net.minecraft.client.network.AbstractClientPlayerEntity

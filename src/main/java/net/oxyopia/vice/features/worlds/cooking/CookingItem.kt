@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.cooking
+package net.oxyopia.vice.features.worlds.cooking
 
 enum class CookingItem(val displayName: String) {
 	BREAD("Bread"),

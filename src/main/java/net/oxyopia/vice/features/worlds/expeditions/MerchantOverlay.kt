@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.expeditions
+package net.oxyopia.vice.features.worlds.expeditions
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.item.ItemStack
@@ -8,8 +8,8 @@ import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.features.expeditions.ExpeditionItemType.Companion.getExpeditionItemType
-import net.oxyopia.vice.features.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
+import net.oxyopia.vice.features.worlds.expeditions.ExpeditionItemType.Companion.getExpeditionItemType
+import net.oxyopia.vice.features.worlds.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import kotlin.math.roundToInt

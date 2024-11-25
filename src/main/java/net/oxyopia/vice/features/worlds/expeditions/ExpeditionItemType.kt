@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.expeditions
+package net.oxyopia.vice.features.worlds.expeditions
 
 import net.minecraft.item.ItemStack
 import net.oxyopia.vice.utils.ItemUtils.getLore

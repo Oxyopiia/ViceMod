@@ -1,11 +1,11 @@
-package net.oxyopia.vice.features.expeditions
+package net.oxyopia.vice.features.worlds.expeditions
 
 import net.minecraft.util.math.Vec3d
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.events.WorldRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.features.expeditions.ExpeditionAPI.rooms
+import net.oxyopia.vice.features.worlds.expeditions.ExpeditionAPI.rooms
 import net.oxyopia.vice.utils.RenderUtils.drawString
 
 object RoomWaypoints {

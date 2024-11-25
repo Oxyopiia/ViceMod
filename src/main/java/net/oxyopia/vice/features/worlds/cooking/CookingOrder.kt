@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.cooking
+package net.oxyopia.vice.features.worlds.cooking
 
 enum class CookingOrder(val displayName: String, val recipe: List<CookingItem>, val isBossOrder: Boolean = false) {
 	HAMBURGER("Hamburger", listOf(CookingItem.BREAD, CookingItem.COOKED_MEAT, CookingItem.BREAD)),

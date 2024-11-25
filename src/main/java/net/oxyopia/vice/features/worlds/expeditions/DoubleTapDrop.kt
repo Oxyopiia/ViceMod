@@ -1,9 +1,9 @@
-package net.oxyopia.vice.features.expeditions
+package net.oxyopia.vice.features.worlds.expeditions
 
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ItemDropEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.features.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
+import net.oxyopia.vice.features.worlds.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
 import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.SoundUtils

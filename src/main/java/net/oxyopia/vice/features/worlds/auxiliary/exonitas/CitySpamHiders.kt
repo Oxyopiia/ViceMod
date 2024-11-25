@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.auxiliary.exonitas
+package net.oxyopia.vice.features.worlds.auxiliary.exonitas
 
 import net.minecraft.client.MinecraftClient
 import net.oxyopia.vice.Vice

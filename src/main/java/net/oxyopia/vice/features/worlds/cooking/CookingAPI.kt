@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.cooking
+package net.oxyopia.vice.features.worlds.cooking
 
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.config.features.worlds.CookingStorage

@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.auxiliary.exonitas
+package net.oxyopia.vice.features.worlds.auxiliary.exonitas
 
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World

@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.expeditions
+package net.oxyopia.vice.features.worlds.expeditions
 
 import net.minecraft.client.MinecraftClient
 import net.minecraft.component.DataComponentTypes
@@ -8,9 +8,9 @@ import net.minecraft.item.Items
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ChatEvent
-import net.oxyopia.vice.features.expeditions.ExpeditionAPI.merchants
-import net.oxyopia.vice.features.expeditions.ExpeditionItemType.Companion.getExpeditionItemType
-import net.oxyopia.vice.features.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
+import net.oxyopia.vice.features.worlds.expeditions.ExpeditionAPI.merchants
+import net.oxyopia.vice.features.worlds.expeditions.ExpeditionItemType.Companion.getExpeditionItemType
+import net.oxyopia.vice.features.worlds.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
 import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName

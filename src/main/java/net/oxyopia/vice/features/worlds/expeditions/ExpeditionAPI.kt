@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.expeditions
+package net.oxyopia.vice.features.worlds.expeditions
 
 import net.minecraft.block.Blocks
 import net.minecraft.item.ItemStack
@@ -11,7 +11,7 @@ import net.oxyopia.vice.events.ChestRenderEvent
 import net.oxyopia.vice.events.EntityDeathEvent
 import net.oxyopia.vice.events.SlotClickEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.features.expeditions.AutoCommunications.processCommunications
+import net.oxyopia.vice.features.worlds.expeditions.AutoCommunications.processCommunications
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.TimeUtils.timeDelta

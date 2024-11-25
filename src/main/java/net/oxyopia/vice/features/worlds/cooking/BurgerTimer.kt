@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.cooking
+package net.oxyopia.vice.features.worlds.cooking
 
 import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos

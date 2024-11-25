@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.cooking
+package net.oxyopia.vice.features.worlds.cooking
 
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
@@ -10,7 +10,7 @@ import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.features.cooking.OrderTracker.mc
+import net.oxyopia.vice.features.worlds.cooking.OrderTracker.mc
 import net.oxyopia.vice.utils.HudUtils.drawTexts
 import net.oxyopia.vice.utils.HudUtils.toText
 

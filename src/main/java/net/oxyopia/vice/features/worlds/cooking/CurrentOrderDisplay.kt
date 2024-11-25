@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.cooking
+package net.oxyopia.vice.features.worlds.cooking
 
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
@@ -10,7 +10,7 @@ import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.features.cooking.CurrentOrderDisplay.mc
+import net.oxyopia.vice.features.worlds.cooking.CurrentOrderDisplay.mc
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 
 object CurrentOrderDisplay : HudElement(

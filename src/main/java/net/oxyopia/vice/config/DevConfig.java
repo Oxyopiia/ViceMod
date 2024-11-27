@@ -81,6 +81,14 @@ public class DevConfig extends Vigilant {
 		category = "Bypasses"
 	)
 	public boolean STORAGE_MARK_DIRTY = true;
+	
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Throttle Events",
+		description = "Make it so no events can be fired and responded to. (literally disables the mod)\n§cRequires Dev Mode enabled.",
+		category = "Bypasses"
+	)
+	public boolean THROTTLE_ALL_EVENTS = false;
 
 	/** DEBUGS */
 	@Property(
@@ -210,6 +218,8 @@ public class DevConfig extends Vigilant {
 	public void init() {
 		initialize();
 		markDirty();
+
+		THROTTLE_ALL_EVENTS = false;
 		STORAGE_MARK_DIRTY = true;
 	}
 }

@@ -12,7 +12,7 @@ import java.awt.Color
 
 object CheeseHelper {
 	private fun ItemStack.isCheeseSalable(): Boolean {
-		val first = getLore().first()
+		val first = getLore().firstOrNull() ?: return false
 		return first.startsWith("Sell Value: ") && first.endsWith(" Cheese")
 	}
 

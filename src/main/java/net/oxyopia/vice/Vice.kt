@@ -66,6 +66,7 @@ import net.oxyopia.vice.features.event.summer.BarTimer
 import net.oxyopia.vice.features.event.summer.FishingDropsTracker
 import net.oxyopia.vice.features.event.summer.SummerAPI
 import net.oxyopia.vice.features.event.summer.SummerTimers
+import net.oxyopia.vice.features.worlds.starrysuburbs.CheeseHelper
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger
@@ -160,12 +161,14 @@ class Vice : ClientModInitializer {
 		ItemTooltipCallback.EVENT.register(ItemTooltipCallback { stack, context, type, lines ->
 			EVENT_MANAGER.publish(ItemTooltipEvent(stack, context, type, lines))
 		})
+
 	}
 
 	private fun subscribeEventListeners() {
 		EVENT_MANAGER.subscribe(BackpackRenaming)
 		EVENT_MANAGER.subscribe(CaveInPrediction)
 		EVENT_MANAGER.subscribe(ChatFilter)
+		EVENT_MANAGER.subscribe(CheeseHelper)
 		EVENT_MANAGER.subscribe(ConsumeItemBlocker)
 		EVENT_MANAGER.subscribe(Fishing)
 		EVENT_MANAGER.subscribe(ItemProtection)

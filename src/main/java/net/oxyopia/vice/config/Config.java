@@ -843,6 +843,27 @@ public class Config extends Vigilant {
 	)
 	public boolean LOST_IN_TIME_CAVE_PREDICTION = true;
 
+	// Worlds/Starry Streets
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Cheese Highlight",
+		description = "Highlights all tradeable items for cheese whilst in the Cheese Exchange.",
+		category = "Worlds",
+		subcategory = "Starry Streets"
+	)
+	public boolean STARRY_STREETS_CHEESE_HIGHLIGHT = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Cheese Display",
+		description = "Counts all cheese-tradeable items in your inventory and their total value.",
+		category = "Worlds",
+		subcategory = "Starry Streets",
+		hidden = true
+	)
+	public boolean STARRY_STREETS_CHEESE_DISPLAY = false;
+
 
 	public Config() {
 		super(new File("./config/vice/config.toml"), "Vice §b" + Vice.Companion.getVersion(), new JVMAnnotationPropertyCollector(), new ConfigSorting());

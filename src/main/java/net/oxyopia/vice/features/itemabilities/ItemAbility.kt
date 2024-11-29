@@ -53,6 +53,7 @@ enum class ItemAbility(
     ZIP_BOMB("Zip Bomb", 9f, set = Set.DEMOLITIONIST, setAmount = 2),
     THE_SYNTHFLESH("The Synthflesh", 3f, set = Set.FLESHCRAWLER, setAmount = 2), // 2 for 1st ability, 3 for 2nd ability
     THE_EXPERIMENT("The Experiment", 6f, set = Set.FLESHCRAWLER, setAmount = 2),
+    GORE_GAUNTLET("Gore Gauntlet", 10f, set = Set.FLESHCRAWLER, setAmount = 3),
     WAVE_PULSER("Wave Pulser", 10f, set = Set.DIGITAL, setAmount = 2),
     THE_PHANTASM("The Phantasm", 10f, set = Set.DIGITAL, setAmount = 2),
     BEWITCHED_BLOWPIPE("Bewitched Blowpipe", 5f),

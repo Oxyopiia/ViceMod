@@ -198,6 +198,10 @@ object ItemAbilityCooldown {
 			event.soundName == "block.bubble_column.whirlpool_inside" && event.volume == 3f -> {
 				ItemAbility.BUBBLE_GUN.onSound()
 			}
+
+			event.soundName == "block.mud.break" && event.volume == 2f -> {
+				ItemAbility.GORE_GAUNTLET.onSound()
+			}
 		}
 	}
 

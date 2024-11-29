@@ -175,6 +175,17 @@ public class Config extends Vigilant {
 	)
 	public boolean HIDE_SET_REQUIREMENT_MESSAGES = false;
 
+	// General/Mining
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Cave-In Prediction",
+		description = "Show a prediction of the time until the next Cave-In when mining in dynamic mining areas.",
+		category = "General",
+		subcategory = "Mining"
+	)
+	public boolean CAVE_IN_PREDICTION = true;
+
 	// General/Fishing
 
 	@Property(
@@ -832,17 +843,6 @@ public class Config extends Vigilant {
 	)
 	public boolean GLITCH_HQ_DELIVERY_TIMER = true;
 
-	// Worlds/Lost in Time
-
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Cave-In Prediction",
-		description = "Shows a prediction of the time until the next Cave-In when mining in the Soulswift Sands.",
-		category = "Worlds",
-		subcategory = "Lost in Time"
-	)
-	public boolean LOST_IN_TIME_CAVE_PREDICTION = true;
-
 	// Worlds/Starry Streets
 
 	@Property(
@@ -918,6 +918,9 @@ public class Config extends Vigilant {
 		});
 		migrations.add(config -> { // Migration 3: Cherry Overlay -> Summer Timers
 			move(config, "event.summer.violet's_exchange_overlay", "event.summer.summer_timers");
+		});
+		migrations.add(config -> { // Migration 4: Generalise Cave In Prediction
+			move(config, "worlds.lost_in_time.cave-in_prediction", "general.mining.cave-in_prediction");
 		});
 		return migrations;
 	}

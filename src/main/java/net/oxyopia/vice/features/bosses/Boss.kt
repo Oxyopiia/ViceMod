@@ -2,11 +2,11 @@ package net.oxyopia.vice.features.bosses
 
 import net.minecraft.text.Style
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.BossBarEvents
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
@@ -38,7 +38,7 @@ abstract class Boss (
 			if (lastKnownUUID != event.instance.uuid) {
 				lastSpawned = System.currentTimeMillis()
 				lastKnownUUID = event.instance.uuid
-				DevUtils.sendDebugChat("&&9BOSS CHANGE &&rDetected a Boss change", "BOSS_DETECTION_INFO")
+				Debugger.BOSS.debug("Detected a Boss change")
 			}
 
 			val phase = groupValues[2].toIntOrNull() ?: return

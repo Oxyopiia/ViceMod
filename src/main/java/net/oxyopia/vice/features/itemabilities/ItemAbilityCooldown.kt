@@ -8,10 +8,10 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.ClickType
 import net.minecraft.util.math.MathHelper
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.HudUtils.highlight
@@ -250,7 +250,7 @@ object ItemAbilityCooldown {
 	private fun handleClickEventAbility(ability: ItemAbility) {
 		ability.apply {
 			lastClicked = System.currentTimeMillis()
-			DevUtils.sendDebugChat("&&bITEMABILITY &&conClick as&&b $name", "ITEM_ABILITY_DEBUGGER")
+			Debugger.ITEMABILITY.debug("§conClick as §b$name")
 
 			if (soundOnUse || remainingCooldown() > 0f) return
 			if (set == null || hasSetEquipped()) {

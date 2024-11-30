@@ -1,7 +1,7 @@
 package net.oxyopia.vice.features.itemabilities
 
 import net.minecraft.util.ClickType
-import net.oxyopia.vice.utils.DevUtils
+import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.data.Set
 import net.oxyopia.vice.utils.ItemUtils.getEquippedSets
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
@@ -80,7 +80,7 @@ enum class ItemAbility(
     // This will reset the cooldown regardless of whether it is still on cooldown or not.
     // Functionality to check for cooldowns MAY be added in a feature commit
     fun activate() {
-        DevUtils.sendDebugChat("&&bITEMABILITY &&aActivated as &&b$itemName", "ITEM_ABILITY_DEBUGGER")
+        Debugger.ITEMABILITY.debug("§aActivated as &&b$itemName")
         val now = System.currentTimeMillis()
 
         sharedCooldownId?.let { sharedCooldowns[it] = now }
@@ -104,7 +104,7 @@ enum class ItemAbility(
 
     fun onSound() {
         val debounceTime = lastClicked.timeDelta()
-        DevUtils.sendDebugChat("&&bITEMABILITY &&eReceived onSound as &&b$itemName", "ITEM_ABILITY_DEBUGGER")
+        Debugger.ITEMABILITY.debug("§eReceived onSound as &&b$itemName")
 
         if (debounceTime < 500.milliseconds) {
             activate()

@@ -2,10 +2,10 @@ package net.oxyopia.vice.features.worlds.expeditions
 
 import net.minecraft.entity.decoration.DisplayEntity.TextDisplayEntity
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.events.EntityShouldRenderEvent
 import net.oxyopia.vice.events.ModifySoundEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.DevUtils
 
 object StylePointsHider {
 	private val stylePoints = listOf(
@@ -27,7 +27,7 @@ object StylePointsHider {
 		if (stylePoints.contains(text)) {
 			event.setReturnValue(false)
 		} else {
-			DevUtils.sendDebugChat("&&aEXPEDITIONS &&cDetected some weird text display: &&f$text", "EXPEDITION_DEBUGGER")
+			Debugger.EXPEDITIONS.warn("Detected some weird text display: &&f$text")
 		}
 	}
 

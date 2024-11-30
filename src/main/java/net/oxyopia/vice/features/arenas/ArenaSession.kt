@@ -3,6 +3,7 @@ package net.oxyopia.vice.features.arenas
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.oxyopia.vice.Vice.Companion.EVENT_MANAGER
+import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.events.ArenaWaveChangeEvent
 import net.oxyopia.vice.events.EntityDeathEvent
 import net.oxyopia.vice.events.TitleEvent
@@ -35,12 +36,12 @@ object ArenaSession {
 		active = true
 
 		EVENT_MANAGER.publish(ArenaStartEvent(world, startTime))
-		DevUtils.sendDebugChat("&&dARENAS&&r &&aSession started", "ARENAS_DEBUGGER")
+		Debugger.ARENA.debug("§aSession started")
 	}
 
 	private fun dispose() {
 		active = false
-		DevUtils.sendDebugChat("&&dARENAS&&r &&cSession disposed", "ARENAS_DEBUGGER")
+		Debugger.ARENA.debug("§cSession disposed")
 	}
 
 	private fun setWave(n: Int) {
@@ -48,13 +49,13 @@ object ArenaSession {
 		waveMobsKilled = if (n != 1) -1 else 0 // This is done because DoomTowers starts the next wave in the same tick as the death event
 		waveStartTime = System.currentTimeMillis()
 		EVENT_MANAGER.publish(ArenaWaveChangeEvent(n))
-		DevUtils.sendDebugChat("&&dARENAS&&r Wave Updated to &&a$n &&r($waveStartTime)", "ARENAS_DEBUGGER")
+		Debugger.ARENA.debug("Wave Updated to §a$n §r($waveStartTime)")
 	}
 
 	private fun addKill() {
 		totalMobsKilled += 1
 		waveMobsKilled += 1
-		DevUtils.sendDebugChat("&&dARENAS&&r Kills Updated to &&b$waveMobsKilled &&r(total $totalMobsKilled)","ARENAS_DEBUGGER")
+		Debugger.ARENA.debug("Kills Updated to §b$waveMobsKilled §r(total $totalMobsKilled)")
 	}
 
 	// Getters

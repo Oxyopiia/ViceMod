@@ -8,8 +8,8 @@ import net.minecraft.client.gui.hud.BossBarHud;
 import net.minecraft.client.gui.hud.ClientBossBar;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.text.Text;
+import net.oxyopia.vice.data.Debugger;
 import net.oxyopia.vice.events.BossBarEvents;
-import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,7 +39,7 @@ public abstract class MixinBossBarHud {
 		if (!Utils.INSTANCE.getInDoomTowers()) return instance.getName();
 
 		if (!Objects.equals(lastReportedTitle, instance.getName().getString())) {
-			DevUtils.sendDebugChat("&&5BOSSBAR &&rUpdated to: " + instance.getName().getString(), "BOSSBAR_DEBUGGER");
+			Debugger.BOSSBAR.debug("Updated to: " + instance.getName().getString());
 			lastReportedTitle = instance.getName().getString();
 		}
 

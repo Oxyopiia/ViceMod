@@ -4,6 +4,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.oxyopia.vice.data.Colors
+import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.BlockUpdateEvent
 import net.oxyopia.vice.events.ChatEvent
@@ -69,12 +70,12 @@ object ExpeditionAPI {
 				val players = Utils.getWorld()?.players?.filterNot { it.name.string.startsWith("CIT-") || it.customName?.string?.startsWith("CIT-") == true } ?: listOf()
 				currentSession = ExpeditionRun(System.currentTimeMillis() - 1000L, gameState = 1, players = players.toMutableList())
 				merchants.clear()
-				DevUtils.sendDebugChat("&&aEXPEDITIONS &&fStarted &&7(gameState = 1, ${players.size} size).", "EXPEDITION_DEBUGGER")
+				Debugger.EXPEDITIONS.debug("Started §7(gameState = 1, ${players.size} size).")
 			}
 
 			event.string.startsWith("Room complete") && !currentSession.roomIsCompleteAndWaiting() -> {
 				currentSession.gameState++
-				DevUtils.sendDebugChat("&&aEXPEDITIONS &&fNew game state &&7(ChatMessage): &&a${currentSession.gameState}.", "EXPEDITION_DEBUGGER")
+				Debugger.EXPEDITIONS.debug("New game state §7(ChatMessage): &&a${currentSession.gameState}.")
 				checkPlayerCount()
 			}
 
@@ -135,11 +136,11 @@ object ExpeditionAPI {
 
 		if (original.block == Blocks.COAL_BLOCK && event.new.block == Blocks.AIR) {
 			currentSession.gameState++
-			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fNew game state &&7(BlockUpdate): &&a${currentSession.gameState}.", "EXPEDITION_DEBUGGER")
+			Debugger.EXPEDITIONS.debug("New game state §7(BlockUpdate): §a${currentSession.gameState}.")
 
 			if (currentSession.gameState == 6) {
 				currentSession.gameState++
-				DevUtils.sendDebugChat("&&aEXPEDITIONS &&fNew game state &&7(CooldownRoom): &&a${currentSession.gameState}.", "EXPEDITION_DEBUGGER")
+				Debugger.EXPEDITIONS.debug("New game state §7(CooldownRoom): §a${currentSession.gameState}.")
 			}
 
 			checkPlayerCount()

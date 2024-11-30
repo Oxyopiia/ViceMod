@@ -7,12 +7,12 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.features.worlds.expeditions.ExpeditionAPI.merchants
 import net.oxyopia.vice.features.worlds.expeditions.ExpeditionItemType.Companion.getExpeditionItemType
 import net.oxyopia.vice.features.worlds.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
 import net.oxyopia.vice.utils.ChatUtils
-import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.Utils.convertFormatting
@@ -47,7 +47,7 @@ object AutoCommunications {
 			SoundUtils.playDing()
 
 			merchants[room]?.set(itemIndex, ItemStack.EMPTY)
-			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fSet index &&a$itemIndex&&f of merchant &&a$room &&fto &&cEMPTY.", "EXPEDITION_DEBUGGER")
+			Debugger.EXPEDITIONS.debug("Set index §a$itemIndex§f of merchant &&a$room §fto §cEMPTY.")
 		}
 
 		// TEST LINE:
@@ -63,7 +63,7 @@ object AutoCommunications {
 			SoundUtils.playDing()
 
 			if (room < 0 || room > 15 || merchants[room]?.isNotEmpty() == true) return
-			DevUtils.sendDebugChat("&&aEXPEDITIONS &&fImporting shopkeeper &&a$room&&f data from ${sender}.", "EXPEDITION_DEBUGGER")
+			Debugger.EXPEDITIONS.debug("Importing shopkeeper §a$room§f data from $sender.")
 
 			val items = data.split(";")
 			merchants[room] = mutableListOf()
@@ -107,7 +107,7 @@ object AutoCommunications {
 	}
 
 	private fun tellTeammates(string: String) {
-		DevUtils.sendDebugChat("&&aEXPEDITIONS &&fSharing data &&7$string", "EXPEDITION_DEBUGGER")
+		Debugger.EXPEDITIONS.debug("Sharing data §7$string")
 		MinecraftClient.getInstance().networkHandler?.sendChatMessage(string)
 	}
 

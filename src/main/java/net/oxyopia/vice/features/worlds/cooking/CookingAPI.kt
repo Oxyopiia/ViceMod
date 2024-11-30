@@ -2,11 +2,11 @@ package net.oxyopia.vice.features.worlds.cooking
 
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.config.features.worlds.CookingStorage
+import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.seconds
@@ -33,8 +33,7 @@ object CookingAPI {
 		}
 
 		Vice.storage.markDirty()
-
-		DevUtils.sendDebugChat("&&6COOKING &&rUpdated current order to &&e${currentOrder.name}", "COOKING_DEBUGGER")
+		Debugger.COOKING.debug("Updated current order to §e${currentOrder.name}")
 	}
 
 	@SubscribeEvent
@@ -75,7 +74,7 @@ object CookingAPI {
 				val match = heldItemRegex.find(content.removeSuffix("."))?.groupValues?.get(1)
 				heldItem = CookingItem.getByName(match.toString()) ?: CookingItem.NONE
 
-				DevUtils.sendDebugChat("&&6COOKING &&rUpdated held item to &&d${heldItem.name}", "COOKING_DEBUGGER")
+				Debugger.COOKING.debug("Updated held item to §d${heldItem.name}")
 
 				if (hideHandledMessages) {
 					event.cancel()
@@ -92,7 +91,7 @@ object CookingAPI {
 				if (currentOrder != CookingOrder.NONE && ingredientsRemaining > 0) {
 					cooking.currentOrderProgress = currentOrder.recipe.size - ingredientsRemaining
 					Vice.storage.markDirty()
-					DevUtils.sendDebugChat("&&6COOKING &&rNext Item: ${currentOrder.recipe[orderCurrentItemIndex]}", "COOKING_DEBUGGER")
+					Debugger.COOKING.debug("Next Item: ${currentOrder.recipe[orderCurrentItemIndex]}")
 				}
 
 				if (hideHandledMessages) event.cancel()
@@ -103,7 +102,7 @@ object CookingAPI {
 
 				cooking.stock = stockValue
 				Vice.storage.markDirty()
-				DevUtils.sendDebugChat("&&6COOKING &&rUpdated Stock to $stock", "COOKING_DEBUGGER")
+				Debugger.COOKING.debug("Updated Stock to $stock")
 
 				if (hideHandledMessages) event.cancel()
 			}

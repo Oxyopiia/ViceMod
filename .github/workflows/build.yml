@@ -37,7 +37,7 @@ jobs:
           name: Artifacts
           path: build/libs/
       - name: update dev release
-        if: ${{ github.ref_name == 'master' && runner.os == 'Linux' && matrix.java == '21' }}
+        if: ${{ github.event_name == 'push' && github.ref_name == 'master' && runner.os == 'Linux' && matrix.java == '21' }}
         uses: andelf/nightly-release@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

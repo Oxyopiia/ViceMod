@@ -8,11 +8,13 @@ import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.BossBarEvents
+import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.hud.CaveInPrediction.getMiningRegion
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.LocationUtils.isInBounds
+import net.oxyopia.vice.utils.NumberUtils.clamp
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils
@@ -26,16 +28,17 @@ object CaveInPrediction : HudElement(
 	enabled = { Vice.config.CAVE_IN_PREDICTION },
 	drawCondition = { getMiningRegion() != null }
 ) {
+	private val CAVE_IN_DURATION = 30.seconds
 	private val bossbarRegex = Regex("(\\d+)/(\\d+) .+ MINED UNTIL A CAVE-IN")
 
 	private val regionalTracking = hashMapOf<String, TrackingData>()
 	private val regions = listOf(
 		"CHARLIE_TRASH_PILE" to { Box(-63.0, 1.0, 29.0, 23.0, 15.0, 50.0).isInBounds(World.StarryStreets) },
-		"STARRY_QUARRY" to { Box(-75.0, 1.0, -14.0, -59.0, 32.0, 2.0).isInBounds(World.StarryStreets) },
+		"STARRY_QUARRY" to { Box(-75.0, 1.0, -14.0, -57.0, 32.0, 4.0).isInBounds(World.StarryStreets) },
 		"SOULSWIFT_SANDS" to { World.SoulswiftSands.isInWorld() && (Utils.getPlayer()?.y ?: 100.0) <= 35.0 }
 	)
 
-	private data class TrackingData(var refPoint: TrackingPoint?, var threshold: Int = -1, var currentCount: Int = -1, var lastUpdated: Long)
+	private data class TrackingData(var refPoint: TrackingPoint?, var threshold: Int, var currentCount: Int, var lastUpdated: Long, var caveInTime: Long = -1)
 	private data class TrackingPoint(val timestamp: Long, val count: Int)
 
 	private fun getMiningRegion(): String? {
@@ -44,8 +47,8 @@ object CaveInPrediction : HudElement(
 	}
 
 	@SubscribeEvent
-	fun onBossbar(event: BossBarEvents.Read) {
-		bossbarRegex.find(event.name.string)?.apply {
+	fun onBossbar(event: BossBarEvents.Override) {
+		bossbarRegex.find(event.original.string)?.apply {
 			val region = getMiningRegion() ?: return
 			val count = groupValues[1].toIntOrNull() ?: -1
 			val threshold = groupValues[2].toIntOrNull() ?: -1
@@ -63,7 +66,31 @@ object CaveInPrediction : HudElement(
 
 			if (count < data.currentCount || data.currentCount == -1 || data.refPoint == null) {
 				val point = TrackingPoint(System.currentTimeMillis(), count)
-				regionalTracking[region] = TrackingData(point, threshold, count, System.currentTimeMillis())
+				regionalTracking[region] = TrackingData(point, threshold, count, System.currentTimeMillis(), data.caveInTime)
+			}
+
+			event.adjustMiningBossbar(data)
+		}
+	}
+
+	private fun BossBarEvents.Override.adjustMiningBossbar(data: TrackingData) {
+		if (!Vice.config.ADJUST_DYNAMIC_MINING_BOSSBAR) return
+
+		if (data.caveInTime.timeDelta() <= 30.seconds) {
+			val timeUntil = data.caveInTime.timeDelta()
+			val percentageComplete = (timeUntil / CAVE_IN_DURATION).clamp(0.0, 1.0)
+			instance.percent = percentageComplete.toFloat()
+		} else {
+			val percentComplete = (data.currentCount.toFloat() / data.threshold).coerceIn(0f, 1f)
+			instance.percent = percentComplete
+		}
+	}
+
+	@SubscribeEvent
+	fun onChat(event: ChatEvent) {
+		when {
+			event.string.startsWith("The Starry Quarry is caving in 30 seconds!") || event.string.startsWith("Charlie: The Trash Pile is Caving In") -> {
+				regionalTracking["STARRY_QUARRY"]?.caveInTime = System.currentTimeMillis()
 			}
 		}
 	}

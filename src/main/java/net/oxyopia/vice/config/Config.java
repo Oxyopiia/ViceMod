@@ -186,6 +186,15 @@ public class Config extends Vigilant {
 	)
 	public boolean CAVE_IN_PREDICTION = true;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Adjust Dynamic Mining Bossbar",
+		description = "Adjust the cave-in bossbar to show the progress to the next cave in.",
+		category = "General",
+		subcategory = "Mining"
+	)
+	public boolean ADJUST_DYNAMIC_MINING_BOSSBAR = true;
+
 	// General/Fishing
 
 	@Property(

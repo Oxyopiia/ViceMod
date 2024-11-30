@@ -30,6 +30,7 @@ object TimeUtils {
 	fun Long.timeDelta(): Duration = System.currentTimeMillis().milliseconds - this.milliseconds
 	fun Long.timeDeltaUntil(): Duration = this.milliseconds - System.currentTimeMillis().milliseconds
 	fun Long.timeDeltaWithin(duration: Duration): Boolean = timeDelta() <= duration
+	fun Long.isInFuture(): Boolean = this.milliseconds > System.currentTimeMillis().milliseconds
 
 	fun Duration.ms() = this.inWholeMilliseconds
 }

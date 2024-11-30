@@ -26,7 +26,7 @@ object SummerAPI {
 
 	@SubscribeEvent
 	fun onSound(event: SoundEvent) {
-		if (event.soundName == "777" && event.pitch == 1f && event.volume == 3f) {
+		if (World.Summer.isInWorld() && event.soundName == "777" && event.pitch == 1f && event.volume == 3f) {
 			lastBarStart = System.currentTimeMillis()
 		}
 	}

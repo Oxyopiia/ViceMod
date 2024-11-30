@@ -197,6 +197,15 @@ public class Config extends Vigilant {
 	)
 	public boolean FISHING_DING = true;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Brew Timer",
+		description = "Shows a timer for the effects of consumables like the Fishy Brew.",
+		category = "General",
+		subcategory = "Fishing"
+	)
+	public boolean FISHING_BREW_TIMER = true;
+
 	// Abilities/Quality of Life
 
 	@Property(

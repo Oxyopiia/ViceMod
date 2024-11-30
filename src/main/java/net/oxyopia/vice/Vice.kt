@@ -66,6 +66,7 @@ import net.oxyopia.vice.features.event.summer.BarTimer
 import net.oxyopia.vice.features.event.summer.FishingDropsTracker
 import net.oxyopia.vice.features.event.summer.SummerAPI
 import net.oxyopia.vice.features.event.summer.SummerTimers
+import net.oxyopia.vice.features.hud.FishingBrewTimer
 import net.oxyopia.vice.features.worlds.starrysuburbs.CheeseHelper
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
@@ -177,6 +178,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(YetiHeadWarning)
 
 		EVENT_MANAGER.subscribe(BossCounter)
+		EVENT_MANAGER.subscribe(FishingBrewTimer)
 		EVENT_MANAGER.subscribe(ForgeTimers)
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(HudUtils)

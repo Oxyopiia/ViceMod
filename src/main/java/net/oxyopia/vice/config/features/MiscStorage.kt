@@ -30,4 +30,7 @@ class MiscStorage {
 	@Expose
 	var playerStatsPos: Position = Position(175f, 150f)
 
+	@Expose
+	var fishingBrewTimerPos: Position = Position(200f, 0f)
+
 }

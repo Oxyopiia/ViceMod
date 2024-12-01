@@ -641,6 +641,17 @@ public class Config extends Vigilant {
 	)
 	public boolean SUMMER_BAR_MINIGAME_BOSSBAR = false;
 
+	// Event/Turkinator
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Invasion Timer",
+		description = "Shows how long until the next Turkinator Invasion, as well as where he last invaded.",
+		category = "Event",
+		subcategory = "Turkinator"
+	)
+	public boolean TURKINATOR_INVASION_TIMER = false;
+
 	// Sounds
 
 	@Property(

@@ -92,6 +92,9 @@ object CaveInPrediction : HudElement(
 			event.string.startsWith("The Starry Quarry is caving in 30 seconds!") || event.string.startsWith("Charlie: The Trash Pile is Caving In") -> {
 				regionalTracking["STARRY_QUARRY"]?.caveInTime = System.currentTimeMillis()
 			}
+			event.string.startsWith("THE SOULSWIFT SANDS ARE CAVING IN! All blocks and structures will be reset in 30 seconds") -> {
+				regionalTracking["SOULSWIFT_SANDS"]?.caveInTime = System.currentTimeMillis()
+			}
 		}
 	}
 

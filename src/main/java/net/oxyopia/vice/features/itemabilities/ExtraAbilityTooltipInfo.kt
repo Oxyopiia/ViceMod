@@ -13,6 +13,8 @@ import java.awt.Color
 object ExtraAbilityTooltipInfo {
 	private const val DAMAGE_LINE_STARTER = "⚔ Damage: "
 	private const val SET_LINE_STARTER = "♦ Set: "
+	private const val CARNAGE_LEVEL_STARTER = "✪ Carnage Level: "
+	private val CARNAGE_LEVEL_REGEX = Regex("✪ Carnage Level: (\\d+)/(\\d+)")
 
 	@SubscribeEvent
 	fun onItemTooltip(event: ItemTooltipEvent) {
@@ -36,6 +38,18 @@ object ExtraAbilityTooltipInfo {
 				text += " §a↑ ${appliedSetAmount * 25}%"
 			}
 			event.lines[setLineIndex] = event.lines[setLineIndex].copy().append(text)
+		}
+
+		val carnageLine = event.lines.find { it.string.startsWith(CARNAGE_LEVEL_STARTER) }
+		if (carnageLine != null) {
+			CARNAGE_LEVEL_REGEX.find(carnageLine.string)?.let { matchResult ->
+				val carnageLevel = matchResult.groupValues[1].toIntOrNull() ?: -1
+				if (carnageLevel > 0) {
+					val text = " §a↑ +${carnageLevel * 0.5}"
+					val carnageLineIndex = event.lines.indexOf(carnageLine)
+					event.lines[carnageLineIndex] = carnageLine.copy().append(text)
+				}
+			}
 		}
 	}
 }

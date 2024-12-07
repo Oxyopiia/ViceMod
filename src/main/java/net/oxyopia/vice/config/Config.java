@@ -893,6 +893,15 @@ public class Config extends Vigilant {
 	)
 	public boolean STARRY_STREETS_CHEESE_DISPLAY = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Star Waypoints",
+		description = "Displays text in the air above where stars have dropped.",
+		category = "Worlds",
+		subcategory = "Starry Streets"
+	)
+	public boolean STAR_WAYPOINTS = true;
+
 
 	public Config() {
 		super(new File("./config/vice/config.toml"), "Vice §b" + Vice.Companion.getVersion(), new JVMAnnotationPropertyCollector(), new ConfigSorting());

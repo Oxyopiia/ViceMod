@@ -69,6 +69,7 @@ import net.oxyopia.vice.features.event.summer.SummerTimers
 import net.oxyopia.vice.features.hud.FishingBrewTimer
 import net.oxyopia.vice.features.hud.TurkinatorInvasionTimer
 import net.oxyopia.vice.features.worlds.starrysuburbs.CheeseHelper
+import net.oxyopia.vice.features.worlds.starrysuburbs.FallenStarWaypoints
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger
@@ -177,6 +178,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
 		EVENT_MANAGER.subscribe(WasteyardTimer)
 		EVENT_MANAGER.subscribe(YetiHeadWarning)
+		EVENT_MANAGER.subscribe(FallenStarWaypoints)
 
 		EVENT_MANAGER.subscribe(BossCounter)
 		EVENT_MANAGER.subscribe(FishingBrewTimer)

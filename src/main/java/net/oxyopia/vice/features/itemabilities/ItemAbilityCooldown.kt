@@ -60,6 +60,14 @@ object ItemAbilityCooldown {
 				ItemAbility.POSEIDONS_FURY.onSound()
 			}
 
+			event.soundName == "item.trident.throw" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.STAR_BOMB.onSound()
+			}
+
+			event.soundName == "item.elytra.flying" && event.pitch == 1.45f && event.volume == 3f -> {
+				ItemAbility.STARBLADE.onSound()
+			}
+
 			// Glitch Mallet
 			event.soundName == "block.respawn_anchor.deplete" && event.pitch == 1.0f && event.volume == 1f -> {
 				ItemAbility.GLITCH_MALLET.onSound()

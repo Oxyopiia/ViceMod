@@ -262,7 +262,7 @@ public class Config extends Vigilant {
 		description = "Changes how the Item Cooldown Display is shown.",
 		category = "Abilities",
 		subcategory = "Cooldown Overlay",
-		options = {"Vanilla", "Static Background", "Color Fade", "Percentage Based", "Text Only"}
+		options = {"Vanilla", "Static Background", "Color Fade", "Percentage Based", "Durability", "Text Only"}
 	)
 	public int ITEMCD_DISPLAY_TYPE = 1;
 
@@ -919,7 +919,7 @@ public class Config extends Vigilant {
 		addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
 		addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");
 		addDependency("SHOW_ITEMCD_TEXT_CROSSHAIR", "ITEM_COOLDOWN_DISPLAY");
-		addDependency("HIDE_ITEMCD_WHEN_READY", "ITEMCD_DISPLAY_TYPE", (value) -> ITEM_COOLDOWN_DISPLAY && (int) value != 0 && (int) value != 4);
+		addDependency("HIDE_ITEMCD_WHEN_READY", "ITEMCD_DISPLAY_TYPE", (value) -> ITEM_COOLDOWN_DISPLAY && (int) value != 0 && (int) value != 5);
 		addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY");
 		addDependency("INVENTORY_SET_COLORS_OPACITY", "INVENTORY_SET_COLORS");
 		addDependency("INCLUDE_ARMOR_IN_SET_COLORS", "INVENTORY_SET_COLORS");

@@ -25,7 +25,7 @@ object TimeUtils {
 		return (if (showClock) PADDED_CLOCK_ICON else "") + ceil((timeLimit.inWholeMilliseconds - this.inWholeMilliseconds) / 1000.0).seconds.formatDuration()
 	}
 
-	fun Duration.formatShortDuration() = String.format("%.2f", this.inWholeMilliseconds / 1000f)
+	fun Duration.formatShortDuration() = String.format("%.1f", this.inWholeMilliseconds / 1000f)
 
 	fun Long.timeDelta(): Duration = System.currentTimeMillis().milliseconds - this.milliseconds
 	fun Long.timeDeltaUntil(): Duration = this.milliseconds - System.currentTimeMillis().milliseconds

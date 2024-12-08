@@ -2,6 +2,9 @@ package net.oxyopia.vice
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
@@ -27,6 +30,7 @@ import net.oxyopia.vice.config.DevConfig
 import net.oxyopia.vice.config.Storage
 import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
+import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.CommandRegisterEvent
 import net.oxyopia.vice.events.ItemTooltipEvent
 import net.oxyopia.vice.events.core.EventManager
@@ -72,7 +76,9 @@ import net.oxyopia.vice.features.worlds.starrysuburbs.CheeseHelper
 import net.oxyopia.vice.features.worlds.starrysuburbs.FallenStarWaypoints
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
+import net.oxyopia.vice.utils.hud.HorizontalAlignment
 import org.slf4j.Logger
+import java.lang.reflect.Type
 
 class Vice : ClientModInitializer {
 	companion object {
@@ -116,6 +122,24 @@ class Vice : ClientModInitializer {
 					return World.getById(text) ?: error("Could not parse World from $text")
 				}
 			}.nullSafe())
+			.registerTypeAdapter(Position::class.java, object : JsonDeserializer<Position> {
+				override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Position {
+					val jsonObject = json.asJsonObject
+
+					val x = jsonObject["x"].asFloat
+					val y = jsonObject["y"].asFloat
+					val scale = jsonObject["scale"]?.asFloat ?: 1f
+
+					val alignment = if (jsonObject.has("centered")) {
+						val centered = jsonObject["centered"].asBoolean
+						if (centered) HorizontalAlignment.CENTER else HorizontalAlignment.LEFT
+					} else {
+						HorizontalAlignment.CENTER
+					}
+
+					return Position(x = x, y = y, scale = scale, alignment = alignment)
+				}
+			})
 			.create()
 
 		const val CHAT_PREFIX = "§bVice §7|§r "

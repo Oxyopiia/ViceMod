@@ -18,6 +18,7 @@ import net.oxyopia.vice.utils.HudUtils.highlight
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.NumberUtils.clamp
+import net.oxyopia.vice.utils.hud.HorizontalAlignment
 import java.awt.Color
 import kotlin.math.ceil
 
@@ -222,7 +223,7 @@ object ItemAbilityCooldown {
 		ability?.apply {
 			if (!isOnCooldown() || !displayCooldown) return
 
-			val pos = Position(event.scaledWidth / 2f + 2, event.scaledHeight / 2f + 2, centered = false)
+			val pos = Position(event.scaledWidth / 2f + 2, event.scaledHeight / 2f + 2, alignment = HorizontalAlignment.LEFT)
 			val color = Color(0, 236, 255, 255)
 
 			val roundedFloat: String = String.format("%.0f", ceil(remainingCooldown().toDouble()))
@@ -290,7 +291,7 @@ object ItemAbilityCooldown {
 		ability.drawStatus(event.x, event.y + 9, event.context)
 	}
 
-	private fun ItemAbility.drawStatus(x: Int, y: Int, context: DrawContext, centered: Boolean = false, defaultColor: Color = Color.white) {
+	private fun ItemAbility.drawStatus(x: Int, y: Int, context: DrawContext, defaultColor: Color = Color.white) {
 		if (!Vice.config.SHOW_ITEMCD_TEXT && Vice.config.ITEMCD_DISPLAY_TYPE != DisplayType.TEXT_ONLY) return
 		if (!Vice.config.ITEM_COOLDOWN_DISPLAY || !displayCooldown) return
 
@@ -301,7 +302,7 @@ object ItemAbilityCooldown {
 
 		if (isOnCooldown()) {
 			val roundedFloat: String = String.format("%.0f", ceil(remainingCooldown().toDouble()))
-			HudUtils.drawText(roundedFloat, x, y, context, color = defaultColor.rgb, shadow = true, centered = centered)
+			HudUtils.drawText(roundedFloat, x, y, context, color = defaultColor.rgb, shadow = true, alignment = HorizontalAlignment.LEFT)
 
 		} else {
 			var color = defaultColor
@@ -311,7 +312,7 @@ object ItemAbilityCooldown {
 				color = if (hp <= 10f) Color.green else Color.red
 			}
 
-			HudUtils.drawText("R", x, y, context, color = color.rgb, shadow = true, centered = centered)
+			HudUtils.drawText("R", x, y, context, color = color.rgb, shadow = true, alignment = HorizontalAlignment.LEFT)
 		}
 
 		matrices.pop()

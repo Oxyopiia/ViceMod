@@ -15,6 +15,7 @@ import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.HudUtils.drawStrings
 import net.oxyopia.vice.utils.HudUtils.drawText
 import net.oxyopia.vice.utils.HudUtils.drawTexts
+import net.oxyopia.vice.utils.hud.HorizontalAlignment
 import java.awt.Color
 
 object RenderTest : HudElement(
@@ -38,7 +39,7 @@ object RenderTest : HudElement(
 		if (!canDraw()) return
 
 		// Anchor top left to (50, 20)
-		val pos50201uc = Position(50f, 20f, centered = false)
+		val pos50201uc = Position(50f, 20f, alignment = HorizontalAlignment.LEFT)
 		pos50201uc.drawText(Text.literal("Color Test 1 uc").withColor(Color(55,134,255).rgb), event.context)
 
 		// Anchor center to (50, 50)
@@ -50,7 +51,7 @@ object RenderTest : HudElement(
 		pos50752.drawText(Text.literal("Scale Test 2x cc").withColor(Color(55, 134, 255).rgb), event.context)
 
 		// Anchor top left to (50, 100) with scale 2
-		val pos100502uc = Position(50f, 100f, scale = 2f, centered = false)
+		val pos100502uc = Position(50f, 100f, scale = 2f, alignment = HorizontalAlignment.LEFT)
 		pos100502uc.drawText(Text.literal("Scale Test 2x uc").withColor(Color(55, 134, 255).rgb), event.context)
 
 		// Anchor center to (100, 100) with scale 1.5
@@ -65,7 +66,7 @@ object RenderTest : HudElement(
 		), event.context)
 
 		// Anchor center to (300, 100) with scale 2
-		val scalar2 = Position(300f, 100f, scale = 2f, centered = false)
+		val scalar2 = Position(300f, 100f, scale = 2f, alignment = HorizontalAlignment.LEFT)
 		scalar2.drawTexts(listOf(
 			Text.literal("Scalar 2 Test 1").withColor(Colors.ChatColor.Green.rgb),
 			Text.literal("Scalar 2 Test 2").withColor(Colors.ChatColor.Green.rgb),

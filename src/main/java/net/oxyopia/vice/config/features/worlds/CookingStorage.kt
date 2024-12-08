@@ -2,6 +2,7 @@ package net.oxyopia.vice.config.features.worlds
 
 import com.google.gson.annotations.Expose
 import net.oxyopia.vice.data.gui.Position
+import net.oxyopia.vice.utils.hud.HorizontalAlignment
 
 class CookingStorage {
 
@@ -24,6 +25,6 @@ class CookingStorage {
 	var currentOrderPos: Position = Position(175f, 10f)
 
 	@Expose
-	var orderTrackerPos: Position = Position(10f, 50f, centered = false)
+	var orderTrackerPos: Position = Position(10f, 50f, alignment = HorizontalAlignment.LEFT)
 
 }

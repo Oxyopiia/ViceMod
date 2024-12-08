@@ -15,6 +15,8 @@ import net.oxyopia.vice.utils.HudUtils.drawBackground
 import net.oxyopia.vice.utils.NumberUtils.clamp
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils.getClient
+import net.oxyopia.vice.utils.hud.HorizontalAlignment
+import net.oxyopia.vice.utils.hud.HorizontalAlignment.Companion.getNext
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
 import kotlin.time.Duration.Companion.seconds
@@ -106,12 +108,12 @@ abstract class HudElement(
 			GLFW.GLFW_KEY_MINUS -> position.scale -= 0.1f
 			GLFW.GLFW_KEY_KP_SUBTRACT -> position.scale -= 0.1f
 
-			GLFW.GLFW_KEY_TAB -> invertCentering()
+			GLFW.GLFW_KEY_TAB -> cycleCentering()
 
 			GLFW.GLFW_KEY_V -> position.y = getClient().window.scaledHeight / 2f
 			GLFW.GLFW_KEY_H -> {
 				position.x = getClient().window.scaledWidth / 2f
-				position.centered = true
+				position.alignment = HorizontalAlignment.CENTER
 			}
 
 			else -> return false
@@ -140,7 +142,7 @@ abstract class HudElement(
 
 	fun tryResetting() {
 		if (isResetting()) {
-			position = Position(0f, 0f, scale = 1f, centered = false)
+			position = Position(0f, 0f, scale = 1f, alignment = HorizontalAlignment.LEFT)
 			resettingElement = null
 			save()
 			return
@@ -149,8 +151,8 @@ abstract class HudElement(
 		resettingElement = this
 	}
 
-	fun invertCentering() {
-		position.centered = !position.centered
+	fun cycleCentering() {
+		position.alignment = position.alignment.getNext()
 	}
 
 	override fun isHovered(): Boolean = visible && hoveredElement == this

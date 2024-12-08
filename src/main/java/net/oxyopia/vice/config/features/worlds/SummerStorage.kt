@@ -2,6 +2,7 @@ package net.oxyopia.vice.config.features.worlds
 
 import com.google.gson.annotations.Expose
 import net.oxyopia.vice.data.gui.Position
+import net.oxyopia.vice.utils.hud.HorizontalAlignment
 
 class SummerStorage {
 
@@ -22,7 +23,7 @@ class SummerStorage {
 	var barReset = -1L
 
 	@Expose
-	var fishingDropsPos = Position(200f, 10f, centered = false)
+	var fishingDropsPos = Position(200f, 10f, alignment = HorizontalAlignment.LEFT)
 
 	@Expose
 	var violetInfoPos = Position(240f, 69f)

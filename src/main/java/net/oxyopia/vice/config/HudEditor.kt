@@ -53,7 +53,7 @@ object HudEditor : Screen(Text.of("Vice HUD Editor")) {
 
 	override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
 		when (button) {
-			GLFW.GLFW_MOUSE_BUTTON_MIDDLE -> HudElement.hoveredElement?.invertCentering()
+			GLFW.GLFW_MOUSE_BUTTON_MIDDLE -> HudElement.hoveredElement?.cycleCentering()
 			GLFW.GLFW_MOUSE_BUTTON_RIGHT -> HudElement.hoveredElement?.tryResetting()
 			GLFW.GLFW_MOUSE_BUTTON_LEFT -> {
 				HudElement.resettingElement = null

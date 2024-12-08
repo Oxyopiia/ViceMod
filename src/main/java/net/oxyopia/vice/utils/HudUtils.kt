@@ -20,6 +20,7 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.RenderHotbarSlotEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils.convertFormatting
+import net.oxyopia.vice.utils.hud.HorizontalAlignment
 import java.awt.Color
 
 object HudUtils {
@@ -99,14 +100,21 @@ object HudUtils {
 		fillUIArea(context.matrices, RenderLayer.getGuiOverlay(), x, y, x + 16, y + 16, -500, color)
 	}
 
-	private fun drawText(text: Text, x: Int, y: Int, context: DrawContext, color: Color, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Size {
+	private fun drawText(text: Text, x: Int, y: Int, context: DrawContext, color: Color, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, alignment: HorizontalAlignment = HorizontalAlignment.LEFT): Size {
 		val textRenderer = MinecraftClient.getInstance().textRenderer
 		val vertexConsumers = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
 		var xPos = x
 
-		if (centered) {
-			val width = textRenderer.getWidth(text)
-			xPos = x - (width / 2)
+		when (alignment) {
+			HorizontalAlignment.LEFT -> {}
+			HorizontalAlignment.CENTER -> {
+				val width = textRenderer.getWidth(text)
+				xPos = x - (width / 2)
+			}
+			HorizontalAlignment.RIGHT -> {
+				val width = textRenderer.getWidth(text)
+				xPos = x - width
+			}
 		}
 
 		val width = textRenderer.draw(
@@ -128,8 +136,8 @@ object HudUtils {
 		return Size(width.toFloat(), Size.DEFAULT_TEXT_HEIGHT.toFloat())
 	}
 
-	fun drawText(text: String, x: Int, y: Int, context: DrawContext, color: Int = Color(255, 255, 255, 255).rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, centered: Boolean = false): Size {
-		return drawText(Text.of(text.convertFormatting()), x, y, context, Color(color), shadow, centered)
+	fun drawText(text: String, x: Int, y: Int, context: DrawContext, color: Int = Color(255, 255, 255, 255).rgb, shadow: Boolean = Vice.config.HUD_TEXT_SHADOW, alignment: HorizontalAlignment = HorizontalAlignment.LEFT): Size {
+		return drawText(Text.of(text.convertFormatting()), x, y, context, Color(color), shadow, alignment)
 	}
 
 	fun Position.drawBackground(size: Size, context: DrawContext, color: Color = Color.gray, padding: Float = 0f): Quad {
@@ -138,8 +146,17 @@ object HudUtils {
 		var width = size.width + padding
 		val height = size.height + padding
 
-		val pureX = x - if (centered) width / 2f else 0f
-		if (centered) width /= 2f
+		val pureX = when (alignment) {
+			HorizontalAlignment.LEFT -> x
+			HorizontalAlignment.CENTER -> {
+				width /= 2f
+				x - width
+			}
+			HorizontalAlignment.RIGHT -> {
+				width /= 2f
+				x - width
+			}
+		}
 
 		return Quad(pureX, y, x + width, y + height)
 			.addPadding(padding)
@@ -154,8 +171,10 @@ object HudUtils {
 		matrices.push()
 		matrices.translate(x, y, 0f)
 
-		if (centered) {
-			matrices.translate(-textRenderer.getWidth(text) / 2f * scale, 0f, 0f)
+		when (alignment) {
+			HorizontalAlignment.CENTER -> matrices.translate(-textRenderer.getWidth(text) / 2f * scale, 0f, 0f)
+			HorizontalAlignment.RIGHT -> matrices.translate(-textRenderer.getWidth(text) * scale, 0f, 0f)
+			else -> {}
 		}
 
 		matrices.translate(offsetX, offsetY, z.toFloat())

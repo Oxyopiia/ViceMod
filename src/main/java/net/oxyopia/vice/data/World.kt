@@ -21,6 +21,7 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	Warehouse("testingzone", "Warehouse"),
 	SoulswiftSands("soulswiftsands", "Soulswift Sands"),
 	TimelessTastes("timelesstastes", "Timeless Tastes"),
+	StarryStreets("starrystreets", "Starry Streets"),
 
 	Vice("viceboss", "Vice", type = WorldType.BOSS),
 	Wasteyard("wasteyard", "Wasteyard", type = WorldType.BOSS),

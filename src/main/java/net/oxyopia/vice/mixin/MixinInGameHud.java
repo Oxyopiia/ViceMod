@@ -8,11 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
 import net.oxyopia.vice.config.HudEditor;
+import net.oxyopia.vice.data.Debugger;
 import net.oxyopia.vice.events.RenderHotbarSlotEvent;
 import net.oxyopia.vice.events.HudRenderEvent;
 import net.oxyopia.vice.events.SubtitleEvent;
 import net.oxyopia.vice.events.TitleEvent;
-import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -53,7 +53,7 @@ public class MixinInGameHud {
 	private void onSubtitle(Text subtitle, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new SubtitleEvent(subtitle, title != null ? title : Text.empty(), ci));
-			DevUtils.sendDebugChat("&&dHUD SUBTITLE &&f" + subtitle.getString(), "INGAMEHUD_MIXIN_DEBUGGER");
+			Debugger.HUD.debug(subtitle.getString(), "SUBTITLE");
 		}
 	}
 
@@ -61,7 +61,7 @@ public class MixinInGameHud {
 	private void onTitle(Text title, CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new TitleEvent(title.getString(), ci));
-			DevUtils.sendDebugChat("&&dHUD TITLE &&f" + title.getString(), "INGAMEHUD_MIXIN_DEBUGGER");
+			Debugger.HUD.debug(title.getString(), "TITLE");
 		}
 	}
 }

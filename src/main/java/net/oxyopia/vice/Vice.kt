@@ -10,6 +10,7 @@ import com.mojang.logging.LogUtils
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.fabricmc.loader.api.FabricLoader
@@ -27,27 +28,28 @@ import net.oxyopia.vice.config.Storage
 import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.CommandRegisterEvent
+import net.oxyopia.vice.events.ItemTooltipEvent
 import net.oxyopia.vice.events.core.EventManager
 import net.oxyopia.vice.features.RenderTest
 import net.oxyopia.vice.features.arenas.ArenaAPI
 import net.oxyopia.vice.features.arenas.ArenaNotifications
 import net.oxyopia.vice.features.arenas.ArenaSession
 import net.oxyopia.vice.features.arenas.LiveArenaInformation
-import net.oxyopia.vice.features.auxiliary.exonitas.BabyMode
-import net.oxyopia.vice.features.auxiliary.exonitas.CitySpamHiders
-import net.oxyopia.vice.features.auxiliary.exonitas.PowerBoxTimer
+import net.oxyopia.vice.features.worlds.auxiliary.exonitas.BabyMode
+import net.oxyopia.vice.features.worlds.auxiliary.exonitas.CitySpamHiders
+import net.oxyopia.vice.features.worlds.auxiliary.exonitas.PowerBoxTimer
 import net.oxyopia.vice.features.bosses.*
-import net.oxyopia.vice.features.cooking.BurgerTimer
-import net.oxyopia.vice.features.cooking.CookingAPI
-import net.oxyopia.vice.features.cooking.OrderTracker
-import net.oxyopia.vice.features.cooking.CurrentOrderDisplay
-import net.oxyopia.vice.features.expeditions.DefibCounter
-import net.oxyopia.vice.features.expeditions.DoubleTapDrop
-import net.oxyopia.vice.features.expeditions.ExpeditionAPI
-import net.oxyopia.vice.features.expeditions.MerchantOverlay
-import net.oxyopia.vice.features.expeditions.RoomWaypoints
-import net.oxyopia.vice.features.expeditions.RunOverview
-import net.oxyopia.vice.features.expeditions.StylePointsHider
+import net.oxyopia.vice.features.worlds.cooking.BurgerTimer
+import net.oxyopia.vice.features.worlds.cooking.CookingAPI
+import net.oxyopia.vice.features.worlds.cooking.OrderTracker
+import net.oxyopia.vice.features.worlds.cooking.CurrentOrderDisplay
+import net.oxyopia.vice.features.worlds.expeditions.DefibCounter
+import net.oxyopia.vice.features.worlds.expeditions.DoubleTapDrop
+import net.oxyopia.vice.features.worlds.expeditions.ExpeditionAPI
+import net.oxyopia.vice.features.worlds.expeditions.MerchantOverlay
+import net.oxyopia.vice.features.worlds.expeditions.RoomWaypoints
+import net.oxyopia.vice.features.worlds.expeditions.RunOverview
+import net.oxyopia.vice.features.worlds.expeditions.StylePointsHider
 import net.oxyopia.vice.features.hud.CaveInPrediction
 import net.oxyopia.vice.features.hud.DeliveryTimer
 import net.oxyopia.vice.features.hud.ForgeTimers
@@ -57,12 +59,17 @@ import net.oxyopia.vice.features.hud.TrainTimer
 import net.oxyopia.vice.features.itemabilities.AbilitySoundChanger
 import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown
 import net.oxyopia.vice.features.itemabilities.CooldownDisplayChanger
+import net.oxyopia.vice.features.itemabilities.ExtraAbilityTooltipInfo
 import net.oxyopia.vice.features.itemabilities.SetHighlighting
 import net.oxyopia.vice.features.misc.*
-import net.oxyopia.vice.features.summer.BarTimer
-import net.oxyopia.vice.features.summer.FishingDropsTracker
-import net.oxyopia.vice.features.summer.SummerAPI
-import net.oxyopia.vice.features.summer.SummerTimers
+import net.oxyopia.vice.features.event.summer.BarTimer
+import net.oxyopia.vice.features.event.summer.FishingDropsTracker
+import net.oxyopia.vice.features.event.summer.SummerAPI
+import net.oxyopia.vice.features.event.summer.SummerTimers
+import net.oxyopia.vice.features.hud.FishingBrewTimer
+import net.oxyopia.vice.features.hud.TurkinatorInvasionTimer
+import net.oxyopia.vice.features.worlds.starrysuburbs.CheeseHelper
+import net.oxyopia.vice.features.worlds.starrysuburbs.FallenStarWaypoints
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import org.slf4j.Logger
@@ -124,8 +131,7 @@ class Vice : ClientModInitializer {
 		storage.initialize()
 
 		subscribeEventListeners()
-		initConnectionEvents()
-		registerCommands()
+		initEvents()
 
 		if (storage.lastVersion != version.friendlyString) {
 			storage.lastVersion = version.friendlyString
@@ -139,7 +145,14 @@ class Vice : ClientModInitializer {
 		}
 	}
 
-	private fun registerCommands() {
+	private fun initEvents() {
+		// If still in DoomTowers, will be updated back to true by Mixin
+		ClientPlayConnectionEvents.DISCONNECT.register(ClientPlayConnectionEvents.Disconnect { _: ClientPlayNetworkHandler?, _: MinecraftClient? ->
+			inDoomTowers = false
+		})
+		ClientPlayConnectionEvents.JOIN.register(ClientPlayConnectionEvents.Join { _: ClientPlayNetworkHandler?, _: PacketSender?, _: MinecraftClient? ->
+			inDoomTowers = false
+		})
 		ClientCommandRegistrationCallback.EVENT.register(ClientCommandRegistrationCallback { dispatcher: CommandDispatcher<FabricClientCommandSource?>?, _: CommandRegistryAccess? ->
 			dispatcher?.let {
 				ViceCommand.register(it)
@@ -148,38 +161,37 @@ class Vice : ClientModInitializer {
 				EVENT_MANAGER.publish(CommandRegisterEvent(it))
 			}
 		})
-	}
+		ItemTooltipCallback.EVENT.register(ItemTooltipCallback { stack, context, type, lines ->
+			EVENT_MANAGER.publish(ItemTooltipEvent(stack, context, type, lines))
+		})
 
-	private fun initConnectionEvents() {
-		// If still in DoomTowers, will be updated back to true by Mixin
-		ClientPlayConnectionEvents.DISCONNECT.register(ClientPlayConnectionEvents.Disconnect { _: ClientPlayNetworkHandler?, _: MinecraftClient? ->
-			inDoomTowers = false
-		})
-		ClientPlayConnectionEvents.JOIN.register(ClientPlayConnectionEvents.Join { _: ClientPlayNetworkHandler?, _: PacketSender?, _: MinecraftClient? ->
-			inDoomTowers = false
-		})
 	}
 
 	private fun subscribeEventListeners() {
 		EVENT_MANAGER.subscribe(BackpackRenaming)
 		EVENT_MANAGER.subscribe(CaveInPrediction)
 		EVENT_MANAGER.subscribe(ChatFilter)
+		EVENT_MANAGER.subscribe(CheeseHelper)
 		EVENT_MANAGER.subscribe(ConsumeItemBlocker)
 		EVENT_MANAGER.subscribe(Fishing)
 		EVENT_MANAGER.subscribe(ItemProtection)
 		EVENT_MANAGER.subscribe(RevolverBlindnessHider)
 		EVENT_MANAGER.subscribe(WasteyardTimer)
 		EVENT_MANAGER.subscribe(YetiHeadWarning)
+		EVENT_MANAGER.subscribe(FallenStarWaypoints)
 
 		EVENT_MANAGER.subscribe(BossCounter)
+		EVENT_MANAGER.subscribe(FishingBrewTimer)
 		EVENT_MANAGER.subscribe(ForgeTimers)
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(HudUtils)
 		EVENT_MANAGER.subscribe(PlayerStats)
 		EVENT_MANAGER.subscribe(TrainTimer)
+		EVENT_MANAGER.subscribe(TurkinatorInvasionTimer)
 
 		EVENT_MANAGER.subscribe(AbilitySoundChanger)
 		EVENT_MANAGER.subscribe(CooldownDisplayChanger)
+		EVENT_MANAGER.subscribe(ExtraAbilityTooltipInfo)
 		EVENT_MANAGER.subscribe(ItemAbilityCooldown)
 		EVENT_MANAGER.subscribe(SetHighlighting)
 

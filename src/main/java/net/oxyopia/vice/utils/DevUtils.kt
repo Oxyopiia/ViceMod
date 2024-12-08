@@ -35,6 +35,8 @@ object DevUtils {
 	}
 
 	fun sendErrorMessage(throwable: Throwable, msg: String) {
+		Vice.logger.error(throwable.message, throwable)
+
 		val stackTrace = throwable.stackTrace
 		val stackTraceString = StringBuilder(throwable.message)
 
@@ -56,7 +58,6 @@ object DevUtils {
 					)
 			)
 
-		Vice.logger.error(throwable.message, throwable)
 		MinecraftClient.getInstance().inGameHud.chatHud.addMessage(errorChat)
 	}
 

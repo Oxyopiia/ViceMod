@@ -1,9 +1,9 @@
 package net.oxyopia.vice.features.bosses
 
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.events.BossBarEvents
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
@@ -21,7 +21,7 @@ object ViceBoss : Boss(
 			if (lastKnownUUID != event.instance.uuid) {
 				lastSpawned = System.currentTimeMillis()
 				lastKnownUUID = event.instance.uuid
-				DevUtils.sendDebugChat("&&9BOSS CHANGE &&rDetected Vice change", "BOSS_DETECTION_INFO")
+				Debugger.BOSS.debug("Detected Vice change")
 			}
 
 			val diff = lastSpawned.timeDelta()

@@ -175,6 +175,26 @@ public class Config extends Vigilant {
 	)
 	public boolean HIDE_SET_REQUIREMENT_MESSAGES = false;
 
+	// General/Mining
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Cave-In Prediction",
+		description = "Show a prediction of the time until the next Cave-In when mining in dynamic mining areas.",
+		category = "General",
+		subcategory = "Mining"
+	)
+	public boolean CAVE_IN_PREDICTION = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Adjust Dynamic Mining Bossbar",
+		description = "Adjust the cave-in bossbar to show the progress to the next cave in.",
+		category = "General",
+		subcategory = "Mining"
+	)
+	public boolean ADJUST_DYNAMIC_MINING_BOSSBAR = true;
+
 	// General/Fishing
 
 	@Property(
@@ -185,6 +205,15 @@ public class Config extends Vigilant {
 		subcategory = "Fishing"
 	)
 	public boolean FISHING_DING = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Brew Timer",
+		description = "Shows a timer for the effects of consumables like the Fishy Brew.",
+		category = "General",
+		subcategory = "Fishing"
+	)
+	public boolean FISHING_BREW_TIMER = true;
 
 	// Abilities/Quality of Life
 
@@ -197,6 +226,15 @@ public class Config extends Vigilant {
 		options = {"Normal", "Action Bar", "Hidden"}
 	)
 	public int ITEM_COOLDOWN_TITLE_TYPE = 0;
+	
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Show Extra Info in Tooltip",
+		description = "Shows extra info, such as Cooldowns and increased Damage, in the tooltip of ability items.",
+		category = "Abilities",
+		subcategory = "Quality of Life"
+	)
+	public boolean SHOW_EXTRA_ABILITY_INFO = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -224,7 +262,7 @@ public class Config extends Vigilant {
 		description = "Changes how the Item Cooldown Display is shown.",
 		category = "Abilities",
 		subcategory = "Cooldown Overlay",
-		options = {"Vanilla", "Static Background", "Color Fade", "Percentage Based", "Text Only"}
+		options = {"Vanilla", "Static Background", "Color Fade", "Percentage Based", "Durability", "Text Only"}
 	)
 	public int ITEMCD_DISPLAY_TYPE = 1;
 
@@ -603,6 +641,17 @@ public class Config extends Vigilant {
 	)
 	public boolean SUMMER_BAR_MINIGAME_BOSSBAR = false;
 
+	// Event/Turkinator
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Invasion Timer",
+		description = "Shows how long until the next Turkinator Invasion, as well as where he last invaded.",
+		category = "Event",
+		subcategory = "Turkinator"
+	)
+	public boolean TURKINATOR_INVASION_TIMER = false;
+
 	// Sounds
 
 	@Property(
@@ -823,16 +872,35 @@ public class Config extends Vigilant {
 	)
 	public boolean GLITCH_HQ_DELIVERY_TIMER = true;
 
-	// Worlds/Lost in Time
+	// Worlds/Starry Streets
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Cave-In Prediction",
-		description = "Shows a prediction of the time until the next Cave-In when mining in the Soulswift Sands.",
+		name = "Cheese Highlight",
+		description = "Highlights all tradeable items for cheese whilst in the Cheese Exchange.",
 		category = "Worlds",
-		subcategory = "Lost in Time"
+		subcategory = "Starry Streets"
 	)
-	public boolean LOST_IN_TIME_CAVE_PREDICTION = true;
+	public boolean STARRY_STREETS_CHEESE_HIGHLIGHT = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Cheese Display",
+		description = "Counts all cheese-tradeable items in your inventory and their total value.",
+		category = "Worlds",
+		subcategory = "Starry Streets",
+		hidden = true
+	)
+	public boolean STARRY_STREETS_CHEESE_DISPLAY = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Star Waypoints",
+		description = "Displays text in the air above where stars have dropped.",
+		category = "Worlds",
+		subcategory = "Starry Streets"
+	)
+	public boolean STAR_WAYPOINTS = true;
 
 
 	public Config() {
@@ -851,7 +919,7 @@ public class Config extends Vigilant {
 		addDependency("ITEMCD_DISPLAY_TYPE", "ITEM_COOLDOWN_DISPLAY");
 		addDependency("SHOW_ITEMCD_TEXT", "ITEM_COOLDOWN_DISPLAY");
 		addDependency("SHOW_ITEMCD_TEXT_CROSSHAIR", "ITEM_COOLDOWN_DISPLAY");
-		addDependency("HIDE_ITEMCD_WHEN_READY", "ITEMCD_DISPLAY_TYPE", (value) -> ITEM_COOLDOWN_DISPLAY && (int) value != 0 && (int) value != 4);
+		addDependency("HIDE_ITEMCD_WHEN_READY", "ITEMCD_DISPLAY_TYPE", (value) -> ITEM_COOLDOWN_DISPLAY && (int) value != 0 && (int) value != 5);
 		addDependency("ITEMCD_BACKGROUND_OPACITY", "ITEM_COOLDOWN_DISPLAY");
 		addDependency("INVENTORY_SET_COLORS_OPACITY", "INVENTORY_SET_COLORS");
 		addDependency("INCLUDE_ARMOR_IN_SET_COLORS", "INVENTORY_SET_COLORS");
@@ -888,6 +956,9 @@ public class Config extends Vigilant {
 		});
 		migrations.add(config -> { // Migration 3: Cherry Overlay -> Summer Timers
 			move(config, "event.summer.violet's_exchange_overlay", "event.summer.summer_timers");
+		});
+		migrations.add(config -> { // Migration 4: Generalise Cave In Prediction
+			move(config, "worlds.lost_in_time.cave-in_prediction", "general.mining.cave-in_prediction");
 		});
 		return migrations;
 	}

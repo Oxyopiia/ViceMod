@@ -12,12 +12,12 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
+import net.oxyopia.vice.data.Debugger;
 import net.oxyopia.vice.events.ChestRenderEvent;
 import net.oxyopia.vice.events.ContainerRenderSlotEvent;
 import net.oxyopia.vice.events.ItemDropEvent;
 import net.oxyopia.vice.events.SlotClickEvent;
 import net.oxyopia.vice.events.ViceEvent;
-import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -63,7 +63,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 			ItemStack cursorStack = touchDragStack.isEmpty() ? handler.getCursorStack() : touchDragStack;
 			if (id == -1) {
 				id = (int) (Math.random() * 25000);
-				DevUtils.sendDebugChat("&&dHUD SCREEN &&fAssigned ID &&b" + id + "&&f to this HandledScreen", "INGAMEHUD_MIXIN_DEBUGGER");
+				Debugger.HUD.debug("Assigned ID §b" + id +" §fto this HandledScreen", "SCREEN");
 			}
 
 			EVENT_MANAGER.publish(new ChestRenderEvent(title.getString(), handler.slots, cursorStack, id));
@@ -81,7 +81,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 	private void onClose(CallbackInfo ci) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
 			id = -1;
-			DevUtils.sendDebugChat("&&dHUD SCREEN &&fReset ID of closed HandledScreen", "INGAMEHUD_MIXIN_DEBUGGER");
+			Debugger.HUD.debug("Reset ID of closed HandledScreen", "SCREEN");
 		}
 	}
 
@@ -91,7 +91,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 	)
 	private void onAttemptMoveItem(ClientPlayerInteractionManager instance, int syncId, int slotId, int button, SlotActionType actionType, PlayerEntity player) {
 		if (Utils.INSTANCE.getInDoomTowers()) {
-			DevUtils.sendDebugChat("&&fFiring SlotClickEvent on syncId &&d" + syncId + "&&f to slotId &&b" + slotId + "&&f with button &&c " + button + " &&fwith type &&e" + actionType + "&&f with title &&a" + title.getString(), "SLOT_CLICK_DEBUGGER");
+			Debugger.SLOTCLICK.debug("§fFiring on syncId §d" + syncId + "§f to slotId §b" + slotId + "§f with button §c " + button + " §fwith type §e" + actionType + "§f with title §a" + title.getString());
 
 			ViceEvent.Cancelable<Boolean> result = null;
 
@@ -114,11 +114,11 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 			}
 
 			if (result.isCanceled()) {
-				DevUtils.sendDebugChat("SlotClickEvent &&cCANCEL", "SLOT_CLICK_DEBUGGER");
+				Debugger.SLOTCLICK.debug("§cCANCEL");
 				return;
 			}
 
-			DevUtils.sendDebugChat("SlotClickEvent &&ePASS", "SLOT_CLICK_DEBUGGER");
+			Debugger.SLOTCLICK.debug("§ePASS");
 		}
 
 		instance.clickSlot(syncId, slotId, button, actionType, player);

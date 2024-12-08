@@ -1,5 +1,6 @@
 package net.oxyopia.vice.events.core
 
+import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ViceEvent
 import net.oxyopia.vice.utils.DevUtils
 import java.lang.invoke.MethodHandles
@@ -52,6 +53,8 @@ class EventManager {
 	 * If an exception is thrown during invocation, it is caught and printed to the Minecraft Chat using a Vice Error.
 	 */
 	fun <T: ViceEvent> publish(event: T): T {
+		if (DevUtils.hasDevMode(Vice.devConfig.THROTTLE_ALL_EVENTS)) return event
+
 		var clazz: Class<*>? = event.javaClass
 
 		while (clazz != null) {

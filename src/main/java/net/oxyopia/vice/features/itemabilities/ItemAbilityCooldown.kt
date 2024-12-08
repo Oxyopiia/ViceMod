@@ -8,10 +8,10 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.ClickType
 import net.minecraft.util.math.MathHelper
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.HudUtils.drawString
 import net.oxyopia.vice.utils.HudUtils.highlight
@@ -58,6 +58,14 @@ object ItemAbilityCooldown {
 			// Poseidon's Fury
 			event.soundName == "item.trident.throw" && event.pitch == 2f && event.volume == 9999f -> {
 				ItemAbility.POSEIDONS_FURY.onSound()
+			}
+
+			event.soundName == "item.trident.throw" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.STAR_BOMB.onSound()
+			}
+
+			event.soundName == "item.elytra.flying" && event.pitch == 1.45f && event.volume == 3f -> {
+				ItemAbility.STARBLADE.onSound()
 			}
 
 			// Glitch Mallet
@@ -198,6 +206,10 @@ object ItemAbilityCooldown {
 			event.soundName == "block.bubble_column.whirlpool_inside" && event.volume == 3f -> {
 				ItemAbility.BUBBLE_GUN.onSound()
 			}
+
+			event.soundName == "block.mud.break" && event.volume == 2f -> {
+				ItemAbility.GORE_GAUNTLET.onSound()
+			}
 		}
 	}
 
@@ -246,10 +258,10 @@ object ItemAbilityCooldown {
 	private fun handleClickEventAbility(ability: ItemAbility) {
 		ability.apply {
 			lastClicked = System.currentTimeMillis()
-			DevUtils.sendDebugChat("&&bITEMABILITY &&conClick as&&b $name", "ITEM_ABILITY_DEBUGGER")
+			Debugger.ITEMABILITY.debug("§conClick as §b$name")
 
 			if (soundOnUse || remainingCooldown() > 0f) return
-			if (set == null || hasSet()) {
+			if (set == null || hasSetEquipped()) {
 				activate()
 			}
 		}
@@ -260,7 +272,7 @@ object ItemAbilityCooldown {
 		val ability: ItemAbility = ItemAbility.getByName(event.itemStack.cleanName()) ?: return
 		val bgOpacity = Vice.config.ITEMCD_BACKGROUND_OPACITY
 
-		if (Vice.config.WRONG_SET_INDICATOR && ability.setAmount > 0 && !ability.hasSet()) {
+		if (Vice.config.WRONG_SET_INDICATOR && ability.setAmount > 0 && !ability.hasSetEquipped()) {
 			event.highlight(Color(255, 0, 0).withAlpha(bgOpacity))
 			ability.drawStatus(event.x, event.y + 9, event.context)
 			return

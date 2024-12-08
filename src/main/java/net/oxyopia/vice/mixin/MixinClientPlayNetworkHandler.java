@@ -5,8 +5,8 @@ import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.network.packet.s2c.play.*;
+import net.oxyopia.vice.data.Debugger;
 import net.oxyopia.vice.events.*;
-import net.oxyopia.vice.utils.DevUtils;
 import net.oxyopia.vice.utils.Utils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,7 +23,7 @@ public class MixinClientPlayNetworkHandler {
 		if (MinecraftClient.getInstance().isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new SoundEvent(packet));
 
-			DevUtils.sendDebugChat("&&bSOUND&&r " + packet.getSound().value().getId().toString() + " &&dP " + packet.getPitch() + " &&eV" + packet.getVolume(), "SEND_SOUND_INFO");
+			Debugger.SOUND.debug(packet.getSound().value().getId().toString() + " §dP " + packet.getPitch() + " §eV" + packet.getVolume());
 		}
 
 	}
@@ -40,7 +40,7 @@ public class MixinClientPlayNetworkHandler {
 		if (MinecraftClient.getInstance().isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
 			EVENT_MANAGER.publish(new EntitySpawnEvent(entity));
 
-			DevUtils.sendDebugChat("&&aENTITY SPAWN&&r " + entity.getName().getString(), "MOB_SPAWN_DEBUGGER");
+			Debugger.MOB.debug(entity.getName().getString(), "SPAWN");
 		}
 	}
 	

@@ -21,7 +21,7 @@ class BossStorage {
 	val minehut = MasterableBoss()
 
 	@Expose
-	val elderpork = Boss()
+	val elderpork = MasterableBoss()
 
 	@Expose
 	val shadowGelato = Boss()
@@ -36,7 +36,7 @@ class BossStorage {
 
 	class MasterableBoss : Boss() {
 		@Expose
-		var masteryCompletions: Int = 0
+		var masteryCompletions: Int = -1
 
 		@Expose
 		var claimedTiers = mutableListOf<Int>()

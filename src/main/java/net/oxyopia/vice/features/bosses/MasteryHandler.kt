@@ -2,9 +2,9 @@ package net.oxyopia.vice.features.bosses
 
 import net.minecraft.item.Items
 import net.oxyopia.vice.Vice
+import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.events.ChestRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.ItemUtils.getLore
 
@@ -26,7 +26,7 @@ object MasteryHandler {
 
 		val boss = masteriesTitle.find(event.chestName)?.groupValues?.get(1) ?: return
 		val interactables = event.slots.filter { it.stack.item != Items.GRAY_STAINED_GLASS_PANE && it.stack.cleanName().startsWith("Mastery Tier") }
-		DevUtils.sendDebugChat("Found ${interactables.size} interactables for $boss")
+		Debugger.MASTERY.debug("Found ${interactables.size} interactables for $boss")
 
 		val bossStorage = Vice.storage.bosses
 		val storageEntry = when (boss) {
@@ -35,6 +35,7 @@ object MasteryHandler {
 			"Gelato" -> bossStorage.gelato
 			"PPP" -> bossStorage.ppp
 			"LBS Unique" -> bossStorage.minehut
+			"Elderpork" -> bossStorage.elderpork
 			else -> return
 		}
 

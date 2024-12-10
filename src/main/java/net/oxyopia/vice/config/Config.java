@@ -449,6 +449,34 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Mastery Tracker",
+		description = "Displays the tier, count and progress to your Masteries while in the respective Boss Arena.",
+		category = "Bosses",
+		subcategory = "Quality of Life"
+	)
+	public boolean MASTERY_TRACKER = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Always show Mastery Tracker",
+		description = "Always show the Mastery Tracker, even outside of Boss Arenas.",
+		category = "Bosses",
+		subcategory = "Quality of Life"
+	)
+	public boolean ALWAYS_SHOW_MASTERY_TRACKER = false;
+
+	@Property(
+		type = PropertyType.SELECTOR,
+		name = "Default Mastery Tracker Boss",
+		description = "The Mastery shown when outside a Mastery Boss arena.",
+		category = "Bosses",
+		subcategory = "Quality of Life",
+		options = {"Most Recent", "Vice", "Wasteyard", "El Gelato", "PPP", "Minehut", "Elderpork"}
+	)
+	public int DEFAULT_MASTERY_BOSS = 0;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Boss Counter",
 		description = "Displays the number of times you have killed each boss.",
 		category = "Bosses",
@@ -912,7 +940,8 @@ public class Config extends Vigilant {
 		markDirty();
 
 		addDependency("TRAIN_TIMER_OUTSIDE", "TRAIN_TIMER");
-		addDependency("BOSS_COUNTER_OUTSIDE", "BOSS_COUNTER");
+
+		addDependency("DEFAULT_MASTERY_BOSS", "ALWAYS_SHOW_MASTERY_TRACKER");
 
 		addDependency("EXPEDITION_ITEM_PROTECTION_THRESHOLD", "EXPEDITION_ITEM_PROTECTION");
 

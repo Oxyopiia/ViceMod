@@ -11,6 +11,7 @@ import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
+import net.oxyopia.vice.features.bosses.masteries.MasteryHandler
 import net.oxyopia.vice.utils.HudUtils.drawTexts
 import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.Utils

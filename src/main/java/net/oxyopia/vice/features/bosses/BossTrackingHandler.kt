@@ -21,8 +21,8 @@ object BossTrackingHandler {
 
 	@SubscribeEvent
 	fun onChatMessage(event: ChatEvent) {
-		val content = event.string
 		if (!event.hasNoSender) return
+		val content = event.string
 
 		when {
 			World.Vice.isInWorld() && content.contains(viceTimeRegex) -> bosses.vice.decrementCompletions()

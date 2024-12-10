@@ -39,6 +39,7 @@ import net.oxyopia.vice.features.worlds.auxiliary.exonitas.BabyMode
 import net.oxyopia.vice.features.worlds.auxiliary.exonitas.CitySpamHiders
 import net.oxyopia.vice.features.worlds.auxiliary.exonitas.PowerBoxTimer
 import net.oxyopia.vice.features.bosses.*
+import net.oxyopia.vice.features.bosses.masteries.MasteryHandler
 import net.oxyopia.vice.features.worlds.cooking.BurgerTimer
 import net.oxyopia.vice.features.worlds.cooking.CookingAPI
 import net.oxyopia.vice.features.worlds.cooking.OrderTracker

@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.bosses
+package net.oxyopia.vice.features.bosses.masteries
 
 import net.minecraft.item.Items
 import net.oxyopia.vice.Vice

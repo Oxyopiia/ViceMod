@@ -27,9 +27,9 @@ public class MixinDrawContext {
 	private String towerBeaconFeatures(String countOverride, TextRenderer textRenderer, ItemStack stack, int x, int y) {
 		Screen currentScreen = MinecraftClient.getInstance().currentScreen;
 
-		if (Utils.INSTANCE.getInDoomTowers() && config.BETTER_TOWER_BEACON_UI && currentScreen != null && currentScreen.getTitle().contains(Text.of("Tower Beacon"))) {
+		if (Utils.INSTANCE.getInDoomTowers() && config.BETTER_WARP_MENU && currentScreen != null && currentScreen.getTitle().contains(Text.of("Warp List"))) {
 			String itemName = stack.getName().getString();
-			Pattern pattern = Pattern.compile("(.*)Floor \\d");
+			Pattern pattern = Pattern.compile("Floor \\d");
 
 			if (pattern.matcher(itemName).find()) return itemName.substring(itemName.length() - 1);
 		}

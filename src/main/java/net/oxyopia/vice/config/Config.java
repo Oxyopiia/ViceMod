@@ -139,12 +139,12 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Better Tower Beacon UI",
-		description = "Display the floor number as a stack size.",
+		name = "Better Warp Menu",
+		description = "Adds the Worlds and Boss to the tooltip of each floor in the /warp menu.",
 		category = "General",
 		subcategory = "Quality of Life"
 	)
-	public boolean BETTER_TOWER_BEACON_UI = true;
+	public boolean BETTER_WARP_MENU = true;
 
 	@Property(
 		type = PropertyType.SWITCH,

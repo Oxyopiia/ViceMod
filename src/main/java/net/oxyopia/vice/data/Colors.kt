@@ -16,7 +16,10 @@ object Colors {
 	val MagmaHeights = Color(255, 170, 0)
 	val Volume = Color(85, 156, 236)
 	val Glimpse = Color(174, 238, 232)
+	val Showdown = Color(255, 206, 160)
 	val GlitchHQ = Color(170, 89, 255)
+	val LostInTime = Color(113, 255, 234)
+	val StarryStreets = Color(0, 168, 143)
 
 	/**
 	 * Color values sourced from Essential mod.

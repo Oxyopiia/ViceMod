@@ -54,5 +54,10 @@ object MasteryHandler {
 				Vice.storage.markDirty()
 			}
 		}
+
+		if (!storageEntry.hasOpened) {
+			storageEntry.hasOpened = true
+			Vice.storage.markDirty()
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package net.oxyopia.vice.features.bosses.masteries
 
 import net.minecraft.client.gui.DrawContext
+import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.config.features.BossStorage
 import net.oxyopia.vice.data.Colors
@@ -18,8 +19,8 @@ import java.awt.Color
 
 object MasteryTracker : HudElement(
 	"Mastery Tracker",
-	Vice.storage.bosses.bossCounterPos,
-	{ Vice.storage.bosses.bossCounterPos = it },
+	Vice.storage.bosses.masteryTrackerPos,
+	{ Vice.storage.bosses.masteryTrackerPos = it },
 	enabled = { Vice.config.MASTERY_TRACKER },
 	drawCondition = { Vice.config.ALWAYS_SHOW_MASTERY_TRACKER || Utils.getDTWorld()?.properties?.contains(World.WorldProperty.MASTERABLE) ?: false }
 ) {
@@ -78,6 +79,11 @@ object MasteryTracker : HudElement(
 		if (tierIndex < thresholds.size) {
 			val remainingRuns = thresholds[tierIndex] - masteryCompletions
 			list.add("§7Tier §a${tierIndex + 1} §7in §a$remainingRuns §7runs.".toText())
+		}
+
+		if (!data.hasOpened) {
+			list.add(Text.empty())
+			list.add("§cOpen your $displayName Masteries menu!".toText())
 		}
 
 		val unclaimedTiers = (1..tierIndex).filterNot { data.claimedTiers.contains(it) }

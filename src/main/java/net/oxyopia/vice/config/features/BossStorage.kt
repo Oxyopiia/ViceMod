@@ -37,14 +37,20 @@ class BossStorage {
 
 	class MasterableBoss : Boss() {
 		@Expose
-		var masteryCompletions: Int = -1
+		var masteryCompletions: Int = 0
 
 		@Expose
 		var claimedTiers = mutableListOf<Int>()
+
+		@Expose
+		var hasOpened = false
 	}
 
 	@Expose
 	var bossCounterPos: Position = Position(175f, 150f)
+
+	@Expose
+	var masteryTrackerPos: Position = Position(125f, 180f)
 
 	@Expose
 	var wasteyardTimerPos: Position = Position(120f, 90f)

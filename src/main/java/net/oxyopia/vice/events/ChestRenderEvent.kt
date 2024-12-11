@@ -1,5 +1,6 @@
 package net.oxyopia.vice.events
 
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.screen.slot.Slot
@@ -10,6 +11,7 @@ class ChestRenderEvent(
 	val slots: DefaultedList<Slot>,
 	val cursorStack: ItemStack,
 	val id: Int,
+	val context: DrawContext
 ) : ViceEvent() {
 	val components by lazy {
 		slots.filter { it.stack.item != Items.GRAY_STAINED_GLASS_PANE }

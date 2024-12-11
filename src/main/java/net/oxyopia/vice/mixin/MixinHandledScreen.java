@@ -66,7 +66,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 				Debugger.HUD.debug("Assigned ID §b" + id +" §fto this HandledScreen", "SCREEN");
 			}
 
-			EVENT_MANAGER.publish(new ChestRenderEvent(title.getString(), handler.slots, cursorStack, id));
+			EVENT_MANAGER.publish(new ChestRenderEvent(title.getString(), handler.slots, cursorStack, id, context));
 		}
 	}
 

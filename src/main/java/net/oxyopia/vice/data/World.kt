@@ -3,7 +3,7 @@ package net.oxyopia.vice.data
 import net.oxyopia.vice.utils.Utils
 import java.awt.Color
 
-enum class World(val id: String, val displayName: String, val type: WorldType = WorldType.NORMAL, val displayColor: Color = Color.white) {
+enum class World(val id: String, val displayName: String, val properties: List<WorldProperty> = emptyList(), val displayColor: Color = Color.white) {
 	RealityPeak("realitypeak", "Reality Peak"),
 	Desert("deserteddunes", "Deserted Dunes"),
 	Space("spaceescape", "World 3 or 4"),
@@ -23,27 +23,27 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 	TimelessTastes("timelesstastes", "Timeless Tastes"),
 	StarryStreets("starrystreets", "Starry Streets"),
 
-	Vice("viceboss", "Vice", type = WorldType.BOSS),
-	Wasteyard("wasteyard", "Wasteyard", type = WorldType.BOSS),
-	Gelato("corruptedvice", "El Gelato", type = WorldType.BOSS),
-	PPP("fakeplayer", "PPP", type = WorldType.BOSS),
-	Minehut("minehutboss", "Minehut Boss", type = WorldType.BOSS),
-	AbyssalVice("darkvice", "Abyssal Vice", type = WorldType.BOSS),
-	ShadowGelato("shadowgelato", "Shadow Gelato", type = WorldType.BOSS),
-	Diox("dioxarena", "Diox", type = WorldType.BOSS),
-	Elderpork("elderpork", "Elderpork", type = WorldType.BOSS),
+	Vice("viceboss", "Vice", properties = listOf(WorldProperty.BOSS, WorldProperty.MASTERABLE)),
+	Wasteyard("wasteyard", "Wasteyard", properties = listOf(WorldProperty.BOSS, WorldProperty.MASTERABLE)),
+	Gelato("corruptedvice", "El Gelato", properties = listOf(WorldProperty.BOSS, WorldProperty.MASTERABLE)),
+	PPP("fakeplayer", "PPP", properties = listOf(WorldProperty.BOSS, WorldProperty.MASTERABLE)),
+	Minehut("minehutboss", "Minehut Boss", properties = listOf(WorldProperty.BOSS, WorldProperty.MASTERABLE)),
+	AbyssalVice("darkvice", "Abyssal Vice", properties = listOf(WorldProperty.BOSS)),
+	ShadowGelato("shadowgelato", "Shadow Gelato", properties = listOf(WorldProperty.BOSS)),
+	Diox("dioxarena", "Diox", properties = listOf(WorldProperty.BOSS)),
+	Elderpork("elderpork", "Elderpork", properties = listOf(WorldProperty.BOSS, WorldProperty.MASTERABLE)),
 
-	Floor2Arena("f2arenas", "Void Voyage", type = WorldType.ARENA, displayColor = Colors.ChatColor.Green),
-	Floor3Arena("f3arenas", "Cryonic Caverns", type = WorldType.ARENA, displayColor = Colors.ChatColor.Blue),
-	Floor4Arena("f4arenas", "Tidal Zone", type = WorldType.ARENA, displayColor = Colors.ChatColor.Cyan),
+	Floor2Arena("f2arenas", "Void Voyage", properties = listOf(WorldProperty.ARENA), displayColor = Colors.ChatColor.Green),
+	Floor3Arena("f3arenas", "Cryonic Caverns", properties = listOf(WorldProperty.ARENA), displayColor = Colors.ChatColor.Blue),
+	Floor4Arena("f4arenas", "Tidal Zone", properties = listOf(WorldProperty.ARENA), displayColor = Colors.ChatColor.Cyan),
 
-	Exonitas("bigcity", "Exonitas", type = WorldType.AUXILARY),
+	Exonitas("bigcity", "Exonitas", properties = listOf(WorldProperty.AUXILIARY)),
 
-	Expeditions("expeditions", "Expeditions", type = WorldType.EXPEDITION),
+	Expeditions("expeditions", "Expeditions", properties = listOf(WorldProperty.EXPEDITION)),
 
-	Summer("summer", "Summer", type = WorldType.EVENT),
+	Summer("summer", "Summer", properties = listOf(WorldProperty.EVENT)),
 
-	Tower("overworld", "The Tower", type = WorldType.TOWER);
+	Tower("overworld", "The Tower", properties = listOf(WorldProperty.TOWER));
 
 	fun isInWorld(): Boolean {
 		Utils.getWorldString()?.let {
@@ -53,11 +53,11 @@ enum class World(val id: String, val displayName: String, val type: WorldType = 
 		return false
 	}
 
-	enum class WorldType {
-		NORMAL,
+	enum class WorldProperty {
 		BOSS,
+		MASTERABLE,
 		ARENA,
-		AUXILARY,
+		AUXILIARY,
 		EXPEDITION,
 		EVENT,
 		TOWER

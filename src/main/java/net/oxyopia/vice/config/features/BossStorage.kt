@@ -1,6 +1,7 @@
 package net.oxyopia.vice.config.features
 
 import com.google.gson.annotations.Expose
+import net.oxyopia.vice.data.World
 import net.oxyopia.vice.data.gui.Position
 
 class BossStorage {
@@ -47,5 +48,8 @@ class BossStorage {
 
 	@Expose
 	var wasteyardTimerPos: Position = Position(120f, 90f)
+
+	@Expose
+	var mostRecentMasterableBoss: World? = null
 
 }

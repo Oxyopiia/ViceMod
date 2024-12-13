@@ -88,9 +88,9 @@ object ArenaSession {
 		worldPath?.let {
 			val world = World.getById(it) ?: return
 
-			if (!active && world.type == World.WorldType.ARENA) {
+			if (!active && world.properties.contains(World.WorldProperty.ARENA)) {
 				begin(world)
-			} else if (active && world.type != World.WorldType.ARENA) {
+			} else if (active && world.properties.contains(World.WorldProperty.ARENA)) {
 				dispose()
 			}
 		}

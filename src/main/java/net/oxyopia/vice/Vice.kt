@@ -39,6 +39,8 @@ import net.oxyopia.vice.features.worlds.auxiliary.exonitas.BabyMode
 import net.oxyopia.vice.features.worlds.auxiliary.exonitas.CitySpamHiders
 import net.oxyopia.vice.features.worlds.auxiliary.exonitas.PowerBoxTimer
 import net.oxyopia.vice.features.bosses.*
+import net.oxyopia.vice.features.bosses.masteries.MasteryHandler
+import net.oxyopia.vice.features.bosses.masteries.MasteryTracker
 import net.oxyopia.vice.features.worlds.cooking.BurgerTimer
 import net.oxyopia.vice.features.worlds.cooking.CookingAPI
 import net.oxyopia.vice.features.worlds.cooking.OrderTracker
@@ -227,9 +229,12 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(CitySpamHiders)
 		EVENT_MANAGER.subscribe(PowerBoxTimer)
 
+		EVENT_MANAGER.subscribe(MasteryTracker)
+		EVENT_MANAGER.subscribe(BossTrackingHandler)
 		EVENT_MANAGER.subscribe(AbyssalVice)
 		EVENT_MANAGER.subscribe(Elderpork)
 		EVENT_MANAGER.subscribe(ElGelato)
+		EVENT_MANAGER.subscribe(MasteryHandler)
 		EVENT_MANAGER.subscribe(MinehutBoss)
 		EVENT_MANAGER.subscribe(PPP)
 		EVENT_MANAGER.subscribe(ShadowGelato)

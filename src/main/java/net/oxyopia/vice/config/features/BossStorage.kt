@@ -22,6 +22,17 @@ class BossStorage {
 	val minehut = MasterableBoss()
 
 	@Expose
+	var diox = DioxBossData()
+
+	class DioxBossData : Boss() {
+		@Expose
+		var easyCompletions: Int = 0
+
+		@Expose
+		var normalCompletions: Int = 0
+	}
+
+	@Expose
 	val elderpork = MasterableBoss()
 
 	@Expose

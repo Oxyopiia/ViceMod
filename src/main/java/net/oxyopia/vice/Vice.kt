@@ -232,6 +232,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(MasteryTracker)
 		EVENT_MANAGER.subscribe(BossTrackingHandler)
 		EVENT_MANAGER.subscribe(AbyssalVice)
+		EVENT_MANAGER.subscribe(Diox)
 		EVENT_MANAGER.subscribe(Elderpork)
 		EVENT_MANAGER.subscribe(ElGelato)
 		EVENT_MANAGER.subscribe(MasteryHandler)

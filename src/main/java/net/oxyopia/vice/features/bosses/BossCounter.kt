@@ -38,21 +38,27 @@ object BossCounter : HudElement(
 	private fun MutableList<Text>.addBossStat(string: String, color: Color, data: BossStorage.Boss) {
 		val completions = data.completions
 
-		if (data is BossStorage.MasterableBoss && data.masteryCompletions > 0) {
-			val masteries = data.masteryCompletions
-			val text = string.toText(color)
+		if (data is BossStorage.DioxBossData) {
+			val easyComps = data.easyCompletions
+			val normalComps = data.normalCompletions
 
-			if (completions <= masteries) {
-				add(text.append(" §f$masteries".toText()))
-				return
+			if (easyComps + normalComps == 0) return
 
-			} else {
-				add(text.append(" §f$masteries §7(§c$completions§7)".toText()))
-				return
-			}
+			add(string.toText(color).append(" §a$easyComps §7| §c$normalComps".toText()))
+			return
 		}
 
-		if (completions <= 0) return
+		if (completions == 0) return
+		if (data is BossStorage.MasterableBoss && data.masteryCompletions > 0) {
+			val masteries = data.masteryCompletions
+			var text = string.toText(color).append(" §f$masteries".toText())
+
+			if (completions > masteries) text = text.append(" §7(§c$completions§7)".toText())
+			add(text)
+
+			return
+		}
+
 		add(string.toText(color).append(" $completions".toText()))
 	}
 
@@ -64,6 +70,7 @@ object BossCounter : HudElement(
 		list.addBossStat("El Gelato", Colors.ChatColor.Green, bosses.gelato)
 		list.addBossStat("PPP", Colors.ChatColor.Red, bosses.ppp)
 		list.addBossStat("Minehut", Colors.ChatColor.Aqua, bosses.minehut)
+		list.addBossStat("Diox", Colors.Diox, bosses.diox)
 		list.addBossStat("Elderpork", Colors.Elderpork, bosses.elderpork)
 		list.addBossStat("Shadow Gelato", Colors.ShadowGelato, bosses.shadowGelato)
 		list.addBossStat("Abyssal Vice", Colors.Diox, bosses.abyssalVice)

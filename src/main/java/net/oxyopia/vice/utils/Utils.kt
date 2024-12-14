@@ -3,6 +3,7 @@ package net.oxyopia.vice.utils
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.world.ClientWorld
+import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
 
@@ -30,4 +31,6 @@ object Utils {
 	fun String.convertFormatting(): String {
 		return this.replace("&&", "§")
 	}
+
+	fun List<Text>.concatenate(): Text = reduce { acc, text -> acc.copy().append(text) }
 }

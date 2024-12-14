@@ -52,10 +52,10 @@ object MasteryTracker : HudElement(
 
 	@SubscribeEvent
 	fun onWorldChange(event: WorldChangeEvent) {
-		if (World.getById(event.world.name())?.properties?.contains(World.WorldProperty.MASTERABLE) != true) return
-		val newWorld = Utils.getDTWorld() ?: return
+		val world = World.getById(event.world.name()) ?: return
+		if (!world.properties.contains(World.WorldProperty.MASTERABLE)) return
 
-		bosses.mostRecentMasterableBoss = newWorld
+		bosses.mostRecentMasterableBoss = world
 		Vice.storage.markDirty()
 	}
 
@@ -66,10 +66,11 @@ object MasteryTracker : HudElement(
 
 		val tierIndex = thresholds.indexOfFirst { masteryCompletions < it }.takeIf { it != -1 } ?: thresholds.size
 		val tierColor = if (tierIndex >= thresholds.size) Colors.ChatColor.Gold else Colors.ChatColor.Green
+		val masteryCountText = "$masteryCompletions".takeIf { data.hasOpened} ?: "???"
 		val list = mutableListOf(
 			displayName.toText(color, bold = true),
 			"✪ Tier $tierIndex".toText(tierColor),
-			"§7Masteries: ".toText().append("$masteryCompletions".toText(color))
+			"§7Masteries: ".toText().append(masteryCountText.toText(color))
 		)
 
 		if (classicCompletions > masteryCompletions) {

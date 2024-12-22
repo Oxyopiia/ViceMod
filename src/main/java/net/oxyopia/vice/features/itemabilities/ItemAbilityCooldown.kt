@@ -87,6 +87,7 @@ object ItemAbilityCooldown {
 			// Barbed Shotgun
 			event.soundName == "entity.blaze.shoot" && event.pitch == 1.25f && event.volume == 3f -> {
 				ItemAbility.BARBED_SHOTGUN.onSound()
+				ItemAbility.SHOTGUN.onSound()
 			}
 
 			// Wasted Boomstick
@@ -209,6 +210,23 @@ object ItemAbilityCooldown {
 
 			event.soundName == "block.mud.break" && event.volume == 2f -> {
 				ItemAbility.GORE_GAUNTLET.onSound()
+			}
+
+			// Pillars
+			event.soundName == "entity.firework_rocket.large_blast" && event.pitch == 0.8f && event.volume == 9999f -> {
+				ItemAbility.DOOM_KNOCK_PISTOL.onSound()
+			}
+			event.soundName == "entity.firework_rocket.large_blast" && event.pitch == 2f && event.volume == 9999f -> {
+				ItemAbility.SNIPER.onSound()
+			}
+			event.soundName == "entity.generic.explode" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.RPG.onSound()
+			}
+			event.soundName == "entity.blaze.shoot" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.THE_PUNISHER.onSound()
+			}
+			event.soundName == "item.book.page_turn" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.MEDKIT.onSound()
 			}
 		}
 	}

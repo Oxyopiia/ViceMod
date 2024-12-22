@@ -74,7 +74,15 @@ enum class ItemAbility(
     CURSED_SKULL("Cursed Skull", 3f),
     GRENADE_BUNDLE("Grenade Bundle", 5f, soundOnUse = false),
     GLOW_BERRIES("Glow Berries", 5f),
-    ALL_SEEING_EYE("All Seeing Eye", 30f);
+    ALL_SEEING_EYE("All Seeing Eye", 30f),
+
+    // Pillars
+    SHOTGUN("Shotgun", 6f),
+    DOOM_KNOCK_PISTOL("Doom-Knock Pistol", 6f),
+    SNIPER("Sniper", 20f),
+    THE_PUNISHER("The Punisher", 8f),
+    RPG("RPG", 10f),
+    MEDKIT("Medkit", 12f);
 
     val displayCooldown = cooldown >= 1f
 

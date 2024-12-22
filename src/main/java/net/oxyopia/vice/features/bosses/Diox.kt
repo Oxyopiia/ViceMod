@@ -20,7 +20,7 @@ object Diox : Boss(
 	private const val PHASE_1_MAX_TIME = 5 * 60
 
 	private var portalCount = 0
-	var mode = DioxMode.EASY
+	private var mode = DioxMode.EASY
 
 	enum class DioxMode {
 		EASY,

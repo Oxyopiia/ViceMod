@@ -24,9 +24,15 @@ object MasteryTracker : HudElement(
 	enabled = { Vice.config.MASTERY_TRACKER },
 	drawCondition = { Vice.config.ALWAYS_SHOW_MASTERY_TRACKER || Utils.getDTWorld()?.properties?.contains(World.WorldProperty.MASTERABLE) ?: false }
 ) {
-	/*
-	this code is terrible rn icl
-	 */
+	private val options = listOf(
+		null,
+		World.Vice,
+		World.Wasteyard,
+		World.Gelato,
+		World.PPP,
+		World.Minehut,
+		World.Elderpork
+	)
 
 	private val bosses get() = Vice.storage.bosses
 
@@ -37,7 +43,9 @@ object MasteryTracker : HudElement(
 	}
 
 	private fun draw(world: World?, context: DrawContext): Size {
-		val actualWorld = world ?: bosses.mostRecentMasterableBoss ?: World.Vice
+		val isInMasterableWorld = Utils.getDTWorld()?.properties?.contains(World.WorldProperty.MASTERABLE) ?: false
+		val preferred = options[Vice.config.DEFAULT_MASTERY_BOSS] ?: bosses.mostRecentMasterableBoss
+		val actualWorld = (if (isInMasterableWorld) world else preferred) ?: preferred
 
 		return when (actualWorld) {
 			World.Vice -> drawMasteryInfo(bosses.vice, "Vice", Colors.ViceBoss, context)
@@ -46,7 +54,7 @@ object MasteryTracker : HudElement(
 			World.PPP -> drawMasteryInfo(bosses.ppp, "PPP", Colors.ChatColor.Red, context)
 			World.Minehut -> drawMasteryInfo(bosses.minehut, "Minehut", Colors.ChatColor.Aqua, context)
 			World.Elderpork -> drawMasteryInfo(bosses.elderpork, "Elderpork", Colors.Elderpork, context)
-			else -> draw(World.Vice, context)
+			else -> draw(preferred, context)
 		}
 	}
 
@@ -59,14 +67,19 @@ object MasteryTracker : HudElement(
 		Vice.storage.markDirty()
 	}
 
-	private fun drawMasteryInfo(data: BossStorage.MasterableBoss, displayName: String, color: Color, context: DrawContext): Size {
+	private fun drawMasteryInfo(
+		data: BossStorage.MasterableBoss,
+		displayName: String,
+		color: Color,
+		context: DrawContext
+	): Size {
 		val thresholds = MasteryHandler.tierThresholds
 		val classicCompletions = data.completions
 		val masteryCompletions = data.masteryCompletions
 
 		val tierIndex = thresholds.indexOfFirst { masteryCompletions < it }.takeIf { it != -1 } ?: thresholds.size
 		val tierColor = if (tierIndex >= thresholds.size) Colors.ChatColor.Gold else Colors.ChatColor.Green
-		val masteryCountText = "$masteryCompletions".takeIf { data.hasOpened} ?: "???"
+		val masteryCountText = "$masteryCompletions".takeIf { data.hasOpened } ?: "???"
 		val list = mutableListOf(
 			displayName.toText(color, bold = true),
 			"✪ Tier $tierIndex".toText(tierColor),
@@ -92,8 +105,7 @@ object MasteryTracker : HudElement(
 		if (unclaimedTiers.isNotEmpty()) {
 			val message = if (unclaimedTiers.size == 1) {
 				"Tier ${unclaimedTiers[0]} has not been claimed!"
-			}
-			else {
+			} else {
 				val last = unclaimedTiers.last()
 				val allButLast = unclaimedTiers.dropLast(1).joinToString(", ")
 				"Tiers $allButLast and $last are unclaimed!"

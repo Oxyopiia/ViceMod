@@ -21,9 +21,13 @@ public class MixinClientPlayNetworkHandler {
 	@Inject(at = @At("HEAD"), method = "onPlaySound")
 	private void onSound(PlaySoundS2CPacket packet, CallbackInfo callbackInfo) {
 		if (MinecraftClient.getInstance().isOnThread() && Utils.INSTANCE.getInDoomTowers()) {
-			EVENT_MANAGER.publish(new SoundEvent(packet));
+			String path = packet.getSound().value().getId().getPath();
+			float pitch = packet.getPitch();
+			float volume = packet.getVolume();
 
-			Debugger.SOUND.debug(packet.getSound().value().getId().toString() + " §dP " + packet.getPitch() + " §eV" + packet.getVolume());
+			EVENT_MANAGER.publish(new SoundEvent(path, pitch, volume));
+
+			Debugger.SOUND.debug(path + " §dP " + pitch + " §eV" + volume);
 		}
 
 	}

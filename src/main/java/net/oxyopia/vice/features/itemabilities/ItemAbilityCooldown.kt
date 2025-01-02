@@ -50,6 +50,10 @@ object ItemAbilityCooldown {
 				ItemAbility.ZIP_BOMB.onSound()
 			}
 
+			event.soundName == "block.note_block.bell" && event.pitch == 2f && event.volume == 9999f -> {
+				ItemAbility.ZIP_BOMB.onSound()
+			}
+
 			// Warped Grenade
 			event.soundName == "entity.generic.explode" && event.pitch == 1f && event.volume == 9999f -> {
 				ItemAbility.WARPED_GRENADE.onSound()
@@ -209,6 +213,10 @@ object ItemAbilityCooldown {
 			}
 
 			event.soundName == "block.mud.break" && event.volume == 2f -> {
+				ItemAbility.GORE_GAUNTLET.onSound()
+			}
+
+			event.soundName == "entity.player.hurt_freeze" && event.volume == 2f && event.pitch == 2.99f -> {
 				ItemAbility.GORE_GAUNTLET.onSound()
 			}
 

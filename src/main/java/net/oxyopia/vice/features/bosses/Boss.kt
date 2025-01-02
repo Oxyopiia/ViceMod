@@ -41,7 +41,9 @@ abstract class Boss (
 				Debugger.BOSS.debug("Detected a Boss change")
 			}
 
-			val phase = groupValues[2].toIntOrNull() ?: return
+			val health = groups["health"]?.value?.toIntOrNull()
+			val phase = groups["phase"]?.value?.toIntOrNull()
+
 			val phaseTime = getPhaseTimeSec(phase) ?: return
 			if (phaseTime <= 0) return
 			val diff = lastSpawned.timeDelta()
@@ -52,8 +54,8 @@ abstract class Boss (
 			event.setReturnValue(event.original.copy().append(timer).setStyle(style))
 
 			lastBarUpdate = System.currentTimeMillis()
-			lastKnownHealth = groupValues[1].toIntOrNull()
-			lastKnownPhase = groupValues[2].toIntOrNull()
+			lastKnownHealth = health
+			lastKnownPhase = phase
 		}
 	}
 

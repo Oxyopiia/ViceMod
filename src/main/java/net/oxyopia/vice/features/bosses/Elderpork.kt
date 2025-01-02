@@ -15,7 +15,7 @@ import kotlin.time.Duration.Companion.seconds
 
 object Elderpork : Boss(
 	World.Elderpork,
-	Regex("Elderpork the Great - (?:(?<health>\\d+)/\\d+|YOU/SHOULD/KILL/YOURSELF) ❤ \\[PHASE (?<phase>\\d+)]"),
+	Regex("Elderpork the Great - (?:(?<health>\\d+(?:\\.\\d+)?)/\\d+(?:\\.\\d+)?|YOU/SHOULD/KILL/YOURSELF) ❤ \\[PHASE (?<phase>\\d+)]"),
 	phaseTimesSec = listOf(60 * 2, 60 * 10, 60 * 5, 60 * 2)
 ){
 	private val MONITOR_MAX_TIME = 30.seconds

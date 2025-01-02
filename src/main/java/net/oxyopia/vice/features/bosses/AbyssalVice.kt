@@ -8,7 +8,7 @@ import net.oxyopia.vice.utils.HudUtils
 
 object AbyssalVice: Boss(
 	World.AbyssalVice,
-	Regex("Abyssal Vice - (?<health>\\d+)/\\d+ ❤ \\[PHASE (?<phase>\\d)]"),
+	Regex("Abyssal Vice - (?<health>\\d+(?:\\.\\d+)?)/\\d+(?:\\.\\d+)?+ ❤ \\[PHASE (?<phase>\\d)]"),
 	phaseTimesSec = listOf(5 * 60, 5 * 60)
 ) {
 	override val warningPercentage: Double
@@ -21,5 +21,4 @@ object AbyssalVice: Boss(
 
 		HudUtils.sendVanillaTitle("&&cLaser!", "", stayTime =  2.8f, fadeinout = 0.1f)
 	}
-
 }

@@ -9,7 +9,7 @@ import net.oxyopia.vice.events.EntityDeathEvent
 import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 
-object BossTrackingHandler {
+object  BossTrackingHandler {
 	private val viceTimeRegex = Regex("You ran out of time to defeat Vice\\. \\(\\d+m\\)")
 	private val gelatoTimeRegex = Regex("You ran out of time to defeat \"Corrupted Vice\" Phase 3\\. \\(\\d+m\\)")
 	private val pppTimeRegex = Regex("You ran out of time to defeat Percentage Player Percentage. \\(\\d+m\\)")

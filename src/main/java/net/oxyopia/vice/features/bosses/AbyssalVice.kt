@@ -4,7 +4,7 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.SoundEvent
-import net.oxyopia.vice.utils.HudUtils
+import net.oxyopia.vice.utils.hud.HudUtils
 
 object AbyssalVice: Boss(
 	World.AbyssalVice,

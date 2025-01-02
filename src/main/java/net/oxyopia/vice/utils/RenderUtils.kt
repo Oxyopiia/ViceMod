@@ -7,7 +7,7 @@ import net.minecraft.client.render.*
 import net.minecraft.client.util.BufferAllocator
 import net.minecraft.util.math.Vec3d
 import net.oxyopia.vice.events.WorldRenderEvent
-import net.oxyopia.vice.utils.HudUtils.getSpecialTextWidth
+import net.oxyopia.vice.utils.hud.HudUtils.getSpecialTextWidth
 import org.joml.Matrix4f
 import org.joml.Vector3f
 import org.lwjgl.opengl.GL11

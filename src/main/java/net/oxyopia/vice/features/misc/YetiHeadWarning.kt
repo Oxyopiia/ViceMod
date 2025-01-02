@@ -6,7 +6,7 @@ import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.ClientTickEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.hud.PlayerStats
-import net.oxyopia.vice.utils.HudUtils
+import net.oxyopia.vice.utils.hud.HudUtils
 import net.oxyopia.vice.utils.ItemUtils.getLore
 import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaWithin

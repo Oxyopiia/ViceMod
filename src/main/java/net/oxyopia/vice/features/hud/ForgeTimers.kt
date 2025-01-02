@@ -12,8 +12,8 @@ import net.oxyopia.vice.events.ChestRenderEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.HudUtils.drawTexts
-import net.oxyopia.vice.utils.HudUtils.toText
+import net.oxyopia.vice.utils.hud.HudUtils.drawTexts
+import net.oxyopia.vice.utils.hud.HudUtils.toText
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.ms
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaUntil

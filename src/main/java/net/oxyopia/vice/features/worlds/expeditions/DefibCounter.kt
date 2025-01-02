@@ -3,7 +3,7 @@ package net.oxyopia.vice.features.worlds.expeditions
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.RenderHotbarSlotEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils
+import net.oxyopia.vice.utils.hud.HudUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.ItemUtils.getLore
 import java.awt.Color

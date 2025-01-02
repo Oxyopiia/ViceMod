@@ -11,7 +11,7 @@ import net.oxyopia.vice.config.HudEditor
 import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.events.HudEditorRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.drawBackground
+import net.oxyopia.vice.utils.hud.HudUtils.drawBackground
 import net.oxyopia.vice.utils.NumberUtils.clamp
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils.getClient

@@ -11,7 +11,7 @@ import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.worlds.expeditions.ExpeditionItemType.Companion.getExpeditionItemType
 import net.oxyopia.vice.features.worlds.expeditions.ExpeditionRarity.Companion.getExpeditionRarity
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.hud.HudUtils.drawStrings
 import kotlin.math.roundToInt
 
 object MerchantOverlay : HudElement(

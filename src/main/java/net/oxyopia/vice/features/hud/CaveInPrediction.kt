@@ -12,7 +12,7 @@ import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.hud.CaveInPrediction.getMiningRegion
-import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.hud.HudUtils.drawStrings
 import net.oxyopia.vice.utils.LocationUtils.isInBounds
 import net.oxyopia.vice.utils.NumberUtils.clamp
 import net.oxyopia.vice.utils.TimeUtils.formatDuration

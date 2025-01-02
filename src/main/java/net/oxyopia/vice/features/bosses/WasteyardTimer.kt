@@ -12,7 +12,7 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.bosses.WasteyardTimer.startTime
 import net.oxyopia.vice.utils.ChatUtils
-import net.oxyopia.vice.utils.HudUtils.drawString
+import net.oxyopia.vice.utils.hud.HudUtils.drawString
 import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import net.oxyopia.vice.utils.TimeUtils.timeDelta

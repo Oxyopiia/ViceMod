@@ -11,10 +11,10 @@ import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.BossBarEvents
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.drawString
-import net.oxyopia.vice.utils.HudUtils.drawStrings
-import net.oxyopia.vice.utils.HudUtils.drawText
-import net.oxyopia.vice.utils.HudUtils.drawTexts
+import net.oxyopia.vice.utils.hud.HudUtils.drawString
+import net.oxyopia.vice.utils.hud.HudUtils.drawStrings
+import net.oxyopia.vice.utils.hud.HudUtils.drawText
+import net.oxyopia.vice.utils.hud.HudUtils.drawTexts
 import net.oxyopia.vice.utils.hud.HorizontalAlignment
 import java.awt.Color
 

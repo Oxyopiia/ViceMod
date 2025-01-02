@@ -10,8 +10,8 @@ import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.hud.FishingBrewTimer.activeBrew
 import net.oxyopia.vice.features.hud.FishingBrewTimer.lastBrewActivation
-import net.oxyopia.vice.utils.HudUtils.drawString
-import net.oxyopia.vice.utils.HudUtils.drawText
+import net.oxyopia.vice.utils.hud.HudUtils.drawString
+import net.oxyopia.vice.utils.hud.HudUtils.drawText
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaWithin

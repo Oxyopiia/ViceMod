@@ -10,8 +10,8 @@ import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.drawTexts
-import net.oxyopia.vice.utils.HudUtils.toText
+import net.oxyopia.vice.utils.hud.HudUtils.drawTexts
+import net.oxyopia.vice.utils.hud.HudUtils.toText
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDeltaUntil
 import java.awt.Color

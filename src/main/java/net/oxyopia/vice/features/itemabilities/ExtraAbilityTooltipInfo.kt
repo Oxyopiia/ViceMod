@@ -4,7 +4,7 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.events.ItemTooltipEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.toText
+import net.oxyopia.vice.utils.hud.HudUtils.toText
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.ItemUtils.getEquippedSets
 import net.oxyopia.vice.utils.Utils

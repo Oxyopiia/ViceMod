@@ -8,9 +8,9 @@ import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.drawStrings
-import net.oxyopia.vice.utils.HudUtils.drawTexts
-import net.oxyopia.vice.utils.HudUtils.toText
+import net.oxyopia.vice.utils.hud.HudUtils.drawStrings
+import net.oxyopia.vice.utils.hud.HudUtils.drawTexts
+import net.oxyopia.vice.utils.hud.HudUtils.toText
 import net.oxyopia.vice.utils.Utils
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import net.oxyopia.vice.utils.TimeUtils.timeDelta

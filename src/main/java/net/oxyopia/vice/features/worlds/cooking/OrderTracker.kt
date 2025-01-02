@@ -11,8 +11,8 @@ import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.worlds.cooking.OrderTracker.mc
-import net.oxyopia.vice.utils.HudUtils.drawTexts
-import net.oxyopia.vice.utils.HudUtils.toText
+import net.oxyopia.vice.utils.hud.HudUtils.drawTexts
+import net.oxyopia.vice.utils.hud.HudUtils.toText
 
 object OrderTracker : HudElement(
 	"Cooking Order Tracker",

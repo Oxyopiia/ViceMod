@@ -7,7 +7,7 @@ import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.WorldRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils
+import net.oxyopia.vice.utils.hud.HudUtils
 import net.oxyopia.vice.utils.RenderUtils.drawString
 import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.TimeUtils.formatShortDuration

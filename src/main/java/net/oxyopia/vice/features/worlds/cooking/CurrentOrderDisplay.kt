@@ -11,7 +11,7 @@ import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.features.worlds.cooking.CurrentOrderDisplay.mc
-import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.hud.HudUtils.drawStrings
 
 object CurrentOrderDisplay : HudElement(
 	"Cooking Display",

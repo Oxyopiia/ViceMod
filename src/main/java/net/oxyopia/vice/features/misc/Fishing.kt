@@ -4,7 +4,7 @@ import net.minecraft.client.MinecraftClient
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ModifySoundEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils
+import net.oxyopia.vice.utils.hud.HudUtils
 import net.oxyopia.vice.utils.SoundUtils
 
 object Fishing {

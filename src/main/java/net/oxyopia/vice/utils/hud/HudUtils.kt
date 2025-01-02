@@ -1,4 +1,4 @@
-package net.oxyopia.vice.utils
+package net.oxyopia.vice.utils.hud
 
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.MinecraftClient
@@ -20,7 +20,6 @@ import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.RenderHotbarSlotEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.Utils.convertFormatting
-import net.oxyopia.vice.utils.hud.HorizontalAlignment
 import java.awt.Color
 
 object HudUtils {
@@ -235,8 +234,8 @@ object HudUtils {
 	private var titleStayTicks = 0
 
 	fun sendViceTitle(title: String, stayTime: Float = 1f) {
-		this.title = Text.of(title.convertFormatting())
-		this.titleStayTicks = (20 * stayTime).toInt()
+		HudUtils.title = Text.of(title.convertFormatting())
+		titleStayTicks = (20 * stayTime).toInt()
 	}
 
 	@SubscribeEvent

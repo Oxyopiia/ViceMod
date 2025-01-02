@@ -7,7 +7,7 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Set
 import net.oxyopia.vice.events.ContainerRenderSlotEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.highlight
+import net.oxyopia.vice.utils.hud.HudUtils.highlight
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.ItemUtils.getAttributeModifierInAnySlot
 import net.oxyopia.vice.utils.ItemUtils.getLore

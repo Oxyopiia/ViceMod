@@ -6,7 +6,7 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.ContainerRenderSlotEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.highlight
+import net.oxyopia.vice.utils.hud.HudUtils.highlight
 import net.oxyopia.vice.utils.ItemUtils.getLore
 import java.awt.Color
 

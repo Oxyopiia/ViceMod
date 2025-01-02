@@ -74,7 +74,7 @@ import net.oxyopia.vice.features.hud.FishingBrewTimer
 import net.oxyopia.vice.features.hud.TurkinatorInvasionTimer
 import net.oxyopia.vice.features.worlds.starrysuburbs.CheeseHelper
 import net.oxyopia.vice.features.worlds.starrysuburbs.FallenStarWaypoints
-import net.oxyopia.vice.utils.HudUtils
+import net.oxyopia.vice.utils.hud.HudUtils
 import net.oxyopia.vice.utils.Utils.inDoomTowers
 import net.oxyopia.vice.utils.hud.HorizontalAlignment
 import org.slf4j.Logger

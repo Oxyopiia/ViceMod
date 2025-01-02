@@ -12,7 +12,7 @@ import net.oxyopia.vice.events.TitleEvent
 import net.oxyopia.vice.events.WorldChangeEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.HudUtils.drawString
+import net.oxyopia.vice.utils.hud.HudUtils.drawString
 import net.oxyopia.vice.utils.TimeUtils.formatShortDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.time.Duration.Companion.seconds

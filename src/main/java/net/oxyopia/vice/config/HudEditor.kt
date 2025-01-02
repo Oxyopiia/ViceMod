@@ -9,7 +9,7 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudEditorRenderEvent
-import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.hud.HudUtils.drawStrings
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
 import kotlin.math.round

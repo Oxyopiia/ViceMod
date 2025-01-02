@@ -8,7 +8,7 @@ import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
-import net.oxyopia.vice.utils.HudUtils.drawStrings
+import net.oxyopia.vice.utils.hud.HudUtils.drawStrings
 import net.oxyopia.vice.utils.TimeUtils.formatDuration
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import kotlin.math.floor

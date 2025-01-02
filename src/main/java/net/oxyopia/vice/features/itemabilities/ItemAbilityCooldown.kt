@@ -12,9 +12,9 @@ import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.data.gui.Position
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils
-import net.oxyopia.vice.utils.HudUtils.drawString
-import net.oxyopia.vice.utils.HudUtils.highlight
+import net.oxyopia.vice.utils.hud.HudUtils
+import net.oxyopia.vice.utils.hud.HudUtils.drawString
+import net.oxyopia.vice.utils.hud.HudUtils.highlight
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.NumberUtils.clamp

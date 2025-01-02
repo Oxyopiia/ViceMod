@@ -1,7 +1,7 @@
 package net.oxyopia.vice.data
 
 import net.minecraft.text.Text
-import net.oxyopia.vice.utils.HudUtils.toText
+import net.oxyopia.vice.utils.hud.HudUtils.toText
 import java.awt.Color
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes

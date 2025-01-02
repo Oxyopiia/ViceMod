@@ -86,6 +86,11 @@ object PlayerStats : HudElement(
 				fishTimeRegex.find(line)?.apply {
 					min = groupValues[1].toDoubleOrNull() ?: 0.0
 					max = groupValues[2].toDoubleOrNull() ?: 0.0
+
+					if(max == 0.0 && min != 0.0) {
+						max = min
+						min = 0.0
+					}
 				}
 			}
 		}

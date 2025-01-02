@@ -14,11 +14,13 @@ import net.minecraft.text.Text
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.Vice.Companion.EVENT_MANAGER
 import net.oxyopia.vice.data.Colors
+import net.oxyopia.vice.events.ActionBarEvent
 import net.oxyopia.vice.events.ChatEvent
 import net.oxyopia.vice.events.CommandRegisterEvent
 import net.oxyopia.vice.events.SoundEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.ChatUtils
+import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.ItemUtils.getNbtString
@@ -122,6 +124,17 @@ object ViceCommand {
 									}
 								)
 							)
+						)
+					)
+					.then(ClientCommandManager.literal("actionbar")
+						.then(ClientCommandManager.argument("text", StringArgumentType.greedyString())
+							.executes {
+								val message = StringArgumentType.getString(it, "text").toText()
+								EVENT_MANAGER.publish(ActionBarEvent(message))
+								HudUtils.sendVanillaActionBar(message)
+								ChatUtils.sendViceMessage("§aSent ActionBarEvent!")
+								Command.SINGLE_SUCCESS
+							}
 						)
 					)
 				)

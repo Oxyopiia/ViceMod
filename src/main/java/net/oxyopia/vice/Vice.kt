@@ -22,8 +22,6 @@ import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayNetworkHandler
 import net.minecraft.command.CommandRegistryAccess
-import net.oxyopia.vice.commands.DevDataCommand
-import net.oxyopia.vice.commands.EventTreeCommand
 import net.oxyopia.vice.commands.ViceCommand
 import net.oxyopia.vice.config.Config
 import net.oxyopia.vice.config.DevConfig
@@ -43,6 +41,8 @@ import net.oxyopia.vice.features.worlds.auxiliary.exonitas.BabyMode
 import net.oxyopia.vice.features.worlds.auxiliary.exonitas.CitySpamHiders
 import net.oxyopia.vice.features.worlds.auxiliary.exonitas.PowerBoxTimer
 import net.oxyopia.vice.features.bosses.*
+import net.oxyopia.vice.features.bosses.masteries.MasteryHandler
+import net.oxyopia.vice.features.bosses.masteries.MasteryTracker
 import net.oxyopia.vice.features.worlds.cooking.BurgerTimer
 import net.oxyopia.vice.features.worlds.cooking.CookingAPI
 import net.oxyopia.vice.features.worlds.cooking.OrderTracker
@@ -179,9 +179,6 @@ class Vice : ClientModInitializer {
 		})
 		ClientCommandRegistrationCallback.EVENT.register(ClientCommandRegistrationCallback { dispatcher: CommandDispatcher<FabricClientCommandSource?>?, _: CommandRegistryAccess? ->
 			dispatcher?.let {
-				ViceCommand.register(it)
-				DevDataCommand.register(it)
-				EventTreeCommand.register(it)
 				EVENT_MANAGER.publish(CommandRegisterEvent(it))
 			}
 		})
@@ -192,6 +189,8 @@ class Vice : ClientModInitializer {
 	}
 
 	private fun subscribeEventListeners() {
+		EVENT_MANAGER.subscribe(ViceCommand)
+
 		EVENT_MANAGER.subscribe(BackpackRenaming)
 		EVENT_MANAGER.subscribe(CaveInPrediction)
 		EVENT_MANAGER.subscribe(ChatFilter)
@@ -203,6 +202,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(WasteyardTimer)
 		EVENT_MANAGER.subscribe(YetiHeadWarning)
 		EVENT_MANAGER.subscribe(FallenStarWaypoints)
+		EVENT_MANAGER.subscribe(BetterWarpMenu)
 
 		EVENT_MANAGER.subscribe(BossCounter)
 		EVENT_MANAGER.subscribe(FishingBrewTimer)
@@ -250,9 +250,13 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(CitySpamHiders)
 		EVENT_MANAGER.subscribe(PowerBoxTimer)
 
+		EVENT_MANAGER.subscribe(MasteryTracker)
+		EVENT_MANAGER.subscribe(BossTrackingHandler)
 		EVENT_MANAGER.subscribe(AbyssalVice)
+		EVENT_MANAGER.subscribe(Diox)
 		EVENT_MANAGER.subscribe(Elderpork)
 		EVENT_MANAGER.subscribe(ElGelato)
+		EVENT_MANAGER.subscribe(MasteryHandler)
 		EVENT_MANAGER.subscribe(MinehutBoss)
 		EVENT_MANAGER.subscribe(PPP)
 		EVENT_MANAGER.subscribe(ShadowGelato)

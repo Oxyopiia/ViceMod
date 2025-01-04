@@ -109,6 +109,14 @@ public class DevConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Mastery Data",
+		description = "debugs grabbed data about masteries",
+		category = "Debugs"
+	)
+	public boolean MASTERY_DEBUGGER = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Bossbar debugger",
 		description = "yep",
 		category = "Debugs"

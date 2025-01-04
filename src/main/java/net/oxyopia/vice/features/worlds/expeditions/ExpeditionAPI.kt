@@ -59,7 +59,7 @@ object ExpeditionAPI {
 	private var lastClickedShopItemTime: Long = -1L
 	val merchants = hashMapOf<Int, MutableList<ItemStack>>()
 
-	internal fun isInExpedition(): Boolean = Utils.getDTWorld()?.type == World.WorldType.EXPEDITION
+	internal fun isInExpedition(): Boolean = Utils.getDTWorld()?.properties?.contains(World.WorldProperty.EXPEDITION) ?: false
 
 	@SubscribeEvent
 	fun onChat(event: ChatEvent) {

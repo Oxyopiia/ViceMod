@@ -4,8 +4,9 @@
 The standards below are a direct extension to the [Java](https://www.oracle.com/java/technologies/javase/codeconventions-contents.html) and [Kotlin](https://kotlinlang.org/docs/coding-conventions.html) Coding Conventions, and should also be followed during development. 
 
 - Files should be written in Kotlin, excluding mixins and some configs.
-- Use and build upon the Vice Events System.
-- Use DevUtils for error logging and debugging.
+- Event Subscriber functions should be placed before other methods. (excluding HudElement's `drawPreview()`)
+- Use and build upon the Vice Events System. When possible, use Fabric API events.
+- Use `Debugger` or `DevUtils` for error logging and debugging.
 - When possible, avoid using Kotlin's `!!` feature, in favour of `?:`
 - Avoid using Wildcard Imports (especially within Vice.kt)
     - This can be automatically disabled in IntelliJ by entering Settings > Editor > Code Style > Kotlin > Indents and selecting 'Use single name import' for each.

@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Artifacts
-          path: build/libs/
+          path: build/libs/*.jar
       - name: update dev release
         if: ${{ github.event_name == 'push' && github.ref_name == 'master' && runner.os == 'Linux' && matrix.java == '21' }}
         uses: andelf/nightly-release@main

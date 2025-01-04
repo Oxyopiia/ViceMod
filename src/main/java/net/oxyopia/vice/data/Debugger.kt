@@ -11,6 +11,7 @@ enum class Debugger(private val isEnabled: () -> Boolean, private val prefix: St
 	EXPEDITIONS({ devConfig.EXPEDITION_DEBUGGER }, "§aEXPEDITIONS"),
 	ITEMABILITY({ devConfig.ITEM_ABILITY_DEBUGGER }, "§bITEMABILITY"),
 	HUD({ devConfig.INGAMEHUD_MIXIN_DEBUGGER }, "§dHUD"),
+	MASTERY({ devConfig.MASTERY_DEBUGGER }, "§6MASTERY"),
 	MOB({ devConfig.MOB_SPAWN_DEBUGGER }, "§2MOB"),
 	SLOTCLICK({ devConfig.SLOT_CLICK_DEBUGGER}, "§4SlotClickEvent"),
 	SOUND({ devConfig.SEND_SOUND_INFO }, "§bSOUND"),

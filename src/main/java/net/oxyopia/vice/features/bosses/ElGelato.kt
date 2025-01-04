@@ -4,6 +4,6 @@ import net.oxyopia.vice.data.World
 
 object ElGelato : Boss(
 	World.Gelato,
-	Regex("(?:EL|TRUE) GELATO - (\\d+)/\\d+ ❤ \\[PHASE (\\d)]"),
+	Regex("(?:EL|TRUE) GELATO - (?<health>\\d+(?:\\.\\d+)?)/\\d+(?:\\.\\d+)? ❤ \\[PHASE (?<phase>\\d)]"),
 	phaseTimesSec = listOf(180, 180, 180)
 )

@@ -23,7 +23,7 @@ abstract class Boss (
 	var lastSpawned = 0L
 	var lastBarUpdate = 0L
 	var lastKnownUUID: UUID? = null
-	var lastKnownHealth: Int? = null
+	var lastKnownHealth: Float? = null
 	var lastKnownPhase: Int? = null
 
 	open val warningPercentage = 0.15
@@ -41,7 +41,9 @@ abstract class Boss (
 				Debugger.BOSS.debug("Detected a Boss change")
 			}
 
-			val phase = groupValues[2].toIntOrNull() ?: return
+			val health = groups["health"]?.value?.toFloatOrNull()
+			val phase = groups["phase"]?.value?.toIntOrNull()
+
 			val phaseTime = getPhaseTimeSec(phase) ?: return
 			if (phaseTime <= 0) return
 			val diff = lastSpawned.timeDelta()
@@ -52,8 +54,8 @@ abstract class Boss (
 			event.setReturnValue(event.original.copy().append(timer).setStyle(style))
 
 			lastBarUpdate = System.currentTimeMillis()
-			lastKnownHealth = groupValues[1].toIntOrNull()
-			lastKnownPhase = groupValues[2].toIntOrNull()
+			lastKnownHealth = health
+			lastKnownPhase = phase
 		}
 	}
 

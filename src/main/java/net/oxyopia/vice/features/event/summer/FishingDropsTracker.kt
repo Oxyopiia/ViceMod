@@ -6,20 +6,22 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.Size
 import net.oxyopia.vice.data.World
-import net.oxyopia.vice.data.gui.HudElement
 import net.oxyopia.vice.data.gui.Position
+import net.oxyopia.vice.utils.tracker.EnumTracker
 import net.oxyopia.vice.events.ChatEvent
-import net.oxyopia.vice.events.HudRenderEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.DevUtils
 import net.oxyopia.vice.utils.hud.HudUtils.drawTexts
 import net.oxyopia.vice.utils.hud.HudUtils.toText
 import net.oxyopia.vice.utils.Utils
 
-object FishingDropsTracker : HudElement(
+object FishingDropsTracker : EnumTracker<FishingDrops>(
 	"Summer Fishing Drops Tracker",
-	Vice.storage.summer.fishingDropsPos,
-	{ Vice.storage.summer.fishingDropsPos = it },
+	FishingDrops.entries,
+	{ Vice.storage.summer.fishups },
+	getEnumFormatting = { it?.formatting },
+	position = Vice.storage.summer.fishingDropsPos,
+	storePosition = { Vice.storage.summer.fishingDropsPos = it },
 	enabled = { Vice.config.SUMMER_FISHING_TRACKER },
 	drawCondition = {  World.Summer.isInWorld() || Vice.config.SHOW_SUMMER_FISHING_TRACKER_GLOBALLY }
 ) {
@@ -33,20 +35,9 @@ object FishingDropsTracker : HudElement(
 		Regex("\\+1 (.+ Pufferfish)")
 	}
 
-	@SubscribeEvent
-	fun onHudRender(event: HudRenderEvent) {
-		if (!canDraw()) return
-		draw(event.context)
-	}
-
-	private fun draw(context: DrawContext): Size {
-		val list: MutableList<Text> = mutableListOf("Summer Fishing Drops".toText(Vice.PRIMARY, bold = true))
-
-		FishingDrops.entries.forEach {
-			val count = Vice.storage.summer.fishups.getOrDefault(it.name, 0)
-			val text = it.customDisplayName.toText(it.color).append(" $count".toText())
-			list.add(text)
-		}
+	override fun draw(context: DrawContext): Size {
+		val list = mutableListOf(title.toText(Colors.Wave, bold = true))
+		list.addAll(getCounts().writeDefault())
 
 		val counts = Pufferfish.entries.associateWith { Vice.storage.summer.pufferfishOpened[it.name] ?: 0 }
 		val text = counts

@@ -6,7 +6,7 @@ import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.*
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.HudUtils.toText
+import net.oxyopia.vice.utils.hud.HudUtils.toText
 import net.oxyopia.vice.utils.TimeUtils.formatTimer
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils.concatenate

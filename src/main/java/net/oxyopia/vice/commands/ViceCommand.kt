@@ -20,12 +20,12 @@ import net.oxyopia.vice.events.CommandRegisterEvent
 import net.oxyopia.vice.events.SoundEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
 import net.oxyopia.vice.utils.ChatUtils
-import net.oxyopia.vice.utils.HudUtils
-import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.ItemUtils
 import net.oxyopia.vice.utils.ItemUtils.getNbtString
 import net.oxyopia.vice.utils.SoundUtils
 import net.oxyopia.vice.utils.Utils
+import net.oxyopia.vice.utils.hud.HudUtils
+import net.oxyopia.vice.utils.hud.HudUtils.toText
 import java.awt.Color
 
 object ViceCommand {

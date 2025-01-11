@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.hud
+package net.oxyopia.vice.features.worlds.glitchhq
 
 import net.minecraft.entity.boss.BossBar
 import net.minecraft.text.Text

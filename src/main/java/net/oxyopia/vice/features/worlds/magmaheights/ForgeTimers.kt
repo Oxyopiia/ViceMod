@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.hud
+package net.oxyopia.vice.features.worlds.magmaheights
 
 import com.google.gson.annotations.Expose
 import net.minecraft.client.gui.DrawContext

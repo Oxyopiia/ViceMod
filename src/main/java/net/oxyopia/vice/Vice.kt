@@ -51,8 +51,8 @@ import net.oxyopia.vice.features.worlds.expeditions.RoomWaypoints
 import net.oxyopia.vice.features.worlds.expeditions.RunOverview
 import net.oxyopia.vice.features.worlds.expeditions.StylePointsHider
 import net.oxyopia.vice.features.hud.CaveInPrediction
-import net.oxyopia.vice.features.hud.DeliveryTimer
-import net.oxyopia.vice.features.hud.ForgeTimers
+import net.oxyopia.vice.features.worlds.glitchhq.DeliveryTimer
+import net.oxyopia.vice.features.worlds.magmaheights.ForgeTimers
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.hud.PlayerStats
 import net.oxyopia.vice.features.hud.TrainTimer
@@ -67,7 +67,8 @@ import net.oxyopia.vice.features.event.summer.FishingDropsTracker
 import net.oxyopia.vice.features.event.summer.SummerAPI
 import net.oxyopia.vice.features.event.summer.SummerTimers
 import net.oxyopia.vice.features.hud.FishingBrewTimer
-import net.oxyopia.vice.features.hud.TurkinatorInvasionTimer
+import net.oxyopia.vice.features.event.turkinator.TurkinatorInvasionTimer
+import net.oxyopia.vice.features.worlds.glitchhq.EvanNotification
 import net.oxyopia.vice.features.worlds.starrysuburbs.CheeseHelper
 import net.oxyopia.vice.features.worlds.starrysuburbs.FallenStarWaypoints
 import net.oxyopia.vice.utils.HudUtils

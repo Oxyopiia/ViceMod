@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.misc
+package net.oxyopia.vice.features.worlds.glitchhq
 
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.Vice.Companion.storage

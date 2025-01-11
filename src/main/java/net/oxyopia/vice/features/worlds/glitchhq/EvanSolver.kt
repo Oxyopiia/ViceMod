@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.misc
+package net.oxyopia.vice.features.worlds.glitchhq
 
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.World
@@ -65,6 +65,5 @@ object EvanSolver {
 		"Is \"8-Bit\" a real set?" to false,
 		"Is the \"Large Backpack\" the 4th Backpack Upgrade?" to false,
 		"Does the Train Drop the Revolver?" to false
-	)
-		get() = field.mapKeys { (key, _) -> key.lowercase() }
+	).mapKeys { (key, _) -> key.lowercase() }
 }

@@ -1,4 +1,4 @@
-package net.oxyopia.vice.features.hud
+package net.oxyopia.vice.features.event.turkinator
 
 import net.minecraft.client.gui.DrawContext
 import net.oxyopia.vice.Vice
@@ -37,7 +37,7 @@ object TurkinatorInvasionTimer : HudElement(
 		val formatted = remainingTime.seconds.formatDuration()
 
 		if (lastKnownLocation != null) {
-			list.add("§6Last Location: §e${lastKnownLocation}")
+			list.add("§6Last Location: §e$lastKnownLocation")
 		} else {
 			list.add("§6Last Location: §cUnknown")
 		}

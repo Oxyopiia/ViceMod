@@ -94,7 +94,7 @@ object ItemProtection {
 				else -> "FavoriteItem"
 			}
 
-			ChatUtils.sendViceMessage("&&cStopped you disposing that item! &&7($cause)")
+			ChatUtils.sendViceMessage("§cStopped you disposing that item! §7($cause)")
 			event.cancel()
 		}
 	}
@@ -117,16 +117,16 @@ object ItemProtection {
 
 		if (item.isEmpty) return DevUtils.sendWarningMessage("You are not holding an item to protect!")
 		if (defaultProtectedItems.contains(item.item) || defaultProtectedItems.contains(itemName)) {
-			ChatUtils.sendViceMessage("&&eThis item is protected by default!")
-			ChatUtils.sendViceMessage("&&7Hold LCONTROL while clicking to bypass this!")
+			ChatUtils.sendViceMessage("§eThis item is protected by default!")
+			ChatUtils.sendViceMessage("§7Hold LCONTROL while clicking to bypass this!")
 			return
 		}
 
 		if (favoriteItems.remove(itemName)) {
-			ChatUtils.sendViceMessage("&&cYour $itemName &&cwill no longer be protected!")
+			ChatUtils.sendViceMessage("§cYour $itemName §cwill no longer be protected!")
 		} else {
 			favoriteItems.add(itemName)
-			ChatUtils.sendViceMessage("&&aYour $itemName &&ais now protected!")
+			ChatUtils.sendViceMessage("§aYour $itemName §ais now protected!")
 		}
 
 		Vice.storage.markDirty()

@@ -9,16 +9,10 @@ object ChatFilter {
 
 	@SubscribeEvent
 	fun onChat(event: ChatEvent) {
-		if (Vice.config.HIDE_WORLDGUARD_MESSAGES && event.string.startsWith("Hey! Sorry,")) {
-			event.cancel()
-			return
+		when {
+			Vice.config.HIDE_WORLDGUARD_MESSAGES && event.string.startsWith("Hey! Sorry,") -> event.cancel()
+			Vice.config.HIDE_SET_REQUIREMENT_MESSAGES && event.string.startsWith("You must be wearing at least") -> event.cancel()
+			else -> lastMessageString = event.string
 		}
-
-		else if (Vice.config.HIDE_SET_REQUIREMENT_MESSAGES && event.string.startsWith("You must be wearing at least")) {
-			event.cancel()
-			return
-		}
-
-		lastMessageString = event.string
 	}
 }

@@ -2,15 +2,12 @@ package net.oxyopia.vice.config.features
 
 import com.google.gson.annotations.Expose
 import net.oxyopia.vice.data.gui.Position
-import net.oxyopia.vice.features.hud.ForgeTimers
+import net.oxyopia.vice.features.worlds.magmaheights.ForgeTimers
 
 class MiscStorage {
 
 	@Expose
 	var showAllHudEditorElements: Boolean = true
-
-    @Expose
-	var lastDailyReward: Long = -1L
 
     @Expose
     var lastEvanQuiz: Long = -1L

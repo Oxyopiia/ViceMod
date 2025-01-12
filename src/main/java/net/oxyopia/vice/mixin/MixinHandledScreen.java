@@ -38,22 +38,6 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends MixinS
 
 	@Unique private int id = -1;
 
-	//	@ModifyArg(
-//		at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTooltip(Lnet/minecraft/client/font/TextRenderer;Ljava/util/List;Ljava/util/Optional;II)V"),
-//		method = "drawMouseoverTooltip",
-//		index = 1
-//	)
-//	private List<? extends Text> onDrawMouseoverTooltip(List<Text> text) {
-//		if (Utils.INSTANCE.getInDoomTowers()) {
-//			DrawHoverTooltipEvent result = EVENT_MANAGER.publish(new DrawHoverTooltipEvent(text));
-//
-//			if (result.hasReturnValue()) {
-//				return result.getReturnValue();
-//			}
-//		}
-//
-//		return text;
-//	}
 	@Inject(
 		method = "render",
 		at = @At("HEAD")

@@ -33,7 +33,7 @@ object FallenStarWaypoints {
 		val x = pos.groupValues[1].toDoubleOrNull() ?: return
 		val z = pos.groupValues[2].toDoubleOrNull() ?: return
 
-		if (stars.any { star -> (x == star.x && z == star.z && star.isPriorityPick) }) return // Avoid duplicates when Priority Pick is triggered
+		if (stars.any { star -> x == star.x && z == star.z && star.isPriorityPick }) return // Avoid duplicates when Priority Pick is triggered
 
 		val isPriorityPick = event.string.endsWith("(Priority Pick)")
 
@@ -59,7 +59,7 @@ object FallenStarWaypoints {
 
 			val color = when {
 				star.isPriorityPick -> Colors.ChatColor.Aqua
-				index == (stars.size - 1) -> Colors.ChatColor.Gold
+				index == stars.size - 1 -> Colors.ChatColor.Gold
 				else -> Colors.ChatColor.Blue
 			}
 

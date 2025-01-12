@@ -105,7 +105,7 @@ object Diox : Boss(
 
 			event.add(
 				text,
-				((1.0f / 3) * portalCount),
+				1.0f / 3 * portalCount,
 				BossBar.Color.GREEN,
 				BossBar.Style.NOTCHED_10
 			)

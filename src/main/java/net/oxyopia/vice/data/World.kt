@@ -40,6 +40,7 @@ enum class World(val id: String, val displayName: String, val properties: List<W
 	Exonitas("bigcity", "Exonitas", properties = listOf(WorldProperty.AUXILIARY)),
 
 	Expeditions("expeditions", "Expeditions", properties = listOf(WorldProperty.EXPEDITION)),
+	Pillar("pillars", "Pillar"),
 
 	Summer("summer", "Summer", properties = listOf(WorldProperty.EVENT)),
 

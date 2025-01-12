@@ -39,6 +39,7 @@ import net.oxyopia.vice.features.worlds.auxiliary.exonitas.PowerBoxTimer
 import net.oxyopia.vice.features.bosses.*
 import net.oxyopia.vice.features.bosses.masteries.MasteryHandler
 import net.oxyopia.vice.features.bosses.masteries.MasteryTracker
+import net.oxyopia.vice.features.event.pillars.PillarsBossBar
 import net.oxyopia.vice.features.worlds.cooking.BurgerTimer
 import net.oxyopia.vice.features.worlds.cooking.CookingAPI
 import net.oxyopia.vice.features.worlds.cooking.OrderTracker
@@ -214,6 +215,8 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(FishingDropsTracker)
 		EVENT_MANAGER.subscribe(SummerAPI)
 		EVENT_MANAGER.subscribe(SummerTimers)
+
+		EVENT_MANAGER.subscribe(PillarsBossBar)
 
 		EVENT_MANAGER.subscribe(DefibCounter)
 		EVENT_MANAGER.subscribe(DoubleTapDrop)

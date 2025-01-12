@@ -633,6 +633,28 @@ public class Config extends Vigilant {
 
 	// Event
 
+	// Event/Pillars
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Next Item Bossbar",
+		description = "Draws a bossbar showing how long until the next Pillars item is given.",
+		category = "Event",
+		subcategory = "Pillars"
+	)
+	public boolean PILLARS_NEXT_ITEM_BOSSBAR = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Event Timers",
+		description = "Timers for events like being able to start another match, or border phases.",
+		category = "Event",
+		subcategory = "Pillars"
+	)
+	public boolean PILLARS_EVENT_TIMERS = false;
+
+	// Event/Summer
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Fishing Drops Tracker",

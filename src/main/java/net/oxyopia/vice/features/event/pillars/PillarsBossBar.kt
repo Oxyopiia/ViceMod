@@ -2,6 +2,7 @@ package net.oxyopia.vice.features.event.pillars
 
 import net.minecraft.entity.boss.BossBar
 import net.minecraft.util.math.Box
+import net.oxyopia.vice.Vice
 import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.BossBarEvents
@@ -52,9 +53,33 @@ object PillarsBossBar {
     @SubscribeEvent
     fun onBossbarAfter(event: BossBarEvents.Insert) {
         if(!World.Pillars.isInWorld() && !PILLARS_HUB_BOUNDS.isInBounds(World.Tower)) return
+        val config = Vice.config
+        if (!config.PILLARS_EVENT_TIMERS && !config.PILLARS_NEXT_ITEM_BOSSBAR) return
+
+        val itemTimeElapsed = itemDuration.timeDelta()
+        if (config.PILLARS_NEXT_ITEM_BOSSBAR && gameStarted) {
+            when {
+                World.Pillars.isInWorld() && itemTimeElapsed <= PILLARS_ITEMS_TIME -> {
+                    val percentageComplete = (itemTimeElapsed / PILLARS_ITEMS_TIME).clamp(0.0, 1.0)
+                    val formattedTime = (PILLARS_ITEMS_TIME - itemTimeElapsed).formatShortDuration()
+
+                    val text = "Next Item in ${formattedTime}s".toText(Colors.ChatColor.Aqua, bold = true)
+
+                    event.add(
+                        text,
+                        (1 - percentageComplete).toFloat(),
+                        BossBar.Color.BLUE,
+                        BossBar.Style.NOTCHED_10
+                    )
+                }
+
+                else -> itemDuration = System.currentTimeMillis()
+            }
+        }
+
+        if (!config.PILLARS_EVENT_TIMERS) return
 
         val timeElapsed = gameDuration.timeDelta()
-        val itemTimeElapsed = itemDuration.timeDelta()
         val failedTimeElapsed = failedDuration.timeDelta()
 
         when {
@@ -62,12 +87,12 @@ object PillarsBossBar {
                 val percentageComplete = (failedTimeElapsed / PILLARS_FAILED_TIME).clamp(0.0, 1.0)
                 val formattedTime = (PILLARS_FAILED_TIME - failedTimeElapsed).formatShortDuration()
 
-                val text = "Pillars Rematch on Cooldown in ${formattedTime}s".toText(Colors.ChatColor.LightPurple, bold = true)
+                val text = "Pillars ready to start in ${formattedTime}s".toText(Colors.ChatColor.LightPurple, bold = true)
 
                 event.add(
                     text,
                     (1 - percentageComplete).toFloat(),
-                    BossBar.Color.PINK,
+                    BossBar.Color.PURPLE,
                     BossBar.Style.NOTCHED_10
                 )
             }
@@ -106,7 +131,7 @@ object PillarsBossBar {
                 val percentageComplete = (phaseTimeElapsed / PILLARS_BORDERED).clamp(0.0, 1.0)
                 val formattedTime = (PILLARS_BORDERED - phaseTimeElapsed).formatDuration()
 
-                val text = "Pillars Borders in $formattedTime".toText(Colors.ChatColor.Red, bold = true)
+                val text = "Border starts to close in $formattedTime".toText(Colors.ChatColor.Red, bold = true)
 
                 event.add(
                     text,
@@ -126,7 +151,7 @@ object PillarsBossBar {
                 val percentageComplete = (phaseTimeElapsed / PILLARS_BORDER_ENDED).clamp(0.0, 1.0)
                 val formattedTime = (PILLARS_BORDER_ENDED - phaseTimeElapsed).formatShortDuration()
 
-                val text = "Pillars Ends in ${formattedTime}s".toText(Colors.ChatColor.Red, bold = true)
+                val text = "Border fully closes ${formattedTime}s".toText(Colors.ChatColor.Red, bold = true)
 
                 event.add(
                     text,
@@ -139,38 +164,18 @@ object PillarsBossBar {
             else -> gameStarted = false
         }
 
-        if (gameStarted) {
-            when {
-                World.Pillars.isInWorld() && itemTimeElapsed <= PILLARS_ITEMS_TIME -> {
-                    val percentageComplete = (itemTimeElapsed / PILLARS_ITEMS_TIME).clamp(0.0, 1.0)
-                    val formattedTime = (PILLARS_ITEMS_TIME - itemTimeElapsed).formatShortDuration()
-
-                    val text = "Pillars Next Item in ${formattedTime}s".toText(Colors.ChatColor.Aqua, bold = true)
-
-                    event.add(
-                        text,
-                        (1 - percentageComplete).toFloat(),
-                        BossBar.Color.BLUE,
-                        BossBar.Style.NOTCHED_10
-                    )
-                }
-
-                else -> itemDuration = System.currentTimeMillis()
-            }
-        }
-
         if (PILLARS_HUB_BOUNDS.isInBounds(World.Tower) && timeElapsed <= PILLARS_TIMER) {
-            val percentageComplete = (timeElapsed / PILLARS_TIMER).clamp(0.0, 1.0)
-            val formattedTime = (PILLARS_TIMER - timeElapsed).formatDuration()
+			val percentageComplete = (timeElapsed / PILLARS_TIMER).clamp(0.0, 1.0)
+			val formattedTime = (PILLARS_TIMER - timeElapsed).formatDuration()
 
-            val text = "Pillars on Cooldown of $formattedTime".toText(Colors.ChatColor.DarkPurple, bold = true)
+			val text = "Pillars starts in $formattedTime".toText(Colors.ChatColor.DarkPurple, bold = true)
 
-            event.add(
-                text,
-                (1 - percentageComplete).toFloat(),
-                BossBar.Color.PURPLE,
-                BossBar.Style.NOTCHED_10
-            )
+			event.add(
+				text,
+				(1 - percentageComplete).toFloat(),
+				BossBar.Color.PURPLE,
+				BossBar.Style.NOTCHED_10
+			)
         }
     }
 }

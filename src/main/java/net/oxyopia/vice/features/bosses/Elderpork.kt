@@ -24,7 +24,7 @@ object Elderpork : Boss(
 
 	@SubscribeEvent
 	fun onChatMessage(event: ChatEvent) {
-		if (event.string.endsWith("is preparing to fight Elderpork the Great!") && event.hasNoSender) {
+		if (event.string.contains("is preparing to fight Elderpork the Great!") && event.hasNoSender) {
 			monitorLastStart = System.currentTimeMillis()
 		}
 	}

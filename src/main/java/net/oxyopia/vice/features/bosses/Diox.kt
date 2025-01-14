@@ -14,7 +14,7 @@ import kotlin.time.Duration.Companion.seconds
 
 object Diox : Boss(
 	World.Diox,
-	Regex("(?:TRUE )?Diox - (?<health>\\d+(?:\\.\\d+)?)/(?:\\d+(?:\\.\\d+)?|∞) ❤ \\[PHASE (?<phase>\\d+)]"),
+	Regex("(?:TRUE )?Diox - (?:(?<health>\\d+(?:\\.\\d+)?)/\\d+(?:\\.\\d+)?|∞) ❤ \\[PHASE (?<phase>\\d+)]"),
 	phaseTimesSec = listOf(5 * 60, 3 * 60, 5 * 60, 5 * 60, 85)
 ){
 	private const val PHASE_1_MAX_TIME = 5 * 60

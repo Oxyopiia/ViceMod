@@ -42,7 +42,12 @@ abstract class Boss (
 			}
 
 			val health = groups["health"]?.value?.toFloatOrNull()
-			val phase = groups["phase"]?.value?.toIntOrNull()
+
+			val phase = try {
+				groups["phase"]?.value?.toIntOrNull() ?: 1
+			} catch (e: IllegalArgumentException) {
+				1
+			}
 
 			val phaseTime = getPhaseTimeSec(phase) ?: return
 			if (phaseTime <= 0) return

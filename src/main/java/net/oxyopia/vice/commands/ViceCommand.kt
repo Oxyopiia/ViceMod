@@ -167,7 +167,7 @@ object ViceCommand {
 
 		val heldItem = ItemUtils.getHeldItem()
 
-		if (Vice.devConfig.COMMAND_SHOW_ITEM_DATA && heldItem.components != null) {
+		if (heldItem.components != null) {
 			ChatUtils.sendViceMessage("")
 			ChatUtils.sendViceMessage(heldItem.name)
 
@@ -201,6 +201,8 @@ object ViceCommand {
 						.setHover(HoverEvent.Action.SHOW_TEXT, Text.of(textureValue))
 				)
 			}
+		} else {
+			ChatUtils.sendViceMessage("§cNo NBT data found in held tool.")
 		}
 	}
 }

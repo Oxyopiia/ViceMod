@@ -211,14 +211,6 @@ public class DevConfig extends Vigilant {
 	)
 	public boolean LOST_IN_TIME_DEBUGGER = false;
 
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Show Held Item Data",
-		description = "sends data about the held item when possible, including nbt components",
-		category = "Command"
-	)
-	public boolean COMMAND_SHOW_ITEM_DATA = true;
-
 	public DevConfig() {
 		super(new File("./config/vice/developerSettings.toml"), "Vice Developer Menu");
 	}

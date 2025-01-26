@@ -59,6 +59,7 @@ enum class ItemAbility(
     STAR_BOMB("Star Bomb", 8f, set = Set.DEMOLITIONIST, setAmount = 2),
     STARBLADE("Starblade", 5f, set = Set.HEAVY, setAmount = 2),
     BEWITCHED_BLOWPIPE("Bewitched Blowpipe", 5f),
+    BROKEN_FLASHLIGHT("Broken Flashlight", 10f),
 
     // No Display
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, set = Set.HEAVY, setAmount = 2),

@@ -92,6 +92,7 @@ object ItemAbilityCooldown {
 			event.soundName == "entity.blaze.shoot" && event.pitch == 1.25f && event.volume == 3f -> {
 				ItemAbility.BARBED_SHOTGUN.onSound()
 				ItemAbility.SHOTGUN.onSound()
+				ItemAbility.BROKEN_FLASHLIGHT.onSound()
 			}
 
 			// Wasted Boomstick

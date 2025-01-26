@@ -3,10 +3,12 @@ package net.oxyopia.vice.features.itemabilities
 import net.minecraft.util.ClickType
 import net.oxyopia.vice.data.Debugger
 import net.oxyopia.vice.data.Set
+import net.oxyopia.vice.features.itemabilities.ItemAbilityCooldown.hasCharged
 import net.oxyopia.vice.utils.ItemUtils.getEquippedSets
 import net.oxyopia.vice.utils.TimeUtils.timeDelta
 import net.oxyopia.vice.utils.Utils
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Inspired from SkyHanni's similar feature, partially adapted
@@ -109,6 +111,8 @@ enum class ItemAbility(
         if (this == THE_EXPERIMENT && (Utils.getPlayer()?.health ?: 0f) <= 10f) {
             diff /= 2
         }
+
+        if (this == BROKEN_FLASHLIGHT && hasCharged) diff = this.cooldown.toInt().seconds
 
         return maxOf(cooldown - (diff.inWholeMilliseconds / 1000.0f), 0f)
     }

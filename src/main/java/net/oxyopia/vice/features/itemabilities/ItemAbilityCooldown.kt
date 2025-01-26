@@ -40,6 +40,8 @@ object ItemAbilityCooldown {
 		}
 	}
 
+	var hasCharged = false
+
 	@SubscribeEvent
 	fun onSound(event: SoundEvent) {
 
@@ -315,6 +317,15 @@ object ItemAbilityCooldown {
 		}
 
 		ability.drawStatus(event.x, event.y + 9, event.context)
+	}
+
+	@SubscribeEvent
+	fun onBattery(event: ChatEvent) {
+		if(event.string.startsWith("+1 Triple P Battery")) {
+			hasCharged = true
+		} else {
+			hasCharged = false
+		}
 	}
 
 	private fun ItemAbility.drawStatus(x: Int, y: Int, context: DrawContext, centered: Boolean = false, defaultColor: Color = Color.white) {

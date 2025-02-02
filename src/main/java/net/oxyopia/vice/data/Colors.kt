@@ -20,6 +20,7 @@ object Colors {
 	val GlitchHQ = Color(170, 89, 255)
 	val LostInTime = Color(113, 255, 234)
 	val StarryStreets = Color(0, 168, 143)
+	val OnTheRun = Color(151, 38, 38)
 
 	/**
 	 * Color values sourced from Essential mod.

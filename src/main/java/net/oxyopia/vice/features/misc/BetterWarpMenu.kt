@@ -24,7 +24,7 @@ object BetterWarpMenu {
 		listOf("Glimpse".toText(Colors.Glimpse), "The Arcade".toText(Colors.ChatColor.DarkGrey)),
 		listOf("Showdown".toText(Colors.Showdown), "The Journey to the Glitch HQ".toText(Colors.GlitchHQ)),
 		listOf("Lost In Time".toText(Colors.LostInTime), "Soulswift Sands".toText(Colors.LostInTime), "Timeless Tastes".toText(Colors.Showdown), "Cosmic Collapse".toText(Colors.SpaceEscape)),
-		listOf("Starry Streets".toText(Colors.StarryStreets), "On the Run".toText(Colors.ChatColor.DarkRed)),
+		listOf("Starry Streets".toText(Colors.StarryStreets), "On the Run".toText(Colors.OnTheRun)),
 	)
 	private val bosses: List<MutableText> = listOf(
 		"Vice".toText(Colors.ViceBoss),

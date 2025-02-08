@@ -116,13 +116,13 @@ enum class ItemAbility(
     }
 
     fun onSound() {
-        if(!this.isOnCooldown()) {
-            val debounceTime = lastClicked.timeDelta()
-            Debugger.ITEMABILITY.debug("§eReceived onSound as &&b$itemName")
+        if (this.isOnCooldown()) return
+        
+        val debounceTime = lastClicked.timeDelta()
+        Debugger.ITEMABILITY.debug("§eReceived onSound as &&b$itemName")
 
-            if (debounceTime < 500.milliseconds) {
-                activate()
-            }
+        if (debounceTime < 500.milliseconds) {
+            activate()
         }
     }
 

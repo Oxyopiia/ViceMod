@@ -211,6 +211,51 @@ public class DevConfig extends Vigilant {
 	)
 	public boolean LOST_IN_TIME_DEBUGGER = false;
 
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Should Use Custom Repo",
+		description = "Whether to use the Custom Repo or the default.",
+		category = "Repo",
+		subcategory = "Custom Repo"
+	)
+	public boolean USE_CUSTOM_REPO = false;
+
+	@Property(
+		type = PropertyType.TEXT,
+		name = "Custom Repo Username",
+		category = "Repo",
+		subcategory = "Custom Repo"
+	)
+	public String CUSTOM_REPO_USER = "Oxyopiia";
+
+	@Property(
+		type = PropertyType.TEXT,
+		name = "Custom Repo Name",
+		category = "Repo",
+		subcategory = "Custom Repo"
+	)
+	public String CUSTOM_REPO_NAME = "doomtowers-repo";
+
+	@Property(
+		type = PropertyType.TEXT,
+		name = "Custom Repo Aggregate File Name",
+		category = "Repo",
+		subcategory = "Custom Repo"
+	)
+	public String CUSTOM_REPO_GLOBAL_FILE_NAME = "all_data.json";
+
+	@Property(
+		type = PropertyType.BUTTON,
+		name = "Reset Custom Repo",
+		category = "Repo",
+		subcategory = "Custom Repo"
+	)
+	public void resetCustomRepo() {
+		CUSTOM_REPO_USER = "Oxyopiia";
+		CUSTOM_REPO_NAME = "doomtowers-repo";
+		CUSTOM_REPO_GLOBAL_FILE_NAME = "all_data.json";
+	}
+
 	public DevConfig() {
 		super(new File("./config/vice/developerSettings.toml"), "Vice Developer Menu");
 	}

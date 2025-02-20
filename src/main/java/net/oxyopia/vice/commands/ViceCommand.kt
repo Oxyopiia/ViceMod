@@ -66,33 +66,67 @@ object ViceCommand {
 					Command.SINGLE_SUCCESS
 				}
 			)
-			.then(ClientCommandManager.literal("converthex")
-				.then(ClientCommandManager.argument("hex", StringArgumentType.word())
-					.executes {
-						val hex = StringArgumentType.getString(it, "hex")
-						try {
-							var formattedHex = hex
-							if (formattedHex.startsWith("#")) formattedHex = formattedHex.replace("#", "")
-							if (!formattedHex.startsWith("0x")) formattedHex = "0x$hex"
-							val color = Color.decode(formattedHex)
+			.then(ClientCommandManager.literal("color")
+				.then(ClientCommandManager.argument("mode", StringArgumentType.word())
+					.then(ClientCommandManager.argument("input", StringArgumentType.greedyString())
+						.executes {
+							val mode = StringArgumentType.getString(it, "mode").lowercase()
+							val input = StringArgumentType.getString(it, "input").trim()
 
-							ChatUtils.sendViceMessage(
-								UTextComponent(
-									"Converted hex ".toText().append(hex.toText(color))
-										.append(" to rgb: ".toText(Colors.ChatColor.Grey))
-										.append("Color(${color.red},${color.green},${color.blue})".toText(color))
-								)
-									.setClick(
-										ClickEvent.Action.COPY_TO_CLIPBOARD,
-										"(${color.red},${color.green},${color.blue})"
-									)
-									.setHover(HoverEvent.Action.SHOW_TEXT, "Click to copy color".toText(color))
-							)
-						} catch (e: NumberFormatException) {
-							ChatUtils.sendViceMessage("Invalid hex string: $hex".toText(Colors.ChatColor.Red))
+							try {
+								val color: Color = when {
+									input.startsWith("#") || input.length in 6..7 -> Color.decode(if (input.startsWith("#")) input else "#$input")
+									input.toIntOrNull() != null -> {
+										val intColor = input.toInt()
+										Color((intColor shr 16) and 0xFF, (intColor shr 8) and 0xFF, intColor and 0xFF)
+									}
+									input.startsWith("Color(") && input.endsWith(")") -> {
+										val rgbValues = input.removePrefix("Color(").removeSuffix(")").split(",").map { it.trim().toInt() }
+										if (rgbValues.size == 3) Color(rgbValues[0], rgbValues[1], rgbValues[2]) else throw NumberFormatException()
+									}
+									else -> throw NumberFormatException()
+								}
+
+								when (mode) {
+									"hex" -> {
+										val hexValue = String.format("%02X%02X%02X", color.red, color.green, color.blue)
+										ChatUtils.sendViceMessage(
+											UTextComponent("Converted $input to hex: ".toText(Colors.ChatColor.Grey)
+												.append(hexValue.toText(Colors.ChatColor.Aqua))
+											)
+												.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, hexValue)
+												.setHover(HoverEvent.Action.SHOW_TEXT, "Click to copy hex value".toText(color))
+										)
+									}
+									"dec" -> {
+										val decimalValue = color.rgb and 0xFFFFFF
+										ChatUtils.sendViceMessage(
+											UTextComponent("Converted $input to decimal: ".toText(Colors.ChatColor.Grey)
+												.append("$decimalValue".toText(Colors.ChatColor.Aqua))
+											)
+												.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, "$decimalValue")
+												.setHover(HoverEvent.Action.SHOW_TEXT, "Click to copy decimal value".toText(color))
+										)
+									}
+									"rgb" -> {
+										ChatUtils.sendViceMessage(
+											UTextComponent("Converted $input to RGB: ".toText(Colors.ChatColor.Grey)
+												.append("Color(${color.red},${color.green},${color.blue})".toText(color))
+											)
+												.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, "(${color.red},${color.green},${color.blue})")
+												.setHover(HoverEvent.Action.SHOW_TEXT, "Click to copy RGB value".toText(color))
+										)
+									}
+									else -> {
+										ChatUtils.sendViceMessage("Invalid mode. Use hex, dec or rgb".toText(Colors.ChatColor.Red))
+									}
+								}
+							} catch (e: NumberFormatException) {
+								ChatUtils.sendViceMessage("Invalid input format for mode $mode: $input".toText(Colors.ChatColor.Red))
+							}
+							Command.SINGLE_SUCCESS
 						}
-						Command.SINGLE_SUCCESS
-					}
+					)
 				)
 			)
 			.then(ClientCommandManager.literal("tree")

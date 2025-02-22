@@ -238,6 +238,14 @@ public class DevConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.TEXT,
+		name = "Custom Repo Branch",
+		category = "Repo",
+		subcategory = "Custom Repo"
+	)
+	public String CUSTOM_REPO_BRANCH = "master";
+
+	@Property(
+		type = PropertyType.TEXT,
 		name = "Custom Repo Aggregate File Name",
 		category = "Repo",
 		subcategory = "Custom Repo"
@@ -253,6 +261,7 @@ public class DevConfig extends Vigilant {
 	public void resetCustomRepo() {
 		CUSTOM_REPO_USER = "Oxyopiia";
 		CUSTOM_REPO_NAME = "doomtowers-repo";
+		CUSTOM_REPO_BRANCH = "master";
 		CUSTOM_REPO_GLOBAL_FILE_NAME = "all_data.json";
 	}
 

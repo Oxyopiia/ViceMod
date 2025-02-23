@@ -19,10 +19,12 @@ import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayNetworkHandler
 import net.minecraft.command.CommandRegistryAccess
+import net.oxyopia.vice.commands.RepoTester
 import net.oxyopia.vice.commands.ViceCommand
 import net.oxyopia.vice.config.Config
 import net.oxyopia.vice.config.DevConfig
 import net.oxyopia.vice.config.Storage
+import net.oxyopia.vice.config.repo.RepoManager
 import net.oxyopia.vice.data.Colors
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.CommandRegisterEvent
@@ -131,6 +133,7 @@ class Vice : ClientModInitializer {
 		config.init()
 		devConfig.init()
 		storage.initialize()
+		RepoManager.initialize()
 
 		subscribeEventListeners()
 		initEvents()
@@ -168,6 +171,7 @@ class Vice : ClientModInitializer {
 
 	private fun subscribeEventListeners() {
 		EVENT_MANAGER.subscribe(ViceCommand)
+		EVENT_MANAGER.subscribe(RepoTester)
 
 		EVENT_MANAGER.subscribe(BackpackRenaming)
 		EVENT_MANAGER.subscribe(CaveInPrediction)

@@ -7,5 +7,5 @@ import net.oxyopia.vice.data.repo.ItemsJson
 data class RepoStorage(
 	@Expose val schema: Int,
 	@Expose val sha: String,
-	@Expose @SerializedName("Items.json") val itemsJson: ItemsJson
+	@Expose @SerializedName("Items") val items: ItemsJson
 )

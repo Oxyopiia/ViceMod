@@ -3,6 +3,8 @@ package net.oxyopia.vice.config;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
 import net.oxyopia.vice.Vice;
+import net.oxyopia.vice.config.repo.RepoManager;
+import net.oxyopia.vice.utils.ChatUtils;
 
 import java.io.File;
 
@@ -212,6 +214,22 @@ public class DevConfig extends Vigilant {
 	public boolean LOST_IN_TIME_DEBUGGER = false;
 
 	@Property(
+		type = PropertyType.BUTTON,
+		name = "Refresh Repo",
+		category = "Repo"
+	)
+	public void refreshRepo() {
+		RepoManager.INSTANCE.refreshData((success) -> {
+			if (success) {
+				ChatUtils.INSTANCE.sendViceMessage("§aRepo reloaded!");
+			} else {
+				ChatUtils.INSTANCE.sendViceMessage("§cRepo did not load properly!");
+			}
+			return null;
+		});
+	}
+
+	@Property(
 		type = PropertyType.SWITCH,
 		name = "Should Use Custom Repo",
 		description = "Whether to use the Custom Repo or the default.",
@@ -255,6 +273,7 @@ public class DevConfig extends Vigilant {
 	@Property(
 		type = PropertyType.BUTTON,
 		name = "Reset Custom Repo",
+		description = "doesn't update values in real time in the ui, but just swap tabs or sth",
 		category = "Repo",
 		subcategory = "Custom Repo"
 	)

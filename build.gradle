@@ -38,6 +38,8 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:1.12.1+kotlin.2.0.20"
+	modImplementation 'com.squareup.okhttp3:okhttp:4.12.0'
+	modImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1'
 
 	modApi "com.terraformersmc:modmenu:11.0.2"
 
@@ -49,7 +51,6 @@ dependencies {
 		exclude(group: "gg.essential", module: "universalcraft-1.18.1-fabric")
 	})
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.1")
-
 
 	// Uncomment the following line to enable the deprecated Fabric API modules.
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.

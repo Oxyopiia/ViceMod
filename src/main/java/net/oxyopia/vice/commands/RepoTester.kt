@@ -13,7 +13,7 @@ object RepoTester {
 		event.register(
 			ClientCommandManager.literal("repotest")
 				.executes {
-					val itemsJson = RepoManager.data?.itemsJson ?: return@executes Command.SINGLE_SUCCESS
+					val itemsJson = RepoManager.data?.items ?: return@executes Command.SINGLE_SUCCESS
 					itemsJson.items.forEach { item ->
 						ChatUtils.sendViceMessage("${item.itemName}, ${item.cooldown}")
 					}

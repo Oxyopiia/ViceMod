@@ -57,8 +57,11 @@ enum class ItemAbility(
     WAVE_PULSER("Wave Pulser", 10f, set = Set.DIGITAL, setAmount = 2),
     THE_PHANTASM("The Phantasm", 10f, set = Set.DIGITAL, setAmount = 2),
     STAR_BOMB("Star Bomb", 8f, set = Set.DEMOLITIONIST, setAmount = 2),
-    STARBLADE("Starblade", 5f, set = Set.HEAVY, setAmount = 2),
+    STARBLADE("Starblade", 2f, set = Set.HEAVY, setAmount = 2),
     BEWITCHED_BLOWPIPE("Bewitched Blowpipe", 5f),
+    BROKEN_FLASHLIGHT("Broken Flashlight", 10f),
+    GALVANISER("Galvaniser", 20f, set = Set.DIGITAL, setAmount = 3),
+    UNSTABLE_DYNAMITE_BARREL("Unstable Dynamite Barrel", 15f, set = Set.DEMOLITIONIST, setAmount = 2),
 
     // No Display
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, set = Set.HEAVY, setAmount = 2),
@@ -113,6 +116,8 @@ enum class ItemAbility(
     }
 
     fun onSound() {
+        if (this.isOnCooldown()) return
+        
         val debounceTime = lastClicked.timeDelta()
         Debugger.ITEMABILITY.debug("§eReceived onSound as &&b$itemName")
 

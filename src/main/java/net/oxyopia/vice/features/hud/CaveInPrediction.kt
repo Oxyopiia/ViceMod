@@ -33,7 +33,7 @@ object CaveInPrediction : HudElement(
 
 	private val regionalTracking = hashMapOf<String, TrackingData>()
 	private val regions = listOf(
-		"STARRY_QUARRY" to { Box(-63.0, 1.0, 29.0, 23.0, 15.0, 50.0).isInBounds(World.StarryStreets) },
+		"STARRY_QUARRY" to { Box(-63.0, 1.0, 29.0, 24.0, 17.0, 51.0).isInBounds(World.StarryStreets) },
 		"CHARLIE_TRASH_PILE" to { Box(-75.0, 1.0, -14.0, -57.0, 32.0, 4.0).isInBounds(World.StarryStreets) },
 		"SOULSWIFT_SANDS" to { World.SoulswiftSands.isInWorld() && (Utils.getPlayer()?.y ?: 100.0) <= 35.0 }
 	)

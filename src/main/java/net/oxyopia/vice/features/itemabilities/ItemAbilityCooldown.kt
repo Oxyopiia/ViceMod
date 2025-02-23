@@ -92,6 +92,11 @@ object ItemAbilityCooldown {
 			event.soundName == "entity.blaze.shoot" && event.pitch == 1.25f && event.volume == 3f -> {
 				ItemAbility.BARBED_SHOTGUN.onSound()
 				ItemAbility.SHOTGUN.onSound()
+				ItemAbility.BROKEN_FLASHLIGHT.onSound()
+			}
+
+			event.soundName == "block.conduit.deactivate" && event.pitch == 1.5f && event.volume == 3f -> {
+				ItemAbility.GALVANISER.onSound()
 			}
 
 			// Wasted Boomstick
@@ -155,6 +160,7 @@ object ItemAbilityCooldown {
 			// Dynamite Barrel
 			event.soundName == "entity.generic.explode" && event.pitch == 1.5f && event.volume == 9999f -> {
 				ItemAbility.DYNAMITE_BARREL.onSound()
+				ItemAbility.UNSTABLE_DYNAMITE_BARREL.onSound()
 			}
 
 			// Laser Point Minigun

@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.minecraft.client.MinecraftClient
 import net.minecraft.item.Items
+import net.minecraft.registry.Registries
 import net.minecraft.text.ClickEvent
 import net.minecraft.text.HoverEvent
 import net.minecraft.text.Text
@@ -167,6 +168,12 @@ object ViceCommand {
 			)
 			.then(ClientCommandManager.literal("sound")
 				.then(ClientCommandManager.argument("sound", StringArgumentType.word())
+					.suggests { _, builder ->
+						val sounds = Registries.SOUND_EVENT.ids.map { it.toString().split(":")[1] }
+
+						sounds.forEach { builder.suggest(it) }
+						builder.buildFuture()
+					}
 					.then(ClientCommandManager.argument("volume", FloatArgumentType.floatArg(0f))
 						.then(ClientCommandManager.argument("pitch", FloatArgumentType.floatArg(0f, 2f))
 							.executes {

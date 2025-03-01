@@ -55,7 +55,7 @@ enum class ItemAbility(
     THE_EXPERIMENT("The Experiment", 6f, set = Set.FLESHCRAWLER, setAmount = 2),
     GORE_GAUNTLET("Gore Gauntlet", 10f, set = Set.FLESHCRAWLER, setAmount = 3),
     WAVE_PULSER("Wave Pulser", 10f, set = Set.DIGITAL, setAmount = 2),
-    THE_PHANTASM("The Phantasm", 10f, set = Set.DIGITAL, setAmount = 2),
+    THE_PHANTASM("The Phantasm", 10f, set = Set.HEAVY, setAmount = 1),
     STAR_BOMB("Star Bomb", 8f, set = Set.DEMOLITIONIST, setAmount = 2),
     STARBLADE("Starblade", 2f, set = Set.HEAVY, setAmount = 2),
     BEWITCHED_BLOWPIPE("Bewitched Blowpipe", 5f),

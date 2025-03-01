@@ -85,7 +85,6 @@ object ItemAbilityCooldown {
 			// Wasted Shotgun
 			event.soundName == "entity.blaze.shoot" && event.pitch == 0.5f && event.volume == 9999f -> {
 				ItemAbility.WASTED_SHOTGUN.onSound()
-				ItemAbility.THE_EXPERIMENT.onSound()
 			}
 
 			// Barbed Shotgun
@@ -93,6 +92,7 @@ object ItemAbilityCooldown {
 				ItemAbility.BARBED_SHOTGUN.onSound()
 				ItemAbility.SHOTGUN.onSound()
 				ItemAbility.BROKEN_FLASHLIGHT.onSound()
+				ItemAbility.THE_EXPERIMENT.onSound()
 			}
 
 			event.soundName == "block.conduit.deactivate" && event.pitch == 1.5f && event.volume == 3f -> {

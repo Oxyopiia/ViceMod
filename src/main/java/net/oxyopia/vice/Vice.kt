@@ -26,6 +26,7 @@ import net.oxyopia.vice.config.DevConfig
 import net.oxyopia.vice.config.Storage
 import net.oxyopia.vice.config.repo.RepoManager
 import net.oxyopia.vice.data.Colors
+import net.oxyopia.vice.data.Set
 import net.oxyopia.vice.data.World
 import net.oxyopia.vice.events.CommandRegisterEvent
 import net.oxyopia.vice.events.ItemTooltipEvent
@@ -118,6 +119,16 @@ class Vice : ClientModInitializer {
 				override fun read(reader: JsonReader): World {
 					val text = reader.nextString()
 					return World.getById(text) ?: error("Could not parse World from $text")
+				}
+			}.nullSafe())
+			.registerTypeAdapter(Set::class.java, object : TypeAdapter<Set>() {
+				override fun write(out: JsonWriter, value: Set) {
+					out.value(value.name)
+				}
+
+				override fun read(reader: JsonReader): Set {
+					val text = reader.nextString()
+					return Set.getByName(text) ?: error("Could not parse Set from $text")
 				}
 			}.nullSafe())
 			.create()

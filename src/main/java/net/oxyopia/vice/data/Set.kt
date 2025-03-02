@@ -7,10 +7,9 @@ enum class Set(val text: String, val color: Color = Color.white) {
     DEMOLITIONIST("Demolitionist", Color(92, 255, 135)),
     FLESHCRAWLER("Fleshcrawler", Color(140, 34, 18)),
     DIGITAL("Digital", Color(231, 65, 152)),
-    HEAVY("Heavy", Color(214, 214, 214)),
-    NONE("");
+    HEAVY("Heavy", Color(214, 214, 214));
 
     companion object {
-        fun getByName(name: String) = entries.firstOrNull { it.text == name } ?: NONE
+        fun getByName(name: String) = entries.firstOrNull { it.text == name }
     }
 }

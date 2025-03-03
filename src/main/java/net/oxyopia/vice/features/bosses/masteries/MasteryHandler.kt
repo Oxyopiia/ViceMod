@@ -36,7 +36,7 @@ object MasteryHandler {
 			"PPP" -> bossStorage.ppp
 			"LBS Unique" -> bossStorage.minehut
 			"Elderpork" -> bossStorage.elderpork
-			"Vatican" -> bossStorage.vatican
+			// "Vatican" -> bossStorage.vatican
 			else -> return
 		}
 

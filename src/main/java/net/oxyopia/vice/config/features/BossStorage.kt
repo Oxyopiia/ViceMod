@@ -36,7 +36,7 @@ class BossStorage {
 	val elderpork = MasterableBoss()
 
 	@Expose
-	val vatican = MasterableBoss()
+	val vatican = Boss()
 
 	@Expose
 	val shadowGelato = Boss()

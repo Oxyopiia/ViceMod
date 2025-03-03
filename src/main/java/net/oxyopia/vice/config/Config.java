@@ -471,7 +471,7 @@ public class Config extends Vigilant {
 		description = "The Mastery shown when outside a Mastery Boss arena.",
 		category = "Bosses",
 		subcategory = "Quality of Life",
-		options = {"Most Recent", "Vice", "Wasteyard", "El Gelato", "PPP", "Minehut", "Elderpork"}
+		options = {"Most Recent", "Vice", "Wasteyard", "El Gelato", "PPP", "Minehut", "Elderpork", "Vatican"}
 	)
 	public int DEFAULT_MASTERY_BOSS = 0;
 
@@ -534,6 +534,17 @@ public class Config extends Vigilant {
 		subcategory = "Elderpork"
 	)
 	public boolean ELDERPORK_START_TIMER = false;
+
+	// Bosses/Vatican
+
+	@Property(
+			type = PropertyType.SWITCH,
+			name = "THE VATICAN Start Timer",
+			description = "Displays a timer during the window to enter The Vatican Boss with the head.",
+			category = "Bosses",
+			subcategory = "Vatican"
+	)
+	public boolean VATICAN_START_TIMER = false;
 
 	// Bosses/Abyssal Vice
 

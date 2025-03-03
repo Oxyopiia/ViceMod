@@ -471,7 +471,7 @@ public class Config extends Vigilant {
 		description = "The Mastery shown when outside a Mastery Boss arena.",
 		category = "Bosses",
 		subcategory = "Quality of Life",
-		options = {"Most Recent", "Vice", "Wasteyard", "El Gelato", "PPP", "Minehut", "Elderpork", "Vatican"}
+		options = {"Most Recent", "Vice", "Wasteyard", "El Gelato", "PPP", "Minehut", "Elderpork"}
 	)
 	public int DEFAULT_MASTERY_BOSS = 0;
 

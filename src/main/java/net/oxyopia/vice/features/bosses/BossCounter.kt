@@ -72,6 +72,7 @@ object BossCounter : HudElement(
 		list.addBossStat("Minehut", Colors.ChatColor.Aqua, bosses.minehut)
 		list.addBossStat("Diox", Colors.Diox, bosses.diox)
 		list.addBossStat("Elderpork", Colors.Elderpork, bosses.elderpork)
+		list.addBossStat("THE VATICAN", Colors.Vatican, bosses.vatican)
 		list.addBossStat("Shadow Gelato", Colors.ShadowGelato, bosses.shadowGelato)
 		list.addBossStat("Abyssal Vice", Colors.Diox, bosses.abyssalVice)
 

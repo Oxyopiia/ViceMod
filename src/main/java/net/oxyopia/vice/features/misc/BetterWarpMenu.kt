@@ -34,7 +34,7 @@ object BetterWarpMenu {
 		"Lifesteal Box SMP".toText(Colors.ChatColor.Aqua),
 		"Diox".toText(Colors.Diox),
 		"Elderpork".toText(Colors.Elderpork),
-		"THE VATICAN".toText(Colors.ChatColor.Aqua)
+		"THE VATICAN".toText(Colors.Vatican)
 	)
 
 	@SubscribeEvent

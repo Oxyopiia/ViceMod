@@ -31,7 +31,8 @@ object MasteryTracker : HudElement(
 		World.Gelato,
 		World.PPP,
 		World.Minehut,
-		World.Elderpork
+		World.Elderpork,
+		// World.Vatican
 	)
 
 	private val bosses get() = Vice.storage.bosses
@@ -54,6 +55,7 @@ object MasteryTracker : HudElement(
 			World.PPP -> drawMasteryInfo(bosses.ppp, "PPP", Colors.ChatColor.Red, context)
 			World.Minehut -> drawMasteryInfo(bosses.minehut, "Minehut", Colors.ChatColor.Aqua, context)
 			World.Elderpork -> drawMasteryInfo(bosses.elderpork, "Elderpork", Colors.Elderpork, context)
+			// World.Vatican -> drawMasteryInfo(bosses.vatican, "THE VATICAN", Colors.Vatican, context)
 			else -> draw(preferred, context)
 		}
 	}

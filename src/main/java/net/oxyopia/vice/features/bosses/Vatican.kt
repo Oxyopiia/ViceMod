@@ -16,7 +16,7 @@ import kotlin.time.Duration.Companion.seconds
 object Vatican : Boss(
     World.Vatican,
     Regex("The Vatican - (?<health>\\d+(?:\\.\\d+)?)/\\d+(?:\\.\\d+)? ❤ \\[PHASE (?<phase>\\d)]"),
-    phaseTimesSec = listOf(5 * 60, 5 * 60, 5 * 60)
+    phaseTimesSec = listOf(60 * 60, 60 * 60, 60 * 60)
 ) {
     private val MONITOR_MAX_TIME = 30.seconds
 

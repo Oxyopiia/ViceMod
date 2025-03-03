@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.minecraft.client.MinecraftClient
 import net.minecraft.item.Items
+import net.minecraft.registry.Registries
 import net.minecraft.text.ClickEvent
 import net.minecraft.text.HoverEvent
 import net.minecraft.text.Text
@@ -68,6 +69,12 @@ object ViceCommand {
 			)
 			.then(ClientCommandManager.literal("color")
 				.then(ClientCommandManager.argument("mode", StringArgumentType.word())
+					.suggests { _, builder ->
+						val modes = listOf("hex", "dec", "rgb")
+
+						modes.forEach { builder.suggest(it) }
+						builder.buildFuture()
+					}
 					.then(ClientCommandManager.argument("input", StringArgumentType.greedyString())
 						.executes {
 							val mode = StringArgumentType.getString(it, "mode").lowercase()
@@ -116,9 +123,6 @@ object ViceCommand {
 												.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, "(${color.red},${color.green},${color.blue})")
 												.setHover(HoverEvent.Action.SHOW_TEXT, "Click to copy RGB value".toText(color))
 										)
-									}
-									else -> {
-										ChatUtils.sendViceMessage("Invalid mode. Use hex, dec or rgb".toText(Colors.ChatColor.Red))
 									}
 								}
 							} catch (e: NumberFormatException) {

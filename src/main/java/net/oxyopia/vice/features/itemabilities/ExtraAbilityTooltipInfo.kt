@@ -8,7 +8,6 @@ import net.oxyopia.vice.utils.HudUtils.toText
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.ItemUtils.getEquippedSets
 import net.oxyopia.vice.utils.Utils
-import net.oxyopia.vice.utils.Utils.inDoomTowers
 import java.awt.Color
 
 object ExtraAbilityTooltipInfo {
@@ -19,7 +18,7 @@ object ExtraAbilityTooltipInfo {
 
 	@SubscribeEvent
 	fun onItemTooltip(event: ItemTooltipEvent) {
-		if (!inDoomTowers || !Vice.config.SHOW_EXTRA_ABILITY_INFO) return
+		if (!Vice.config.SHOW_EXTRA_ABILITY_INFO) return
 
 		val itemName = event.stack.cleanName()
 		val ability = ItemAbility.getByName(itemName) ?: return

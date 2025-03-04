@@ -160,11 +160,11 @@ class Vice : ClientModInitializer {
 				EVENT_MANAGER.publish(CommandRegisterEvent(it))
 			}
 		})
-		if(inDoomTowers) {
-			ItemTooltipCallback.EVENT.register(ItemTooltipCallback { stack, context, type, lines ->
+		ItemTooltipCallback.EVENT.register(ItemTooltipCallback { stack, context, type, lines ->
+			if(inDoomTowers) {
 				EVENT_MANAGER.publish(ItemTooltipEvent(stack, context, type, lines))
-			})
-		}
+			}
+		})
 
 	}
 

@@ -243,6 +243,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(PPP)
 		EVENT_MANAGER.subscribe(ShadowGelato)
 		EVENT_MANAGER.subscribe(ViceBoss)
+		EVENT_MANAGER.subscribe(Vatican)
 
 		EVENT_MANAGER.subscribe(RenderTest)
 	}

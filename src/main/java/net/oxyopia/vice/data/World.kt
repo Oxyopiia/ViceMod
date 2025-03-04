@@ -32,6 +32,7 @@ enum class World(val id: String, val displayName: String, val properties: List<W
 	ShadowGelato("shadowgelato", "Shadow Gelato", properties = listOf(WorldProperty.BOSS)),
 	Diox("dioxarena", "Diox", properties = listOf(WorldProperty.BOSS)),
 	Elderpork("elderpork", "Elderpork", properties = listOf(WorldProperty.BOSS, WorldProperty.MASTERABLE)),
+	Vatican("thevatican2", "Vatican", properties = listOf(WorldProperty.BOSS, WorldProperty.MASTERABLE)),
 
 	Floor2Arena("f2arenas", "Void Voyage", properties = listOf(WorldProperty.ARENA), displayColor = Colors.ChatColor.Green),
 	Floor3Arena("f3arenas", "Cryonic Caverns", properties = listOf(WorldProperty.ARENA), displayColor = Colors.ChatColor.Blue),

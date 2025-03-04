@@ -21,16 +21,17 @@ object  BossTrackingHandler {
 
 	@SubscribeEvent
 	fun onChatMessage(event: ChatEvent) {
+		if (!event.hasNoSender && event.sender != "Anodized") return
 		val content = event.string
 
 		when {
-			!event.hasNoSender && World.Vice.isInWorld() && content.contains(viceTimeRegex) -> bosses.vice.decrementCompletions()
-			!event.hasNoSender && World.Gelato.isInWorld() && content.contains(gelatoTimeRegex) -> bosses.gelato.decrementCompletions()
-			!event.hasNoSender && World.PPP.isInWorld() && content.contains(pppTimeRegex) -> bosses.ppp.decrementCompletions()
-			!event.hasNoSender && World.Minehut.isInWorld() && content.contains(minehutTimeRegex) -> bosses.minehut.decrementCompletions()
-			!event.hasNoSender && World.ShadowGelato.isInWorld() && content.contains(shadowTimeRegex) -> bosses.shadowGelato.decrementCompletions()
-			!event.hasNoSender && World.AbyssalVice.isInWorld() && content.contains(abyssalCompletionRegex) -> bosses.abyssalVice.incrementCompletions()
-			!event.hasNoSender && World.Elderpork.isInWorld() && content.contains("TAPE FINISHED.") -> bosses.elderpork.incrementCompletions()
+			World.Vice.isInWorld() && content.contains(viceTimeRegex) -> bosses.vice.decrementCompletions()
+			World.Gelato.isInWorld() && content.contains(gelatoTimeRegex) -> bosses.gelato.decrementCompletions()
+			World.PPP.isInWorld() && content.contains(pppTimeRegex) -> bosses.ppp.decrementCompletions()
+			World.Minehut.isInWorld() && content.contains(minehutTimeRegex) -> bosses.minehut.decrementCompletions()
+			World.ShadowGelato.isInWorld() && content.contains(shadowTimeRegex) -> bosses.shadowGelato.decrementCompletions()
+			World.AbyssalVice.isInWorld() && content.contains(abyssalCompletionRegex) -> bosses.abyssalVice.incrementCompletions()
+			World.Elderpork.isInWorld() && content.contains("TAPE FINISHED.") -> bosses.elderpork.incrementCompletions()
 			event.sender == "Anodized" && World.Vatican.isInWorld() && content.contains("It's about time you come with me.") -> bosses.vatican.incrementCompletions()
 			else -> return
 		}

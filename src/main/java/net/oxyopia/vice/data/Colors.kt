@@ -7,6 +7,7 @@ object Colors {
 
 	val Diox = Color(165, 248, 185)
 	val Elderpork = Color(232,0,102)
+	val Vatican = Color(119, 185, 255)
 	val ShadowGelato = Color(202, 27, 255)
 	val ViceBoss = Color(219, 0, 182)
 

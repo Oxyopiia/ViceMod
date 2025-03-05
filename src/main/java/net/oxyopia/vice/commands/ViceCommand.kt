@@ -69,6 +69,12 @@ object ViceCommand {
 			)
 			.then(ClientCommandManager.literal("color")
 				.then(ClientCommandManager.argument("mode", StringArgumentType.word())
+					.suggests { _, builder ->
+						val modes = listOf("hex", "dec", "rgb")
+
+						modes.forEach { builder.suggest(it) }
+						builder.buildFuture()
+					}
 					.then(ClientCommandManager.argument("input", StringArgumentType.greedyString())
 						.executes {
 							val mode = StringArgumentType.getString(it, "mode").lowercase()
@@ -117,9 +123,6 @@ object ViceCommand {
 												.setClick(ClickEvent.Action.COPY_TO_CLIPBOARD, "(${color.red},${color.green},${color.blue})")
 												.setHover(HoverEvent.Action.SHOW_TEXT, "Click to copy RGB value".toText(color))
 										)
-									}
-									else -> {
-										ChatUtils.sendViceMessage("Invalid mode. Use hex, dec or rgb".toText(Colors.ChatColor.Red))
 									}
 								}
 							} catch (e: NumberFormatException) {

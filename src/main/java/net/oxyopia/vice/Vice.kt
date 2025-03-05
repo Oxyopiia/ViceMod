@@ -161,7 +161,9 @@ class Vice : ClientModInitializer {
 			}
 		})
 		ItemTooltipCallback.EVENT.register(ItemTooltipCallback { stack, context, type, lines ->
-			EVENT_MANAGER.publish(ItemTooltipEvent(stack, context, type, lines))
+			if (inDoomTowers) {
+				EVENT_MANAGER.publish(ItemTooltipEvent(stack, context, type, lines))
+			}
 		})
 
 	}
@@ -241,6 +243,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(PPP)
 		EVENT_MANAGER.subscribe(ShadowGelato)
 		EVENT_MANAGER.subscribe(ViceBoss)
+		EVENT_MANAGER.subscribe(Vatican)
 
 		EVENT_MANAGER.subscribe(RenderTest)
 	}

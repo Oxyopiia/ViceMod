@@ -21,7 +21,7 @@ object  BossTrackingHandler {
 
 	@SubscribeEvent
 	fun onChatMessage(event: ChatEvent) {
-		if (!event.hasNoSender) return
+		if (!event.hasNoSender && event.sender != "Anodized") return
 		val content = event.string
 
 		when {
@@ -32,6 +32,7 @@ object  BossTrackingHandler {
 			World.ShadowGelato.isInWorld() && content.contains(shadowTimeRegex) -> bosses.shadowGelato.decrementCompletions()
 			World.AbyssalVice.isInWorld() && content.contains(abyssalCompletionRegex) -> bosses.abyssalVice.incrementCompletions()
 			World.Elderpork.isInWorld() && content.contains("TAPE FINISHED.") -> bosses.elderpork.incrementCompletions()
+			event.sender == "Anodized" && World.Vatican.isInWorld() && content.contains("It's about time you come with me.") -> bosses.vatican.incrementCompletions()
 			else -> return
 		}
 

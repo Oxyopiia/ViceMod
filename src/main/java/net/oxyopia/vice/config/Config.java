@@ -535,6 +535,17 @@ public class Config extends Vigilant {
 	)
 	public boolean ELDERPORK_START_TIMER = false;
 
+	// Bosses/Vatican
+
+	@Property(
+			type = PropertyType.SWITCH,
+			name = "THE VATICAN Start Timer",
+			description = "Displays a timer during the window to enter The Vatican Boss with the head.",
+			category = "Bosses",
+			subcategory = "Vatican"
+	)
+	public boolean VATICAN_START_TIMER = false;
+
 	// Bosses/Abyssal Vice
 
 	@Property(

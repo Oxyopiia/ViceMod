@@ -170,11 +170,24 @@ object ViceCommand {
 				)
 			)
 			.then(ClientCommandManager.literal("sound")
-				.then(ClientCommandManager.argument("sound", StringArgumentType.word())
+				.then(ClientCommandManager.argument("sound", StringArgumentType.string())
 					.suggests { _, builder ->
-						val sounds = Registries.SOUND_EVENT.ids.map { it.toString().split(":")[1] }
+						val sounds = mutableListOf(
+							"custom:vice",
+							"custom:intro",
+							"custom:bloom",
+							"custom:777",
+							"custom:ghost",
+							"custom:rigormortis",
+							"custom:rouge",
+							"custom:cyclone",
+							"custom:thesimulation",
+							"custom:crushed"
+						)
 
-						sounds.forEach { builder.suggest(it) }
+						Registries.SOUND_EVENT.ids.map { sounds.add(it.toString()) }
+
+						sounds.forEach { builder.suggest("\"$it\"") }
 						builder.buildFuture()
 					}
 					.then(ClientCommandManager.argument("volume", FloatArgumentType.floatArg(0f))

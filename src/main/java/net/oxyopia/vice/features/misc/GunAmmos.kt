@@ -4,6 +4,7 @@ import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ActionBarEvent
 import net.oxyopia.vice.events.RenderHotbarSlotEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
+import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.Utils
@@ -11,7 +12,7 @@ import java.awt.Color
 
 object GunAmmos {
 
-    val ammosRegex = Regex("(\\d+)/30")
+    val ammosRegex = Regex("\uD83D\uDD2B (\\d+)/30 \uD83D\uDD2B")
 
     @SubscribeEvent
     fun onActionBar(event: ActionBarEvent) {

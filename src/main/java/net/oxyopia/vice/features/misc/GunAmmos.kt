@@ -1,10 +1,12 @@
 package net.oxyopia.vice.features.misc
 
+import net.minecraft.client.MinecraftClient
+import net.minecraft.item.ItemStack
 import net.oxyopia.vice.Vice
 import net.oxyopia.vice.events.ActionBarEvent
 import net.oxyopia.vice.events.RenderHotbarSlotEvent
+import net.oxyopia.vice.events.RightClickEvent
 import net.oxyopia.vice.events.core.SubscribeEvent
-import net.oxyopia.vice.utils.ChatUtils
 import net.oxyopia.vice.utils.HudUtils
 import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.Utils
@@ -21,6 +23,14 @@ object GunAmmos {
 
             Vice.storage.markDirty()
         }
+    }
+
+    @SubscribeEvent
+    fun onRightClick(event: RightClickEvent) {
+        val stack: ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
+        val name = stack.cleanName()
+
+        if(name == "AK-47" && Vice.storage.misc.ammos <= 0) HudUtils.sendViceTitle("&&6Drop with Q to reload weapon!")
     }
 
     @SubscribeEvent

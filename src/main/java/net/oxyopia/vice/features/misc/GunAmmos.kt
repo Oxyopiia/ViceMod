@@ -17,7 +17,7 @@ object GunAmmos {
     @SubscribeEvent
     fun onActionBar(event: ActionBarEvent) {
         ammosRegex.find(event.content.string).apply {
-            Vice.storage.misc.ammos = this?.groupValues?.get(1)?.toIntOrNull() ?: 0
+            Vice.storage.misc.ammos = this?.groupValues?.get(1)?.toIntOrNull() ?: return
 
             Vice.storage.markDirty()
         }

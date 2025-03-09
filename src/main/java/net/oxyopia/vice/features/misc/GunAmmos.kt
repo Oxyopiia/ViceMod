@@ -32,7 +32,7 @@ object GunAmmos {
         matrices.translate(9.0f, 9.0f, 200.0f)
 
         if(event.itemStack.cleanName() == "AK-47") {
-            val display: String
+            var display: String
             val color: Color
             val ammos = Vice.storage.misc.ammos
 
@@ -43,6 +43,7 @@ object GunAmmos {
                 if (player.inventory.main.find { itemStack -> itemStack.cleanName() == "AK-47 Magazine" }?.isEmpty == false) {
                     color = Color.green
                 } else {
+                    display = "0"
                     color = Color.red
                 }
             }

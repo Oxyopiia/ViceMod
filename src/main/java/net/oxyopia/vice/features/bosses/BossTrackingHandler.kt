@@ -32,7 +32,6 @@ object  BossTrackingHandler {
 			World.ShadowGelato.isInWorld() && content.contains(shadowTimeRegex) -> bosses.shadowGelato.decrementCompletions()
 			World.AbyssalVice.isInWorld() && content.contains(abyssalCompletionRegex) -> bosses.abyssalVice.incrementCompletions()
 			World.Elderpork.isInWorld() && content.contains("TAPE FINISHED.") -> bosses.elderpork.incrementCompletions()
-			event.sender == "Anodized" && World.Vatican.isInWorld() && content.contains("It's about time you come with me.") -> bosses.vatican.incrementCompletions()
 			else -> return
 		}
 
@@ -50,6 +49,7 @@ object  BossTrackingHandler {
 			World.PPP.isInWorld() && entityName.contains("Monster") && PPP.lastKnownPhase == 2 -> bosses.ppp.incrementCompletions()
 			World.Minehut.isInWorld() && entityName.contains("TheOwner") -> bosses.minehut.incrementCompletions()
 			World.ShadowGelato.isInWorld() && entityName.contains("True Shadow Gelato") -> bosses.shadowGelato.incrementCompletions()
+			World.Vatican.isInWorld() && entityName.contains("The Chancellor") && Vatican.lastKnownPhase == 3 -> bosses.vatican.incrementCompletions()
 			else -> return
 		}
 

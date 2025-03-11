@@ -10,6 +10,7 @@ object Colors {
 	val Vatican = Color(119, 185, 255)
 	val ShadowGelato = Color(202, 27, 255)
 	val ViceBoss = Color(219, 0, 182)
+	val Anodized = Color(219,0,0)
 
 	val SpaceEscape = Color(121, 255, 127)
 	val FastestFood = Color(64, 148, 200)
@@ -22,6 +23,8 @@ object Colors {
 	val LostInTime = Color(113, 255, 234)
 	val StarryStreets = Color(0, 168, 143)
 	val OnTheRun = Color(151, 38, 38)
+	val Oracle = Color(252,222, 222)
+	val BoundToSin = Color(219, 252, 229)
 
 	/**
 	 * Color values sourced from Essential mod.

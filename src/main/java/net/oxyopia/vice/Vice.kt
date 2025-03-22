@@ -183,7 +183,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(YetiHeadWarning)
 		EVENT_MANAGER.subscribe(FallenStarWaypoints)
 		EVENT_MANAGER.subscribe(BetterWarpMenu)
-		EVENT_MANAGER.subscribe(GunAmmos)
+		EVENT_MANAGER.subscribe(AmmoCounter)
 
 		EVENT_MANAGER.subscribe(BossCounter)
 		EVENT_MANAGER.subscribe(FishingBrewTimer)

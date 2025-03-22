@@ -28,7 +28,7 @@ object ExtraAbilityTooltipInfo {
 
 			val name = event.lines[0]
 			val damage = event.lines[1]
-			val curAmmos = Vice.storage.misc.ammos
+			val ammo = Vice.storage.misc.ammo
 			val magazines = player.inventory.main.filter { it.cleanName() == "AK-47 Magazine" }.sumOf { it.count }
 
 			event.lines.clear()
@@ -36,9 +36,9 @@ object ExtraAbilityTooltipInfo {
 			event.lines.add(name)
 			event.lines.add(damage)
 			event.lines.add(Text.empty())
-			event.lines.add(Text.of("§7Ammos: $curAmmos/30"))
+			event.lines.add(Text.of("§7Ammo: $ammo/30"))
 			event.lines.add(Text.of("§7Magazines: $magazines"))
-			event.lines.add(Text.of("§7Total Ammos: ${(magazines * 30) + curAmmos}"))
+			event.lines.add(Text.of("§7Total Ammo: ${(magazines * 30) + ammo}"))
 		} else {
 
 			val ability = ItemAbility.getByName(itemName) ?: return

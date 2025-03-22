@@ -333,6 +333,26 @@ public class Config extends Vigilant {
 	)
 	public boolean INCLUDE_ARMOR_IN_SET_COLORS = true;
 
+	// Abilities/Specific
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Ammo Counter",
+		description = "Show the count of ammo in weapons like the AK-47 in the hotbar.",
+		category = "Abilities",
+		subcategory = "Specific"
+	)
+	public boolean AMMO_COUNTER = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Ammo Reload Warning",
+		description = "Display a title when an ammo-based weapon needs to be reloaded.",
+		category = "Abilities",
+		subcategory = "Specific"
+	)
+	public boolean AMMO_RELOAD_TITLE = true;
+
 	// Arenas/Quality of Life
 
 	@Property(

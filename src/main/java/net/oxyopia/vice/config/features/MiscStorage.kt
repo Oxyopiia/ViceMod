@@ -13,7 +13,7 @@ class MiscStorage {
     var lastEvanQuiz: Long = -1L
 
 	@Expose
-	var ammos: Int = 0
+	var ammo: Int = 0
 
 	@Expose
 	var backpackNames: HashMap<String, String> = HashMap()

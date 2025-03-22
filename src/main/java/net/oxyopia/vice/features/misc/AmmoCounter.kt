@@ -26,6 +26,8 @@ object AmmoCounter {
 
     @SubscribeEvent
     fun onRightClick(event: RightClickEvent) {
+        if (!Vice.config.AMMO_RELOAD_TITLE) return
+
         val stack: ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
         val name = stack.cleanName()
 
@@ -36,6 +38,7 @@ object AmmoCounter {
 
     @SubscribeEvent
     fun onRenderItemSlot(event: RenderHotbarSlotEvent) {
+        if (!Vice.config.AMMO_COUNTER) return
         val matrices = event.context.matrices
 
         matrices.push()

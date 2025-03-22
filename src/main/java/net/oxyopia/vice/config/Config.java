@@ -130,15 +130,6 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Hide Revolver Blindness",
-		description = "Hides the blindness effect when aiming the revolver.",
-		category = "General",
-		subcategory = "Quality of Life"
-	)
-	public boolean HIDE_REVOLVER_BLINDNESS = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
 		name = "Better Warp Menu",
 		description = "Adds the Worlds and Boss to the tooltip of each floor in the /warp menu.",
 		category = "General",
@@ -334,6 +325,15 @@ public class Config extends Vigilant {
 	public boolean INCLUDE_ARMOR_IN_SET_COLORS = true;
 
 	// Abilities/Specific
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Hide Revolver Blindness",
+		description = "Hides the blindness effect when aiming the revolver.",
+		category = "Abilities",
+		subcategory = "Specific"
+	)
+	public boolean HIDE_REVOLVER_BLINDNESS = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -1041,6 +1041,9 @@ public class Config extends Vigilant {
 		});
 		migrations.add(config -> { // Migration 4: Generalise Cave In Prediction
 			move(config, "worlds.lost_in_time.cave-in_prediction", "general.mining.cave-in_prediction");
+		});
+		migrations.add(config -> { // Migration 5: Move ability related config options to Abilities/Specific
+			move(config, "general.quality_of_life.hide_revolver_blindness", "abilities.specific.hide_revolver_blindness");
 		});
 		return migrations;
 	}

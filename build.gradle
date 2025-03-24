@@ -41,7 +41,7 @@ dependencies {
 
 	modApi "com.terraformersmc:modmenu:11.0.2"
 
-	modImplementation(include("gg.essential:universalcraft-1.21-fabric:365"))
+	modImplementation(include("gg.essential:universalcraft-1.21-fabric:387"))
 	modImplementation(include("gg.essential:vigilance-1.18.1-fabric:299") {
 		exclude(group: "gg.essential", module: "universalcraft-1.18.1-fabric")
 	})

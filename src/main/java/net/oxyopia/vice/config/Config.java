@@ -130,15 +130,6 @@ public class Config extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Hide Revolver Blindness",
-		description = "Hides the blindness effect when aiming the revolver.",
-		category = "General",
-		subcategory = "Quality of Life"
-	)
-	public boolean HIDE_REVOLVER_BLINDNESS = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
 		name = "Better Warp Menu",
 		description = "Adds the Worlds and Boss to the tooltip of each floor in the /warp menu.",
 		category = "General",
@@ -332,6 +323,35 @@ public class Config extends Vigilant {
 		subcategory = "Set Colors"
 	)
 	public boolean INCLUDE_ARMOR_IN_SET_COLORS = true;
+
+	// Abilities/Specific
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Hide Revolver Blindness",
+		description = "Hides the blindness effect when aiming the revolver.",
+		category = "Abilities",
+		subcategory = "Specific"
+	)
+	public boolean HIDE_REVOLVER_BLINDNESS = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Ammo Counter",
+		description = "Show the count of ammo in weapons like the AK-47 in the hotbar.",
+		category = "Abilities",
+		subcategory = "Specific"
+	)
+	public boolean AMMO_COUNTER = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Ammo Reload Warning",
+		description = "Display a title when an ammo-based weapon needs to be reloaded.",
+		category = "Abilities",
+		subcategory = "Specific"
+	)
+	public boolean AMMO_RELOAD_TITLE = true;
 
 	// Arenas/Quality of Life
 
@@ -1021,6 +1041,9 @@ public class Config extends Vigilant {
 		});
 		migrations.add(config -> { // Migration 4: Generalise Cave In Prediction
 			move(config, "worlds.lost_in_time.cave-in_prediction", "general.mining.cave-in_prediction");
+		});
+		migrations.add(config -> { // Migration 5: Move ability related config options to Abilities/Specific
+			move(config, "general.quality_of_life.hide_revolver_blindness", "abilities.specific.hide_revolver_blindness");
 		});
 		return migrations;
 	}

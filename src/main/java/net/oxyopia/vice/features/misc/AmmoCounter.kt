@@ -12,14 +12,13 @@ import net.oxyopia.vice.utils.ItemUtils.cleanName
 import net.oxyopia.vice.utils.Utils
 import java.awt.Color
 
-object GunAmmos {
-
-    val ammosRegex = Regex("\uD83D\uDD2B (\\d+)/30 \uD83D\uDD2B")
+object AmmoCounter {
+    private val ammoRegex = Regex("\uD83D\uDD2B (\\d+)/30 \uD83D\uDD2B")
 
     @SubscribeEvent
     fun onActionBar(event: ActionBarEvent) {
-        ammosRegex.find(event.content.string).apply {
-            Vice.storage.misc.ammos = this?.groupValues?.get(1)?.toIntOrNull() ?: return
+        ammoRegex.find(event.content.string).apply {
+            Vice.storage.misc.ammo = this?.groupValues?.get(1)?.toIntOrNull() ?: return
 
             Vice.storage.markDirty()
         }
@@ -27,40 +26,42 @@ object GunAmmos {
 
     @SubscribeEvent
     fun onRightClick(event: RightClickEvent) {
+        if (!Vice.config.AMMO_RELOAD_TITLE) return
+
         val stack: ItemStack = MinecraftClient.getInstance().player?.mainHandStack ?: ItemStack.EMPTY
         val name = stack.cleanName()
 
-        if(name == "AK-47" && Vice.storage.misc.ammos <= 0) HudUtils.sendViceTitle("&&6Drop with Q to reload weapon!")
+        if (name == "AK-47" && Vice.storage.misc.ammo <= 0) {
+            HudUtils.sendViceTitle("&&6Drop with Q to reload weapon!")
+        }
     }
 
     @SubscribeEvent
     fun onRenderItemSlot(event: RenderHotbarSlotEvent) {
-
+        if (!Vice.config.AMMO_COUNTER) return
         val matrices = event.context.matrices
 
         matrices.push()
         matrices.translate(9.0f, 9.0f, 200.0f)
 
-        if(event.itemStack.cleanName() == "AK-47") {
-            var display: String
-            val color: Color
-            val ammos = Vice.storage.misc.ammos
+        if (event.itemStack.cleanName() == "AK-47") {
+            val ammo = Vice.storage.misc.ammo
+
+            var display: String = ammo.toString()
+            var color = Color.yellow
 
             val player = Utils.getPlayer() ?: return
 
-            if(ammos <= 0) {
-                display = "Q"
+            if (ammo <= 0) {
                 if (player.inventory.main.find { itemStack -> itemStack.cleanName() == "AK-47 Magazine" }?.isEmpty == false) {
+                    display = "Q"
                     color = Color.green
                 } else {
                     display = "0"
                     color = Color.red
                 }
             }
-            else {
-                display = ammos.toString()
-                color = Color.yellow
-            }
+
             HudUtils.drawText(display, event.x, event.y, event.context, color.rgb, shadow = true, centered = true)
         }
 

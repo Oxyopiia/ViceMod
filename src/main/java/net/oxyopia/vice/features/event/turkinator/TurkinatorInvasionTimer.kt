@@ -54,12 +54,11 @@ object TurkinatorInvasionTimer : HudElement(
 	@SubscribeEvent
 	fun onChatEvent(event: ChatEvent) {
 		SPAWN_MESSAGE.find(event.string)?.apply {
+			if (Vice.config.TURKINATOR_INVASION_TIMER) SoundUtils.playSound("block.bell.use", volume = 1.0f)
 			lastKnownSpawnTime = System.currentTimeMillis()
 			lastKnownLocation = groupValues[1]
 			Vice.storage.markDirty()
 		}
-
-		if (Vice.config.TURKINATOR_INVASION_TIMER) SoundUtils.playSound("block.bell.use", volume = 1.0f)
 	}
 
 	override fun Position.drawPreview(context: DrawContext): Size {

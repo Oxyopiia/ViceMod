@@ -87,6 +87,11 @@ object ItemAbilityCooldown {
 				ItemAbility.WASTED_SHOTGUN.onSound()
 			}
 
+			// Egg Launcher
+			event.soundName == "entity.blaze.shoot" && event.pitch == 0f && event.volume == 3f -> {
+				ItemAbility.EGG_LAUNCHER.onSound()
+			}
+
 			// Barbed Shotgun
 			event.soundName == "entity.blaze.shoot" && event.pitch == 1.25f && event.volume == 3f -> {
 				ItemAbility.BARBED_SHOTGUN.onSound()

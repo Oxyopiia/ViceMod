@@ -179,10 +179,15 @@ object ViceCommand {
 							"custom:777",
 							"custom:ghost",
 							"custom:rigormortis",
-							"custom:rouge",
+							"custom:spooky",
 							"custom:cyclone",
+							"custom:turduckentribute",
+							"custom:rouge",
 							"custom:thesimulation",
-							"custom:crushed"
+							"custom:scarybeat",
+							"custom:handfulofrubber",
+							"custom:crushed",
+							"custom:insane"
 						)
 
 						Registries.SOUND_EVENT.ids.map { sounds.add(it.toString()) }

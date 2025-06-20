@@ -72,6 +72,10 @@ object ItemAbilityCooldown {
 				ItemAbility.STARBLADE.onSound()
 			}
 
+			event.soundName == "entity.wither.shoot" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.PORK_WAND.onSound()
+			}
+
 			// Glitch Mallet
 			event.soundName == "block.respawn_anchor.deplete" && event.pitch == 1.0f && event.volume == 1f -> {
 				ItemAbility.GLITCH_MALLET.onSound()

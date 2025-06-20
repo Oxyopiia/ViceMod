@@ -63,6 +63,7 @@ enum class ItemAbility(
     GALVANISER("Galvaniser", 20f, set = Set.DIGITAL, setAmount = 3),
     UNSTABLE_DYNAMITE_BARREL("Unstable Dynamite Barrel", 15f, set = Set.DEMOLITIONIST, setAmount = 2),
     EGG_LAUNCHER("Egg Launcher", 4f, set = Set.DEMOLITIONIST, setAmount = 1),
+    PORK_WAND("Pork Wand", 4f),
 
     // No Display
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, set = Set.HEAVY, setAmount = 2),

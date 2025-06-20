@@ -35,7 +35,7 @@ object ForgeTimers : HudElement(
 
 	@SubscribeEvent
 	fun onChatMessage(event: ChatEvent) {
-		if (!World.MagmaHeights.isInWorld()) return
+		//if (!World.MagmaHeights.isInWorld()) return
 		val content = event.string
 
 		startRegex.find(content)?.apply {
@@ -83,8 +83,8 @@ object ForgeTimers : HudElement(
 
 	@SubscribeEvent
 	fun onChestRender(event: ChestRenderEvent) {
-		if (!World.MagmaHeights.isInWorld()) return
-		if (!event.chestName.contains("Ember")) return
+		//if (!World.MagmaHeights.isInWorld()) return
+		if (!event.chestName.contains("MAYOR STEEL")) return
 
 		val chestContents = event.slots.filter { it.inventory.size() != 41 }
 		if (chestContents.last().stack.isEmpty) return // Inventory is still loading

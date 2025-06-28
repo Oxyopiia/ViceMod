@@ -64,6 +64,11 @@ enum class ItemAbility(
     UNSTABLE_DYNAMITE_BARREL("Unstable Dynamite Barrel", 15f, set = Set.DEMOLITIONIST, setAmount = 2),
     EGG_LAUNCHER("Egg Launcher", 4f, set = Set.DEMOLITIONIST, setAmount = 1),
     PORK_WAND("Pork Wand", 4f),
+    SMILE_DUMMY("Smile Dummy", 20f, set = Set.TRICKSTER, setAmount = 1),
+    CONFUSION_SPELL("Confusion Spell", 9.5f, set = Set.TRICKSTER, setAmount = 1),
+    COSMIC_SPONGE("Cosmic Sponge", 15f, set = Set.TRICKSTER, setAmount = 1),
+    INVERTED_SMILE_DUMMY("Inverted Smile Dummy", 8f, set = Set.TRICKSTER, setAmount = 1),
+    STAR_LEECH("Star Leech", 10f, set = Set.TRICKSTER, setAmount = 1),
 
     // No Display
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, set = Set.HEAVY, setAmount = 2),

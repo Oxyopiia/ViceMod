@@ -23,7 +23,7 @@ object Colors {
 	val LostInTime = Color(113, 255, 234)
 	val StarryStreets = Color(0, 168, 143)
 	val OnTheRun = Color(151, 38, 38)
-	val Oracle = Color(252,222, 222)
+	val TheOracle = Color(252,222, 222)
 	val BoundToSin = Color(219, 252, 229)
 
 	/**

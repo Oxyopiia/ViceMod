@@ -17,7 +17,16 @@ object SoundUtils {
 	}
 
 	fun playSound(string: String, pitch: Float = 1f, volume: Float = 1f) {
-		val identifier = Identifier.of("minecraft", string) ?: return
+		var namespace = "minecraft"
+		var name = string
+
+		if(string.contains(":")) {
+			val parts = string.split(":")
+			namespace = parts[0]
+			name = parts[1]
+		}
+
+		val identifier = Identifier.of(namespace, name) ?: return
 		playSound(identifier, pitch, volume)
 	}
 

@@ -72,6 +72,27 @@ object ItemAbilityCooldown {
 				ItemAbility.STARBLADE.onSound()
 			}
 
+			event.soundName == "entity.wither.shoot" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.PORK_WAND.onSound()
+			}
+
+			event.soundName == "entity.armor_stand.place" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.SMILE_DUMMY.onSound()
+				ItemAbility.INVERTED_SMILE_DUMMY.onSound()
+			}
+
+			event.soundName == "entity.evoker.cast_spell" && event.pitch == 1.1f && event.volume == 9999f -> {
+				ItemAbility.CONFUSION_SPELL.onSound()
+			}
+
+			event.soundName == "block.sponge.absorb" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.COSMIC_SPONGE.onSound()
+			}
+
+			event.soundName == "entity.evoker_fangs.attack" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.STAR_LEECH.onSound()
+			}
+
 			// Glitch Mallet
 			event.soundName == "block.respawn_anchor.deplete" && event.pitch == 1.0f && event.volume == 1f -> {
 				ItemAbility.GLITCH_MALLET.onSound()
@@ -85,6 +106,11 @@ object ItemAbilityCooldown {
 			// Wasted Shotgun
 			event.soundName == "entity.blaze.shoot" && event.pitch == 0.5f && event.volume == 9999f -> {
 				ItemAbility.WASTED_SHOTGUN.onSound()
+			}
+
+			// Egg Launcher
+			event.soundName == "entity.blaze.shoot" && event.pitch == 0f && event.volume == 3f -> {
+				ItemAbility.EGG_LAUNCHER.onSound()
 			}
 
 			// Barbed Shotgun

@@ -193,6 +193,7 @@ class Vice : ClientModInitializer {
 		EVENT_MANAGER.subscribe(PlayerStats)
 		EVENT_MANAGER.subscribe(TrainTimer)
 		EVENT_MANAGER.subscribe(TurkinatorInvasionTimer)
+		EVENT_MANAGER.subscribe(CrimsonCosmonaut)
 
 		EVENT_MANAGER.subscribe(AbilitySoundChanger)
 		EVENT_MANAGER.subscribe(CooldownDisplayChanger)

@@ -146,6 +146,16 @@ public class Config extends Vigilant {
 	)
 	public boolean PLAYER_STATS = false;
 
+	@Property(
+			type = PropertyType.SWITCH,
+			name = "Crimson Cosmonaut Timer",
+			description = "Shows how long until the next Crimson Cosmonaut.",
+			category = "General",
+			subcategory = "The Shattered Sector"
+	)
+	public boolean CRIMSON_COSMONAUT_TIMER = false;
+
+
 	// General/Spam Hider
 
 	@Property(

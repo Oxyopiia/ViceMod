@@ -46,6 +46,25 @@ enum class CookingOrder(val displayName: String, val recipe: List<CookingItem>, 
 		),
 		isBossOrder = true
 	),
+	XCAINR(
+		"XCAINR",
+		listOf(
+			CookingItem.BREAD,
+			CookingItem.COOKED_MEAT,
+			CookingItem.COOKED_MEAT,
+			CookingItem.COOKED_MEAT,
+			CookingItem.COOKED_MEAT,
+			CookingItem.COOKED_MEAT,
+			CookingItem.COOKED_MEAT,
+			CookingItem.COOKED_MEAT,
+			CookingItem.COOKED_MEAT,
+			CookingItem.COOKED_MEAT,
+			CookingItem.COOKED_MEAT,
+			CookingItem.CHEESE,
+			CookingItem.BREAD
+		),
+		isBossOrder = true
+	),
 	NONE("", emptyList());
 
 	companion object {

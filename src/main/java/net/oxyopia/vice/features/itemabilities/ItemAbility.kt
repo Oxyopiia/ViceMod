@@ -32,6 +32,7 @@ enum class ItemAbility(
     BURGER_BLADE("Burger Blade", 15f, set = Set.CHEF, setAmount = 1, soundOnUse = false),
     WASTED_SHOTGUN("Wasted Shotgun", 5f),
     BARBED_SHOTGUN("Barbed Shotgun", 5f),
+    MIKEY_SHOTGUN("Mikey's Shotgun", 4f),
     WASTED_BOOMSTICK("Wasted Boomstick", 7f),
     ARCTIC_CORE("Arctic's Core", 2f, set = Set.DEMOLITIONIST, setAmount = 2),
     ARCTIC_SCROLL("Arctic Scroll", 15f),

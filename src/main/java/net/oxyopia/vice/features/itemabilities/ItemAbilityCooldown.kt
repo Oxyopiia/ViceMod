@@ -166,6 +166,7 @@ object ItemAbilityCooldown {
 				ItemAbility.SLIME_HOOK.onSound()
 				ItemAbility.LUMINESCENT_HOOK.onSound()
 				ItemAbility.GENHOOK.onSound()
+				ItemAbility.TENDRIL_HOOK.onSound()
 			}
 
 			// Bedrock Breaker

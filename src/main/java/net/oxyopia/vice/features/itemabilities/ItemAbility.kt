@@ -40,6 +40,7 @@ enum class ItemAbility(
     SLIME_HOOK("Slime Hook", 3f, sharedCooldownId = "GRAPPLING_HOOK"),
     LUMINESCENT_HOOK("Luminescent Hook", 3f, sharedCooldownId = "GRAPPLING_HOOK"),
     GENHOOK("GenHook", 2f, sharedCooldownId = "GRAPPLING_HOOK"),
+    TENDRIL_HOOK("Tendril Hook", 2f, sharedCooldownId = "GRAPPLING_HOOK"),
     BEDROCK_BREAKER("Bedrock Breaker", 10f, set = Set.HEAVY, setAmount = 2),
     DOGE_HAMMER("Doge Hammer", 3f, set = Set.DEMOLITIONIST, setAmount = 2),
     REVOLVER("Revolver", 10f, set = Set.HEAVY, setAmount = 2),

@@ -191,6 +191,10 @@ object ItemAbilityCooldown {
 				ItemAbility.UNSTABLE_DYNAMITE_BARREL.onSound()
 			}
 
+			event.soundName == "entity.firework_rocket.large_blast" && event.pitch == 1.65f && event.volume == 9999f -> {
+				ItemAbility.TERMINUS_RAILGUN.onSound()
+			}
+
 			// Laser Point Minigun
 			event.soundName == "entity.generic.explode" && event.pitch == 2.0f && event.volume == 9999f -> {
 				ItemAbility.LASER_POINT_MINIGUN.onSound()

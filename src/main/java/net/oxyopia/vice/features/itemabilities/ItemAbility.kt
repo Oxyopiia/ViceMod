@@ -72,6 +72,7 @@ enum class ItemAbility(
     INVERTED_SMILE_DUMMY("Inverted Smile Dummy", 8f, set = Set.TRICKSTER, setAmount = 1),
     STAR_LEECH("Star Leech", 10f, set = Set.TRICKSTER, setAmount = 1),
     TERMINUS_RAILGUN("Terminus' Railgun", 20f),
+    BUG_ZAPPER("Bug Zapper", 15f),
 
     // No Display
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, set = Set.HEAVY, setAmount = 2),

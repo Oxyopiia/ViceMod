@@ -10,7 +10,7 @@ import net.oxyopia.vice.utils.ItemUtils.getLore
 
 object MasteryHandler {
 	private var lastMenuID = -1
-	internal val tierThresholds = listOf(10, 25, 50, 150)
+	internal val tierThresholds = listOf(10, 25, 50, 150, 250)
 
 	private val masteriesTitle by lazy {
 		Regex("Masteries \\((.+)\\)")

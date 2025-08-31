@@ -743,6 +743,15 @@ public class Config extends Vigilant {
 	)
 	public boolean TURKINATOR_INVASION_TIMER = false;
 
+	@Property(
+			type = PropertyType.SWITCH,
+			name = "Boxtown Timer",
+			description = "Shows how long until the next Boxtown",
+			category = "General",
+			subcategory = "Quality of Life"
+	)
+	public boolean BOXTOWN_TIMER = false;
+
 	// Sounds
 
 	@Property(

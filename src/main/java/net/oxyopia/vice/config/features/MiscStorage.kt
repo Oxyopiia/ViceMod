@@ -33,4 +33,10 @@ class MiscStorage {
 	@Expose
 	var fishingBrewTimerPos: Position = Position(200f, 0f)
 
+	@Expose
+	var boxtownTimerPos: Position = Position(200f, 0f)
+
+	@Expose
+	var lastKnownBoxtown: Long = 0L
+
 }

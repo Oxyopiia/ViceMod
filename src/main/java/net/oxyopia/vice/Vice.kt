@@ -53,7 +53,7 @@ import net.oxyopia.vice.features.worlds.expeditions.RunOverview
 import net.oxyopia.vice.features.worlds.expeditions.StylePointsHider
 import net.oxyopia.vice.features.hud.CaveInPrediction
 import net.oxyopia.vice.features.worlds.glitchhq.DeliveryTimer
-import net.oxyopia.vice.features.worlds.magmaheights.ForgeTimers
+//import net.oxyopia.vice.features.worlds.magmaheights.ForgeTimers
 import net.oxyopia.vice.features.hud.GamingMode
 import net.oxyopia.vice.features.hud.PlayerStats
 import net.oxyopia.vice.features.hud.TrainTimer

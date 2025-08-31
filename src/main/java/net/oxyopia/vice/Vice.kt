@@ -187,7 +187,7 @@ class Vice : ClientModInitializer {
 
 		EVENT_MANAGER.subscribe(BossCounter)
 		EVENT_MANAGER.subscribe(FishingBrewTimer)
-		EVENT_MANAGER.subscribe(ForgeTimers)
+		// EVENT_MANAGER.subscribe(ForgeTimers)
 		EVENT_MANAGER.subscribe(GamingMode)
 		EVENT_MANAGER.subscribe(HudUtils)
 		EVENT_MANAGER.subscribe(PlayerStats)

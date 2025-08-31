@@ -22,7 +22,7 @@ import kotlin.math.abs
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
-object ForgeTimers : HudElement(
+/*object ForgeTimers : HudElement(
 	"Forge Times",
 	Vice.storage.misc.forgeTimersPos,
 	{ Vice.storage.misc.forgeTimersPos = it },
@@ -139,4 +139,4 @@ object ForgeTimers : HudElement(
 		@Expose val name: String,
 		@Expose val timestamp: Long
 	)
-}
+}*/

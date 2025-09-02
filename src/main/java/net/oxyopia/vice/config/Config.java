@@ -912,14 +912,14 @@ public class Config extends Vigilant {
 
 	// Worlds/Magma Heights
 
-	@Property(
+	/*@Property(
 		type = PropertyType.SWITCH,
 		name = "Forge Timers",
 		description = "Displays the time remaining for items in the Forge to smelt.",
 		category = "Worlds",
 		subcategory = "Magma Heights"
 	)
-	public boolean FORGE_TIMERS = true;
+	public boolean FORGE_TIMERS = true;*/
 
 	// Worlds/Showdown
 

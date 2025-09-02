@@ -2,7 +2,7 @@ package net.oxyopia.vice.config.features
 
 import com.google.gson.annotations.Expose
 import net.oxyopia.vice.data.gui.Position
-import net.oxyopia.vice.features.worlds.magmaheights.ForgeTimers
+//import net.oxyopia.vice.features.worlds.magmaheights.ForgeTimers
 
 class MiscStorage {
 
@@ -21,11 +21,11 @@ class MiscStorage {
 	@Expose
 	var protectedItems: MutableList<String> = mutableListOf()
 
-	@Expose
+	/*@Expose
 	var forgeList: MutableList<ForgeTimers.ForgeItem> = mutableListOf()
 
 	@Expose
-	var forgeTimersPos: Position = Position(128f, 95f)
+	var forgeTimersPos: Position = Position(128f, 95f)*/
 
 	@Expose
 	var playerStatsPos: Position = Position(175f, 150f)

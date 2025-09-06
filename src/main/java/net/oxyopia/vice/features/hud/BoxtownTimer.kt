@@ -21,7 +21,7 @@ object BoxtownTimer : HudElement(
     { Vice.storage.misc.boxtownTimerPos = it },
     enabled = { Vice.config.BOXTOWN_TIMER },
 ) {
-    private val BOXTOWN_COOLDOWN = 1.hours
+    private val BOXTOWN_COOLDOWN = 2.hours
     private val SPAWN_MESSAGE = Regex("Mine as many correct boxes as possible before the time runs out!")
 
     private var bellUsed = false

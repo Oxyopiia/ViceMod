@@ -13,6 +13,7 @@ import java.awt.Color
 
 object BetterWarpMenu {
 	private const val WARP_STARTER = "Left-Click to Warp"
+	private const val WARP_STARTER2 = "LEFT CLICK TO WARP"
 	private val FLOOR_REGEX by lazy {
 		Regex("Floor (\\d+)")
 	}
@@ -43,7 +44,7 @@ object BetterWarpMenu {
 
 	@SubscribeEvent
 	fun onItemTooltip(event: ItemTooltipEvent) {
-		if (!Vice.config.BETTER_WARP_MENU || !event.lines.any { it.string.startsWith(WARP_STARTER) }) return
+		if (!Vice.config.BETTER_WARP_MENU || !event.lines.any { it.string.startsWith(WARP_STARTER) || it.string.startsWith(WARP_STARTER2) }) return
 
 		val floorMatch = FLOOR_REGEX.find(event.stack.cleanName()) ?: return
 		val floorIndex = (floorMatch.groupValues[1].toIntOrNull() ?: 0) - 1

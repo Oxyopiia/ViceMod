@@ -151,6 +151,10 @@ object ItemAbilityCooldown {
 				ItemAbility.THE_PHANTASM.onSound()
 			}
 
+			event.soundName == "block.beacon.deactivate" && event.pitch == 1f && event.volume == 3f -> {
+				ItemAbility.BUG_ZAPPER.onSound()
+			}
+
 			// Arctic Scroll
 			(event.soundName == "block.lava.pop" || event.soundName == "entity.player.hurt_freeze") && event.pitch == 1f && event.volume == 9999f -> {
 				ItemAbility.ARCTIC_SCROLL.onSound()

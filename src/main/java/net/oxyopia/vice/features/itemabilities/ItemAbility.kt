@@ -73,6 +73,7 @@ enum class ItemAbility(
     STAR_LEECH("Star Leech", 10f, set = Set.TRICKSTER, setAmount = 1),
     TERMINUS_RAILGUN("Terminus' Railgun", 20f),
     BUG_ZAPPER("Bug Zapper", 15f),
+    GUTTED_BARREL_BLASTER("Gutted Barrel Blaster", 6f, set = Set.FLESHCRAWLER, setAmount = 2),
     ZAP_JAVELIN("Zap Javelin", 6f, set = Set.DIGITAL, setAmount = 3),
 
     // No Display

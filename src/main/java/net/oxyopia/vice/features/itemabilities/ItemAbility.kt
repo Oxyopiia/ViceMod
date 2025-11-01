@@ -73,6 +73,7 @@ enum class ItemAbility(
     STAR_LEECH("Star Leech", 10f, set = Set.TRICKSTER, setAmount = 1),
     TERMINUS_RAILGUN("Terminus' Railgun", 20f),
     BUG_ZAPPER("Bug Zapper", 15f),
+    GUTTED_BARREL_BLASTER("Gutted Barrel Blaster", 6f, set = Set.FLESHCRAWLER, setAmount = 2),
 
     // No Display
     LASER_POINT_MINIGUN("Laser Point Minigun", 0.5f, set = Set.HEAVY, setAmount = 2),

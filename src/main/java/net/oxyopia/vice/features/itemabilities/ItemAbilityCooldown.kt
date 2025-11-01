@@ -120,6 +120,7 @@ object ItemAbilityCooldown {
 				ItemAbility.SHOTGUN.onSound()
 				ItemAbility.BROKEN_FLASHLIGHT.onSound()
 				ItemAbility.THE_EXPERIMENT.onSound()
+				ItemAbility.GUTTED_BARREL_BLASTER.onSound()
 			}
 
 			event.soundName == "block.conduit.deactivate" && event.pitch == 1.5f && event.volume == 3f -> {

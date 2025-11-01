@@ -200,6 +200,10 @@ object ItemAbilityCooldown {
 				ItemAbility.TERMINUS_RAILGUN.onSound()
 			}
 
+			event.soundName == "entity.firework_rocket.large_blast" && event.pitch == 1.9f && event.volume == 9999f -> {
+				ItemAbility.ZAP_JAVELIN.onSound()
+			}
+
 			// Laser Point Minigun
 			event.soundName == "entity.generic.explode" && event.pitch == 2.0f && event.volume == 9999f -> {
 				ItemAbility.LASER_POINT_MINIGUN.onSound()

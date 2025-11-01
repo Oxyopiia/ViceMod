@@ -39,4 +39,10 @@ class MiscStorage {
 	@Expose
 	var lastKnownBoxtown: Long = 0L
 
+	@Expose
+	var ivoryTimerPos: Position = Position(200f, 0f)
+
+	@Expose
+	var lastKnownIvory: Long = 0L
+
 }

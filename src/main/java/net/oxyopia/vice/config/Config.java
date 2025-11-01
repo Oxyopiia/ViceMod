@@ -752,6 +752,15 @@ public class Config extends Vigilant {
 	)
 	public boolean BOXTOWN_TIMER = false;
 
+	@Property(
+			type = PropertyType.SWITCH,
+			name = "Ivory Boss Timer",
+			description = "Shows how long until the next Ivory Boss",
+			category = "General",
+			subcategory = "Quality of Life"
+	)
+	public boolean IVORY_TIMER = false;
+
 	// Sounds
 
 	@Property(
